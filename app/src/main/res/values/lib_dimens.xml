@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="lib_font_title">18sp</dimen>
+    <dimen name="lib_font_subTitle">16sp</dimen>
+    <dimen name="lib_font_supDesription">14sp</dimen>
+    <dimen name="lib_font_description">12sp</dimen>
+    <dimen name="lib_font_subDescription">10sp</dimen>
+
+</resources>

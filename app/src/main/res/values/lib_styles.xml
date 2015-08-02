@@ -1,0 +1,66 @@
+<resources>
+
+    <!--
+		<item name="android:windowFrame">@null</item> ：Dialog的windowFrame框为无
+		<item name="android:windowIsFloating">true</item>：是否浮现在activity之上
+		<item name="android:windowIsTranslucent">false</item>:是否半透明
+		<item name="android:windowNoTitle">true</item>:是否显示title
+		<item name="android:windowBackground">@drawable/dia_bg</item>:设置dialog的背景
+		<item name="android:backgroundDimEnabled">false</item>: 背景是否模糊显示
+    -->
+
+
+    <!-- Activity 半透明 -->
+    <style name="lib_activity_translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <!-- Activity 切换动画 Theme -->
+    <style name="lib_theme" parent="android:Theme.Light">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/lib_startActivity_slide_animation</item>
+    </style>
+
+    <!-- Dialog 全屏 -->
+    <style name="lib_dialog_fullscreenTransparent" parent="@android:style/Theme.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在Activity之上 -->
+        <item name="android:windowIsFloating">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <!-- 全屏 -->
+        <item name="android:windowFullscreen">true</item>
+        <!-- 横竖屏 -->
+        <item name="android:screenOrientation">landscape</item>
+    </style>
+    <!-- Dialog 全屏 -->
+    <style name="lib_dialog_fullscreen" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <!-- Dialog取消标题 -->
+    <style name="lib_dialog_NoTitle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- Activity切换左进右出滑动动画 -->
+    <style name="lib_startActivity_slide_animation" parent="@android:style/Animation.Translucent">
+        <item name="android:activityOpenEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/slide_out_right</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/slide_out_right</item>
+    </style>
+
+</resources>
