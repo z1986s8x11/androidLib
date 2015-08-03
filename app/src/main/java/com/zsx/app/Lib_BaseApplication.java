@@ -12,8 +12,8 @@ import com.zsx.network.NetworkStateReceiver;
 
 /**
  * Application 基类
- *
- *
+ * <p/>
+ * <p/>
  * Created by zhusx on 2015/7/31.
  */
 public abstract class Lib_BaseApplication extends Application {
@@ -48,6 +48,7 @@ public abstract class Lib_BaseApplication extends Application {
     @Override
     public void onTerminate() {
         NetworkStateReceiver.removeRegisterObserver(httpState);
+        NetworkStateReceiver.unRegisterNetworkStateReceiver(this);
     }
 
     private class HttpObject implements NetChangeObserver {

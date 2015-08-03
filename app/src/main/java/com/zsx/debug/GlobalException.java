@@ -75,7 +75,6 @@ public class GlobalException implements UncaughtExceptionHandler {
 			} else {
 				this.mContext = context.getApplicationContext();
 			}
-
 		} else {
 			if (LogUtil.DEBUG) {
 				LogUtil.e(this, "_init() is Repeat Call");

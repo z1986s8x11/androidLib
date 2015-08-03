@@ -3,6 +3,7 @@ package com.zsx.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,17 @@ import android.widget.Toast;
 import java.util.List;
 
 public abstract class Lib_BaseFragment extends Fragment {
+    private Toast toast;
+
     public void _showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
+        if (toast == null) {
+            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+        }
+        toast.setText(message);
+        toast.show();
     }
 
     public int _getFullScreenWidth() {

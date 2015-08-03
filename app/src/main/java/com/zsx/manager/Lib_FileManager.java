@@ -100,6 +100,11 @@ public final class Lib_FileManager {
         return cachePath;
     }
 
+    /**
+     * 图片缓存路径
+     *
+     * @return
+     */
     public final static String getBitmapCachePath() {
         return bitmapCachePath;
     }
@@ -164,6 +169,9 @@ public final class Lib_FileManager {
         return getFileSize(new File(cachePath));
     }
 
+    /**
+     * 文件或者文件夹的大小
+     */
     public static long getFileSize(File f) {
         if (!f.exists()) {
             return -1;

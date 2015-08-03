@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@android:id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lib_white"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="拍照"
+            android:textColor="@color/lib_blue" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lib_gray" />
+
+        <TextView
+            android:id="@android:id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lib_white"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="从手机相册选择"
+            android:textColor="@color/lib_blue" />
+
+        <TextView
+            android:id="@android:id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/lib_white"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="取消"
+            android:textColor="@color/lib_blue" />
+    </LinearLayout>
+
+</RelativeLayout>

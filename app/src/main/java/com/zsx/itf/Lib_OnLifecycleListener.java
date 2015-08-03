@@ -1,18 +1,13 @@
 package com.zsx.itf;
 
 /**
- * 
- * 
- * @author 祝思翔
- *
- * @company 重庆慧致动联科技
- *
- * @date 2015年7月8日
+ * Activity 生命周期的回调
+ * Created by zhusx on 2015/7/31.
  */
 public interface Lib_OnLifecycleListener {
-	void onActivityResume();
+    void onActivityResume();
 
-	void onActivityPause();
+    void onActivityPause();
 
-	void onActivityDestroy();
+    void onActivityDestroy();
 }
