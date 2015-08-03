@@ -18,7 +18,7 @@ public class XListViewFooter extends LinearLayout {
 
 	public XListViewFooter(Context context) {
 		super(context);
-		View v = LayoutInflater.from(context).inflate(R.layout.lib_base_widget_listview_footer, this, false);
+		View v = LayoutInflater.from(context).inflate(R.layout.lib_widget_listview_footer, this, false);
 		loadingPB = (ProgressBar) v.findViewById(R.id.lib_progressbar);
 		loadMoreTV = (TextView) v.findViewById(R.id.lib_tv_loadMore);
 		addView(v);

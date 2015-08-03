@@ -32,7 +32,7 @@ public class XListViewHeader extends LinearLayout {
 	public XListViewHeader(Context context) {
 		super(context);
 		View v = LayoutInflater.from(context).inflate(
-				R.layout.lib_base_widget_listview_header, this, false);
+				R.layout.lib_widget_listview_header, this, false);
 		loadingPB = (ProgressBar) v.findViewById(R.id.lib_progressbar);
 		messageTV = (TextView) v.findViewById(R.id.lib_tv_refresh);
 		arrowIV = (ImageView) v.findViewById(R.id.lib_iv_listview_arrow);

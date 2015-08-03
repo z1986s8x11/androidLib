@@ -48,7 +48,7 @@ public class Lib_BugReportActivity extends Activity implements View.OnClickListe
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        setContentView(R.layout.activity_bug);
+        setContentView(R.layout.lib_activity_bug);
         msgText = getIntent().getStringExtra(STACKTRACE);
         ((TextView) findViewById(R.id.tv_message)).setText(msgText);
         findViewById(R.id.btn_ok).setOnClickListener(this);
