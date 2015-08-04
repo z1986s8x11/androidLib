@@ -21,15 +21,13 @@ public abstract class Lib_BaseApplication extends Application {
     /**
      * 当前链接状态
      */
-    public static NetworkState.NetType _Current_NetWork_Status = NetworkState.NetType.CMNET;
+    public static NetworkState.NetType _Current_NetWork_Status = NetworkState.NetType.Default;
 
     @Override
     public void onCreate() {
         super.onCreate();
         /** 初始化文件系统 (创建目录) */
         Lib_FileManager.init(_getProjectName(), getApplicationContext());
-        /** 监听全局异常 */
-        GlobalException._getInstance()._init(this);
         /** 注册网络改变监听 */
         NetworkStateReceiver.registerNetworkStateReceiver(this);
         /** 注册接受网络改变观察者 */
@@ -37,6 +35,8 @@ public abstract class Lib_BaseApplication extends Application {
         NetworkStateReceiver.registerObserver(httpState);
         if (LogUtil.DEBUG) {
             StrictMode.enableDefaults();
+            /** 监听全局异常 */
+            GlobalException._getInstance()._init(this);
         }
     }
 

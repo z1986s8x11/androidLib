@@ -1,13 +1,9 @@
 package com.zsx.network;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.widget.Toast;
 
-import com.zsx.app.Lib_BaseActivity;
 import com.zsx.app.Lib_BaseApplication;
-import com.zsx.app.Lib_BaseFragmentActivity;
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
 
@@ -141,7 +137,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         HTTPEXCUTORS = Executors.newFixedThreadPool(2);
     }
 
-    private synchronized final void requestData(boolean isRefresh,
+    private synchronized  void requestData(boolean isRefresh,
                                                 Parameter... objects) {
         RequestData<Parameter> request = new RequestData<Parameter>();
         request.lastObjectsParams = objects;
@@ -150,8 +146,6 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "id:" + id + "\t 正在下载" + id);
             }
-            // onRequestStart(id, request);
-            // onRequestError(id, request, "正在获取数据");
             return;
         }
         if (Lib_BaseApplication._Current_NetWork_Status == NetworkState.NetType.NoneNet) {
@@ -251,7 +245,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         String str;
         Object paramObject = params.getParams(id);
         switch (params.getRequestMethod()) {
-            case GET:
+            case Lib_HttpParams.GET:
                 String getUrl = null;
                 if (paramObject == null) {
                     getUrl = params.getRequestUrl(id);
@@ -284,7 +278,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
                 }
                 str = Lib_HttpRequest._get(getUrl);
                 break;
-            case POST:
+            case Lib_HttpParams.POST:
                 if (LogUtil.DEBUG) {
                     LogUtil.e("requestData params:", String.valueOf(paramObject));
                 }
@@ -305,20 +299,8 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         return str;
     }
 
-    private boolean isShowLongDialog = false;
-    private Context context;
-
-    public void _setShowLoadingDialog(Context context, boolean isShowLongDialog) {
-        this.isShowLongDialog = isShowLongDialog;
-        this.context = context;
-    }
 
     private void onRequestStart(int id, RequestData<Parameter> requestData) {
-        if (isShowLongDialog) {
-            if (context != null) {
-                _startLoadingDialog(context);
-            }
-        }
         b_isDownding = true;
         __onStart(id, requestData);
         if (listener != null) {
@@ -328,28 +310,11 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
 
     private final void onRequestError(int id,
                                       RequestData<Parameter> requestData, String error_message) {
-        if (isShowLongDialog) {
-            _stopLoadingDialog();
-            tryShowToast(error_message);
-        }
         b_isDownding = false;
         __onError(id, requestData, null, false, error_message);
         if (listener != null) {
             listener.onLoadError(id, this, requestData, null, false,
                     error_message);
-        }
-    }
-
-    private void tryShowToast(String error_message) {
-        if (context != null) {
-            if (context instanceof Lib_BaseActivity) {
-                ((Lib_BaseActivity) context)._showToast(error_message);
-            } else if (context instanceof Lib_BaseFragmentActivity) {
-                ((Lib_BaseFragmentActivity) context)._showToast(error_message);
-            } else {
-                Toast.makeText(context, error_message, Toast.LENGTH_SHORT)
-                        .show();
-            }
         }
     }
 
@@ -369,9 +334,6 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
 
     private final void onRequestComplete(int id,
                                          RequestData<Parameter> requestData, Result source, String returnStr) {
-        if (isShowLongDialog) {
-            _stopLoadingDialog();
-        }
         b_isDownding = false;
         boolean isError = false;
         Result bean = null;
@@ -381,9 +343,6 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
             isError = true;
             if (LogUtil.DEBUG) {
                 LogUtil.e(e);
-            }
-            if (isShowLongDialog) {
-                tryShowToast("解析发生异常");
             }
             __onError(id, requestData, bean, false, "解析发生异常");
             if (listener != null) {
@@ -399,9 +358,6 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
                     listener.onLoadComplete(id, requestData, bean);
                 }
             } else {
-                if (isShowLongDialog) {
-                    tryShowToast(__getErrorMessage(id, bean));
-                }
                 __onError(id, requestData, bean, true,
                         __getErrorMessage(id, bean));
                 if (listener != null) {
@@ -457,22 +413,4 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     protected void __onComplete(int id, RequestData<Parameter> requestData,
                                 Result b) {
     }
-
-
-    public final synchronized void _startLoadingDialog(Context context) {
-        if (__isDestory()) {
-            return;
-        }
-    }
-
-    public final synchronized void _stopLoadingDialog() {
-        if (__isDestory()) {
-            return;
-        }
-    }
-
-    protected boolean __isDestory() {
-        return false;
-    }
-
 }

@@ -62,6 +62,10 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
         toast.show();
     }
 
+    /**
+     * 设置 是非在顶层处理 点击非E
+     * @param isClickNoEditTextCloseInput
+     */
     public void _setClickNoEditTextCloseInput(boolean isClickNoEditTextCloseInput) {
         this.isClickNoEditTextCloseInput = isClickNoEditTextCloseInput;
     }

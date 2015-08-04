@@ -19,6 +19,9 @@ public abstract class Lib_BaseFragment extends Fragment {
         if (TextUtils.isEmpty(message)) {
             return;
         }
+        if (getActivity() == null) {
+            return;
+        }
         if (toast == null) {
             toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
         }
