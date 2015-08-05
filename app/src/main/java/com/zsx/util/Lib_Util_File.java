@@ -1,5 +1,14 @@
 package com.zsx.util;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.os.StatFs;
+import android.os.storage.StorageManager;
+
+import com.zsx.debug.LogUtil;
+import com.zsx.tools.Lib_UnicodeInputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,15 +22,6 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import zsx.lib.base.log.LogUtil;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Environment;
-import android.os.StatFs;
-import android.os.storage.StorageManager;
-
-import com.zsx.tools.Lib_UnicodeInputStream;
 
 /**
  * 
@@ -231,7 +231,7 @@ public class Lib_Util_File {
 	/**
 	 * 获取文件扩展名
 	 * 
-	 * @param fileName
+	 * @param filePath
 	 * @return ""或者后缀
 	 */
 	public static String getFileSuffix(String filePath) {

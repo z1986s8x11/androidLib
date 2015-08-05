@@ -17,9 +17,6 @@
  */
 package com.zsx.widget.viewpager.indicator;
 
-import java.util.ArrayList;
-
-import zsx.lib.base.util.Lib_Util_Density;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -36,6 +33,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+
+import com.zsx.util.Lib_Util_Density;
+
+import java.util.ArrayList;
 
 /**
  * A TitlePageIndicator is a PageIndicator which displays the title of left view

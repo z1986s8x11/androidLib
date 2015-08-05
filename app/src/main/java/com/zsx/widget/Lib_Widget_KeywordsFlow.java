@@ -1,11 +1,5 @@
 package com.zsx.widget;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Vector;
-
-import zsx.lib.base.log.LogUtil;
 import android.content.Context;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -23,6 +17,13 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.zsx.debug.LogUtil;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 /**
  * 关键字飞入效果
@@ -75,12 +76,6 @@ public class Lib_Widget_KeywordsFlow extends FrameLayout implements OnGlobalLayo
 	private boolean enableShow;
 	private Random random;
 	/**
-	 * @see ANIMATION_IN
-	 * @see ANIMATION_OUT
-	 * @see OUTSIDE_TO_LOCATION
-	 * @see LOCATION_TO_OUTSIDE
-	 * @see LOCATION_TO_CENTER
-	 * @see CENTER_TO_LOCATION
 	 * */
 	private int txtAnimInType, txtAnimOutType;
 	/** 最近一次启动动画显示的时间。 */
@@ -380,7 +375,7 @@ public class Lib_Widget_KeywordsFlow extends FrameLayout implements OnGlobalLayo
 	 * 
 	 * @param endIdx
 	 *            起始位置。
-	 * @param txtArr
+	 * @param listTxt
 	 *            待排序的数组。
 	 * 
 	 */

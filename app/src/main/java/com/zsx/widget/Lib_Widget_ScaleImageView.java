@@ -1,6 +1,5 @@
 package com.zsx.widget;
 
-import zsx.lib.base.log.LogUtil;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +14,8 @@ import android.util.DisplayMetrics;
 import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+
+import com.zsx.debug.LogUtil;
 
 public class Lib_Widget_ScaleImageView extends ImageView {
 	public Lib_Widget_ScaleImageView(Context context, AttributeSet attrs,

@@ -16,7 +16,6 @@
 
 package com.zsx.widget;
 
-import zsx.lib.BuildConfig;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
@@ -37,6 +36,8 @@ import android.widget.HeaderViewListAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
+
+import com.zsx.BuildConfig;
 
 /**
  * 固定标题组的

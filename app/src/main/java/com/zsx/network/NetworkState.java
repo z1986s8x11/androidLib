@@ -79,7 +79,7 @@ public class NetworkState {
         NET, //net 连接
         WAP, //wap 连接
         Default,//默认
-        NoneNet //无网
+        NetType, NoneNet //无网
     }
 
     /**
