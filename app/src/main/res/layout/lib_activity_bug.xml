@@ -7,11 +7,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/lib_green"
         android:gravity="center"
         android:padding="10dp"
-        android:textColor="@android:color/white"
         android:text="异常报告"
+        android:textColor="@color/lib_black_font"
         android:textSize="18sp" />
 
     <View
@@ -23,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:scrollbars="none"
         android:fadeScrollbars="@null"
-        android:padding="15dp">
+        android:padding="15dp"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,11 +42,12 @@
     </ScrollView>
 
     <Button
-        android:background="@android:color/holo_green_dark"
         android:id="@+id/btn_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/lib_yellow"
+        android:padding="10dp"
         android:text="发送错误"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@color/lib_red"
         android:textStyle="bold" />
 </LinearLayout>

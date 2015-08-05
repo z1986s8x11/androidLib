@@ -3,7 +3,6 @@ package com.zsx.network;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.zsx.app.Lib_BaseApplication;
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
 
@@ -137,8 +136,8 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         HTTPEXCUTORS = Executors.newFixedThreadPool(2);
     }
 
-    private synchronized  void requestData(boolean isRefresh,
-                                                Parameter... objects) {
+    private synchronized void requestData(boolean isRefresh,
+                                          Parameter... objects) {
         RequestData<Parameter> request = new RequestData<Parameter>();
         request.lastObjectsParams = objects;
         request.isRefresh = isRefresh;
@@ -148,7 +147,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
             }
             return;
         }
-        if (Lib_BaseApplication._Current_NetWork_Status == NetworkState.NetType.NoneNet) {
+        if (NetworkStateReceiver._Current_NetWork_Status == NetworkState.NetType.NoneNet) {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "网络链接异常" + id);
             }

@@ -40,7 +40,7 @@ public class Lib_Util_Intent {
 	 *            文本
 	 * @return
 	 */
-	public static Boolean sendMail(Context mContext, String toUser,
+	public static void sendMail(Context mContext, String[] toUser,
 			String title, String text) {
 		// 调用系统发邮件
 		Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -55,7 +55,6 @@ public class Lib_Util_Intent {
 		emailIntent.putExtra(Intent.EXTRA_TEXT, text);
 		mContext.startActivity(Intent.createChooser(emailIntent,
 				"Choose Email Client"));
-		return null;
 	}
 
 	/**

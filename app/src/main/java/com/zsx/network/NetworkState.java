@@ -75,11 +75,11 @@ public class NetworkState {
     }
 
     public enum NetType {
+        Default,//默认
         Wifi,//wifi 状态
         NET, //net 连接
         WAP, //wap 连接
-        Default,//默认
-        NetType, NoneNet //无网
+        NoneNet //无网
     }
 
     /**

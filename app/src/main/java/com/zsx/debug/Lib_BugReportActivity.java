@@ -19,42 +19,33 @@
 
 package com.zsx.debug;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zsx.R;
 
-import java.util.List;
-
 /**
  * 待测试
  */
 public class Lib_BugReportActivity extends Activity implements View.OnClickListener {
-    public static final String STACKTRACE = "mo kan";
-    String msgText;
+    public static final String _EXTRA_TEXT = "text";
+    private String msgText;
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         setContentView(R.layout.lib_activity_bug);
-        msgText = getIntent().getStringExtra(STACKTRACE);
+        msgText = getIntent().getStringExtra(_EXTRA_TEXT);
         ((TextView) findViewById(R.id.tv_message)).setText(msgText);
         findViewById(R.id.btn_ok).setOnClickListener(this);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -71,33 +62,8 @@ public class Lib_BugReportActivity extends Activity implements View.OnClickListe
     }
 
     private void restartActivity() {
-        try {
-            PackageInfo packageinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            if (packageinfo == null) {
-                return;
-            }
-            Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
-            resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            resolveIntent.setPackage(packageinfo.packageName);
-            List<ResolveInfo> resolveinfoList = getPackageManager()
-                    .queryIntentActivities(resolveIntent, 0);
-            while (resolveinfoList.iterator().hasNext()) {
-                ResolveInfo resolveinfo = resolveinfoList.iterator().next();
-                if (resolveinfo != null) {
-                    if (resolveinfo.filter != null) {
-                        if ("android.intent.action.MAIN".equals(resolveinfo.filter.getAction(0)) && "android.intent.category.LAUNCHER".equals(resolveinfo.filter.getCategory(0))) {
-                            String packageName = resolveinfo.activityInfo.packageName;
-                            String className = resolveinfo.activityInfo.name;
-                            ComponentName cn = new ComponentName(packageName, className);
-                            startActivity(Intent.makeRestartActivityTask(cn));
-                            return;
-                        }
-                    }
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        //TODO 启动 主页?
+        finish();
     }
 
     @Override

@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
 
-import com.zsx.app.Lib_BaseApplication;
 import com.zsx.debug.LogUtil;
 import com.zsx.network.NetworkState;
+import com.zsx.network.NetworkStateReceiver;
 import com.zsx.util.Lib_Util_String;
 
 import org.apache.http.client.ClientProtocolException;
@@ -85,7 +85,7 @@ public class Lib_DownloadService extends Service {
 				return super.onStartCommand(intent, flags, startId);
 			}
 			if (!_isDownloading(data.getDownloadKey())) {
-				if (Lib_BaseApplication._Current_NetWork_Status == NetworkState.NetType.NoneNet) {
+				if (NetworkStateReceiver._Current_NetWork_Status == NetworkState.NetType.NoneNet) {
 					Toast.makeText(getApplicationContext(), "没有网络连接!",
 							Toast.LENGTH_SHORT).show();
 					return super.onStartCommand(intent, flags, startId);

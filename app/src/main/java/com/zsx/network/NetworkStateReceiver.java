@@ -1,15 +1,13 @@
 package com.zsx.network;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.zsx.debug.LogUtil;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
+import com.zsx.util.Lib_Util_System;
 
 /**
  * 是一个检测网络状态改变的，需要配置 <code> <receiver
@@ -33,24 +31,12 @@ import java.util.List;
  * @date 2013-5-5 下午 22:47
  */
 public class NetworkStateReceiver extends BroadcastReceiver {
-    private static Boolean networkAvailable = false;
-    private static NetworkState.NetType netType = NetworkState.NetType.NoneNet;
-    private static List<WeakReference<NetChangeObserver>> netChangeObserverArrayList;
+    public static NetworkState.NetType _Current_NetWork_Status = NetworkState.NetType.Default;
     private final static String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
-    public final static String TA_ANDROID_NET_CHANGE_ACTION = "lib.android.net.conn.CONNECTIVITY_CHANGE";
-    private static BroadcastReceiver receiver;
-
-    private static BroadcastReceiver getReceiver() {
-        if (receiver == null) {
-            receiver = new NetworkStateReceiver();
-        }
-        return receiver;
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        receiver = NetworkStateReceiver.this;
-        if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION) || intent.getAction().equalsIgnoreCase(TA_ANDROID_NET_CHANGE_ACTION)) {
+        if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION)) {
             if (LogUtil.DEBUG) {
                 LogUtil.d(NetworkStateReceiver.this, "网络状态改变.");
             }
@@ -58,15 +44,13 @@ public class NetworkStateReceiver extends BroadcastReceiver {
                 if (LogUtil.DEBUG) {
                     LogUtil.d(NetworkStateReceiver.this, "没有网络连接.");
                 }
-                networkAvailable = false;
+                _Current_NetWork_Status = NetworkState.NetType.NoneNet;
             } else {
-                netType = NetworkState.getAPNType(context);
+                _Current_NetWork_Status = NetworkState.getAPNType(context);
                 if (LogUtil.DEBUG) {
-                    LogUtil.d(NetworkStateReceiver.this, "网络连接成功." + netType.name());
+                    LogUtil.d(NetworkStateReceiver.this, "网络连接成功." + _Current_NetWork_Status.name());
                 }
-                networkAvailable = true;
             }
-            notifyObserver();
         }
     }
 
@@ -75,22 +59,16 @@ public class NetworkStateReceiver extends BroadcastReceiver {
      *
      * @param mContext
      */
-    public static void registerNetworkStateReceiver(Context mContext) {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(TA_ANDROID_NET_CHANGE_ACTION);
-        filter.addAction(ANDROID_NET_CHANGE_ACTION);
-        mContext.getApplicationContext().registerReceiver(getReceiver(), filter);
-    }
-
-    /**
-     * 检查网络状态
-     *
-     * @param mContext
-     */
-    public static void checkNetworkState(Context mContext) {
-        Intent intent = new Intent();
-        intent.setAction(TA_ANDROID_NET_CHANGE_ACTION);
-        mContext.sendBroadcast(intent);
+    public void registerNetworkStateReceiver(Context mContext) {
+        if (Lib_Util_System.isPermisson(mContext, Manifest.permission.ACCESS_NETWORK_STATE)) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ANDROID_NET_CHANGE_ACTION);
+            mContext.getApplicationContext().registerReceiver(this, filter);
+        } else {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(this, "需要权限:" + Manifest.permission.ACCESS_NETWORK_STATE);
+            }
+        }
     }
 
     /**
@@ -98,71 +76,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
      *
      * @param mContext
      */
-    public static void unRegisterNetworkStateReceiver(Context mContext) {
-        if (receiver != null) {
-            try {
-                mContext.getApplicationContext().unregisterReceiver(receiver);
-            } catch (Exception e) {
-                LogUtil.w(e);
-            }
-        }
-
+    public void unRegisterNetworkStateReceiver(Context mContext) {
+        mContext.getApplicationContext().unregisterReceiver(this);
     }
-
-    /**
-     * 获取当前网络状态，true为网络连接成功，否则网络连接失败
-     *
-     * @return
-     */
-    public static Boolean isNetworkAvailable() {
-        return networkAvailable;
-    }
-
-    public static NetworkState.NetType getAPNType() {
-        return netType;
-    }
-
-    private void notifyObserver() {
-        if (netChangeObserverArrayList == null) {
-            return;
-        }
-        for (int i = 0; i < netChangeObserverArrayList.size(); i++) {
-            WeakReference<NetChangeObserver> weakObserver = netChangeObserverArrayList.get(i);
-            if (weakObserver != null) {
-                NetChangeObserver observer = weakObserver.get();
-                if (observer != null) {
-                    if (isNetworkAvailable()) {
-                        observer.onConnect(netType);
-                    } else {
-                        observer.onDisConnect();
-                    }
-                }
-            }
-        }
-
-    }
-
-    /**
-     * 注册网络连接观察者
-     * <p/>
-     * observerKey
-     */
-    public static void registerObserver(NetChangeObserver observer) {
-        if (netChangeObserverArrayList == null) {
-            netChangeObserverArrayList = new ArrayList<WeakReference<NetChangeObserver>>();
-        }
-        netChangeObserverArrayList.add(new WeakReference<NetChangeObserver>(observer));
-    }
-
-    /**
-     * 注销网络连接观察者
-     * <p/>
-     * observerKey
-     */
-    public static void removeRegisterObserver(NetChangeObserver observer) {
-        if (netChangeObserverArrayList != null) {
-            netChangeObserverArrayList.remove(observer);
-        }
-    }
-
 }

@@ -537,9 +537,10 @@ public class Lib_Util_System {
      * @param permission android.Manifest.permission.常量
      * @return 是否有此权限
      */
-    public static boolean isPermisson(Context context, String permission) {
+    public static boolean isPermisson(Context context, String... permission) {
 
         try {
+            int pCount = permission.length;
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
             // 得到自己的包名
@@ -558,8 +559,15 @@ public class Lib_Util_System {
                  * tmpPermInfo.loadLabel(pm).toString()+ "\n"); tv.append(i +
                  * "-" + tmpPermInfo.loadDescription(pm).toString()+ "\n");
                  */
-                if (String.valueOf(permName).equalsIgnoreCase(permission)) {
-                    return true;
+
+                for (int j = 0; j < permission.length; j++) {
+                    if (String.valueOf(permName).equalsIgnoreCase(permission[j])) {
+                        pCount--;
+                        if (pCount == 0) {
+                            return true;
+                        }
+                        continue;
+                    }
                 }
             }
         } catch (NameNotFoundException e) {

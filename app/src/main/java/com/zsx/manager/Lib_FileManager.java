@@ -1,11 +1,13 @@
 package com.zsx.manager;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 
 import com.zsx.debug.LogUtil;
+import com.zsx.util.Lib_Util_System;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +29,13 @@ public final class Lib_FileManager {
         if (rootDirName.trim().length() == 0) {
             return;
         }
-        File rootPathFile = null;
+        if (!Lib_Util_System.isPermisson(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(Lib_FileManager.class, "需要权限:" + Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            return;
+        }
+        File rootPathFile;
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
             rootPathFile = new File(Environment.getExternalStorageDirectory()
@@ -41,40 +49,28 @@ public final class Lib_FileManager {
         }
         rootPath = rootPathFile.getPath();
         File cacheFile = new File(rootPathFile, "cache");
-        cachePath = cacheFile.getPath();
         if (!cacheFile.exists() || !cacheFile.isDirectory()) {
             if (!cacheFile.mkdir()) {
                 if (LogUtil.DEBUG) {
-                    LogUtil.e(
-                            "",
-                            "file.mkdir() is Error,Path:"
-                                    + cacheFile.getPath()
-                                    + ",please check  <uses-permission android:name=android.permission.WRITE_EXTERNAL_STORAGE />");
+                    LogUtil.e(Lib_FileManager.class, "mkdir() is Error,Path:" + cacheFile.getPath());
                 }
             }
         }
+        cachePath = cacheFile.getPath();
         File logFile = new File(rootPathFile, "log");
-        logPath = logFile.getPath();
         if (!logFile.exists() || !logFile.isDirectory()) {
             if (!logFile.mkdir()) {
                 if (LogUtil.DEBUG) {
-                    LogUtil.e(
-                            "",
-                            "file.mkdir() is Error,Path:"
-                                    + logFile.getPath()
-                                    + ",please check  <uses-permission android:name=android.permission.WRITE_EXTERNAL_STORAGE />");
+                    LogUtil.e(Lib_FileManager.class, "mkdir() is Error,Path:" + logFile.getPath());
                 }
             }
         }
+        logPath = logFile.getPath();
         File cacheBitmapFile = new File(cachePath, "bitmap");
         if (!cacheBitmapFile.exists() || !cacheBitmapFile.isDirectory()) {
             if (!cacheBitmapFile.mkdir()) {
                 if (LogUtil.DEBUG) {
-                    LogUtil.e(
-                            "",
-                            "file.mkdir() is Error,Path:"
-                                    + cacheBitmapFile.getPath()
-                                    + ",please check  <uses-permission android:name=android.permission.WRITE_EXTERNAL_STORAGE />");
+                    LogUtil.e(Lib_FileManager.class, "mkdir() is Error,Path:" + cacheBitmapFile.getPath());
                 }
             }
         }

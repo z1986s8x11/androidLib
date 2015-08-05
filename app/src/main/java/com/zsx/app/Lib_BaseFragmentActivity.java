@@ -63,7 +63,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
     }
 
     /**
-     * 设置 是非在顶层处理 点击非E
+     * 设置 是非在顶层处理 点击非EditText 隐藏键盘
      * @param isClickNoEditTextCloseInput
      */
     public void _setClickNoEditTextCloseInput(boolean isClickNoEditTextCloseInput) {
