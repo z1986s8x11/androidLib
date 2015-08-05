@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
 import zsx.com.test.base._BaseAdapter;
+import zsx.com.test.ui.adapter.InsertAdapterActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
 
 /**
@@ -23,23 +26,32 @@ public class MainActivity extends _BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView mListView = (ListView) findViewById(R.id.listView);
-        mListView.setAdapter(new _BaseAdapter<String>(this, Arrays.asList("Debug", "我草", "我日")) {
+        List<Item> list = new ArrayList<>();
+        list.add(new Item("InsertAdapter", InsertAdapterActivity.class));
+        list.add(new Item("Debug", ExceptionActivity.class));
+        mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
-            public View getView(LayoutInflater inflater, String bean, final int position, View convertView, ViewGroup parent) {
-                View[] vs = _getViewHolder(inflater, convertView, parent, R.layout.lib_list_item_1, android.R.id.text1);
-                _toTextView(vs[1]).setText(bean);
-                vs[0].setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (position) {
-                            case 0:
-                                startActivity(new Intent(v.getContext(), ExceptionActivity.class));
-                                break;
-                        }
-                    }
-                });
+            public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {
+                View[] vs = _getViewHolder(inflater, convertView, parent, R.layout.lib_list_item_1);
+                _toTextView(vs[0]).setText(bean.name);
                 return vs[0];
             }
         });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(parent.getContext(), ((Item) parent.getItemAtPosition(position)).cls));
+            }
+        });
+    }
+
+    private class Item {
+        public String name;
+        public Class<?> cls;
+
+        public Item(String name, Class<?> cls) {
+            this.name = name;
+            this.cls = cls;
+        }
     }
 }

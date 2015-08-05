@@ -2,6 +2,8 @@
     package="zsx.com.test">
 
     <uses-permission android:name="android.permission.write_external_storage" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".TestApplication"
         android:allowBackup="true"
@@ -16,6 +18,7 @@
         </activity>
         <activity android:name="com.zsx.debug.Lib_BugReportActivity" />
         <activity android:name=".ui.debug.ExceptionActivity" />
+        <activity android:name=".ui.adapter.InsertAdapterActivity" />
     </application>
 
 </manifest>

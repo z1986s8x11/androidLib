@@ -11,6 +11,7 @@
         android:ems="4"
         android:onClick="onClickReturn"
         android:padding="10dp"
+        android:clickable="true"
         android:text="&lt;返回"
         android:textColor="@color/lib_blue" />
 

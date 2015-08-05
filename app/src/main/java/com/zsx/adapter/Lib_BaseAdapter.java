@@ -176,15 +176,15 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         return views;
     }
 
-    public TextView _toTextView(View v) {
+    protected TextView _toTextView(View v) {
         return (TextView) v;
     }
 
-    public ImageView _toImageView(View v) {
+    protected ImageView _toImageView(View v) {
         return (ImageView) v;
     }
 
-    public CheckBox _toCheckBox(View v) {
+    protected CheckBox _toCheckBox(View v) {
         return (CheckBox) v;
     }
 }

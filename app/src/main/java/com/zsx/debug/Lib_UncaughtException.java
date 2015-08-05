@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Lib_UncaughtException implements UncaughtExceptionHandler {
+public final class Lib_UncaughtException implements UncaughtExceptionHandler {
 
     // CrashHandler 实例
     private static Lib_UncaughtException INSTANCE = new Lib_UncaughtException();

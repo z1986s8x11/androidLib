@@ -32,9 +32,10 @@ import com.zsx.R;
 /**
  * 待测试
  */
-public class Lib_BugReportActivity extends Activity implements View.OnClickListener {
+public final class Lib_BugReportActivity extends Activity implements View.OnClickListener {
     public static final String _EXTRA_TEXT = "text";
     private String msgText;
+    private final int REQUEST_ID = 11;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -53,7 +54,7 @@ public class Lib_BugReportActivity extends Activity implements View.OnClickListe
         intent.putExtra(Intent.EXTRA_SUBJECT, "错误信息");
         intent.putExtra(Intent.EXTRA_TEXT, msgText);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivityForResult(Intent.createChooser(intent, "发送给开发者"), 11);
+        startActivityForResult(Intent.createChooser(intent, "发送给开发者"), REQUEST_ID);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class Lib_BugReportActivity extends Activity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 11) {
+        if (requestCode == REQUEST_ID) {
             if (resultCode == RESULT_OK) {
                 restartActivity();
             }

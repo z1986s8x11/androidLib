@@ -6,5 +6,6 @@
     android:ellipsize="end"
     android:gravity="center_vertical"
     android:minHeight="25dp"
-    android:padding="10dp"
-    android:textIsSelectable="true" />
+    android:padding="10dp" />
+
+    <!--android:textIsSelectable="true"  设置之后 将不能被点击-->
