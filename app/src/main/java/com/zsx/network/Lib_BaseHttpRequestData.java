@@ -18,9 +18,6 @@ import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * @param <Parameter> loadData 参数类型
@@ -30,57 +27,37 @@ import java.util.concurrent.Future;
  * @description
  */
 public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
-    /**
-     * 默认所有请求可同时开2线程
-     */
-    private static ExecutorService HTTPEXCUTORS = Executors
-            .newFixedThreadPool(2);
+    private HttpWork pWorkThread;
     private Handler pHandler = new Handler(Looper.getMainLooper());
-    private int id;
-    private Result pBean;
-    private boolean b_isDownding = false;
-    private Lib_OnHttpLoadingListener<Result, Parameter> listener;
-    private Future<?> future;
+    private int pId;
+    private Lib_HttpResult<Result> pBean;
+    private boolean pIsDownding = false;
+    private Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> pListener;
+    private Object lock = new Object();
+    private Lib_HttpRequest<Parameter> pLastRequestData;
 
-    private RequestData<Parameter> lastRequestData;
-
-    public static class RequestData<Parameter> {
-        public Parameter[] lastObjectsParams;
-        public boolean isRefresh;
-
-        /**
-         * 外部不能创建
-         */
-        private RequestData() {
-        }
-
-        public void reset() {
-            lastObjectsParams = null;
-            isRefresh = false;
-        }
-    }
 
     /**
      * @return 最后一次调教的参数
      */
-    public Parameter[] _getLastObjectsParams() {
-        if (lastRequestData != null) {
-            return lastRequestData.lastObjectsParams;
+    public Lib_HttpRequest<Parameter> _getLastObjectsParams() {
+        if (pLastRequestData != null) {
+            return pLastRequestData;
         }
         return null;
     }
 
     public void _setOnLoadingListener(
-            Lib_OnHttpLoadingListener<Result, Parameter> listener) {
-        this.listener = listener;
+            Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+        this.pListener = listener;
     }
 
     public Lib_BaseHttpRequestData(int id) {
-        this.id = id;
+        this.pId = id;
     }
 
     public int _getRequestID() {
-        return id;
+        return pId;
     }
 
     public void _loadData(Parameter... objects) {
@@ -92,8 +69,8 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     }
 
     public void _refreshData() {
-        if (lastRequestData.lastObjectsParams != null) {
-            requestData(true, lastRequestData.lastObjectsParams);
+        if (pLastRequestData != null) {
+            requestData(pLastRequestData.isRefresh, pLastRequestData.lastObjectsParams);
         } else {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "requestData(Objects... objs) 从未主动加载过数据 不能直接刷新");
@@ -102,7 +79,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     }
 
     public boolean _isLoading() {
-        return b_isDownding;
+        return pIsDownding;
     }
 
     public boolean _hasCache() {
@@ -113,7 +90,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         pBean = null;
     }
 
-    public Result _getLastData() {
+    public Lib_HttpResult<Result> _getLastData() {
         return pBean;
     }
 
@@ -123,72 +100,81 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
      * @Deprecated
      */
     public void _cancelLoadData() {
-        if (b_isDownding) {
-            if (future != null) {
-                future.cancel(true);
+        if (pIsDownding) {
+            if (pWorkThread != null) {
+                pWorkThread.cancel();
             }
-            b_isDownding = false;
+            pIsDownding = false;
         }
-    }
-
-    public static void _shutdownAll() {
-        HTTPEXCUTORS.shutdownNow();
-        HTTPEXCUTORS = null;
-        HTTPEXCUTORS = Executors.newFixedThreadPool(2);
     }
 
     private synchronized void requestData(boolean isRefresh,
                                           Parameter... objects) {
-        RequestData<Parameter> request = new RequestData<Parameter>();
+        Lib_HttpRequest<Parameter> request = new Lib_HttpRequest<Parameter>();
         request.lastObjectsParams = objects;
         request.isRefresh = isRefresh;
-        if (b_isDownding) {
+        if (pIsDownding) {
             if (LogUtil.DEBUG) {
-                LogUtil.e(this, "id:" + id + "\t 正在下载" + id);
+                LogUtil.e(this, "id:" + pId + "\t 正在下载");
             }
             return;
         }
         if (Lib_NetworkStateReceiver._Current_NetWork_Status == Lib_Util_Network.NetType.NoneNet) {
             if (LogUtil.DEBUG) {
-                LogUtil.e(this, "网络链接异常" + id);
+                LogUtil.e(this, "网络连接异常" + pId);
             }
-            onRequestStart(id, request);
-            onRequestError(id, request, "网络链接异常");
+            onRequestStart(pListener);
+            onRequestError(null, false, "网络连接异常", pListener);
             return;
         }
-        b_isDownding = true;
-        Lib_HttpParams pParams = getHttpParams(id, objects);
-        future = HTTPEXCUTORS.submit(new HttpWork(pParams, request));
+        Lib_HttpParams pParams = getHttpParams(pId, objects);
+        onRequestStart(pListener);
+        pWorkThread = new HttpWork(pParams, pListener);
+        pWorkThread.start();
     }
 
-    private class HttpWork implements Runnable {
-        private Lib_HttpParams params;
-        private String error_message;
-        private RequestData<Parameter> requestData;
+    private class HttpWork extends Thread {
+        private Lib_HttpParams mParams;
+        private Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> mListener;
 
-        public HttpWork(Lib_HttpParams params,
-                        RequestData<Parameter> requestData) {
-            this.params = params;
-            this.requestData = requestData;
-            lastRequestData = requestData;
+        public HttpWork(Lib_HttpParams params, Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+            this.mParams = params;
+            this.mListener = listener;
         }
 
-        @Override
-        public void run() {
-            b_isDownding = true;
-            String str = null;
+        public void cancel() {
+            this.mListener = null;
+        }
+
+
+        private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
             pHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
-                    onRequestStart(id, requestData);
+                    onRequestError(result, isApiError, error_message, listener);
                 }
             });
-            error_message = null;
+        }
+
+        private void onPostComplete(final Lib_HttpResult<Result> bean, final Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+            pHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    onRequestComplete(bean, listener);
+                }
+            });
+        }
+
+        @Override
+        public void run() {
+            String returnStr = null;
+            String error_message = null;
             try {
-                str = __requestProtocol(id, params);
+                returnStr = __requestProtocol(pId, mParams);
                 if (LogUtil.DEBUG) {
-                    LogUtil.e("requestData result:", String.valueOf(str));
+                    LogUtil.e("requestData result:", String.valueOf(returnStr));
                 }
             } catch (Lib_Exception e) {
                 error_message = e._getErrorMessage();
@@ -217,23 +203,28 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
                 error_message = "发生未知异常";
                 LogUtil.e(e);
             }
-            if (str == null) {
-                pHandler.post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        onRequestError(id, requestData, error_message);
-                    }
-                });
-            } else {
-                final String returnStr = str;
-                pHandler.post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        onRequestComplete(id, requestData, pBean, returnStr);
-                    }
-                });
+            if (error_message != null) {
+                onPostError(null, false, error_message, mListener);
+                return;
+            }
+            boolean isError = false;
+            Lib_HttpResult<Result> bean = null;
+            try {
+                bean = parseStr(pId, returnStr, pBean);
+            } catch (Exception e) {
+                isError = true;
+                if (LogUtil.DEBUG) {
+                    LogUtil.e(e);
+                }
+                onPostError(bean, false, "解析异常", mListener);
+            }
+            if (!isError) {
+                if (bean.isSuccess()) {
+                    onPostComplete(bean, mListener);
+                } else {
+                    onPostError(bean, true, bean.getMessage(), mListener);
+                }
+                pBean = bean;
             }
         }
     }
@@ -276,20 +267,20 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
                 if (LogUtil.DEBUG) {
                     LogUtil.e("requestData params:", String.valueOf(getUrl));
                 }
-                str = Lib_HttpRequest._get(getUrl);
+                str = Lib_HttpRequestUtil._get(getUrl);
                 break;
             case Lib_HttpParams.POST:
                 if (LogUtil.DEBUG) {
                     LogUtil.e("requestData params:", String.valueOf(paramObject));
                 }
                 if (paramObject instanceof Map) {
-                    str = Lib_HttpRequest._post(params.getRequestUrl(id),
+                    str = Lib_HttpRequestUtil._post(params.getRequestUrl(id),
                             (Map<String, Object>) paramObject);
                 } else if (paramObject instanceof JSONObject) {
-                    str = Lib_HttpRequest._post(params.getRequestUrl(id),
+                    str = Lib_HttpRequestUtil._post(params.getRequestUrl(id),
                             (JSONObject) paramObject);
                 } else {
-                    str = Lib_HttpRequest._post(params.getRequestUrl(id),
+                    str = Lib_HttpRequestUtil._post(params.getRequestUrl(id),
                             String.valueOf(paramObject));
                 }
                 break;
@@ -300,72 +291,27 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     }
 
 
-    private void onRequestStart(int id, RequestData<Parameter> requestData) {
-        b_isDownding = true;
-        __onStart(id, requestData);
+    private void onRequestStart(Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+        pIsDownding = true;
+        __onStart(pId);
         if (listener != null) {
-            listener.onLoadStart(id, requestData);
+            listener.onLoadStart(pId);
         }
     }
 
-    private final void onRequestError(int id,
-                                      RequestData<Parameter> requestData, String error_message) {
-        b_isDownding = false;
-        __onError(id, requestData, null, false, error_message);
+    private final void onRequestError(Lib_HttpResult<Result> result, boolean isApiError, String error_message, Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+        pIsDownding = false;
+        __onError(pId, pLastRequestData, result, isApiError, error_message);
         if (listener != null) {
-            listener.onLoadError(id, this, requestData, null, false,
-                    error_message);
+            listener.onLoadError(pId, pLastRequestData, result, isApiError, error_message);
         }
     }
 
-    /**
-     * 检查获取的数据 是否是 服务器成功返回的数据
-     *
-     * @param bean 并且parseStr()成功解析
-     */
-    protected abstract boolean __isSucess(int id, Result bean);
-
-    /**
-     * 如果 __isSucess() 返回false 将会调用
-     *
-     * @return 返回服务器返回的错误信息
-     */
-    protected abstract String __getErrorMessage(int id, Result bean);
-
-    private final void onRequestComplete(int id,
-                                         RequestData<Parameter> requestData, Result source, String returnStr) {
-        b_isDownding = false;
-        boolean isError = false;
-        Result bean = null;
-        try {
-            bean = parseStr(id, returnStr, source);
-        } catch (Exception e) {
-            isError = true;
-            if (LogUtil.DEBUG) {
-                LogUtil.e(e);
-            }
-            __onError(id, requestData, bean, false, "解析发生异常");
-            if (listener != null) {
-                listener.onLoadError(id, this, requestData, bean, false,
-                        "解析发生异常");
-            }
-
-        }
-        if (!isError) {
-            if (__isSucess(id, bean)) {
-                __onComplete(id, requestData, bean);
-                if (listener != null) {
-                    listener.onLoadComplete(id, requestData, bean);
-                }
-            } else {
-                __onError(id, requestData, bean, true,
-                        __getErrorMessage(id, bean));
-                if (listener != null) {
-                    listener.onLoadError(id, this, requestData, bean, true,
-                            __getErrorMessage(id, bean));
-                }
-            }
-            pBean = bean;
+    private final void onRequestComplete(Lib_HttpResult<Result> bean, Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+        pIsDownding = false;
+        __onComplete(pId, pLastRequestData, bean);
+        if (listener != null) {
+            listener.onLoadComplete(pId, pLastRequestData, bean);
         }
     }
 
@@ -384,15 +330,15 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
      * @return 会在onComplete()中回调出去
      * @throws Exception
      */
-    protected abstract Result parseStr(int id, String currentDownloadText,
-                                       Result lastData) throws Exception;
+    protected abstract Lib_HttpResult<Result> parseStr(int id, String currentDownloadText,
+                                                       Lib_HttpResult<Result> lastData) throws Exception;
 
     /**
      * 开始下载
      *
      * @param id
      */
-    protected void __onStart(int id, RequestData<Parameter> requestData) {
+    protected void __onStart(int id) {
     }
 
     /**
@@ -406,11 +352,11 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
      * @param result        当前请求解析返回 如果false result ==null;
      * @param error_message 错误消息
      */
-    protected void __onError(int id, RequestData<Parameter> requestData,
-                             Result result, boolean isAPIError, String error_message) {
+    protected void __onError(int id, Lib_HttpRequest<Parameter> requestData,
+                             Lib_HttpResult<Result> result, boolean isAPIError, String error_message) {
     }
 
-    protected void __onComplete(int id, RequestData<Parameter> requestData,
-                                Result b) {
+    protected void __onComplete(int id, Lib_HttpRequest<Parameter> requestData,
+                                Lib_HttpResult<Result> b) {
     }
 }

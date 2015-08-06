@@ -2,7 +2,7 @@ package com.zsx.network;
 
 public class Lib_HttpResult<M> {
 	private boolean isSuccess;
-	private String errorMessage;
+	private String message;
 	private M data;
 	private int errorCode = -1;
 	private int totalCount = TOTAL_COUNT_DEFAULT;
@@ -33,11 +33,11 @@ public class Lib_HttpResult<M> {
 	}
 
 	public String getMessage() {
-		return errorMessage;
+		return message;
 	}
 
 	public void setMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+		this.message = errorMessage;
 	}
 
 	public M getData() {
