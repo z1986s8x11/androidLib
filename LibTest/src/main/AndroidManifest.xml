@@ -22,6 +22,7 @@
         <activity android:name=".ui.debug.ExceptionActivity" />
         <activity android:name=".ui.adapter.InsertAdapterActivity" />
         <activity android:name=".ui.download.DownloadActivity" />
+        <activity android:name=".ui.network.LoadDataActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>

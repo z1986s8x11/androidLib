@@ -17,6 +17,7 @@ import zsx.com.test.base._BaseAdapter;
 import zsx.com.test.ui.adapter.InsertAdapterActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
 import zsx.com.test.ui.download.DownloadActivity;
+import zsx.com.test.ui.network.LoadDataActivity;
 
 /**
  * Created by zhusx on 2015/8/5.
@@ -31,6 +32,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("InsertAdapter", InsertAdapterActivity.class));
         list.add(new Item("Debug", ExceptionActivity.class));
         list.add(new Item("Donwload", DownloadActivity.class));
+        list.add(new Item("loadData", LoadDataActivity.class));
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
             public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {

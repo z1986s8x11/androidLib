@@ -40,7 +40,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     /**
      * @return 最后一次调教的参数
      */
-    public Lib_HttpRequest<Parameter> _getLastObjectsParams() {
+    public Lib_HttpRequest<Parameter> _getRequestParams() {
         if (pLastRequestData != null) {
             return pLastRequestData;
         }
@@ -68,7 +68,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         requestData(true, objects);
     }
 
-    public void _refreshData() {
+    public void _reLoadData() {
         if (pLastRequestData != null) {
             requestData(pLastRequestData.isRefresh, pLastRequestData.lastObjectsParams);
         } else {
@@ -110,15 +110,17 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
 
     private synchronized void requestData(boolean isRefresh,
                                           Parameter... objects) {
-        Lib_HttpRequest<Parameter> request = new Lib_HttpRequest<Parameter>();
-        request.lastObjectsParams = objects;
-        request.isRefresh = isRefresh;
         if (pIsDownding) {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "id:" + pId + "\t 正在下载");
             }
             return;
         }
+        if (pLastRequestData == null) {
+            pLastRequestData = new Lib_HttpRequest<>();
+        }
+        pLastRequestData.lastObjectsParams = objects;
+        pLastRequestData.isRefresh = isRefresh;
         if (Lib_NetworkStateReceiver._Current_NetWork_Status == Lib_Util_Network.NetType.NoneNet) {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "网络连接异常" + pId);
