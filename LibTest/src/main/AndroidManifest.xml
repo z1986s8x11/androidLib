@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="zsx.com.test">
 
-    <uses-permission android:name="android.permission.write_external_storage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".TestApplication"
@@ -19,6 +21,9 @@
         <activity android:name="com.zsx.debug.Lib_BugReportActivity" />
         <activity android:name=".ui.debug.ExceptionActivity" />
         <activity android:name=".ui.adapter.InsertAdapterActivity" />
+        <activity android:name=".ui.download.DownloadActivity" />
+
+        <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>
 
 </manifest>

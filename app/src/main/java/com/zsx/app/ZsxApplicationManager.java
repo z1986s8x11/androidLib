@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import com.zsx.debug.Lib_UncaughtException;
 import com.zsx.debug.LogUtil;
 import com.zsx.manager.Lib_FileManager;
-import com.zsx.network.NetworkStateReceiver;
+import com.zsx.network.Lib_NetworkStateReceiver;
 
 
 /**
@@ -19,7 +19,7 @@ import com.zsx.network.NetworkStateReceiver;
 public class ZsxApplicationManager {
     private Application.ActivityLifecycleCallbacks activityCallbacks;
     private Application context;
-    private NetworkStateReceiver receiver;
+    private Lib_NetworkStateReceiver receiver;
     private boolean monitorNet;
     private boolean uncaughtException;
     private String fileManagerDir;
@@ -41,7 +41,7 @@ public class ZsxApplicationManager {
 
         if (monitorNet) {
             /*监听网络变化*/
-            receiver = new NetworkStateReceiver();
+            receiver = new Lib_NetworkStateReceiver();
             receiver.registerNetworkStateReceiver(context);
         }
 

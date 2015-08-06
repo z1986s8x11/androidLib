@@ -4,8 +4,8 @@ import android.os.Handler;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
-import com.zsx.network.NetworkState;
-import com.zsx.network.NetworkStateReceiver;
+import com.zsx.util.Lib_Util_Network;
+import com.zsx.network.Lib_NetworkStateReceiver;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -52,7 +52,7 @@ public class Lib_UpLoad {
             LogUtil.e(this, "上传文件不存在:" + uploadFile.getPath());
             return false;
         }
-        if (NetworkStateReceiver._Current_NetWork_Status == NetworkState.NetType.NoneNet) {
+        if (Lib_NetworkStateReceiver._Current_NetWork_Status == Lib_Util_Network.NetType.NoneNet) {
             return false;
         }
         if (!isUpload(uploadURL)) {

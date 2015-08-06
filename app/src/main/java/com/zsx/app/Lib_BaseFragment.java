@@ -14,6 +14,7 @@ import java.util.List;
 
 public abstract class Lib_BaseFragment extends Fragment {
     private Toast toast;
+    protected View mFragmentView;
 
     public void _showToast(String message) {
         if (TextUtils.isEmpty(message)) {
@@ -34,7 +35,6 @@ public abstract class Lib_BaseFragment extends Fragment {
         return displayMetrics.widthPixels;
     }
 
-    protected View mFragmentView;
 
     @Override
     public View onCreateView(LayoutInflater inflater,

@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
+import com.zsx.util.Lib_Util_Network;
 
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.ParseException;
@@ -147,7 +148,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
             }
             return;
         }
-        if (NetworkStateReceiver._Current_NetWork_Status == NetworkState.NetType.NoneNet) {
+        if (Lib_NetworkStateReceiver._Current_NetWork_Status == Lib_Util_Network.NetType.NoneNet) {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "网络链接异常" + id);
             }

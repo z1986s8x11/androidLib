@@ -1,11 +1,11 @@
-package com.zsx.network;
+package com.zsx.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-public class NetworkState {
+public class Lib_Util_Network {
     /**
      * 判断MOBILE网络是否可用
      *
