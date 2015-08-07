@@ -32,16 +32,19 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
             @Override
             public void onLoadStart(int id) {
                 LogUtil.e("onLoadStart", "onLoadStart");
+                mMessageTV.setText("onLoadStart");
             }
 
             @Override
             public void onLoadError(int id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> stringLib_httpResult, boolean isAPIError, String error_message) {
                 LogUtil.e("onLoadError", String.valueOf(isAPIError) + ":" + String.valueOf(error_message));
+                mMessageTV.setText("onLoadError:" + String.valueOf(error_message));
             }
 
             @Override
             public void onLoadComplete(int id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
                 LogUtil.e("onLoadComplete", String.valueOf(b.getData()));
+                mMessageTV.setText("onLoadComplete" + b.getData());
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.zsx.network;
+package com.zsx.util;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -7,7 +7,6 @@ import android.telephony.TelephonyManager;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
-import com.zsx.util.Lib_Util_System;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -64,7 +63,7 @@ import java.util.UUID;
  * @date 2013-12-23
  * @description post(); </br>get();
  */
-public final class Lib_HttpRequestUtil {
+public final class Lib_Util_HttpRequest {
     /**
      * 连接超时 (还未连接上服务器)
      */
@@ -197,7 +196,7 @@ public final class Lib_HttpRequestUtil {
         return _post(url, m);
     }
 
-    protected final static String _post(String url,
+    public final static String _post(String url,
                                         Map<String, Object> parameters) throws ConnectTimeoutException,
             SocketTimeoutException, ClientProtocolException, IOException,
             URISyntaxException, Lib_Exception {
@@ -263,7 +262,7 @@ public final class Lib_HttpRequestUtil {
             }
         } else {
             if (LogUtil.DEBUG) {
-                LogUtil.e(Lib_HttpRequestUtil.class, "http status Code :"
+                LogUtil.e(Lib_Util_HttpRequest.class, "http status Code :"
                         + response.getStatusLine().getStatusCode());
             }
             throw new Lib_Exception(response.getStatusLine().getStatusCode(),

@@ -21,7 +21,7 @@
             android:id="@+id/btn_insert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="设置插入数据" />
+            android:text="插入数据" />
 
         <Button
             android:id="@+id/btn_clearData"

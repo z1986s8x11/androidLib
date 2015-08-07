@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
+import com.zsx.util.Lib_Util_HttpRequest;
 import com.zsx.util.Lib_Util_Network;
 
 import org.apache.http.NoHttpResponseException;
@@ -235,7 +236,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     protected String __requestProtocol(int id, Lib_HttpParams params)
             throws ParseException, URISyntaxException, IOException,
             Lib_Exception {
-        String str;
+        String str = null;
         Object paramObject = params.getParams(id);
         switch (params.getRequestMethod()) {
             case Lib_HttpParams.GET:
@@ -269,21 +270,18 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
                 if (LogUtil.DEBUG) {
                     LogUtil.e("requestData params:", String.valueOf(getUrl));
                 }
-                str = Lib_HttpRequestUtil._get(getUrl);
+                str = Lib_Util_HttpRequest._get(getUrl);
                 break;
             case Lib_HttpParams.POST:
                 if (LogUtil.DEBUG) {
                     LogUtil.e("requestData params:", String.valueOf(paramObject));
                 }
                 if (paramObject instanceof Map) {
-                    str = Lib_HttpRequestUtil._post(params.getRequestUrl(id),
-                            (Map<String, Object>) paramObject);
+                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(id), (Map<String, Object>) paramObject);
                 } else if (paramObject instanceof JSONObject) {
-                    str = Lib_HttpRequestUtil._post(params.getRequestUrl(id),
-                            (JSONObject) paramObject);
+                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(id), (JSONObject) paramObject);
                 } else {
-                    str = Lib_HttpRequestUtil._post(params.getRequestUrl(id),
-                            String.valueOf(paramObject));
+                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(id), String.valueOf(paramObject));
                 }
                 break;
             default:
