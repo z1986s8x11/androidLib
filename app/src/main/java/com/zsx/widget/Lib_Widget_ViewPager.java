@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 
+ * 可禁止滑动的ViewPager
  * @author zsx
  * 
  */

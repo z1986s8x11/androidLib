@@ -40,7 +40,7 @@ public class Lib_Widget_KeywordsFlow extends FrameLayout implements OnGlobalLayo
 	public static final int IDX_TXT_LENGTH = 2;
 	public static final int IDX_DIS_Y = 3;
 
-	public static enum ANIMATION_TYPE {
+	public  enum _ANIMATION_TYPE {
 		/** 由外至内的动画。 */
 		ANIMATION_IN,
 		/** 由内至外的动画。 */
@@ -130,7 +130,7 @@ public class Lib_Widget_KeywordsFlow extends FrameLayout implements OnGlobalLayo
 	 *         1.时间上不允许，受lastStartAnimationTime的制约；<br/>
 	 *         2.未获取到width和height的值。<br/>
 	 */
-	public boolean _showKeywords(List<String> list, ANIMATION_TYPE animType) {
+	public boolean _showKeywords(List<String> list, _ANIMATION_TYPE animType) {
 		vecKeywords.clear();
 		for (int i = 0; i < list.size(); i++) {
 			vecKeywords.add(list.get(i));

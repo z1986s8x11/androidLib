@@ -274,29 +274,29 @@ public class Lib_ViewPager_TitlePageIndicator extends View implements PageIndica
 		invalidate();
 	}
 
-	public int _getSelectedColor() {
+	public int _getTextSelectedColor() {
 		return mColorSelected;
 	}
 
-	public void _setSelectedColor(int selectedColor) {
+	public void _setTextSelectedColor(int selectedColor) {
 		mColorSelected = selectedColor;
 		invalidate();
 	}
 
-	public boolean _isSelectedBold() {
+	public boolean _isTextSelectedBold() {
 		return mBoldText;
 	}
 
-	public void _setSelectedBold(boolean selectedBold) {
+	public void _setTextSelectedBold(boolean selectedBold) {
 		mBoldText = selectedBold;
 		invalidate();
 	}
 
-	public int _getTextColor() {
+	public int _getTextUnSelectColor() {
 		return mColorText;
 	}
 
-	public void _setTextColor(int textColor) {
+	public void _setTextUnSelectColor(int textColor) {
 		mPaintText.setColor(textColor);
 		mColorText = textColor;
 		invalidate();
