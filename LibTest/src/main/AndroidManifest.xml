@@ -27,6 +27,7 @@
         <activity android:name=".ui.widget.ViewPagerIndicatorActivity" />
         <activity android:name=".ui.widget.KeywordsFlowActivity" />
         <activity android:name=".ui.widget.AutoListViewActivity" />
+        <activity android:name=".ui.widget.DragListViewActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>

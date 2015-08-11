@@ -162,12 +162,20 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         return false;
     }
 
+    public boolean _removeItem(T m) {
+        return p_list.remove(m);
+    }
+
     public T _removeItemToUpdate(int position) {
         T bean = p_list.remove(position);
         if (bean != null) {
             notifyDataSetChanged();
         }
         return bean;
+    }
+
+    public T _removeItem(int position) {
+        return p_list.remove(position);
     }
 
     public abstract View getView(LayoutInflater inflater, T bean,
