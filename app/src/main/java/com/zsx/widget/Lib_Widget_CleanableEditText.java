@@ -76,9 +76,21 @@ public class Lib_Widget_CleanableEditText extends EditText {
 
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (!enabled) {
+            setClearDrawableVisible(false);
+        }
+    }
+
     private class TextWatcherImpl implements TextWatcher {
         @Override
         public void afterTextChanged(Editable s) {
+            if (!isEnabled()) {
+                setClearDrawableVisible(false);
+                return;
+            }
             if (isHasFocus) {
                 boolean isVisible = !TextUtils.isEmpty(getText().toString().trim());
                 setClearDrawableVisible(isVisible);
