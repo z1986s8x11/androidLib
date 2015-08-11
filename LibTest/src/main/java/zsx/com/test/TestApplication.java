@@ -9,7 +9,6 @@ import com.zsx.debug.LogUtil;
  * Created by zhusx on 2015/8/5.
  */
 public class TestApplication extends Application {
-    ZsxApplicationManager zsx;
 
     @Override
     public void onCreate() {
@@ -18,8 +17,7 @@ public class TestApplication extends Application {
         if (LogUtil.DEBUG) {
             LogUtil.e(this, "onCreate");
         }
-        zsx = new ZsxApplicationManager(this).setMonitorNet(true).setFileManagerDir("Lib").setUncaughtException(true);
-        zsx.init();
+        ZsxApplicationManager.builder(this).setMonitorNet(true).setFileManagerDir("Lib").setUncaughtException(true).build();
     }
 
     @Override
@@ -28,7 +26,6 @@ public class TestApplication extends Application {
         if (LogUtil.DEBUG) {
             LogUtil.e(this, "onTerminate");
         }
-        zsx.onTerminate();
     }
 
     @Override

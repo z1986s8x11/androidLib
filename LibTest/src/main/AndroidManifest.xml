@@ -26,6 +26,7 @@
         <activity android:name=".ui.widget.SlidingMenuActivity" />
         <activity android:name=".ui.widget.ViewPagerIndicatorActivity" />
         <activity android:name=".ui.widget.KeywordsFlowActivity" />
+        <activity android:name=".ui.widget.AutoListViewActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>

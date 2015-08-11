@@ -18,6 +18,7 @@ import zsx.com.test.ui.adapter.InsertAdapterActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
 import zsx.com.test.ui.download.DownloadActivity;
 import zsx.com.test.ui.network.LoadDataActivity;
+import zsx.com.test.ui.widget.AutoListViewActivity;
 import zsx.com.test.ui.widget.KeywordsFlowActivity;
 import zsx.com.test.ui.widget.SlidingMenuActivity;
 import zsx.com.test.ui.widget.ViewPagerIndicatorActivity;
@@ -39,6 +40,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("slidingMenu", SlidingMenuActivity.class));
         list.add(new Item("viewPagerIndicator", ViewPagerIndicatorActivity.class));
         list.add(new Item("keywordsFlow", KeywordsFlowActivity.class));
+        list.add(new Item("autoListView", AutoListViewActivity.class));
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
             public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {
