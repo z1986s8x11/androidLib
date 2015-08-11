@@ -11,13 +11,15 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.zsx.debug.LogUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Adapter 基类
- *
- *
+ * <p/>
+ * <p/>
  * Created by zhusx on 2015/7/31.
  */
 public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
@@ -93,21 +95,33 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
      * 添加项
      */
     public synchronized void _addItemToUpdate(T bean) {
-        if (bean != null) {
-            p_list.add(bean);
+        if (p_list.add(bean)) {
             notifyDataSetChanged();
+        } else {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(this, "_addItemToUpdate 失败!");
+            }
         }
+    }
+
+    public synchronized void _addItemToUpdate(int position, T bean) {
+        if (position < 0 || position > p_list.size()) {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(this, "_addItemToUpdate 失败! 当前List.size():+" + p_list.size() + ";position:" + position);
+            }
+            return;
+        }
+        p_list.add(position, bean);
+        notifyDataSetChanged();
     }
 
     /**
      * 添加项
      */
     public synchronized void _addItemToUpdate(List<T> bean) {
-        if (bean != null) {
-            if (bean.size() > 0) {
-                p_list.addAll(bean);
-                notifyDataSetChanged();
-            }
+        if (bean.size() > 0) {
+            p_list.addAll(bean);
+            notifyDataSetChanged();
         }
     }
 
@@ -141,11 +155,11 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
 
 
     public boolean _removeItemToUpdate(T m) {
-        boolean isSuccess = p_list.remove(m);
-        if (isSuccess) {
+        if (p_list.remove(m)) {
             notifyDataSetChanged();
+            return true;
         }
-        return isSuccess;
+        return false;
     }
 
     public T _removeItemToUpdate(int position) {
