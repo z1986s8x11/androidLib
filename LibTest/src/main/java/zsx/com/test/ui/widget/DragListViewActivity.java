@@ -45,7 +45,7 @@ public class DragListViewActivity extends _BaseActivity {
                 public void drop(int from, int to) {//from to 分别表示 被拖动控件原位置 和目标位置
                     if (from != to) {
                         String item = (String) adapter.getItem(from);//得到listview的适配器
-                        adapter._removeItemToUpdate(from);//在适配器中”原位置“的数据。
+                        adapter._removeItem(from);//在适配器中”原位置“的数据。
                         adapter._addItemToUpdate(to, item);//在目标位置中插入被拖动的控件。
                     }
                 }
