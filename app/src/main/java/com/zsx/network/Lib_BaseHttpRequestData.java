@@ -27,13 +27,13 @@ import java.util.Map;
  * @date 2014-5-9
  * @description
  */
-public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
+public abstract class Lib_BaseHttpRequestData<Id,Result, Parameter> {
     private HttpWork pWorkThread;
     private Handler pHandler = new Handler(Looper.getMainLooper());
-    private int pId;
+    private Id pId;
     private Lib_HttpResult<Result> pBean;
     private boolean pIsDownding = false;
-    private Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> pListener;
+    private Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> pListener;
     private Object lock = new Object();
     private Lib_HttpRequest<Parameter> pLastRequestData;
 
@@ -49,15 +49,15 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     }
 
     public void _setOnLoadingListener(
-            Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+            Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> listener) {
         this.pListener = listener;
     }
 
-    public Lib_BaseHttpRequestData(int id) {
+    public Lib_BaseHttpRequestData(Id id) {
         this.pId = id;
     }
 
-    public int _getRequestID() {
+    public Id _getRequestID() {
         return pId;
     }
 
@@ -138,9 +138,9 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
 
     private class HttpWork extends Thread {
         private Lib_HttpParams mParams;
-        private Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> mListener;
+        private Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> mListener;
 
-        public HttpWork(Lib_HttpParams params, Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+        public HttpWork(Lib_HttpParams params, Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> listener) {
             this.mParams = params;
             this.mListener = listener;
         }
@@ -150,7 +150,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         }
 
 
-        private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+        private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> listener) {
             pHandler.post(new Runnable() {
 
                 @Override
@@ -160,7 +160,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
             });
         }
 
-        private void onPostComplete(final Lib_HttpResult<Result> bean, final Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+        private void onPostComplete(final Lib_HttpResult<Result> bean, final Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> listener) {
             pHandler.post(new Runnable() {
 
                 @Override
@@ -233,16 +233,16 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     }
 
     @SuppressWarnings("unchecked")
-    protected String __requestProtocol(int id, Lib_HttpParams params)
+    protected String __requestProtocol(Id id, Lib_HttpParams params)
             throws ParseException, URISyntaxException, IOException,
             Lib_Exception {
         String str = null;
-        Object paramObject = params.getParams(id);
+        Object paramObject = params.getParams();
         switch (params.getRequestMethod()) {
             case Lib_HttpParams.GET:
                 String getUrl = null;
                 if (paramObject == null) {
-                    getUrl = params.getRequestUrl(id);
+                    getUrl = params.getRequestUrl();
                 } else {
                     String getParam = null;
                     if (paramObject instanceof Map) {
@@ -265,7 +265,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
                     } else {
                         getParam = String.valueOf(paramObject);
                     }
-                    getUrl = params.getRequestUrl(id) + getParam;
+                    getUrl = params.getRequestUrl() + getParam;
                 }
                 if (LogUtil.DEBUG) {
                     LogUtil.e("requestData params:", String.valueOf(getUrl));
@@ -277,11 +277,11 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
                     LogUtil.e("requestData params:", String.valueOf(paramObject));
                 }
                 if (paramObject instanceof Map) {
-                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(id), (Map<String, Object>) paramObject);
+                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(), (Map<String, Object>) paramObject);
                 } else if (paramObject instanceof JSONObject) {
-                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(id), (JSONObject) paramObject);
+                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(), (JSONObject) paramObject);
                 } else {
-                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(id), String.valueOf(paramObject));
+                    str = Lib_Util_HttpRequest._post(params.getRequestUrl(), String.valueOf(paramObject));
                 }
                 break;
             default:
@@ -291,7 +291,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
     }
 
 
-    private void onRequestStart(Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+    private void onRequestStart(Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> listener) {
         pIsDownding = true;
         __onStart(pId);
         if (listener != null) {
@@ -299,7 +299,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         }
     }
 
-    private final void onRequestError(Lib_HttpResult<Result> result, boolean isApiError, String error_message, Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+    private final void onRequestError(Lib_HttpResult<Result> result, boolean isApiError, String error_message, Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> listener) {
         pIsDownding = false;
         __onError(pId, pLastRequestData, result, isApiError, error_message);
         if (listener != null) {
@@ -307,7 +307,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
         }
     }
 
-    private final void onRequestComplete(Lib_HttpResult<Result> bean, Lib_OnHttpLoadingListener<Lib_HttpResult<Result>, Parameter> listener) {
+    private final void onRequestComplete(Lib_HttpResult<Result> bean, Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> listener) {
         pIsDownding = false;
         __onComplete(pId, pLastRequestData, bean);
         if (listener != null) {
@@ -321,7 +321,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
      * @param objects
      * @return
      */
-    protected abstract Lib_HttpParams getHttpParams(int id,
+    protected abstract Lib_HttpParams getHttpParams(Id id,
                                                     Parameter... objects);
 
     /**
@@ -330,7 +330,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
      * @return 会在onComplete()中回调出去
      * @throws Exception
      */
-    protected abstract Lib_HttpResult<Result> parseStr(int id, String currentDownloadText,
+    protected abstract Lib_HttpResult<Result> parseStr(Id id, String currentDownloadText,
                                                        Lib_HttpResult<Result> lastData) throws Exception;
 
     /**
@@ -338,7 +338,7 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
      *
      * @param id
      */
-    protected void __onStart(int id) {
+    protected void __onStart(Id id) {
     }
 
     /**
@@ -352,11 +352,11 @@ public abstract class Lib_BaseHttpRequestData<Result, Parameter> {
      * @param result        当前请求解析返回 如果false result ==null;
      * @param error_message 错误消息
      */
-    protected void __onError(int id, Lib_HttpRequest<Parameter> requestData,
+    protected void __onError(Id id, Lib_HttpRequest<Parameter> requestData,
                              Lib_HttpResult<Result> result, boolean isAPIError, String error_message) {
     }
 
-    protected void __onComplete(int id, Lib_HttpRequest<Parameter> requestData,
+    protected void __onComplete(Id id, Lib_HttpRequest<Parameter> requestData,
                                 Lib_HttpResult<Result> b) {
     }
 }

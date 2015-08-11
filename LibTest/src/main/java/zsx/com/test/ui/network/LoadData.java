@@ -14,13 +14,17 @@ import java.net.URISyntaxException;
 /**
  * Created by zhusx on 2015/8/6.
  */
-public class LoadData extends Lib_BaseHttpRequestData<String, String> {
-    public LoadData(int id) {
+public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, String> {
+    public static enum Api {
+        A, B, C;
+    }
+
+    public LoadData(LoadData.Api id) {
         super(id);
     }
 
     @Override
-    protected Lib_HttpParams getHttpParams(int id, String... objects) {
+    protected Lib_HttpParams getHttpParams(LoadData.Api id, String... objects) {
         Lib_HttpParams params = new Lib_HttpParams();
         params.setRequestMethod(Lib_HttpParams.POST);
         params.setApiUrl("http://www.baidu.com");
@@ -28,7 +32,7 @@ public class LoadData extends Lib_BaseHttpRequestData<String, String> {
     }
 
     @Override
-    protected Lib_HttpResult<String> parseStr(int id, String currentDownloadText, Lib_HttpResult<String> lastData) throws Exception {
+    protected Lib_HttpResult<String> parseStr(LoadData.Api id, String currentDownloadText, Lib_HttpResult<String> lastData) throws Exception {
         Lib_HttpResult<String> result = new Lib_HttpResult<String>();
         result.setMessage(_getRequestParams().isRefresh ? "成功" : "失败");
         result.setSuccess(_getRequestParams().isRefresh);
@@ -37,7 +41,7 @@ public class LoadData extends Lib_BaseHttpRequestData<String, String> {
     }
 
     @Override
-    protected String __requestProtocol(int id, Lib_HttpParams params) throws ParseException, URISyntaxException, IOException, Lib_Exception {
+    protected String __requestProtocol(LoadData.Api id, Lib_HttpParams params) throws ParseException, URISyntaxException, IOException, Lib_Exception {
         int i = 0;
         while (i < 1) {
             i++;

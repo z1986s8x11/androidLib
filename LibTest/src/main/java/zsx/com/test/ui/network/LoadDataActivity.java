@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.zsx.debug.LogUtil;
 import com.zsx.network.Lib_HttpRequest;
 import com.zsx.network.Lib_HttpResult;
-import com.zsx.network.Lib_OnHttpLoadingListener;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -27,22 +26,22 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
         findViewById(R.id.btn_load).setOnClickListener(this);
         findViewById(R.id.btn_loadError).setOnClickListener(this);
         mMessageTV = (TextView) findViewById(R.id.tv_message);
-        loadData = new LoadData(11);
-        loadData._setOnLoadingListener(new Lib_OnHttpLoadingListener<Lib_HttpResult<String>, String>() {
+        loadData = new LoadData(LoadData.Api.B);
+        loadData._setOnLoadingListener(new OnSimpleLoadListener<String>() {
             @Override
-            public void onLoadStart(int id) {
+            public void onLoadStart(LoadData.Api id) {
                 LogUtil.e("onLoadStart", "onLoadStart");
                 mMessageTV.setText("onLoadStart");
             }
 
             @Override
-            public void onLoadError(int id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> stringLib_httpResult, boolean isAPIError, String error_message) {
+            public void onLoadError(LoadData.Api id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> stringLib_httpResult, boolean isAPIError, String error_message) {
                 LogUtil.e("onLoadError", String.valueOf(isAPIError) + ":" + String.valueOf(error_message));
                 mMessageTV.setText("onLoadError:" + String.valueOf(error_message));
             }
 
             @Override
-            public void onLoadComplete(int id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
+            public void onLoadComplete(LoadData.Api id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
                 LogUtil.e("onLoadComplete", String.valueOf(b.getData()));
                 mMessageTV.setText("onLoadComplete" + b.getData());
             }

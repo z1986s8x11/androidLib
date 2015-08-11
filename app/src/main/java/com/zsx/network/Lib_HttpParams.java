@@ -42,7 +42,7 @@ public class Lib_HttpParams {
     /**
      * @return 请求URL
      */
-    public final String getRequestUrl(int id) {
+    public final String getRequestUrl() {
         return apiUrl;
     }
 
@@ -67,7 +67,7 @@ public class Lib_HttpParams {
     /**
      * @return 拿到请求参数
      */
-    protected Object getParams(int id) {
+    protected Object getParams() {
         return param;
     }
 

@@ -1,13 +1,13 @@
 package com.zsx.network;
 
 
-public interface Lib_OnHttpLoadingListener<Result, Parameter> {
+public interface Lib_OnHttpLoadingListener<Id,Result, Parameter> {
     /**
      * 开始下载
      *
      * @param id
      */
-    void onLoadStart(int id);
+    void onLoadStart(Id id);
 
     /**
      * 请求发生错误
@@ -19,11 +19,11 @@ public interface Lib_OnHttpLoadingListener<Result, Parameter> {
      *                      </ul>
      * @param error_message 错误消息
      */
-    void onLoadError(int id, Lib_HttpRequest<Parameter> requestData, Result result, boolean isAPIError, String error_message);
+    void onLoadError(Id id, Lib_HttpRequest<Parameter> requestData, Result result, boolean isAPIError, String error_message);
 
     /**
      * @param id
      * @param b
      */
-    void onLoadComplete(int id, Lib_HttpRequest<Parameter> requestData, Result b);
+    void onLoadComplete(Id id, Lib_HttpRequest<Parameter> requestData, Result b);
 }
