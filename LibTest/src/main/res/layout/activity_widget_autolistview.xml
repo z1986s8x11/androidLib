@@ -6,10 +6,8 @@
 
     <include layout="@layout/include_activity_title" />
 
-    <LinearLayout
+    <com.zsx.widget.Lib_Widget_ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>
