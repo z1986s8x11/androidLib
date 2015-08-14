@@ -23,7 +23,40 @@ public class SlidingMenuActivity extends _BaseFragmentActivity implements View.O
         mSlidingMenu.setBehindWidth(400);
         findViewById(R.id.btn_toggle).setOnClickListener(this);
 
-
+//        SlidingMenu 常用的属性设置：
+//// 设置侧边, 必须为 LEFT(左边)，RIGHT(右边)，LEFT_RIGHT(左右两边)三者之一 public void setMode(int mode)
+//// 设置触摸方式，必须为 TOUCHMODE_FULLSCREEN(全屏可触摸)，TOUCHMODE_MARGIN(边缘可触摸)，默认 48dp, TOUCHMODE_NONE(不可触摸)三者之一
+//        public void setTouchModeAbove(int i)
+//// 根据资源文件 ID 设置阴影部分的 width
+//        public void setShadowWidthRes(int resId)
+//// 根据资源文件 ID 设置阴影部分的效果
+//        public void setShadowDrawable(int resId)
+//// 根据资源文件 ID 设置第二个侧边栏阴影部分的效果
+//        public void setSecondaryShadowDrawable(int resId)
+//// 根据资源文件 ID 设置主界面距离屏幕的偏移量
+//        public void setBehindOffsetRes(int resID)
+//// 设置 fade in 和 fade out 效果的值
+//        public void setFadeDegree(float f)
+//// 设置滑动比例的值，范围为 0-1 之间
+//        public void setBehindScrollScale(float f)
+//// 根据资源文件 ID 设置侧边栏布局
+//        public void setMenu(int res)
+//// 根据 View 设置侧边栏布局
+//        public void setMenu(View v)
+//// 根据资源文件 ID 设置第二个侧边栏布局
+//        public void setSecondaryMenu(int res)
+//// 根据 View 设置第二个侧边栏布局
+//        public void setSecondaryMenu(View v)
+//// 打开菜单
+//        public void showMenu()
+//// 打开第二个菜单
+//        public void showSecondaryMenu()
+//// SlidingMenu 的开关
+//        public void toggle()
+//// 检查侧边栏是否打开
+//        public boolean isMenuShowing()
+//// 检查第二个侧边栏是否打开
+//        public boolean isSecondaryMenuShowing()
 //        mSlidingMenu.setMode(SlidingMenu.LEFT);//设置左滑菜单
 //        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//设置滑动的屏幕范围，该设置为全屏区域都可以滑动
 //        mSlidingMenu.setShadowDrawable(R.drawable.shadow);//设置阴影图片
