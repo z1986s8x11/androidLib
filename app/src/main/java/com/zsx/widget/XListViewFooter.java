@@ -11,9 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zsx.R;
-import com.zsx.itf.Lib_AutoLoadMoreListener;
 
-public class XListViewFooter extends LinearLayout implements Lib_AutoLoadMoreListener {
+public class XListViewFooter extends LinearLayout  {
 	private final ProgressBar loadingPB;
 	private TextView loadMoreTV;
 
