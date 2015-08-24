@@ -6,7 +6,7 @@
 
     <include layout="@layout/include_activity_title" />
 
-    <zsx.com.test.ui.widget.DragSortListView
+    <com.zsx.widget.drag.DragSortListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
