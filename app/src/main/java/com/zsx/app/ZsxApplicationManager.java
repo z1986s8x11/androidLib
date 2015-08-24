@@ -67,7 +67,7 @@ public class ZsxApplicationManager {
             return this;
         }
 
-        public void init() {
+        private void init() {
             if (fileManagerDir != null) {
                 if (!TextUtils.isEmpty(fileManagerDir.trim())) {
                     /* 初始化文件系统 (创建目录) */
