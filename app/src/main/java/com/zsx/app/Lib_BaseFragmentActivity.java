@@ -7,8 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -171,7 +169,11 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
     public final void _setDoubleBackExit(boolean isDoubleBack) {
         this.isDoubleBack = isDoubleBack;
     }
-
+    private String mToastMessage = "再次点击退出";
+    public final void _setDoubleBackExit(boolean isDoubleBack, String toastMessage) {
+        this.isDoubleBack = isDoubleBack;
+        this.mToastMessage = toastMessage;
+    }
     /**
      * 拿到屏幕的宽度
      */
@@ -179,26 +181,38 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
-
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public void onBackPressed() {
         if (!isDoubleBack) {
-            return super.onKeyDown(keyCode, event);
+            super.onBackPressed();
+            return;
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Toast toast = Toast
-                        .makeText(this, "再次点击退出", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                exitTime = System.currentTimeMillis();
-            } else {
-                _exitSystem();
-            }
-            return true;
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            _showToast(mToastMessage);
+            exitTime = System.currentTimeMillis();
+        } else {
+            _exitSystem();
         }
-        return super.onKeyDown(keyCode, event);
     }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (!isDoubleBack) {
+//            return super.onKeyDown(keyCode, event);
+//        }
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//            if ((System.currentTimeMillis() - exitTime) > 2000) {
+//                Toast toast = Toast
+//                        .makeText(this, "再次点击退出", Toast.LENGTH_SHORT);
+//                toast.setGravity(Gravity.CENTER, 0, 0);
+//                toast.show();
+//                exitTime = System.currentTimeMillis();
+//            } else {
+//                _exitSystem();
+//            }
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
 
     public void _addFragment(int id, Fragment from, Fragment to, String tag,
