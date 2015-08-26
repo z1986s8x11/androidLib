@@ -357,7 +357,7 @@ public class Lib_Util_File {
 			throw new IllegalArgumentException("sdFile 不能写");
 		}
 		if (sdFile.exists()) {
-			sdFile.delete();
+			return;
 		}
 		InputStream ins = null;
 		FileOutputStream out = null;
