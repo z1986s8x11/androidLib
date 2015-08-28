@@ -34,9 +34,7 @@ public abstract class Lib_BaseHttpRequestData<Id,Result, Parameter> {
     private Lib_HttpResult<Result> pBean;
     private boolean pIsDownding = false;
     private Lib_OnHttpLoadingListener<Id,Lib_HttpResult<Result>, Parameter> pListener;
-    private Object lock = new Object();
     private Lib_HttpRequest<Parameter> pLastRequestData;
-
 
     /**
      * @return 最后一次调教的参数

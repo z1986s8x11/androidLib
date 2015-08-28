@@ -25,7 +25,6 @@ public class Lib_HttpParams {
     public Lib_HttpParams() {
     }
 
-
     public Lib_HttpParams(String url, String method, JSONObject param) {
         this.apiUrl = url;
         this.mothod = method;

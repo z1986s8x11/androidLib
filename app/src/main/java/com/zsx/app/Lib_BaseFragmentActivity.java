@@ -13,18 +13,20 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.zsx.itf.Lib_OnLifecycleListener;
+import com.zsx.itf.Lib_LifeCycle;
+import com.zsx.itf.Lib_OnCancelListener;
+import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Lib_BaseFragmentActivity extends FragmentActivity {
+public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_LifeCycle {
     public static final String _EXTRA_Serializable = Lib_BaseActivity._EXTRA_Serializable;
     public static final String _EXTRA_String = Lib_BaseActivity._EXTRA_String;
     public static final String _EXTRA_Integer = Lib_BaseActivity._EXTRA_Integer;
     public static final String _EXTRA_Boolean = Lib_BaseActivity._EXTRA_Boolean;
-
+    protected String mToastMessage = "再次点击退出";
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -45,9 +47,10 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
      */
     private boolean isClickNoEditTextCloseInput = false;
     /**
-     * Activity生命周期回调
+     * 基于Activity生命周期回调
      */
-    private Set<Lib_OnLifecycleListener> listeners = new HashSet<Lib_OnLifecycleListener>();
+    private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
+    private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
 
     public void _showToast(String message) {
         if (TextUtils.isEmpty(message)) {
@@ -62,6 +65,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
 
     /**
      * 设置 是非在顶层处理 点击非EditText 隐藏键盘
+     *
      * @param isClickNoEditTextCloseInput
      */
     public void _setClickNoEditTextCloseInput(boolean isClickNoEditTextCloseInput) {
@@ -109,48 +113,58 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
         Lib_SystemExitManager.addActivity(this);
     }
 
-
-    public void _addOnLifeCycleListener(Lib_OnLifecycleListener listener) {
-        listeners.add(listener);
+    @Override
+    public void _addOnCancelListener(Lib_OnCancelListener listener) {
+        cancelListener.add(listener);
+    }
+    @Override
+    public void _removeOnCancelListener(Lib_OnCancelListener listener) {
+        cancelListener.remove(listener);
     }
 
-    public void _removeOnLifeCycleListener(Lib_OnLifecycleListener listener) {
-        listeners.remove(listener);
+    @Override
+    public void _addOnCycleListener(Lib_OnCycleListener listener) {
+        cycleListener.add(listener);
+    }
+
+    @Override
+    public void _removeOnCycleListener(Lib_OnCycleListener listener) {
+        cycleListener.remove(listener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityResume();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onResume();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityPause();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onPause();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityDestroy();
+        for (Lib_OnCancelListener l : cancelListener) {
+            l.onCancel();
         }
-        listeners.clear();
+        cancelListener.clear();
         Lib_SystemExitManager.removeActivity(this);
     }
 
     @Override
     public void finish() {
         super.finish();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityDestroy();
+        for (Lib_OnCancelListener l : cancelListener) {
+            l.onCancel();
         }
-        listeners.clear();
+        cancelListener.clear();
         Lib_SystemExitManager.removeActivity(this);
     }
 
@@ -169,11 +183,12 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
     public final void _setDoubleBackExit(boolean isDoubleBack) {
         this.isDoubleBack = isDoubleBack;
     }
-    private String mToastMessage = "再次点击退出";
+
     public final void _setDoubleBackExit(boolean isDoubleBack, String toastMessage) {
         this.isDoubleBack = isDoubleBack;
         this.mToastMessage = toastMessage;
     }
+
     /**
      * 拿到屏幕的宽度
      */
@@ -181,6 +196,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
+
     @Override
     public void onBackPressed() {
         if (!isDoubleBack) {

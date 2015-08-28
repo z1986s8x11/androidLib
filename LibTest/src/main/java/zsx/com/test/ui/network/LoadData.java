@@ -2,6 +2,8 @@ package zsx.com.test.ui.network;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
+import com.zsx.itf.Lib_LifeCycle;
+import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.network.Lib_BaseHttpRequestData;
 import com.zsx.network.Lib_HttpParams;
 import com.zsx.network.Lib_HttpResult;
@@ -15,12 +17,18 @@ import java.net.URISyntaxException;
  * Created by zhusx on 2015/8/6.
  */
 public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, String> {
-    public static enum Api {
+    public enum Api {
         A, B, C;
     }
 
-    public LoadData(LoadData.Api id) {
+    public LoadData(LoadData.Api id, Lib_LifeCycle lifeCycle) {
         super(id);
+        lifeCycle._addOnCancelListener(new Lib_OnCancelListener() {
+            @Override
+            public void onCancel() {
+                _cancelLoadData();
+            }
+        });
     }
 
     @Override

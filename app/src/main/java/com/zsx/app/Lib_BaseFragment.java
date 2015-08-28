@@ -2,6 +2,7 @@ package com.zsx.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -10,11 +11,67 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.List;
+import com.zsx.itf.Lib_LifeCycle;
+import com.zsx.itf.Lib_OnCancelListener;
+import com.zsx.itf.Lib_OnCycleListener;
+import com.zsx.manager.Lib_SystemExitManager;
 
-public abstract class Lib_BaseFragment extends Fragment {
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle {
     private Toast toast;
-    protected View mFragmentView;
+    /**
+     * 基于Activity生命周期回调
+     */
+    private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
+    private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
+
+    @Override
+    public void _addOnCancelListener(Lib_OnCancelListener listener) {
+        cancelListener.add(listener);
+    }
+
+    @Override
+    public void _removeOnCancelListener(Lib_OnCancelListener listener) {
+        cancelListener.remove(listener);
+    }
+
+    @Override
+    public void _addOnCycleListener(Lib_OnCycleListener listener) {
+        cycleListener.add(listener);
+    }
+
+    @Override
+    public void _removeOnCycleListener(Lib_OnCycleListener listener) {
+        cycleListener.remove(listener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onPause();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        for (Lib_OnCancelListener l : cancelListener) {
+            l.onCancel();
+        }
+        cancelListener.clear();
+    }
 
     public void _showToast(String message) {
         if (TextUtils.isEmpty(message)) {
@@ -35,25 +92,16 @@ public abstract class Lib_BaseFragment extends Fragment {
         return displayMetrics.widthPixels;
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        if (mFragmentView != null) {
+    protected final void _removeParentView(View view) {
+        if (view != null) {
             // 缓存的rootView需要判断是否已经被加过parent，
             // 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-            ViewGroup parent = (ViewGroup) mFragmentView.getParent();
+            ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null) {
-                parent.removeView(mFragmentView);
+                parent.removeView(view);
             }
-            return mFragmentView;
         }
-        return mFragmentView = __onCreateView(inflater, container,
-                savedInstanceState);
     }
-
-    protected abstract View __onCreateView(LayoutInflater inflater,
-                                           ViewGroup container, Bundle savedInstanceState);
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

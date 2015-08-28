@@ -199,14 +199,12 @@ public final class Lib_FileManager {
                 .getDefaultSharedPreferences(context).getBoolean(
                         "lib_assets_to_data_first", false);
         if (!isFirst) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
-                    .putBoolean("lib_assets_to_data_first", true).commit();
-            String databasepath = "/data/data/%s/databases";
+            String databasePath = "/data/data/%s/databases";
             InputStream input = null;
             FileOutputStream out = null;
             try {
                 input = context.getAssets().open(assetsName);
-                File f = new File(String.format(databasepath,
+                File f = new File(String.format(databasePath,
                         context.getApplicationInfo().packageName));
                 if (!f.exists()) {
                     if (!f.mkdir()) {
@@ -216,7 +214,7 @@ public final class Lib_FileManager {
                         }
                     }
                 }
-                File targetFile = new File(String.format(databasepath,
+                File targetFile = new File(String.format(databasePath,
                         context.getApplicationInfo().packageName), assetsName);
                 if (targetFile.exists()) {
                     if (LogUtil.DEBUG) {
@@ -232,6 +230,8 @@ public final class Lib_FileManager {
                     out.write(b, 0, count);
                 }
                 out.flush();
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putBoolean("lib_assets_to_data_first", true).commit();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -258,7 +258,7 @@ public final class Lib_FileManager {
      *
      * @param cacheMaxFileCount 只保留最近产生的多少条
      */
-    private final static void clearLogFile(int cacheMaxFileCount) {
+    private static void clearLogFile(int cacheMaxFileCount) {
         File logFile = new File(logPath);
         File[] fs = logFile.listFiles();
         if (fs == null) {

@@ -11,7 +11,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.zsx.itf.Lib_OnLifecycleListener;
+import com.zsx.itf.Lib_LifeCycle;
+import com.zsx.itf.Lib_OnCancelListener;
+import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
 
 import java.util.HashSet;
@@ -23,11 +25,12 @@ import java.util.Set;
  * <p/>
  * Created by zhusx on 2015/7/31.
  */
-public class Lib_BaseActivity extends Activity {
+public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     public static final String _EXTRA_Serializable = "extra_Serializable";
-    public static final String _EXTRA_String = "xtra_String";
+    public static final String _EXTRA_String = "extra_String";
     public static final String _EXTRA_Integer = "extra_Integer";
     public static final String _EXTRA_Boolean = "extra_boolean";
+    protected String mToastMessage = "再次点击退出";
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -47,9 +50,10 @@ public class Lib_BaseActivity extends Activity {
     private boolean isClickNoEditTextCloseInput = false;
 
     /**
-     * Activity生命周期回调
+     * 基于Activity生命周期回调
      */
-    private Set<Lib_OnLifecycleListener> listeners = new HashSet<Lib_OnLifecycleListener>();
+    private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
+    private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
 
     public void _showToast(String message) {
         if (TextUtils.isEmpty(message)) {
@@ -62,6 +66,9 @@ public class Lib_BaseActivity extends Activity {
         toast.show();
     }
 
+    /**
+     * 设置点击非EditText 关闭软键盘
+     */
     public void _setClickNoEditTextCloseInput(boolean isClickNoEditTextCloseInput) {
         this.isClickNoEditTextCloseInput = isClickNoEditTextCloseInput;
     }
@@ -107,48 +114,72 @@ public class Lib_BaseActivity extends Activity {
         Lib_SystemExitManager.addActivity(this);
     }
 
-
-    public void _addOnLifeCycleListener(Lib_OnLifecycleListener listener) {
-        listeners.add(listener);
+    /**
+     * 添加取消监听
+     */
+    @Override
+    public void _addOnCancelListener(Lib_OnCancelListener listener) {
+        cancelListener.add(listener);
     }
 
-    public void _removeOnLifeCycleListener(Lib_OnLifecycleListener listener) {
-        listeners.remove(listener);
+    /**
+     * 移除取消监听
+     */
+    @Override
+    public void _removeOnCancelListener(Lib_OnCancelListener listener) {
+        cancelListener.remove(listener);
+    }
+
+    /**
+     * 添加周期监听
+     */
+    @Override
+    public void _addOnCycleListener(Lib_OnCycleListener listener) {
+        cycleListener.add(listener);
+    }
+
+    /**
+     * 移除周期监听
+     */
+    @Override
+    public void _removeOnCycleListener(Lib_OnCycleListener listener) {
+        cycleListener.remove(listener);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityResume();
+        //FIXME 如果onCreate已经执行...这里可能执行2次
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onResume();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityPause();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onPause();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityDestroy();
+        for (Lib_OnCancelListener l : cancelListener) {
+            l.onCancel();
         }
-        listeners.clear();
+        cancelListener.clear();
         Lib_SystemExitManager.removeActivity(this);
     }
 
     @Override
     public void finish() {
         super.finish();
-        for (Lib_OnLifecycleListener l : listeners) {
-            l.onActivityDestroy();
+        for (Lib_OnCancelListener l : cancelListener) {
+            l.onCancel();
         }
-        listeners.clear();
+        cancelListener.clear();
         Lib_SystemExitManager.removeActivity(this);
     }
 
@@ -158,8 +189,6 @@ public class Lib_BaseActivity extends Activity {
     public void _exitSystem() {
         Lib_SystemExitManager.exitSystem();
     }
-
-    private String mToastMessage = "再次点击退出";
 
     /**
      * 设置 连续双击后退键 退出
@@ -214,6 +243,4 @@ public class Lib_BaseActivity extends Activity {
 //        }
 //        return super.onKeyDown(keyCode, event);
 //    }
-
-
 }
