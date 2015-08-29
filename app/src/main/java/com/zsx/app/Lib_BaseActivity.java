@@ -3,6 +3,7 @@ package com.zsx.app;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,6 +33,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     public static final String _EXTRA_Integer = "extra_Integer";
     public static final String _EXTRA_Boolean = "extra_boolean";
     protected String mToastMessage = "再次点击退出";
+    private Handler pHandler = new Handler();
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -166,6 +169,10 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        destroyActivity();
+    }
+
+    private final void destroyActivity() {
         for (Lib_OnCancelListener l : cancelListener) {
             l.onCancel();
         }
@@ -176,11 +183,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     public void finish() {
         super.finish();
-        for (Lib_OnCancelListener l : cancelListener) {
-            l.onCancel();
-        }
-        cancelListener.clear();
-        Lib_SystemExitManager.removeActivity(this);
+        destroyActivity();
     }
 
     /**
@@ -243,4 +246,52 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
 //        }
 //        return super.onKeyDown(keyCode, event);
 //    }
+    public void _setAutoPlayForAlways(Runnable runnable, long time) {
+        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
+        _addOnCancelListener(delayRunnable);
+        pHandler.postDelayed(delayRunnable, time);
+    }
+    public void _setAutoPlayForCanPause(Runnable runnable, long time) {
+        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
+        _addOnCancelListener(delayRunnable);
+        _addOnCancelListener(delayRunnable);
+        pHandler.postDelayed(delayRunnable, time);
+    }
+
+    private class DelayRunnable implements Runnable,Lib_OnCycleListener,Lib_OnCancelListener{
+        private Runnable r;
+        private long time;
+        private boolean isExit;
+        private boolean isPause;
+        public DelayRunnable(Runnable r, long time) {
+            this.r = r;
+            this.time = time;
+        }
+
+        @Override
+        public void run() {
+            if (isExit) {
+                return;
+            }
+            if(!isPause){
+                r.run();
+            }
+            pHandler.postDelayed(this, time);
+        }
+
+        @Override
+        public void onCancel() {
+            this.isExit = true;
+        }
+
+        @Override
+        public void onResume() {
+            isPause=false;
+        }
+
+        @Override
+        public void onPause() {
+            isPause = true;
+        }
+    }
 }

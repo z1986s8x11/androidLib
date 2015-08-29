@@ -2,6 +2,7 @@ package com.zsx.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -27,7 +28,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
      */
     private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
-
+    private Handler pHandler = new Handler();
     @Override
     public void _addOnCancelListener(Lib_OnCancelListener listener) {
         cancelListener.add(listener);
@@ -111,6 +112,54 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
             for (int i = 0; i < list.size(); i++) {
                 list.get(i).onActivityResult(requestCode, resultCode, data);
             }
+        }
+    }
+    public void _setAutoPlayForAlways(Runnable runnable, long time) {
+        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
+        _addOnCancelListener(delayRunnable);
+        pHandler.postDelayed(delayRunnable, time);
+    }
+    public void _setAutoPlayForCanPause(Runnable runnable, long time) {
+        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
+        _addOnCancelListener(delayRunnable);
+        _addOnCancelListener(delayRunnable);
+        pHandler.postDelayed(delayRunnable, time);
+    }
+
+    private class DelayRunnable implements Runnable,Lib_OnCycleListener,Lib_OnCancelListener{
+        private Runnable r;
+        private long time;
+        private boolean isExit;
+        private boolean isPause;
+        public DelayRunnable(Runnable r, long time) {
+            this.r = r;
+            this.time = time;
+        }
+
+        @Override
+        public void run() {
+            if (isExit) {
+                return;
+            }
+            if(!isPause){
+                r.run();
+            }
+            pHandler.postDelayed(this, time);
+        }
+
+        @Override
+        public void onCancel() {
+            this.isExit = true;
+        }
+
+        @Override
+        public void onResume() {
+            isPause=false;
+        }
+
+        @Override
+        public void onPause() {
+            isPause = true;
         }
     }
 }

@@ -2,6 +2,7 @@ package com.zsx.app;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -27,6 +28,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     public static final String _EXTRA_Integer = Lib_BaseActivity._EXTRA_Integer;
     public static final String _EXTRA_Boolean = Lib_BaseActivity._EXTRA_Boolean;
     protected String mToastMessage = "再次点击退出";
+    private Handler pHandler = new Handler();
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -282,5 +284,52 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment, tag).commit();
     }
+    public void _setAutoPlayForAlways(Runnable runnable, long time) {
+        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
+        _addOnCancelListener(delayRunnable);
+        pHandler.postDelayed(delayRunnable, time);
+    }
+    public void _setAutoPlayForCanPause(Runnable runnable, long time) {
+        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
+        _addOnCancelListener(delayRunnable);
+        _addOnCancelListener(delayRunnable);
+        pHandler.postDelayed(delayRunnable, time);
+    }
 
+    private class DelayRunnable implements Runnable,Lib_OnCycleListener,Lib_OnCancelListener{
+        private Runnable r;
+        private long time;
+        private boolean isExit;
+        private boolean isPause;
+        public DelayRunnable(Runnable r, long time) {
+            this.r = r;
+            this.time = time;
+        }
+
+        @Override
+        public void run() {
+            if (isExit) {
+                return;
+            }
+            if(!isPause){
+                r.run();
+            }
+            pHandler.postDelayed(this, time);
+        }
+
+        @Override
+        public void onCancel() {
+            this.isExit = true;
+        }
+
+        @Override
+        public void onResume() {
+            isPause=false;
+        }
+
+        @Override
+        public void onPause() {
+            isPause = true;
+        }
+    }
 }
