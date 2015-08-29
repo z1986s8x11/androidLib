@@ -117,8 +117,12 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
 
     @Override
     public void _addOnCancelListener(Lib_OnCancelListener listener) {
+        if (cancelListener.contains(listener)) {
+            return;
+        }
         cancelListener.add(listener);
     }
+
     @Override
     public void _removeOnCancelListener(Lib_OnCancelListener listener) {
         cancelListener.remove(listener);
@@ -126,6 +130,9 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
 
     @Override
     public void _addOnCycleListener(Lib_OnCycleListener listener) {
+        if (cycleListener.contains(listener)) {
+            return;
+        }
         cycleListener.add(listener);
     }
 
@@ -284,23 +291,26 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment, tag).commit();
     }
+
     public void _setAutoPlayForAlways(Runnable runnable, long time) {
         final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
         _addOnCancelListener(delayRunnable);
         pHandler.postDelayed(delayRunnable, time);
     }
+
     public void _setAutoPlayForCanPause(Runnable runnable, long time) {
         final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
         _addOnCancelListener(delayRunnable);
-        _addOnCancelListener(delayRunnable);
+        _addOnCycleListener(delayRunnable);
         pHandler.postDelayed(delayRunnable, time);
     }
 
-    private class DelayRunnable implements Runnable,Lib_OnCycleListener,Lib_OnCancelListener{
+    private class DelayRunnable implements Runnable, Lib_OnCycleListener, Lib_OnCancelListener {
         private Runnable r;
         private long time;
         private boolean isExit;
         private boolean isPause;
+
         public DelayRunnable(Runnable r, long time) {
             this.r = r;
             this.time = time;
@@ -311,7 +321,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
             if (isExit) {
                 return;
             }
-            if(!isPause){
+            if (!isPause) {
                 r.run();
             }
             pHandler.postDelayed(this, time);
@@ -324,7 +334,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
 
         @Override
         public void onResume() {
-            isPause=false;
+            isPause = false;
         }
 
         @Override

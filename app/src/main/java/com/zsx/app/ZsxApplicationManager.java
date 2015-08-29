@@ -87,45 +87,45 @@ public class ZsxApplicationManager {
                 }
                 StrictMode.enableDefaults();
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                activityCallbacks = new Application.ActivityLifecycleCallbacks() {
-                    @Override
-                    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                        LogUtil.e(activity, "onActivityCreated");
-                    }
-
-                    @Override
-                    public void onActivityStarted(Activity activity) {
-                        LogUtil.e(activity, "onActivityStarted");
-                    }
-
-                    @Override
-                    public void onActivityResumed(Activity activity) {
-                        LogUtil.e(activity, "onActivityResumed");
-                    }
-
-                    @Override
-                    public void onActivityPaused(Activity activity) {
-                        LogUtil.e(activity, "onActivityPaused");
-                    }
-
-                    @Override
-                    public void onActivityStopped(Activity activity) {
-                        LogUtil.e(activity, "onActivityStopped");
-                    }
-
-                    @Override
-                    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                        LogUtil.e(activity, "onActivitySaveInstanceState");
-                    }
-
-                    @Override
-                    public void onActivityDestroyed(Activity activity) {
-                        LogUtil.e(activity, "onActivityDestroyed");
-                    }
-                };
-                context.registerActivityLifecycleCallbacks(activityCallbacks);
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+//                activityCallbacks = new Application.ActivityLifecycleCallbacks() {
+//                    @Override
+//                    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+//                        LogUtil.e(activity, "onActivityCreated");
+//                    }
+//
+//                    @Override
+//                    public void onActivityStarted(Activity activity) {
+//                        LogUtil.e(activity, "onActivityStarted");
+//                    }
+//
+//                    @Override
+//                    public void onActivityResumed(Activity activity) {
+//                        LogUtil.e(activity, "onActivityResumed");
+//                    }
+//
+//                    @Override
+//                    public void onActivityPaused(Activity activity) {
+//                        LogUtil.e(activity, "onActivityPaused");
+//                    }
+//
+//                    @Override
+//                    public void onActivityStopped(Activity activity) {
+//                        LogUtil.e(activity, "onActivityStopped");
+//                    }
+//
+//                    @Override
+//                    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+//                        LogUtil.e(activity, "onActivitySaveInstanceState");
+//                    }
+//
+//                    @Override
+//                    public void onActivityDestroyed(Activity activity) {
+//                        LogUtil.e(activity, "onActivityDestroyed");
+//                    }
+//                };
+//                context.registerActivityLifecycleCallbacks(activityCallbacks);
+//            }
         }
 
         public void onTerminate() {

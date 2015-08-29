@@ -31,6 +31,9 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     private Handler pHandler = new Handler();
     @Override
     public void _addOnCancelListener(Lib_OnCancelListener listener) {
+        if(cancelListener.contains(listener)){
+            return;
+        }
         cancelListener.add(listener);
     }
 
@@ -41,6 +44,9 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
 
     @Override
     public void _addOnCycleListener(Lib_OnCycleListener listener) {
+        if(cycleListener.contains(listener)){
+            return;
+        }
         cycleListener.add(listener);
     }
 
@@ -122,7 +128,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     public void _setAutoPlayForCanPause(Runnable runnable, long time) {
         final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
         _addOnCancelListener(delayRunnable);
-        _addOnCancelListener(delayRunnable);
+        _addOnCycleListener(delayRunnable);
         pHandler.postDelayed(delayRunnable, time);
     }
 

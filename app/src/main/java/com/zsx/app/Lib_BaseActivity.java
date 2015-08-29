@@ -122,6 +122,9 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
      */
     @Override
     public void _addOnCancelListener(Lib_OnCancelListener listener) {
+        if (cancelListener.contains(listener)) {
+            return;
+        }
         cancelListener.add(listener);
     }
 
@@ -138,6 +141,9 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
      */
     @Override
     public void _addOnCycleListener(Lib_OnCycleListener listener) {
+        if (cycleListener.contains(listener)) {
+            return;
+        }
         cycleListener.add(listener);
     }
 
@@ -230,7 +236,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         }
     }
 
-//    @Override
+    //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        if (!isDoubleBack) {
 //            return super.onKeyDown(keyCode, event);
@@ -251,18 +257,20 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         _addOnCancelListener(delayRunnable);
         pHandler.postDelayed(delayRunnable, time);
     }
+
     public void _setAutoPlayForCanPause(Runnable runnable, long time) {
         final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
-        _addOnCancelListener(delayRunnable);
+        _addOnCycleListener(delayRunnable);
         _addOnCancelListener(delayRunnable);
         pHandler.postDelayed(delayRunnable, time);
     }
 
-    private class DelayRunnable implements Runnable,Lib_OnCycleListener,Lib_OnCancelListener{
+    private class DelayRunnable implements Runnable, Lib_OnCycleListener, Lib_OnCancelListener {
         private Runnable r;
         private long time;
         private boolean isExit;
         private boolean isPause;
+
         public DelayRunnable(Runnable r, long time) {
             this.r = r;
             this.time = time;
@@ -273,7 +281,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
             if (isExit) {
                 return;
             }
-            if(!isPause){
+            if (!isPause) {
                 r.run();
             }
             pHandler.postDelayed(this, time);
@@ -286,7 +294,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
 
         @Override
         public void onResume() {
-            isPause=false;
+            isPause = false;
         }
 
         @Override
