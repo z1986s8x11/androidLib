@@ -2,6 +2,7 @@ package com.zsx.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.storage.StorageManager;
@@ -20,6 +21,8 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author zsx
@@ -136,6 +139,9 @@ public class Lib_Util_File {
         File file = new File(savePath);
         if (!file.getParentFile().exists()) {
             file.mkdirs();
+        }
+        if (file.exists()) {
+            file.delete();
         }
         OutputStream stream = null;
         try {
@@ -394,4 +400,7 @@ public class Lib_Util_File {
         }
     }
 
+    public File toFile(Uri uri) throws URISyntaxException {
+        return new File(new URI(uri.toString()));
+    }
 }
