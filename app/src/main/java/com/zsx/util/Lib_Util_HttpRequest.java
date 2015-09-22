@@ -197,7 +197,7 @@ public final class Lib_Util_HttpRequest {
     }
 
     public final static String _post(String url,
-                                        Map<String, Object> parameters) throws ConnectTimeoutException,
+                                     Map<String, Object> parameters) throws ConnectTimeoutException,
             SocketTimeoutException, ClientProtocolException, IOException,
             URISyntaxException, Lib_Exception {
         String returnStr = null;
@@ -315,6 +315,7 @@ public final class Lib_Util_HttpRequest {
         if (!file.exists()) {
             throw new FileNotFoundException("File Not Found Exception!!");
         }
+        String contentType = "image/jpeg";// 流  application/octet-stream
         int res = 0;
         String result = null;
         String BOUNDARY = UUID.randomUUID().toString(); // 边界标识 随机生成
@@ -346,7 +347,7 @@ public final class Lib_Util_HttpRequest {
          */
         sb.append("Content-Disposition: form-data; name=\"file\"; filename=\""
                 + file.getName() + "\"" + LINE_END);
-        sb.append("Content-Type: application/octet-stream; charset=" + Charset
+        sb.append("Content-Type: " + contentType + "; charset=" + Charset
                 + LINE_END);
         sb.append(LINE_END);
         dos.write(sb.toString().getBytes());
