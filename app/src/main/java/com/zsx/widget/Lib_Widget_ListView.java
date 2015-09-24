@@ -69,7 +69,6 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 	private final static int RATIO = 3;
 	private XListViewHeader headView;
 	private XListViewFooter footView;
-	private XListViewEmpty emptyView;
 	// 用于保证startY的值在一个完整的touch事件中只被记录一次
 	private boolean isRecored;
 	private int headContentHeight;
@@ -227,9 +226,6 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 		if (footStatus == FootStatus.LOADING) {
 			changeFootViewByState(FootStatus.DONE);
 		}
-		if (emptyView != null) {
-			emptyView._setDefault();
-		}
 		super.setAdapter(adapter);
 	}
 
@@ -315,7 +311,7 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 			if (footStatus != FootStatus.LOADING
 					&& headStatus != HeadStatus.REFRESHING) {
 				if (headStatus == null || headStatus == HeadStatus.DONE) {
-					if (event.getY() - startY < 40) {
+//					if (event.getY() - startY < 40) {
 						ListAdapter adapter = getAdapter();
 						if (adapter != null) {
 							if (scrollTotalItemCount == adapter.getCount()) {
@@ -331,7 +327,7 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 								}
 							}
 						}
-					}
+//					}
 				}
 				if (headStatus == HeadStatus.DONE) {
 					// 什么都不做
@@ -535,13 +531,6 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 		if (footStatus == FootStatus.NO_DATA) {
 			changeFootViewByState(FootStatus.DONE);
 		}
-		if (emptyView != null) {
-			if (getAdapter().isEmpty()) {
-				emptyView._setNoData();
-			} else {
-				emptyView._setDefault();
-			}
-		}
 	}
 
 	/**
@@ -556,9 +545,6 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 		if (footStatus == FootStatus.LOADING) {
 			changeFootViewByState(FootStatus.ERROR);
 		}
-		if (emptyView != null) {
-			emptyView._setError();
-		}
 	}
 
 	/**
@@ -570,12 +556,6 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 		}
 		if (onLoadMoreListener == null) {
 			throw new IllegalStateException("no setFootView()");
-		}
-		if (emptyView != null) {
-			emptyView.setEnabled(false);
-			if (getAdapterCount() == 0) {
-				emptyView._setLoading();
-			}
 		}
 		changeFootViewByState(FootStatus.LOADING);
 		onLoadMoreListener.loadMoreData(this, getAdapterCount());
