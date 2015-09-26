@@ -6,7 +6,7 @@
 		<item name="android:windowIsTranslucent">false</item>:是否半透明
 		<item name="android:windowNoTitle">true</item>:是否显示title
 		<item name="android:windowBackground">@drawable/dia_bg</item>:设置dialog的背景
-		<item name="android:backgroundDimEnabled">false</item>: 背景是否模糊显示
+		<item name="android:backgroundDimEnabled">false</item>: 背景是否模糊显示
     -->
 
 
@@ -63,4 +63,15 @@
         <item name="android:activityCloseExitAnimation">@android:anim/slide_out_right</item>
     </style>
 
+    <!--基础theme-->
+    <style name="lib_base_theme" parent="android:Theme.Light">
+        <item name="android:listViewStyle">@style/lib_base_listView</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <!--基础 listView 样式-->
+    <style name="lib_base_listView" parent="@android:style/Widget.ListView">
+        <item name="android:listSelector">@color/lib_transparent</item>
+    </style>
 </resources>
