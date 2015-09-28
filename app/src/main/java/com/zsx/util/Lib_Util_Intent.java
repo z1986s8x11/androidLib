@@ -3,6 +3,7 @@ package com.zsx.util;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -126,5 +127,22 @@ public class Lib_Util_Intent {
         } catch (ActivityNotFoundException e) {
             return false;
         }
+    }
+
+    public static Intent getClopImageIntent(Uri uri, int width, int height) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", width);
+        intent.putExtra("outputY", height);
+        intent.putExtra("return-data", true);
+        return intent;
+    }
+
+    public static Intent getClopImageIntent(File file, int width, int height) {
+        return getClopImageIntent(Uri.fromFile(file), width, height);
     }
 }
