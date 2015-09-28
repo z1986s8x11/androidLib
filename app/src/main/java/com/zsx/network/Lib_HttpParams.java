@@ -15,7 +15,7 @@ public class Lib_HttpParams {
     public static final String GET = "GET";
     public static final String POST = "POST";
     private String apiUrl;
-    private String mothod = POST;
+    private String method = POST;
     private Object param;
 
     public Object getParam() {
@@ -27,14 +27,14 @@ public class Lib_HttpParams {
 
     public Lib_HttpParams(String url, String method, JSONObject param) {
         this.apiUrl = url;
-        this.mothod = method;
+        this.method = method;
         this.param = param;
     }
 
     public Lib_HttpParams(String url, String mothod,
                           Map<String, Object> param) {
         this.apiUrl = url;
-        this.mothod = mothod;
+        this.method = mothod;
         this.param = param;
     }
 
@@ -57,10 +57,10 @@ public class Lib_HttpParams {
     /**
      * 设置请求方式
      *
-     * @param mothod
+     * @param method
      */
-    public final void setRequestMethod(String mothod) {
-        this.mothod = mothod;
+    public final void setRequestMethod(String method) {
+        this.method = method;
     }
 
     /**
@@ -92,6 +92,6 @@ public class Lib_HttpParams {
      * @return
      */
     public final String getRequestMethod() {
-        return mothod;
+        return method;
     }
 }

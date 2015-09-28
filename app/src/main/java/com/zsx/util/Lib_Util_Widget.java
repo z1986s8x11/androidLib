@@ -121,7 +121,6 @@ public class Lib_Util_Widget {
             LinearLayout parentLayout = new LinearLayout(resLayout.getContext());
             parentLayout.setLayoutParams(lp);
             parentLayout.setOrientation(LinearLayout.VERTICAL);
-            parentLayout.setId(R.id.lib_content);
             parentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
             ViewGroup group = (ViewGroup) parent;

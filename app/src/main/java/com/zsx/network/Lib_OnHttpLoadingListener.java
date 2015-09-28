@@ -19,11 +19,11 @@ public interface Lib_OnHttpLoadingListener<Id,Result, Parameter> {
      *                      </ul>
      * @param error_message 错误消息
      */
-    void onLoadError(Id id, Lib_HttpRequest<Parameter> requestData, Result result, boolean isAPIError, String error_message);
+    void onLoadError(Id id, Lib_HttpRequest<Parameter> request, Result result, boolean isAPIError, String error_message);
 
     /**
      * @param id
-     * @param b
+     * @param result
      */
-    void onLoadComplete(Id id, Lib_HttpRequest<Parameter> requestData, Result b);
+    void onLoadComplete(Id id, Lib_HttpRequest<Parameter> request, Result result);
 }
