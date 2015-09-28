@@ -3,7 +3,6 @@ package com.zsx.app;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -16,6 +15,7 @@ import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
+import com.zsx.tools.Lib_Delayed;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +32,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     public static final String _EXTRA_Integer = "extra_Integer";
     public static final String _EXTRA_Boolean = "extra_boolean";
     protected String mToastMessage = "再次点击退出";
-    private Handler pHandler = new Handler();
+    private Lib_Delayed timer;
     private boolean pIsPause;
     private boolean pisDestroy;
     /**
@@ -249,70 +249,24 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         }
     }
 
-    //    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (!isDoubleBack) {
-//            return super.onKeyDown(keyCode, event);
-//        }
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//            if ((System.currentTimeMillis() - exitTime) > 2000) {
-//                _showToast(mToastMessage);
-//                exitTime = System.currentTimeMillis();
-//            } else {
-//                _exitSystem();
-//            }
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
     public void _setAutoPlayForAlways(Runnable runnable, long time) {
-        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
-        _addOnCancelListener(delayRunnable);
-        pHandler.postDelayed(delayRunnable, time);
+        if (timer == null) {
+            timer = new Lib_Delayed(this);
+        }
+        timer._setAutoPlayForAlways(runnable, time);
     }
 
     public void _setAutoPlayForCanPause(Runnable runnable, long time) {
-        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
-        _addOnCycleListener(delayRunnable);
-        _addOnCancelListener(delayRunnable);
-        pHandler.postDelayed(delayRunnable, time);
+        if (timer == null) {
+            timer = new Lib_Delayed(this);
+        }
+        timer._setAutoPlayForCanPause(runnable, time);
     }
 
-    private class DelayRunnable implements Runnable, Lib_OnCycleListener, Lib_OnCancelListener {
-        private Runnable r;
-        private long time;
-        private boolean isExit;
-        private boolean isPause;
-
-        public DelayRunnable(Runnable r, long time) {
-            this.r = r;
-            this.time = time;
+    public void _cancelAutoPlay(Runnable runnable) {
+        if (timer == null) {
+            return;
         }
-
-        @Override
-        public void run() {
-            if (isExit) {
-                return;
-            }
-            if (!isPause) {
-                r.run();
-            }
-            pHandler.postDelayed(this, time);
-        }
-
-        @Override
-        public void onCancel() {
-            this.isExit = true;
-        }
-
-        @Override
-        public void onResume() {
-            isPause = false;
-        }
-
-        @Override
-        public void onPause() {
-            isPause = true;
-        }
+        timer._cancelAutoPlay(runnable);
     }
 }

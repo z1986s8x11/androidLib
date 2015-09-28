@@ -1,7 +1,6 @@
 package com.zsx.app;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
+import com.zsx.tools.Lib_Delayed;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +24,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
      */
     private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
-    private Handler pHandler = new Handler();
+    private Lib_Delayed timer;
 
     @Override
     public void _addOnCancelListener(Lib_OnCancelListener listener) {
@@ -119,55 +119,23 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     }
 
     public void _setAutoPlayForAlways(Runnable runnable, long time) {
-        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
-        _addOnCancelListener(delayRunnable);
-        pHandler.postDelayed(delayRunnable, time);
+        if (timer == null) {
+            timer = new Lib_Delayed(this);
+        }
+        timer._setAutoPlayForAlways(runnable, time);
     }
 
     public void _setAutoPlayForCanPause(Runnable runnable, long time) {
-        final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
-        _addOnCancelListener(delayRunnable);
-        _addOnCycleListener(delayRunnable);
-        pHandler.postDelayed(delayRunnable, time);
+        if (timer == null) {
+            timer = new Lib_Delayed(this);
+        }
+        timer._setAutoPlayForCanPause(runnable, time);
     }
 
-    private class DelayRunnable implements Runnable, Lib_OnCycleListener, Lib_OnCancelListener {
-        private Runnable r;
-        private long time;
-        private boolean isExit;
-        private boolean isPause;
-
-        public DelayRunnable(Runnable r, long time) {
-            this.r = r;
-            this.time = time;
+    public void _cancelAutoPlay(Runnable runnable) {
+        if (timer == null) {
+            return;
         }
-
-        @Override
-        public void run() {
-            if (isExit) {
-                return;
-            }
-            long start = System.currentTimeMillis();
-            if (!isPause) {
-                r.run();
-            }
-            long expendTime = System.currentTimeMillis() - start;
-            pHandler.postDelayed(this, time - expendTime);
-        }
-
-        @Override
-        public void onCancel() {
-            this.isExit = true;
-        }
-
-        @Override
-        public void onResume() {
-            isPause = false;
-        }
-
-        @Override
-        public void onPause() {
-            isPause = true;
-        }
+        timer._cancelAutoPlay(runnable);
     }
 }
