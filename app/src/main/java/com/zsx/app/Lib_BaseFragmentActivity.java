@@ -29,6 +29,8 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     public static final String _EXTRA_Boolean = Lib_BaseActivity._EXTRA_Boolean;
     protected String mToastMessage = "再次点击退出";
     private Handler pHandler = new Handler();
+    private boolean pIsPause;
+    private boolean pisDestroy;
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -112,6 +114,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pisDestroy = false;
         Lib_SystemExitManager.addActivity(this);
     }
 
@@ -144,6 +147,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     @Override
     protected void onResume() {
         super.onResume();
+        pIsPause = false;
         for (Lib_OnCycleListener l : cycleListener) {
             l.onResume();
         }
@@ -152,6 +156,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     @Override
     protected void onPause() {
         super.onPause();
+        pIsPause = true;
         for (Lib_OnCycleListener l : cycleListener) {
             l.onPause();
         }
@@ -160,6 +165,19 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        pisDestroy = true;
+        destroyActivity();
+    }
+
+    public boolean _isDestroy() {
+        return pisDestroy;
+    }
+
+    public boolean _isPause() {
+        return pIsPause;
+    }
+
+    private final void destroyActivity() {
         for (Lib_OnCancelListener l : cancelListener) {
             l.onCancel();
         }
@@ -170,11 +188,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     @Override
     public void finish() {
         super.finish();
-        for (Lib_OnCancelListener l : cancelListener) {
-            l.onCancel();
-        }
-        cancelListener.clear();
-        Lib_SystemExitManager.removeActivity(this);
+        destroyActivity();
     }
 
     /**

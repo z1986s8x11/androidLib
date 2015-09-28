@@ -17,7 +17,6 @@ import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +33,8 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     public static final String _EXTRA_Boolean = "extra_boolean";
     protected String mToastMessage = "再次点击退出";
     private Handler pHandler = new Handler();
+    private boolean pIsPause;
+    private boolean pisDestroy;
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -114,6 +115,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pisDestroy = false;
         Lib_SystemExitManager.addActivity(this);
     }
 
@@ -158,6 +160,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     protected void onResume() {
         super.onResume();
+        pIsPause = false;
         //FIXME 如果onCreate已经执行...这里可能执行2次
         for (Lib_OnCycleListener l : cycleListener) {
             l.onResume();
@@ -167,6 +170,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     protected void onPause() {
         super.onPause();
+        pIsPause = true;
         for (Lib_OnCycleListener l : cycleListener) {
             l.onPause();
         }
@@ -175,7 +179,16 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        pisDestroy = true;
         destroyActivity();
+    }
+
+    public boolean _isDestroy() {
+        return pisDestroy;
+    }
+
+    public boolean _isPause() {
+        return pIsPause;
     }
 
     private final void destroyActivity() {
