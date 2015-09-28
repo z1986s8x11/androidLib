@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.zsx.debug.LogUtil;
@@ -144,5 +145,11 @@ public class Lib_Util_Intent {
 
     public static Intent getClopImageIntent(File file, int width, int height) {
         return getClopImageIntent(Uri.fromFile(file), width, height);
+    }
+
+    public static Intent getCameraImageToFile(File saveFile) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(saveFile));
+        return intent;
     }
 }
