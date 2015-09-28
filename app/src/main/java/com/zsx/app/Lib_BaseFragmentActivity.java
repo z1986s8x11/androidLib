@@ -335,10 +335,12 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
             if (isExit) {
                 return;
             }
+            long start = System.currentTimeMillis();
             if (!isPause) {
                 r.run();
             }
-            pHandler.postDelayed(this, time);
+            long expendTime = System.currentTimeMillis() - start;
+            pHandler.postDelayed(this, time - expendTime);
         }
 
         @Override

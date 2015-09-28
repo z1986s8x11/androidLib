@@ -1,13 +1,10 @@
 package com.zsx.app;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -15,7 +12,6 @@ import android.widget.Toast;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
-import com.zsx.manager.Lib_SystemExitManager;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,9 +25,10 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
     private Handler pHandler = new Handler();
+
     @Override
     public void _addOnCancelListener(Lib_OnCancelListener listener) {
-        if(cancelListener.contains(listener)){
+        if (cancelListener.contains(listener)) {
             return;
         }
         cancelListener.add(listener);
@@ -44,7 +41,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
 
     @Override
     public void _addOnCycleListener(Lib_OnCycleListener listener) {
-        if(cycleListener.contains(listener)){
+        if (cycleListener.contains(listener)) {
             return;
         }
         cycleListener.add(listener);
@@ -120,11 +117,13 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
             }
         }
     }
+
     public void _setAutoPlayForAlways(Runnable runnable, long time) {
         final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
         _addOnCancelListener(delayRunnable);
         pHandler.postDelayed(delayRunnable, time);
     }
+
     public void _setAutoPlayForCanPause(Runnable runnable, long time) {
         final DelayRunnable delayRunnable = new DelayRunnable(runnable, time);
         _addOnCancelListener(delayRunnable);
@@ -132,11 +131,12 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
         pHandler.postDelayed(delayRunnable, time);
     }
 
-    private class DelayRunnable implements Runnable,Lib_OnCycleListener,Lib_OnCancelListener{
+    private class DelayRunnable implements Runnable, Lib_OnCycleListener, Lib_OnCancelListener {
         private Runnable r;
         private long time;
         private boolean isExit;
         private boolean isPause;
+
         public DelayRunnable(Runnable r, long time) {
             this.r = r;
             this.time = time;
@@ -147,10 +147,12 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
             if (isExit) {
                 return;
             }
-            if(!isPause){
+            long start = System.currentTimeMillis();
+            if (!isPause) {
                 r.run();
             }
-            pHandler.postDelayed(this, time);
+            long expendTime = System.currentTimeMillis() - start;
+            pHandler.postDelayed(this, time - expendTime);
         }
 
         @Override
@@ -160,7 +162,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
 
         @Override
         public void onResume() {
-            isPause=false;
+            isPause = false;
         }
 
         @Override
