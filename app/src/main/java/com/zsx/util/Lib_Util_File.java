@@ -1,11 +1,14 @@
 package com.zsx.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.storage.StorageManager;
+import android.provider.MediaStore;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.tools.Lib_UnicodeInputStream;
@@ -400,7 +403,23 @@ public class Lib_Util_File {
         }
     }
 
-    public File toFile(Uri uri) throws URISyntaxException {
-        return new File(new URI(uri.toString()));
+    public File toFile(Activity activity, Uri uri) {
+        File file = null;
+        if ("file:".contains(uri.getScheme())) {
+            try {
+                file = new File(new URI(uri.toString()));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else if ("content:".contains(uri.getScheme())) {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor actualimagecursor = activity.managedQuery(uri, proj, null, null, null);
+            int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            actualimagecursor.moveToFirst();
+            String img_path = actualimagecursor.getString(actual_image_column_index);
+            //actualimagecursor.close(); //关闭之后再次打开会报错 (managedQuery 关联的是Activity activity 销毁cursor销毁)
+            file = new File(img_path);
+        }
+        return file;
     }
 }
