@@ -29,8 +29,11 @@ import java.util.Set;
 public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     public static final String _EXTRA_Serializable = "extra_Serializable";
     public static final String _EXTRA_String = "extra_String";
+    public static final String _EXTRA_Strings = "extra_Strings";
+    public static final String _EXTRA_ListSerializable = "extra_ListSerializable";
     public static final String _EXTRA_Integer = "extra_Integer";
     public static final String _EXTRA_Boolean = "extra_boolean";
+    public static final String _EXTRA_Double = "extra_double";
     protected String mToastMessage = "再次点击退出";
     private Lib_Delayed timer;
     private boolean pIsPause;

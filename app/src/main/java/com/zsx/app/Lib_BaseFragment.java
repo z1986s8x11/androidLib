@@ -18,6 +18,13 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle {
+    public static final String _EXTRA_Serializable = Lib_BaseActivity._EXTRA_Serializable;
+    public static final String _EXTRA_ListSerializable = Lib_BaseActivity._EXTRA_ListSerializable;
+    public static final String _EXTRA_String = Lib_BaseActivity._EXTRA_String;
+    public static final String _EXTRA_Strings = Lib_BaseActivity._EXTRA_Strings;
+    public static final String _EXTRA_Integer = Lib_BaseActivity._EXTRA_Integer;
+    public static final String _EXTRA_Boolean = Lib_BaseActivity._EXTRA_Boolean;
+    public static final String _EXTRA_Double = Lib_BaseActivity._EXTRA_Double;
     private Toast toast;
     /**
      * 基于Activity生命周期回调

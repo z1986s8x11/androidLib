@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.zsx.debug.Lib_BugReportActivity" />
+        <activity android:name="com.zsx.debug.P_BugReportFragment" />
         <activity android:name=".ui.debug.ExceptionActivity" />
         <activity android:name=".ui.adapter.InsertAdapterActivity" />
         <activity android:name=".ui.download.DownloadActivity" />

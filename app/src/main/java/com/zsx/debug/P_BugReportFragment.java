@@ -21,30 +21,31 @@ package com.zsx.debug;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zsx.R;
+import com.zsx.app.Lib_BaseFragment;
 
 /**
  * 待测试
  */
-public final class Lib_BugReportActivity extends Activity implements View.OnClickListener {
-    public static final String _EXTRA_TEXT = "text";
+public final class P_BugReportFragment extends Lib_BaseFragment implements View.OnClickListener {
     private String msgText;
     private final int REQUEST_ID = 11;
 
+    @Nullable
     @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        setContentView(R.layout.lib_activity_bug);
-        msgText = getIntent().getStringExtra(_EXTRA_TEXT);
-        ((TextView) findViewById(R.id.tv_message)).setText(msgText);
-        findViewById(R.id.btn_ok).setOnClickListener(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.lib_activity_bug, container, false);
+        msgText = getArguments().getString(_EXTRA_String);
+        ((TextView) rootView.findViewById(R.id.tv_message)).setText(msgText);
+        rootView.findViewById(R.id.btn_ok).setOnClickListener(this);
+        return rootView;
     }
 
     @Override
@@ -58,20 +59,11 @@ public final class Lib_BugReportActivity extends Activity implements View.OnClic
     }
 
     @Override
-    public void onBackPressed() {
-        restartActivity();
-    }
-
-    private void restartActivity() {
-        //TODO 启动 主页?
-        finish();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ID) {
-            if (resultCode == RESULT_OK) {
-                restartActivity();
+            if (resultCode == Activity.RESULT_OK) {
+                //TODO 启动 主页?
+                getActivity().finish();
             }
         }
     }

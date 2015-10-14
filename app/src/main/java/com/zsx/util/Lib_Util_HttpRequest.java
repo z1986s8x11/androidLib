@@ -366,7 +366,7 @@ public final class Lib_Util_HttpRequest {
          * 获取响应码 200=成功 当响应成功，获取响应的流
          */
         res = conn.getResponseCode();
-        if (res == 200) {
+        if (res == HttpURLConnection.HTTP_OK) {
             InputStream input = conn.getInputStream();
             StringBuffer sb1 = new StringBuffer();
             int ss;

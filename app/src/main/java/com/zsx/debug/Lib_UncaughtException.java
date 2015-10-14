@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Looper;
 import android.util.Log;
 
+import com.zsx.app.Lib_BaseActivity;
+import com.zsx.app._PublicFragmentActivity;
 import com.zsx.manager.Lib_FileManager;
 import com.zsx.manager.Lib_SystemExitManager;
 import com.zsx.util.Lib_Util_System;
@@ -112,7 +114,7 @@ public final class Lib_UncaughtException implements UncaughtExceptionHandler {
             return true;
         }
         if (LogUtil.DEBUG) {
-            LogUtil.e(this, "是否注册了" + Lib_BugReportActivity.class.getSimpleName() + ".java 在AndroidManifest?");
+            LogUtil.e(this, "是否注册了" + P_BugReportFragment.class.getSimpleName() + ".java 在AndroidManifest?");
         }
         return true;
     }
@@ -123,9 +125,10 @@ public final class Lib_UncaughtException implements UncaughtExceptionHandler {
     private boolean startActivity(String log) {
         try {
             //打开BugReportActivity
-            Intent intent = new Intent(mContext, Lib_BugReportActivity.class);
+            Intent intent = new Intent(mContext, _PublicFragmentActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Lib_BugReportActivity._EXTRA_TEXT, log);
+            intent.putExtra(_PublicFragmentActivity._EXTRA_FRAGMENT, P_BugReportFragment.class);
+            intent.putExtra(Lib_BaseActivity._EXTRA_String, log);
             mContext.startActivity(intent);
             return true;
         } catch (Exception e) {
