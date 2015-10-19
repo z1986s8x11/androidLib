@@ -17,7 +17,6 @@ import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
-import com.zsx.tools.Lib_Delayed;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +29,6 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     protected String mToastMessage = "再次点击退出";
     private boolean pIsPause;
     private boolean pisDestroy;
-    private Lib_Delayed timer;
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -284,27 +282,5 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     public void _replaceFragment(int id, Fragment fragment, String tag) {
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment, tag).commit();
-    }
-
-
-    public void _setAutoPlayForAlways(Runnable runnable, long time) {
-        if (timer == null) {
-            timer = new Lib_Delayed(this);
-        }
-        timer._setAutoPlayForAlways(runnable, time);
-    }
-
-    public void _setAutoPlayForCanPause(Runnable runnable, long time) {
-        if (timer == null) {
-            timer = new Lib_Delayed(this);
-        }
-        timer._setAutoPlayForCanPause(runnable, time);
-    }
-
-    public void _cancelAutoPlay(Runnable runnable) {
-        if (timer == null) {
-            return;
-        }
-        timer._cancelAutoPlay(runnable);
     }
 }
