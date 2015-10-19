@@ -6,6 +6,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
+import com.zsx.tools.SystemBarTintManager;
 import com.zsx.widget.Lib_Widget_ListView;
 
 import java.util.ArrayList;
@@ -31,10 +32,9 @@ public class AutoListViewActivity extends _BaseActivity implements Lib_Widget_Li
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
-            /**
-             * 全屏
-             */
-            //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.lib_green);//通知栏所需颜色
         }
         setContentView(R.layout.activity_widget_autolistview);
         List<String> list = new ArrayList<>();
