@@ -15,7 +15,6 @@ import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
-import com.zsx.tools.Lib_Delayed;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,7 +34,6 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     public static final String _EXTRA_Boolean = "extra_boolean";
     public static final String _EXTRA_Double = "extra_double";
     protected String mToastMessage = "再次点击退出";
-    private Lib_Delayed timer;
     private boolean pIsPause;
     private boolean pisDestroy;
     /**
@@ -250,26 +248,5 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         } else {
             _exitSystem();
         }
-    }
-
-    public void _setAutoPlayForAlways(Runnable runnable, long time) {
-        if (timer == null) {
-            timer = new Lib_Delayed(this);
-        }
-        timer._setAutoPlayForAlways(runnable, time);
-    }
-
-    public void _setAutoPlayForCanPause(Runnable runnable, long time) {
-        if (timer == null) {
-            timer = new Lib_Delayed(this);
-        }
-        timer._setAutoPlayForCanPause(runnable, time);
-    }
-
-    public void _cancelAutoPlay(Runnable runnable) {
-        if (timer == null) {
-            return;
-        }
-        timer._cancelAutoPlay(runnable);
     }
 }
