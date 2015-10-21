@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
-import com.zsx.tools.Lib_Delayed;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +30,6 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
      */
     private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
-    private Lib_Delayed timer;
 
     @Override
     public void _addOnCancelListener(Lib_OnCancelListener listener) {
@@ -123,26 +121,5 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
                 list.get(i).onActivityResult(requestCode, resultCode, data);
             }
         }
-    }
-
-    public void _setAutoPlayForAlways(Runnable runnable, long time) {
-        if (timer == null) {
-            timer = new Lib_Delayed(this);
-        }
-        timer._setAutoPlayForAlways(runnable, time);
-    }
-
-    public void _setAutoPlayForCanPause(Runnable runnable, long time) {
-        if (timer == null) {
-            timer = new Lib_Delayed(this);
-        }
-        timer._setAutoPlayForCanPause(runnable, time);
-    }
-
-    public void _cancelAutoPlay(Runnable runnable) {
-        if (timer == null) {
-            return;
-        }
-        timer._cancelAutoPlay(runnable);
     }
 }
