@@ -18,6 +18,7 @@ import zsx.com.test.ui.adapter.InsertAdapterActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
 import zsx.com.test.ui.download.DownloadActivity;
 import zsx.com.test.ui.network.LoadDataActivity;
+import zsx.com.test.ui.parse.JavaParseActivity;
 import zsx.com.test.ui.widget.AutoListViewActivity;
 import zsx.com.test.ui.widget.DragListViewActivity;
 import zsx.com.test.ui.widget.KeywordsFlowActivity;
@@ -43,6 +44,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("keywordsFlow", KeywordsFlowActivity.class));
         list.add(new Item("autoListView", AutoListViewActivity.class));
         list.add(new Item("dragListView", DragListViewActivity.class));
+        list.add(new Item("parse", JavaParseActivity.class));
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
             public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {

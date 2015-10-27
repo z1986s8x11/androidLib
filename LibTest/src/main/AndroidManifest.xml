@@ -28,7 +28,7 @@
         <activity android:name=".ui.widget.KeywordsFlowActivity" />
         <activity android:name=".ui.widget.AutoListViewActivity" />
         <activity android:name=".ui.widget.DragListViewActivity" />
-
+        <activity android:name=".ui.parse.JavaParseActivity" />
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>
 
