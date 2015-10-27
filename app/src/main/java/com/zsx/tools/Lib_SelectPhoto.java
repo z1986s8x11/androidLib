@@ -15,8 +15,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import com.zsx.util.Lib_Util_Bitmap;
-import com.zsx.util.Lib_Util_Density;
 import com.zsx.util.Lib_Util_File;
 
 import java.io.File;
@@ -117,16 +115,6 @@ public class Lib_SelectPhoto {
                         if (isClop) {
                             gotoClop(Uri.fromFile(saveFile), photoWidth, photoHeight);
                         } else {
-                            int width = Lib_Util_Density.dip2px(context, photoWidth);
-                            int height = Lib_Util_Density.dip2px(context, photoHeight);
-                            Bitmap b = Lib_Util_Bitmap.getImageThumbnail(saveFile.getPath(), width, height);
-                            if (saveFile.exists()) {
-                                saveFile.delete();
-                            }
-                            Lib_Util_File.saveToFile(b, saveFile.getPath());
-                            if (!b.isRecycled()) {
-                                b.recycle();
-                            }
                             listener.onPhoto(saveFile);
                         }
                     }
@@ -137,19 +125,8 @@ public class Lib_SelectPhoto {
                         if (isClop) {
                             gotoClop(Uri.fromFile(new File(getPath(context, uri))), photoWidth, photoHeight);
                         } else {
-                            File file = null;
-                            file = new File(getPath(context, uri));
-                            int width = Lib_Util_Density.dip2px(context, photoWidth);
-                            int height = Lib_Util_Density.dip2px(context, photoHeight);
-                            Bitmap b = Lib_Util_Bitmap.getImageThumbnail(file.getPath(), width, height);
-                            if (saveFile.exists()) {
-                                saveFile.delete();
-                            }
-                            Lib_Util_File.saveToFile(b, saveFile.getPath());
-                            if (!b.isRecycled()) {
-                                b.recycle();
-                            }
-                            listener.onPhoto(saveFile);
+                            File file = new File(getPath(context, uri));
+                            listener.onPhoto(file);
                         }
                     }
                     break;
