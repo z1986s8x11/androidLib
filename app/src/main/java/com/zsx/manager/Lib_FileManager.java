@@ -3,15 +3,15 @@ package com.zsx.manager;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.util.Lib_Util_System;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -188,69 +188,38 @@ public final class Lib_FileManager {
     }
 
     /**
-     * 复制Assets文件到Data/包名/databases/下
-     *
-     * @param context
-     * @param assetsName Assets文件下DB文件名
+     * 复制Assets文件到Data/包名/files/下
+     * <p>
+     * 使用数据库用 SQLiteDatabase.openOrCreateDatabase(new File(context.getFilesDir(), dbName).getPath(), null);
      */
     @SuppressLint("SdCardPath")
-    public static void copyAssetsFileToDataDB(Context context, String assetsName) {
-        boolean isFirst = PreferenceManager
-                .getDefaultSharedPreferences(context).getBoolean(
-                        "lib_assets_to_data_first", false);
-        if (!isFirst) {
-            String databasePath = "/data/data/%s/databases";
-            InputStream input = null;
-            FileOutputStream out = null;
-            try {
-                input = context.getAssets().open(assetsName);
-                File f = new File(String.format(databasePath,
-                        context.getApplicationInfo().packageName));
-                if (!f.exists()) {
-                    if (!f.mkdir()) {
-                        if (LogUtil.DEBUG) {
-                            LogUtil.e(Lib_FileManager.class, "mkdir is error:"
-                                    + f.getPath());
-                        }
-                    }
-                }
-                File targetFile = new File(String.format(databasePath,
-                        context.getApplicationInfo().packageName), assetsName);
-                if (targetFile.exists()) {
-                    if (LogUtil.DEBUG) {
-                        LogUtil.e(Lib_FileManager.class,
-                                "dbname:" + targetFile.getPath()
-                                        + " is exists!!!");
-                    }
-                }
-                out = new FileOutputStream(targetFile);
-                int count = 0;
-                byte[] b = new byte[1024 * 4];
-                while ((count = input.read(b)) != -1) {
-                    out.write(b, 0, count);
-                }
-                out.flush();
-                PreferenceManager.getDefaultSharedPreferences(context).edit()
-                        .putBoolean("lib_assets_to_data_first", true).commit();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
+    public static void copyAssetsFileToDataDB(final Context context, String assetsName, String dbName) {
+        File file = new File(context.getFilesDir(), dbName);
+        if (file.exists() && file.length() > 0) {
+            return;
+        }
+        new AsyncTask<String, Void, Void>() {
+            @Override
+            protected Void doInBackground(String... params) {
+                // 拷贝资产目录下的数据库 到系统的data/data/包名/files/目录
+                AssetManager am = context.getAssets();
                 try {
-                    if (out != null) {
-                        out.close();
+                    InputStream is = am.open(params[0]);
+                    File file = new File(context.getFilesDir(), params[1]);
+                    FileOutputStream fos = new FileOutputStream(file);
+                    byte[] buffer = new byte[1024];
+                    int len;
+                    while ((len = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, len);
                     }
-                } catch (IOException e) {
+                    fos.close();
+                    is.close();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (input != null) {
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                return null;
             }
-        }
+        }.execute(assetsName, dbName);
     }
 
     /**
