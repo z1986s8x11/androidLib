@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
@@ -118,6 +119,38 @@ public class Lib_Util_String {
     }
 
     /**
+     * 转化为2位小数
+     */
+    public static String to2Decimals(Object doubleValue) {
+        return new java.text.DecimalFormat("#.00").format(doubleValue);
+    }
+
+    /**
+     * 转化为2位小数
+     */
+    public static double to2Decimals(double decimals) {
+        return new BigDecimal(decimals).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    /**
+     * 字符串转化成日期 </br> y 年 M 月 d 日 H 小时 m 分钟
+     *
+     * @param dateStr   如 2011-11-11
+     * @param formatStr 如 yyyy-MM-dd
+     * @return 日期
+     */
+    public static Date toDate(String dateStr, String formatStr) {
+        SimpleDateFormat dd = new SimpleDateFormat(formatStr);
+        Date date = null;
+        try {
+            date = dd.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    /**
      * 验证是否有汉字
      *
      * @param str
@@ -192,24 +225,6 @@ public class Lib_Util_String {
             buffer.append("\\u" + hexB);
         }
         return buffer.substring(0);
-    }
-
-    /**
-     * 字符串转化成日期 </br> y 年 M 月 d 日 H 小时 m 分钟
-     *
-     * @param dateStr   如 2011-11-11
-     * @param formatStr 如 yyyy-MM-dd
-     * @return 日期
-     */
-    public static Date StringToDate(String dateStr, String formatStr) {
-        SimpleDateFormat dd = new SimpleDateFormat(formatStr);
-        Date date = null;
-        try {
-            date = dd.parse(dateStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
     }
 
     /**
@@ -446,4 +461,6 @@ public class Lib_Util_String {
         m.appendTail(sb);
         return sb.toString();
     }
+
+
 }
