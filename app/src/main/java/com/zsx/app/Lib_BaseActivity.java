@@ -235,7 +235,13 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
-
+    /**
+     * 拿到屏幕的高度
+     */
+    public int _getFullScreenHeight() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        return displayMetrics.heightPixels;
+    }
     @Override
     public void onBackPressed() {
         if (!isDoubleBack) {

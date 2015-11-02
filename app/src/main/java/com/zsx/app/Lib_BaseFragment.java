@@ -100,6 +100,13 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
+    /**
+     * 拿到屏幕的高度
+     */
+    public int _getFullScreenHeight() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        return displayMetrics.heightPixels;
+    }
 
     protected final void _removeParentView(View view) {
         if (view != null) {

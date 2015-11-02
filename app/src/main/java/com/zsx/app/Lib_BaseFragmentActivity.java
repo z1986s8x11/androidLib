@@ -218,6 +218,14 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
         return displayMetrics.widthPixels;
     }
 
+    /**
+     * 拿到屏幕的高度
+     */
+    public int _getFullScreenHeight() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        return displayMetrics.heightPixels;
+    }
+
     @Override
     public void onBackPressed() {
         if (!isDoubleBack) {
@@ -276,12 +284,10 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     }
 
     public void _replaceFragment(int id, Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(id, fragment)
-                .commit();
+        getSupportFragmentManager().beginTransaction().replace(id, fragment).commit();
     }
 
     public void _replaceFragment(int id, Fragment fragment, String tag) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(id, fragment, tag).commit();
+        getSupportFragmentManager().beginTransaction().replace(id, fragment, tag).commit();
     }
 }

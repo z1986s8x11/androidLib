@@ -13,8 +13,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.zsx.R;
-
 /**
  * @author zsx
  * @date 2013-12-27 上午11:22:32
@@ -82,9 +80,16 @@ public class Lib_Util_Widget {
      * 屏幕宽度,单位像素(px).
      */
     public static int getWidth(Context context) {
-        DisplayMetrics displayMetrics = context.getResources()
-                .getDisplayMetrics();
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
+    }
+
+    /**
+     * 拿到屏幕的高度
+     */
+    public int _getHeight(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return displayMetrics.heightPixels;
     }
 
     /**
