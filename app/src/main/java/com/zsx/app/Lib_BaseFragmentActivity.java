@@ -254,7 +254,8 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
         } else {
             transaction.show(to);
         }
-        transaction.commit();
+//        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     public void _addFragment(int id, Fragment from, Fragment to) {
