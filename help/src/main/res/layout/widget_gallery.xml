@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- animationDuration	setAnimationDuration(int)　设置列表项切换时的动画持续时间 -->
+    <!-- gravity	setGravity(int)	设置对其方式 -->
+    <!-- spacing	setSpacing(int)	设置Gallery内列表项之间的间距 -->
+    <!-- unselectedAlpha	setUnselectedAlpha(float)	设置没有选中的列表项的透明度 -->
+
+    <Gallery
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:spacing="3pt"
+        android:unselectedAlpha="0.6" />
+
+</LinearLayout>

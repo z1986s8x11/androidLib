@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- adjustViewBounds	setAdjustViewBounds(boolean)	设置ImageView是否调整自己的边界来保持所显示图片的长宽比 -->
+    <!-- maxHeight	setMaxHeight(int)	设置ImageView的最大高度 -->
+    <!-- maxWidth	setMaxWidth(int)	设置ImageView的最大宽度 -->
+    <!-- scaleType	setScaleType(ImageView.ScaleType)	设置所显示的图片如何缩放或移动以适应ImageView的大小 -->
+    <!-- src	setImageResource(int)	设置ImageView所显示的Drawable对象的ID -->
+
+
+    <!-- scaleType 允许的属性值 -->
+    <!-- matrix 			ImageView.ScaleType.MATRIX			使用matrix方式进行缩放 -->
+    <!-- fitXY			ImageView.ScaleType.FIT_XY			对图片横向,纵向独立缩放,使得该图完全适用于该ImageView,图片的纵横比可能会改变 -->
+    <!-- fitStart		ImageView.ScaleType.FIT_START		保持纵横比缩放图片,直到该图片能完全显示在ImageView中(图片较长的边长与ImageView相应的边长相等),缩放完成后将该图片放在ImageView的左上角 -->
+    <!-- fitCenter		ImageView.ScaleType.FIT_CENTER		保持纵横比缩放图片,直到该图片能完全显示在ImageView中(图片较长的边长与ImageView相应的边长相等),缩放完成后将该图片放在ImageView的中间 -->
+    <!-- fitEnd			ImageView.ScaleType.FIT_END			保持纵横比缩放图片,直到该图片能完全显示在ImageView中(图片较长的边长与ImageView相应的边长相等),缩放完成后将该图片放在ImageView的右下角 -->
+    <!-- center			ImageView.ScaleType.CENTER			把图片放在ImageView中间,但不进行任何缩放 -->
+    <!-- centerCrop		ImageView.ScaleType.CENTER_CROP		保持横纵比缩放图片,以使得图片能完全覆盖ImageView -->
+    <!-- centerInside	ImageView.ScaleType.CENTER_INSIDE	保持横纵比缩放图片,以使得ImageView能完全显示该图片 -->
+
+    <ImageView
+        android:id="@id/act_widget_current_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_add" />
+
+</LinearLayout>

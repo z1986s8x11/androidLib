@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </SearchView>
+    <!-- choiceMode	设置ListView的选择行为 -->
+    <!-- divider	设置List列表项的分隔条(既可用颜色分隔,也可以用Drawable分隔) -->
+    <!-- dividerHeight	设置分隔条的高度 -->
+    <!-- entries	指定一个数组资源,Android将根据该数组资源生成ListView -->
+    <!-- footerDividersEnabled	如果设置为false,则不在footer View之前绘制分隔条 -->
+    <!-- HeaderDividersEnabled	如果设置为false,则不在header View之后绘制分隔条 -->
+    <!-- android:stackFromBottom="true"  如果设置成true listview从下往上排列显示(默认从上往下排列) -->
+    <!-- android:transcriptMode="alwaysScroll" 动态添加数据时，列表将自动往下滚动最新的条目可以自动滚动到可视范围内 -->
+    <!-- drawSelectorOnTop="true" true 点击某一条记录，颜色会显示在最上面，记录上的文字被遮住 false颜色会在记录的后面，成为背景色，但是记录内容的文字是可见的 -->
+    <!-- fadingEdge="none" 上边和下边有黑色的阴影设置后就没有了 -->
+    <!-- scrollbars="none" 隐藏滚动条 -->
+    <!-- fadeScrollbars="true" 属性为true就可以实现滚动条的自动隐藏和显示 -->
+    <!-- android:duplicateParentState="true"放在Adapter的itemView 中表示View享受点击等状态的影响，但不相应点击事件 -->
+
+    <ListView
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.0"
+        android:divider="#ff0055"
+        android:dividerHeight="2dp"
+        android:entries="@array/activity_list" >
+    </ListView>
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="@string/dev_listview" />
+
+</LinearLayout>

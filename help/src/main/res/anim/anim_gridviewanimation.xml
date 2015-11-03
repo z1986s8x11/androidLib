@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- android:directionPriority="[row][colum]" 显示优先级 -->
+<!-- android:direction="right_to_left|bottom_to_top"  显示方向 -->
+<!-- android:rowDelay="75%" -->
+<!-- android:columnDelay="0%" -->
+<!-- android:directionPriority="none" -->
+<gridLayoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animation="@anim/anim_alpha"
+    android:directionPriority="column"
+    android:rowDelay="50%" />

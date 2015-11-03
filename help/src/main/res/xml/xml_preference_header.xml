@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="org.zsx.android.api.widget.PreferenceHeader_Activity$Prefs1Fragment"
+        android:icon="@android:drawable/ic_input_get"
+        android:summary="summary"
+        android:title="title" />
+    <header
+        android:icon="@android:drawable/ic_input_add"
+        android:summary="Intent"
+        android:title="跳转网页" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://wap.baidu.com" />
+    </header>
+
+</preference-headers>

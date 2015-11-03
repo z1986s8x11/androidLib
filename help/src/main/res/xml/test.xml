@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system>
+	<linux pwd="当前路径" ls="当前目录文件" cd="更改当前路径">命令</linux>
+	<linux pwd="当前路径" awk="awk方法" find="查找">命令</linux>
+</system>

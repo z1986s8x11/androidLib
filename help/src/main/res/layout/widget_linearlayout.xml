@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- android:keepScreenOn 设置屏幕常亮 -->
+<!-- android:splitMotionEvents 定义布局是否传递touch事件到子布局 -->
+<!-- android:addStatesFromChildren 父控件的状态随子控件的状态改变而改变 -->
+<!-- android:soundEffectsEnabled点击或触摸是否有声音效果 -->
+<!-- android:hapticFeedbackEnabled设置触感反馈 -->
+<!-- android:fitsSystemWindows设置布局调整时是否考虑系统窗口(如状态栏) -->
+<!-- android:layout_baselinealignedChildIndex 属性 指当前layout是 以哪个view的基准线与其他的View进行对齐。这个属性只对Button、TextView、EditView有效且下标从0开始 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+</LinearLayout>

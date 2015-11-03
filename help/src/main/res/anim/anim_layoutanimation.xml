@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     android:animationOrder=""
+	[reverse 反向显示] 
+	[random  随机显示]
+-->
+<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:animation="@anim/anim_scale"
+    android:animationOrder="reverse"
+    android:delay="30%" />

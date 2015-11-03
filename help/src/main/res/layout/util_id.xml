@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请输入身份证号码:" />
+
+    <EditText
+        android:id="@id/global_edittext1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@id/global_btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看" />
+
+    <TextView
+        android:id="@id/global_textview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

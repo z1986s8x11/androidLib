@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </SearchView>
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="默认" />
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="自定义文字" >
+    </SearchView>
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="@string/dev_searchView_1" />
+
+    <SearchView
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </SearchView>
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="@string/dev_searchView_2" />
+
+</LinearLayout>

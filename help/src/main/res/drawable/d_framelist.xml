@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- android:oneshot="false"  是否只循环一次 -->
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false" >
+    <item
+        android:drawable="@android:drawable/ic_dialog_alert"
+        android:duration="1000"/>
+    <item
+        android:drawable="@android:drawable/ic_dialog_dialer"
+        android:duration="1000"/>
+    <item
+        android:drawable="@android:drawable/ic_dialog_email"
+        android:duration="1000"/>
+    <item
+        android:drawable="@android:drawable/ic_dialog_info"
+        android:duration="1000"/>
+    <item
+        android:drawable="@android:drawable/ic_dialog_map"
+        android:duration="1000"/>
+
+</animation-list>

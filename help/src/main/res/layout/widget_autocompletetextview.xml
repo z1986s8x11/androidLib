@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- completionHint	setCompletionHint(CharSequence)	设置出现在下拉菜单中的提示标题 -->
+    <!-- completionThreshold	setThreshold(int)	设置用户至少输入几个字符才会显示提示 -->
+    <!-- dropDownHeight	setDropDownHeight(int)	设置下拉菜单的高度 -->
+    <!-- dropDownHorizontalOffset	设置下拉菜单与文本框之间的水平偏移.下拉菜单默认与文本框左对齐 -->
+    <!-- dropDownVerticalOffset	设置下拉菜单与文本框之间的垂直偏移.下拉菜单默认紧跟文本框 -->
+    <!-- dropDownWidth	setDropDownWidth(int)	设置下拉菜单的高度 -->
+    <!-- popupBackground	setDropDownBackgroundResource(int)	设置下拉菜单的背景 -->
+
+    <AutoCompleteTextView
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:completionHint="请选择需要查找的内容(widget)"
+        android:completionThreshold="1"
+        android:dropDownHorizontalOffset="20dp" />
+
+</LinearLayout>

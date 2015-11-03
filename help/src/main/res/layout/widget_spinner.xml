@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- prompt	设置该列表选择框的提示 -->
+    <!-- entries 使用数组资源设置该下拉列表框的列表项目 -->
+
+    <Spinner
+        android:id="@id/act_widget_current_view"
+        style="@android:style/Widget.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/activity_list"
+        android:prompt="@string/action_settings" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="@string/dev_spinner_1" />
+
+    <Spinner
+        android:id="@id/global_spinner"
+        style="@android:style/Widget.Spinner.DropDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/activity_list"
+        android:prompt="@string/action_settings" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="@string/dev_spinner_2" />
+
+</LinearLayout>

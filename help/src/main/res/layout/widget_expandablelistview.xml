@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- childDivider	指定各组内各子列表项之间的分隔条 -->
+    <!-- childIndicator	显示在子列表项旁边的Drawable对象 -->
+    <!-- groupIndicator	显示在组列表项旁边的Drawable对象 -->
+
+    <ExpandableListView
+        android:childIndicator="@android:drawable/ic_input_delete"
+        android:groupIndicator="@android:drawable/ic_input_add"
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ExpandableListView>
+
+</LinearLayout>

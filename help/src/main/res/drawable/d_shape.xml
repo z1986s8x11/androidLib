@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 圆角 -->
+
+    <corners />
+    <!-- 渐变 -->
+    <!-- angle 的值必须是45的倍数（包括0），仅在type="linear"有效 -->
+    <gradient android:angle="270" />
+    <!-- 间隔 -->
+
+    <padding />
+    <!-- 大小 -->
+
+    <size />
+    <!-- 填充 -->
+
+    <solid />
+    <!-- stroke 描边 -->
+    <!-- android:width 设置边边的宽度 -->
+    <!-- android:color 设置边边的颜色 -->
+    <!-- android:dashWidth  设置虚线的宽度 -->
+    <!-- android:dashGap 设置虚线的间隔宽度 -->
+    <stroke
+        android:dashGap="2dp"
+        android:dashWidth="1dp"
+        android:width="5dp"
+        android:color="@color/lib_black" />
+
+</shape>

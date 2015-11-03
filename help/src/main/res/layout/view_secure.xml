@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@id/global_btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="showToast遮挡Button" />
+
+    <Button
+        android:id="@id/global_btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="button1" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="默认" />
+
+    <Button
+        android:id="@id/global_btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:filterTouchesWhenObscured="true"
+        android:gravity="center"
+        android:text="button2" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="@string/dev_view_secure_1" />
+
+    <Button
+        android:id="@id/global_btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="button3" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="@string/dev_view_secure_2" />
+
+</LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 位于http://schemas.android.com/apk/res/+项目子包 -->
+
+    <org.zsx.android.api.parse.CustomView
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:testBoolean="true"
+        app:testColor="@color/lib_black"
+        app:testColorReference="#111111"
+        app:testDimension="10dp"
+        app:testEnum="test3"
+        app:testFloat="3"
+        app:testInteger="2"
+        app:testReference="祝思翔" />
+
+</LinearLayout>

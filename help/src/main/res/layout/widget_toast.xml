@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@id/global_btn1"
+        android:layout_width="wrap_content"
+        android:text="普通"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@id/global_btn2"
+        android:text="图片"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="view"
+        android:id="@id/global_btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

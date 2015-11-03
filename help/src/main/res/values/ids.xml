@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item name="global_btn1" type="id"></item>
+    <item name="global_btn2" type="id"></item>
+    <item name="global_btn3" type="id"></item>
+    <item name="global_btn4" type="id"></item>
+    <item name="global_edittext1" type="id"></item>
+    <item name="global_textview1" type="id"></item>
+    <item name="global_textview2" type="id"></item>
+    <item name="global_textview3" type="id"></item>
+    <item name="global_textview4" type="id"></item>
+    <item name="act_widget_current_view" type="id"></item>
+    <item name="global_linearlayout1" type="id"></item>
+    <item name="global_linearlayout2" type="id"></item>
+    <item name="global_listview" type="id"></item>
+    <item name="global_gridview" type="id"></item>
+    <item name="global_imageview1" type="id"></item>
+    <item name="global_imageview2" type="id"></item>
+    <item name="global_imageview3" type="id"></item>
+	<item name="global_seekbar" type="id"></item>
+	<item name="global_tablelayout" type="id"></item>
+	<item name="global_spinner" type="id"></item>
+</resources>

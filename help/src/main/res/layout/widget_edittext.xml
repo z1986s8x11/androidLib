@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- android:ems="10"  默认多少个字符的宽度 -->
+    <!-- android:autoLink="web"  默认提取字符串中的特定子串执行相应操作 -->
+    <!-- android:digits="1234ab"  允许输入的字符串 -->
+    <!-- android:inputType="textPassword" 输入方式 -->
+    <!-- android:ellipsize="end" 字符串超过最大长度，进行省略处理的方式 -->
+    <!-- android:maxLength="5" 最多5个字符 -->
+    <!-- android:textStyle="bold" 字体加粗 对英文有效 -->
+	<!-- android:includeFontPadding设置文本是否包含顶部和底部额外空白 -->
+	<!-- android:linksClickable设置链接是否点击连接，即使设置了autoLink -->
+	<!-- android:lineSpacingExtra设置行间距 -->
+	<!-- android:lineSpacingMultiplier设置行间距的倍数。如”1.2” -->
+    <EditText
+        android:id="@id/act_widget_current_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="单行10字符长度"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234ab"
+        android:hint="只能输入1234ab"
+        android:textColorHint="@android:color/holo_green_light" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="密码"
+        android:inputType="textPassword"
+        android:singleLine="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="最多5个字符"
+        android:maxLength="5" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|top"
+        android:hint="多行"
+        android:lines="2" />
+
+</LinearLayout>

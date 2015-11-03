@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <!-- android:max="int" 最大进度值 -->
+    <!-- android:progress="int" 当前进度值 -->
+    <!-- android:thumb="drawable" 当前进度值的图标 -->
+
+    <SeekBar
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:secondaryProgress="75"
+        android:progress="10"
+        android:thumb="@android:drawable/ic_media_play" />
+
+</LinearLayout>

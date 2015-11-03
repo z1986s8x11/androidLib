@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">帮助文档</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="html_str"><i>斜体</i><b>粗体</b><u>下划线</u><sup>上标</sup><sub>下标</sub><strike>删除线</strike><big>大字</big><small>小字</small><monospace>等宽</monospace></string>
+    <string name="link"><a href="http://wap.baidu.com">进入百度</a>和<a href="tel:13996687614">打电话</a></string>
+    <string name="styled_12_hour_clock">MM/<font fgcolor="#ffff0000"><b>dd</b></font>/yy h<font fgcolor="#ffff0000"><sup><small>mm</small></sup></font><b>aa</b></string>
+    <string name="styled_24_hour_clock">MM/<font fgcolor="#ffff0000"><b>dd</b></font>/yy k<font fgcolor="#ffff0000"><sup><small>mm</small></sup></font></string>
+    <string name="dev_textview_0">TextView.setMovementMethod(ScrollingMovementMethod.getInstance())</string>
+    <string name="dev_textview_1">android:focusable="true"
+         android:focusableInTouchMode="true"
+         android:marqueeRepeatLimit="marquee_forever"
+         android:singleLine="true"</string>
+    <string name="dev_textview_2">android:drawableLeft="@android:drawable/ic_menu_add\"</string>
+    <string name="dev_textview_3">autoLink="web"
+         android:textColorLink="@android:color/holo_green_light"</string>
+    <string name="dev_textview_4">textStyle="bold"</string>
+    <string name="dev_textview_5">android:ellipsize="end"
+        nandroid:singleLine="true"</string>
+    <string name="dev_textview_6">android:text="&lt;i>斜体&lt;/i>&lt;b>粗体&lt;/b>&lt;u>下划线&lt;/u>&lt;sup>上标&lt;/sup>&lt;sub>下标&lt;/sub>&lt;strike>删除线&lt;/strike>&lt;big>大字&lt;/big>&lt;small>小字&lt;/small>&lt;monospace>等宽&lt;/monospace>"</string>
+    <string name="dev_textview_7">Spanned span = Html.fromHtml(html,new ImageGetter(){},new TagHandler(){});
+	    TextView.setText(span);
+	    TextView.setClickable(true);
+	    TextView.setMovementMethod(LinkMovementMethod.getInstance())</string>
+    <string name="dev_textview_8">SpannableString ss = new SpannableString("text4: Manually created spans. Click here to dial the phone.");\n
+        ss.setSpan(new StyleSpan(Typeface.BOLD), 0, 30,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);\n
+        ss.setSpan(new URLSpan("tel:13996687614"), 31+6, 31+10,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);\n
+        TextView.setText(ss);\n
+        TextView.setMovementMethod(LinkMovementMethod.getInstance());</string>
+    <string name="dev_animator_1">Animation anim = AnimationUtils.loadAnimation(this,R.anim.xx);
+        \n\n&lt;translate android:fromXDelta="0"
+        android:interpolator="@anim/interpolator_cycle" 
+        android:toXDelta="10" />
+        \n\n&lt;cycleInterpolator android:cycles="7" /></string>
+    <string name="dev_popupmenu">PopupMenu mPopupMenu = new PopupMenu(this, showPopupBtn);\n
+        getMenuInflater().inflate(R.menu.popup_menu, mPopupMenu.getMenu());\n
+        mPopupMenu.setOnMenuItemClickListener(this);</string>
+    <string name="dev_progressbar">// 设置窗口特征:启用先是进度条的进度条 必须设置在setContentView方法以前\n
+		requestWindowFeature(Window.FEATURE_PROGRESS);\n// 设置窗口特征:启用不显示进度条的进度条\n
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);\n
+		setContentView(R.layout.widget_progressbar);\n
+		// 显示不带进度的进度条\n
+		setProgressBarIndeterminate(true);\n
+		// 显示带进度的进度条\n
+		setProgressBarVisibility(true);\n</string>
+    <string name="dev_textswitch">textSwitch.setFactory(this);
+	    android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out"</string>
+    <string name="dev_switch">android:textOff="自定义关"
+	    android:textOn="自定义开"</string>
+    <string name="dev_tablelayout_1">android:shrinkColumns="0"</string>
+    <string name="dev_tablelayout_2">android:stretchColumns="1"</string>
+    <string name="dev_tablelayout_3">android:layout_column="1"</string>
+    <string name="dev_tablelayout_4">TableLayout.setColumnCollapsed(0, !table.isColumnCollapsed(0))</string>
+    <string name="dev_spinner_1">style="@android:style/Widget.Spinner"</string>
+    <string name="dev_spinner_2">style="@android:style/Widget.Spinner.DropDown"</string>
+    <string name="dev_listview">ListView.setTextFilterEnabled(true);
+        mListView.clearTextFilter();
+        mListView.setFilterText(newText);</string>
+    <string name="dev_view_secure_1">所在窗口被其它可见窗口遮住时,是否过滤触摸事件:
+	    android:filterTouchesWhenObscured="true"</string>
+    <string name="dev_view_secure_2">public boolean onTouch(View v, MotionEvent event) {\n\t
+        if ((event.getFlags() &amp; MotionEvent.FLAG_WINDOW_IS_OBSCURED) != 0) {\n\t\t
+        	if (event.getAction() == MotionEvent.ACTION_UP) {\n\t\t\t
+        		//事件相应\n\t\t\t\t
+        	}\n\t\t
+        	return true;\n\t\t
+        }\n\t
+        return false;\n
+       }</string>
+    <string name="dev_searchView_1">android:iconifiedByDefault="false"
+        android:queryHint="自定义文字"</string>
+    <string name="dev_searchView_2">SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);\n
+	    if (searchManager != null) {\n\t
+	    List&lt;SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();\n\t\t
+		SearchableInfo info = searchManager.getSearchableInfo(getComponentName());\n\t\t
+		for (SearchableInfo inf : searchables) {\n\t\t
+		if (inf.getSuggestAuthority() != null&amp;&amp; inf.getSuggestAuthority().startsWith("applications")) {\n\t\t
+				info = inf;\n\t\t\t
+				}\n\t\t
+			}\n\t\t
+			searchSV.setSearchableInfo(info);\n\t\t}</string>
+    <string name="dev_intent_1">in = new Intent(Intent.ACTION_DIAL);
+        in.setData(Uri.parse("tel:13996687614"));</string>
+    <string name="dev_intent_2">in = new Intent(Intent.ACTION_CALL);
+        // 需要 uses-permission android:name="android.permission.CALL_PHONE
+        in.setData(Uri.parse("tel:13996687614"));</string>
+    <string name="dev_intent_3">in = new Intent(Intent.ACTION_VIEW);i
+        n.setData(Uri.parse("http://www.baidu.com"));</string>
+    <string name="dev_intent_4">in = new Intent(Intent.ACTION_VIEW);
+        in.setData(Uri.parse("geo:0,0?z=4&amp;q=business+near+city"));</string>
+    <string name="dev_intent_5">in = new Intent(Intent.ACTION_WEB_SEARCH);
+        in.setData(Uri.parse("http://www.baidu.com"));</string>
+    <string name="dev_intent_6">Intent[] ins = new Intent[3];
+        ins[0] = Intent.makeRestartActivityTask(new ComponentName(this,MainActivity.class));
+        ins[1] = new Intent(this, Activity_Activity.class);
+        ins[2] = new Intent(this,Activity_Activity_TestDialogActivity.class);
+        ins[2].putExtra(Activity_Activity_TestDialogActivity._EXTRA_FLAG_KEY,android.R.style.Theme_Dialog);
+        startActivities(ins);</string>
+    <string name="dev_intent_7">in = new Intent(Intent.ACTION_GET_CONTENT);
+        in.setType("audio/*");
+        startActivity(Intent.createChooser(in, "Select music"));</string>
+    <string name="dev_dialogfragment">CustomDialogFragment frgt = new CustomDialogFragment();\n 
+        Bundle bundle = new Bundle();\n
+		bundle.putString("params", "我是参数");\n
+		frgt.setArguments(bundle);\n
+		frgt.show(getFragmentManager(), "tag2");</string>
+	<string name="dev_swipeRefreshLayout">
+	    xml:\n
+	    &lt;android.support.v4.widget.SwipeRefreshLayout\n
+        android:layout_width="match_parent"\n
+        android:layout_height="match_parent">\n
+        	\t&lt;ListView\n
+            \tandroid:layout_width="match_parent"\n
+            \tandroid:layout_height="match_parent"\n
+            \tandroid:entries="@array/activity_list" >\n
+        	\t&lt;/ListView>\n
+        &lt;/android.support.v4.widget.SwipeRefreshLayout>\n
+        java:\n
+        mRefreshLayout.setColorSchemeColors(Color.YELLOW, Color.RED, Color.BLUE, Color.GREEN);\n
+        mRefreshLayout.setOnRefreshListener(this);\n
+        mRefreshLayout.setRefreshing(false);
+	</string>
+</resources>

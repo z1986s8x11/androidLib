@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="activity_list">
+        <item>控件</item>
+        <item>多媒体</item>
+        <item>数据存储</item>
+        <item>数据解析</item>
+        <item>服务</item>
+        <item>图形图像动画</item>
+        <item>网络通信</item>
+        <item>位置服务</item>
+        <item>设备功能</item>
+        <item>类说明</item>
+    </string-array>
+    <string-array name="activity_list_value">
+        <item>widget</item>
+        <item>media</item>
+        <item>io</item>
+        <item>parse</item>
+        <item>service</item>
+        <item>animation</item>
+        <item>http</item>
+        <item>location</item>
+        <item>device</item>
+        <item>util</item>
+    </string-array>
+
+</resources>

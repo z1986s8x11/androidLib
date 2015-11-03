@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@id/global_btn1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转拨号键盘" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_intent_1" />
+
+        <Button
+            android:id="@id/global_btn2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转拨打电话" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_intent_2" />
+
+        <Button
+            android:id="@id/global_btn3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转网页" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_intent_3" />
+
+        <Button
+            android:id="@id/global_btn4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转地图" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_intent_4" />
+
+        <Button
+            android:id="@id/global_textview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转搜索" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_intent_5" />
+
+        <Button
+            android:id="@id/global_textview2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="startActivities()" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_intent_6" />
+
+        <Button
+            android:id="@id/global_textview3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择音乐" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_intent_7" />
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?><!-- android:package 主程序包的包名 --><!-- android:sharedUserId 默认情况下，Android给每个APK分配一个唯一的UserID，所以是默认禁止不同APK访问共享数据的.将不同APK的sharedUserId都设为一样，则这些APK之间就可以互相共享数据了 --><!-- android:versionCode 设备程序识别版本 --><!-- android:versionName 这个名称是给用户看的 --><!--
+     android:installLocation 
+		[preferExternal 系统会优先考虑将APK安装到SD卡上 ]
+		[auto 系统将会根据存储空间自己去适应]
+		[internalOnly 是指必须安装到内部才能运行 ]
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.zsx.android.api"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="16" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- android:allowClearUserData('true'or 'false') 用户是否能选择自行清除数据,默认为true -->
+    <!-- android:allowTaskReparenting('true'or 'false') 是否允许activity更换从属的任务，比如从短信息任务切换到浏览器任务 -->
+    <!-- android:backupAgent 设置该APP的备份，属性值应该是一个完整的类名，如org.zsx.android，此属性并没有默认值，并且类名必须得指定(就是个备份工具，将数据备份到云端的操作) -->
+    <!-- android:debuggable true时，表明该APP在手机上可以被调试。默认为false,在false的情况下调试该APP，就会报错误 -->
+    <!-- android:description/android:label 属性都是为许可提供的，均为字符串资源，当用户去看许可列表(android:label)或者某个许可的详细信息(android:description)时，这些字符串资源就可以显示给用户 -->
+    <!-- android:enabled Android系统是否能够实例化该应用程序的组件，如果为true，每个组件的enabled属性决定那个组件是否可以被 enabled。如果为false，它覆盖组件指定的值；所有组件都是disabled -->
+    <!-- android:hasCode('true'or 'false') 此APP是否包含任何的代码，默认为true，若为false， -->
+    <!-- android:icon APP的图标 -->
+    <!-- android:killAfterRestore -->
+    <!-- android:manageSpaceActivity -->
+    <!-- android:name 应用程序所实现的Application子类的全名 -->
+    <!-- android:permission 设置许可名，这个属性若在<application>上定义的话，是一个给应用程序的所有组件设置许可的便捷方式，当然它是被各组件设置的许可名所覆盖的 -->
+    <!-- android:presistent 该应用程序是否应该在任何时候都保持运行状态,默认为false。因为应用程序通常不应该设置本标识，持续模式仅仅应该设置给某些系统应用程序才是有意义的 -->
+    <!-- android:process 应用程序运行的进程名，它的默认值为<manifest>元素里设置的包名，当然每个组件都可以通过设置该属性来覆盖默认值。如果你想两个应用程序共用一个进程的话，你可以设置他们的android:process相同，但前提条件是他们共享一个用户ID及被赋予了相同证书的时候 -->
+    <!-- android:restoreAnyVersion 表明应用是否准备尝试恢复所有的备份，甚至该备份是比当前设备上更要新的版本，默认是false -->
+    <!-- android:taskAffinity 拥有相同的affinity的Activity理论上属于相同的Task，应用程序默认的affinity的名字是<manifest>元素中设定的package名 -->
+    <!-- android:theme 一个资源的风格，它定义了一个默认的主题风格给所有的activity,当然也可以在自己的theme里面去设置它，有点类似style -->
+    <application
+        android:name="org.zsx.android.api._BaseApplication"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <!-- Activity 配置 -->
+        <!-- configChanges 表示忽略什么的改变 即当配置list发生修改时， 是否调用 onConfigurationChanged() 方法 -->
+        <!--
+             screenOrientation 屏幕的适配 
+        		 [landscape 横屏]
+        		 [portrait 竖屏]
+        		 [user 当前用户倾向的屏幕方向]
+        		 [behind 屏幕方向]
+        		 [sensor 重力传感器确定屏幕方向]
+        		 [nosensor 忽略重力传感器方向]
+        -->
+        <!-- exported  是否允许被其他进程调用 -->
+        <!--
+             launchMode 
+        		[standard 每次都创建实例]
+        		[singleTop 每次都创建,并且放置于栈顶]
+        		[singleTask 当前App 只有一个实例]
+        		[singleInstance 与多个App启动同一Intent有关]
+        -->
+        <!-- Task 相关 -->
+        <!-- alwaysRetainTaskState 是否保留Activity所在Task状态,默认false -->
+        <!-- clearTaskOnLaunch 清除除根目录以外所有Activity 默认false  比如 P 是 activity, Q 是被P 触发的activity, 然后返回Home, 重新启动 P，是否显示 Q -->
+        <!-- finishOnTaskLaunch 当Task从主页面重新启动时，特定的Activity是否需要被销毁	默认false -->
+        <!-- android:excludeFromRecents 是否可被显示在最近打开的activity列表里，默认是false -->
+        <!-- android:finishOnTaskLaunch 当用户重新启动这个任务的时候，是否关闭已打开的activity，默认是false -->
+        <!-- android:excludeFromRecents 是否可被显示在最近打开的activity列表里，默认是false -->
+        <!-- android:multiprocess 是否允许多进程，默认是false -->
+        <!-- android:noHistory 当用户从Activity上离开并且它在屏幕上不再可见时，Activity是否从Activity stack中清除并结束。默认是false。Activity不会留下历史痕迹 -->
+        <!-- android:stateNotNeeded activity被销毁或者成功重启时是否保存状态 -->
+        <!--
+             android:windowSoftInputMode 
+				[stateUnspecified 软键盘的状态并没有指定，系统将选择一个合适的状态或依赖于主题的设置] 
+				[stateUnchanged 当这个activity出现时，软键盘将一直保持在上一个activity里的状态，无论是隐藏还是显示]
+				[stateHidden：用户选择activity时，软键盘总是被隐藏]
+				[stateAlwaysHidden：当该Activity主窗口获取焦点时，软键盘也总是被隐藏的]
+				[stateVisible：软键盘通常是可见的]
+				[stateAlwaysVisible：用户选择activity时，软键盘总是显示的状态]
+				[adjustUnspecified：默认设置，通常由系统自行决定是隐藏还是显示]
+				[adjustResize：该Activity总是调整屏幕的大小以便留出软键盘的空间]
+				[adjustPan：当前窗口的内容将自动移动以便当前焦点从不被键盘覆盖和用户能总是看到输入内容的部分]
+        -->
+        <activity
+            android:name="org.zsx.android.api.MainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!-- data -->
+                <!-- android:mimeType 指定数据类型 -->
+                <!-- android:scheme 对应URI的各部分 scheme://host:port/path -->
+                <!-- android:host 对应URI的各部分 scheme://host:port/path -->
+                <!-- android:port 对应URI的各部分 scheme://host:port/path -->
+                <!-- android:path  对应URI的各部分 scheme://host:port/path -->
+                <!-- android:pathPattern 主要是为了格式化path所使用的 -->
+                <!-- android:PathPrefix 主要是为了格式化path所使用的 -->
+
+
+                <!-- meta-data -->
+                <!-- android:name 元数据项的名字，为了保证这个名字是唯一的，采用java风格的命名规范，如com.woody.project.fried -->
+                <!-- android:resource 资源的一个引用，指定给这个项的值是该资源的id。该id可以通过方法Bundle.getInt()来从meta-data中找到 -->
+                <!-- android:value 指定给这一项的值。可以作为值来指定的数据类型并且组件用来找回那些值的Bundle方法：[getString],[getInt],[getFloat],[getString],[getBoolean]) -->
+            </intent-filter>
+        </activity>
+        <!--android:configChanges="orientation|keyboardHidden" 不重新创建Activity和包含的Fragment -->
+        <activity
+            android:name="com.zsx.app._PublicFragmentActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name="zsx.lib.qrcode.main.Lib_QRCodeActivity" />
+        <!-- anim -->
+        <activity android:name="org.zsx.android.api.animator.AlphaAnimation_Activity" />
+        <activity android:name="org.zsx.android.api.animator.Animator_Activity" />
+        <activity android:name="org.zsx.android.api.animator.AnimatorSet_Activity" />
+        <activity android:name="org.zsx.android.api.animator.FrameAnimation_Activity" />
+        <activity android:name="org.zsx.android.api.animator.Keyframe_Activity" />
+        <activity android:name="org.zsx.android.api.animator.RotateAnimation_Activity" />
+        <activity android:name="org.zsx.android.api.animator.ScaleAnimation_Activity" />
+        <activity android:name="org.zsx.android.api.animator.TranslateAnimation_Activity" />
+        <activity android:name="org.zsx.android.api.animator.LayoutAnimation_Activity" />
+        <activity android:name="org.zsx.android.api.animator.LayoutTransition_Activity" />
+        <activity android:name="org.zsx.android.api.animator.ObjectAnimator_Activity" />
+        <activity android:name="org.zsx.android.api.animator.ValueAnimator_Activity" />
+        <activity android:name="org.zsx.android.api.animator.ViewPropertyAnimator_Activity" />
+        <!-- device -->
+        <activity android:name="org.zsx.android.api.device.Configuration_Activity" />
+        <activity android:name="org.zsx.android.api.device.SoftInputModes_Activity" />
+        <activity android:name="org.zsx.android.api.device.WallpaperManager_Activity" />
+        <!-- drawable -->
+        <activity android:name="org.zsx.android.api.drawable.ClipDrawable_Activity" />
+        <activity android:name="org.zsx.android.api.drawable.LayerDrawable_Activity" />
+        <activity android:name="org.zsx.android.api.drawable.ShapeDrawable_Activity" />
+        <activity android:name="org.zsx.android.api.drawable.StateListDrawable_Activity" />
+        <!-- io -->
+        <activity android:name="org.zsx.android.api.io.OpenFileStrem_Activity" />
+        <activity android:name="org.zsx.android.api.io.SharedPreference_Activity" />
+        <activity android:name="org.zsx.android.api.io.SQLiteDatabase_Activity" />
+        <!-- media -->
+        <activity android:name="org.zsx.android.api.media.AsyncPlayer_Activity" />
+        <activity android:name="org.zsx.android.api.media.AudioRecord_Activity" />
+        <activity android:name="org.zsx.android.api.media.Camera_Activity" />
+        <activity android:name="org.zsx.android.api.media.MediaPlayer_Activity" />
+        <activity android:name="org.zsx.android.api.media.MediaRecorder_Activity" />
+        <activity android:name="org.zsx.android.api.media.SoundPool_Activity" />
+        <!-- parse -->
+        <activity android:name="org.zsx.android.api.parse.Attrs_Activity" />
+        <activity android:name="org.zsx.android.api.parse.XmlResourceParser_Activity" />
+        <!-- sensor -->
+        <activity android:name="org.zsx.android.api.sensor.SensorLight_Activity" />
+        <!-- service -->
+        <activity android:name="org.zsx.android.api.service.AlarmManager_Activity" />
+        <activity android:name="org.zsx.android.api.service.Clipboard_Activity" />
+        <activity android:name="org.zsx.android.api.service.NfcManager_Activity" />
+        <activity android:name="org.zsx.android.api.service.Notification_Activity" />
+        <activity android:name="org.zsx.android.api.service.SensorManager_Activity" />
+        <activity android:name="org.zsx.android.api.service.Service_Activity" />
+        <activity android:name="org.zsx.android.api.service.SmsManager_Activity" />
+        <activity android:name="org.zsx.android.api.service.Telephony_Activity" />
+        <activity android:name="org.zsx.android.api.service.WindowManager_Activity" />
+        <!-- activity -->
+        <activity android:name="org.zsx.android.api.activity.Activity_Activity" />
+        <activity
+            android:name="org.zsx.android.api.activity.Activity_Activity_TestActivity"
+            android:theme="@style/android:Theme.Light" />
+        <activity
+            android:name="org.zsx.android.api.activity.Activity_Activity_TestDialogActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name="org.zsx.android.api.activity.WallpaperActivity_Activity"
+            android:theme="@android:style/Theme.Wallpaper" />
+        <!-- util -->
+        <activity android:name="org.zsx.android.api.util.AccountManager_Activity" />
+        <activity android:name="org.zsx.android.api.util.AsyncTask_Activity" />
+        <activity android:name="org.zsx.android.api.util.BroadcastReceiver_Activity" />
+        <activity android:name="org.zsx.android.api.util.CountDownTimer_Activity" />
+        <activity android:name="org.zsx.android.api.util.Environment_Activity" />
+        <activity android:name="org.zsx.android.api.util.Handler_Activity" />
+        <activity android:name="org.zsx.android.api.util.ID_Activity" />
+        <activity android:name="org.zsx.android.api.util.Intent_Activity" />
+        <activity android:name="org.zsx.android.api.util.LauncherActivity_Activity" />
+        <activity android:name="org.zsx.android.api.util.QRCode_Activity" />
+        <activity android:name="org.zsx.android.api.util.SystemDrawable_Activity" />
+        <activity android:name="org.zsx.android.api.util.VelocityTracker_Activity" />
+        <!-- widget -->
+        <activity android:name="org.zsx.android.api.widget.AlertDialog_Activity" />
+        <activity android:name="org.zsx.android.api.widget.AnalogClock_Activity" />
+        <activity android:name="org.zsx.android.api.widget.AutoCompleteTextView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.Button_Activity" />
+        <activity android:name="org.zsx.android.api.widget.CheckBox_Activity" />
+        <activity android:name="org.zsx.android.api.widget.CheckedTextView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.Chronometer_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ContextMenu_Activity" />
+        <activity android:name="org.zsx.android.api.widget.DatePickerDialog_Activity" />
+        <activity android:name="org.zsx.android.api.widget.DatePicker_Activity" />
+        <activity android:name="org.zsx.android.api.widget.DigitalClock_Activity" />
+        <activity android:name="org.zsx.android.api.widget.EditText_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ExpandableListView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.Gallery_Activity" />
+        <activity android:name="org.zsx.android.api.widget.GridLayout_Activity" />
+        <activity android:name="org.zsx.android.api.widget.GridView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.HorizontalScrollView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ImageButton_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ImageSwithcer_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ImageView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ListView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.PopupMenu_Activity" />
+        <activity android:name="org.zsx.android.api.widget.PopupWindow_Activity" />
+        <activity android:name="org.zsx.android.api.widget.PreferenceActivity_Activity" />
+        <activity android:name="org.zsx.android.api.widget.PreferenceFragment_Activity" />
+        <activity android:name="org.zsx.android.api.widget.PreferenceHeader_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ProgressBar_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ProgressDialog_Activity" />
+        <activity android:name="org.zsx.android.api.widget.RaidoButton_Activity" />
+        <activity android:name="org.zsx.android.api.widget.RatingBar_Activity" />
+        <activity android:name="org.zsx.android.api.widget.SearchView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ScrollView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.SeekBar_Activity" />
+        <activity android:name="org.zsx.android.api.widget.SurfaceView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.Switch_Activity" />
+        <activity android:name="org.zsx.android.api.widget.SwipeRefreshLayout_Activity" />
+        <activity android:name="org.zsx.android.api.widget.SlidingDrawer_Activity" />
+        <activity android:name="org.zsx.android.api.widget.Spinner_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TableLayout_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TabHost_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TextClock_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TextToSpeech_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TextView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TextSwitch_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TimePickerDialog_Activity" />
+        <activity android:name="org.zsx.android.api.widget.TimePicker_Activity" />
+        <activity android:name="org.zsx.android.api.widget.Toast_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ToggleButton_Activity" />
+        <activity android:name="org.zsx.android.api.widget.MultiAutoCompleteTextView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.VideoView_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ViewFlipper_Activity" />
+        <activity android:name="org.zsx.android.api.widget.ViewGroup_Activity" />
+        <activity android:name="org.zsx.android.api.widget.View_Activity" />
+        <activity android:name="org.zsx.android.api.widget.WebView_Activity" />
+        <!-- graphice -->
+        <activity android:name="org.zsx.android.api.graphice.Animation_Activity" />
+        <activity android:name="org.zsx.android.api.graphice.Arcs_Activity" />
+        <activity android:name="org.zsx.android.api.graphice.Movie_Activity" />
+        <!-- fragment -->
+        <activity android:name="org.zsx.android.api.fragment.DialogFragment_Activity" />
+        <activity android:name="org.zsx.android.api.fragment.Fragment_Activity" />
+        <!-- 自定义View -->
+        <activity android:name="org.zsx.android.api.view.Secure_Activity" />
+        <activity android:name="org.zsx.android.api.view.CustomFullView_Activity" />
+        <!-- reader -->
+        <activity
+            android:name="org.zsx.android.api.read.TxtReaderActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:mimeType="text/plain"
+                    android:pathPattern=".*\\.txt"
+                    android:scheme="file" />
+            </intent-filter>
+        </activity>
+        <!-- Service 配置 -->
+        <!-- exported  是否允许被其他进程调用 -->
+        <!-- process 服务运行在单独的进程中的进程名 -->
+        <!-- permission 权限配置 -->
+        <service
+            android:name="org.zsx.android.api._BaseService"
+            android:exported="false"
+            android:permission="org.android.zsx.permission.LOAD"
+            android:process=":baseService" />
+        <service android:name="com.zsx.debug.Lib_DebugService" />
+    </application>
+
+</manifest>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- columnWidth	setColumnWidth(int)	设置列的宽度 -->
+    <!-- gravity	setGravity(int)	设置对其方式 -->
+    <!-- horizontalSpacing	setHorizontalSpacing(int)	设置各元素之间的水平间距 -->
+    <!-- numColumns	setNumColumns(int)	设置列数 -->
+    <!-- stretchMode		setStretchMode(int)		设置拉伸模式 -->
+    <!-- verticalSpacing	settVerticalSpacing(int)	设置各元素之间的垂直间距 -->
+    <GridView
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:horizontalSpacing="2pt"
+        android:numColumns="3"
+        android:verticalSpacing="2pt" >
+    </GridView>
+
+</LinearLayout>

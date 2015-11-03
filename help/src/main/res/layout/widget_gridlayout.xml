@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- android:animateLayoutChanges 是否有layout改变的动画效果 -->
+    <!-- android:columnCount 设置该网格的列数量 -->
+	<!-- android:alignmentMode 设置该布局管理器采用的对齐模式 -->
+	<!-- android:columnOrderPreserved 设置该网格容器是否保留列序号 -->
+	<!-- android:rowCount 设置该网格的行数量 -->
+	<!-- android:rowOrderPreserved 设置该网格容器是否保留行序号 -->
+	<!-- android:useDefaultMargins 设置该布局管理器是否使用默认的页边距 -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignBounds"
+        android:columnCount="4"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true" >
+
+        <TextView
+            android:background="@android:color/holo_blue_bright"
+            android:text="第一个" />
+
+        <TextView
+            android:background="@android:color/holo_orange_dark"
+            android:text="第二个" />
+
+        <TextView
+            android:background="@android:color/holo_orange_dark"
+            android:text="第三个" />
+
+        <TextView
+            android:background="@android:color/holo_green_dark"
+            android:text="第三个" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:layout_columnSpan="4"
+            android:text="默认" />
+
+        <TextView
+            android:layout_columnSpan="4"
+            android:layout_gravity="center_horizontal"
+            android:layout_row="3"
+            android:text="占满一排" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:layout_columnSpan="4"
+            android:text="android:layout_columnSpan=4\nandroid:layout_gravity=&apos;center_horizontal&apos;" />
+
+        <TextView
+            android:layout_column="2"
+            android:text="定义在第二个显示" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:layout_columnSpan="4"
+            android:text="android:layout_column=2" />
+
+        <TextView
+            android:layout_row="8"
+            android:text="我显示在第三排" />
+
+        <TextView
+            style="@style/textView_showCode"
+            android:layout_columnSpan="4"
+            android:text="android:layout_row=8" />
+    </GridLayout>
+
+    <Button
+        android:id="@id/global_btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add" />
+
+    <GridLayout
+        android:id="@id/act_widget_current_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:columnCount="4" >
+    </GridLayout>
+
+</LinearLayout>

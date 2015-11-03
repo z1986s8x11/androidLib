@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow>
+
+                <Button android:text="长度过长会把后面的抵出界面,shrinkColumns,设置多行显示完" />
+
+                <Button android:text="我没显示完" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="默认" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="0" >
+
+            <TableRow>
+
+                <Button android:text="长度过长会把后面的抵出界面,shrinkColumns,设置多行显示完" />
+
+                <Button android:text="我没显示完" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_tablelayout_1" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1" >
+
+            <TableRow>
+
+                <Button android:text="默认情况" />
+
+                <Button android:text="拉伸填充" />
+
+                <Button android:text="默认情况" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_tablelayout_2" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow>
+
+                <Button android:text="默认情况" />
+
+                <Button android:text="默认情况" />
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:layout_column="1"
+                    android:text="空个位置" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_tablelayout_3" />
+
+        <TableLayout
+            android:id="@id/global_tablelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:collapseColumns="0" >
+
+            <TableRow>
+
+                <Button android:text="我被隐藏" />
+
+                <Button android:text="第一列被隐藏" />
+
+                <Button
+                    android:id="@id/global_btn1"
+                    android:text="点击显示" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            style="@style/textView_showCode"
+            android:text="@string/dev_tablelayout_4" />
+    </LinearLayout>
+
+</ScrollView>

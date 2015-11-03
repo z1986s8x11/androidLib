@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- isIndicator 设置该星级评分条是否允许用户改变(true为不允许修改) -->
+    <!-- numStars 设置该星级评分条总共有多少星级 -->
+    <!-- rating 设置该星级评分条默认的星级 -->
+    <!-- stepSize 设置每次最少需要改变多少个星级 -->
+    <!-- 不能设置成  layout_width="match_parent" -->
+
+    <RatingBar
+        android:id="@id/act_widget_current_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:progress="0"
+        android:rating="3"
+        android:stepSize="0.5" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="默认" />
+
+    <RatingBar
+        android:id="@id/act_widget_current_view"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="3" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="style=&apos;?android:attr/ratingBarStyleSmall&apos;" />
+
+    <RatingBar
+        android:id="@id/act_widget_current_view"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="3" />
+
+    <TextView
+        style="@style/textView_showCode"
+        android:text="style=&apos;?android:attr/ratingBarStyleIndicator&apos;" />
+
+</LinearLayout>

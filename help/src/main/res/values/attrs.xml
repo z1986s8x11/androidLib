@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 包含attr子元素 :定义一个属性 -->
+    <!-- 定义一个属性 -->
+    <attr name="hello"></attr>
+    <!-- declare-styleable子元素:定义一个styleable对象,每个styleable对象就是一个attr属性的集合 -->
+    <!-- reference指的是是从string.xml引用过来 -->
+    <!-- flag是自己定义的,类似于 android:gravity="top" -->
+    <!-- dimension 指的是是从dimension.xml里引用过来的内容.注意,这里如果是dp那就会做像素转换 -->
+    <declare-styleable name="lib_TextView">
+        <attr name="testBoolean" format="boolean" />
+        <attr name="testInteger" format="integer" />
+        <attr name="testReference" format="reference|string" />
+        <attr name="testColorReference" format="reference|color" />
+        <attr name="testColor" format="color" />
+        <attr name="testDimension" format="dimension" />
+        <attr name="testEnum">
+            <flag name="test1" value="0" />
+            <flag name="test2" value="1" />
+            <flag name="test3" value="2" />
+            <flag name="test4" value="3" />
+        </attr>
+        <attr name="testFloat" format="float" />
+    </declare-styleable>
+
+</resources>
