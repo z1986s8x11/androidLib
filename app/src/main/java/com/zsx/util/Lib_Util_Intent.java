@@ -84,6 +84,8 @@ public class Lib_Util_Intent {
             File f = new File(imgPath);
             if (f != null && f.exists() && f.isFile()) {
                 intent.setType("image/jpg");
+                //当用户选择短信时使用sms_body取得文字
+                intent.putExtra("sms_body", msgText);
                 Uri u = Uri.fromFile(f);
                 intent.putExtra(Intent.EXTRA_STREAM, u);
             }
