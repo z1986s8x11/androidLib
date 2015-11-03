@@ -1,5 +1,6 @@
 package com.zsx.util;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -128,5 +129,10 @@ public class Lib_Util_Intent {
         } catch (ActivityNotFoundException e) {
             return false;
         }
+    }
+
+    public static Intent startApp(Activity activity, String packageName) {
+        Intent intent = activity.getPackageManager().getLaunchIntentForPackage(packageName);
+        return intent;
     }
 }
