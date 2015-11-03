@@ -90,17 +90,16 @@ public class Lib_Util_Bitmap {
     }
 
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
+        double outMax = Math.max(options.outHeight, options.outWidth);
+        double outMin = Math.min(options.outHeight, options.outWidth);
+        double reqMax = Math.max(reqHeight, reqWidth);
+        double reqMin = Math.min(reqHeight, reqWidth);
         int inSampleSize = 1;
-        if (height > reqHeight || width > reqWidth) {
-            final int heightRatio = Math.round((float) height
-                    / (float) reqHeight);
-            final int widthRatio = Math.round((float) width / (float) reqWidth);
-            inSampleSize = heightRatio < widthRatio ? widthRatio : heightRatio;
+        if (outMax > reqMax || outMin > reqMin) {
+            int maxRatio = Math.round((float) outMax / (float) reqMax);
+            int minRatio = Math.round((float) outMin / (float) reqMin);
+            inSampleSize = maxRatio < minRatio ? minRatio : maxRatio;
         }
         return inSampleSize;
     }
-
-
 }
