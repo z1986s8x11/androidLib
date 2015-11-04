@@ -11,6 +11,7 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -652,6 +653,18 @@ public class Lib_Util_System {
         return Looper.myLooper() == Looper.getMainLooper();
     }
 
+    public static String getMetaDataFromApplication(Context activity, String name) {
+        try {
+            ApplicationInfo appInfo = activity.getPackageManager()
+                    .getApplicationInfo(activity.getPackageName(),
+                            PackageManager.GET_META_DATA);
+            String mTag = appInfo.metaData.getString(name);
+            return mTag;
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     // 设置字体
     // Typeface mFace =
     // Typeface.createFromAsset(getContext().getAssets(),"fonts/samplefont.ttf");
