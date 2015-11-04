@@ -1,6 +1,7 @@
 package com.zsx.adapter;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -197,6 +198,22 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         }
         return views;
     }
+
+    @SuppressWarnings("unchecked")
+    private static <X extends View> X _getViewHolder(View view, int id) {
+        SparseArray<View> viewHolder = (SparseArray<View>) view.getTag();
+        if (viewHolder == null) {
+            viewHolder = new SparseArray<View>();
+            view.setTag(viewHolder);
+        }
+        View childView = viewHolder.get(id);
+        if (childView == null) {
+            childView = view.findViewById(id);
+            viewHolder.put(id, childView);
+        }
+        return (X) childView;
+    }
+
 
     protected TextView _toTextView(View v) {
         return (TextView) v;
