@@ -25,7 +25,7 @@ public class AccountManager_Activity extends _BaseActivity {
 		/**
 		 * 需要 <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 		 */
-		if (Lib_Util_System.isPermisson(this, permission.GET_ACCOUNTS)) {
+		if (Lib_Util_System.isPermission(this, permission.GET_ACCOUNTS)) {
 			Toast.makeText(
 					this,
 					" 需要 <uses-permission android:name='android.permission.GET_ACCOUNTS'/>",

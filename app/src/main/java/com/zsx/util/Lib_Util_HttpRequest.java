@@ -94,7 +94,7 @@ public final class Lib_Util_HttpRequest {
             } catch (NameNotFoundException e) {
                 e.printStackTrace(System.err);
             }
-            if (Lib_Util_System.isPermisson(appContext,
+            if (Lib_Util_System.isPermission(appContext,
                     android.Manifest.permission.READ_PHONE_STATE)) {
                 TelephonyManager tm = (TelephonyManager) appContext
                         .getSystemService(Context.TELEPHONY_SERVICE);

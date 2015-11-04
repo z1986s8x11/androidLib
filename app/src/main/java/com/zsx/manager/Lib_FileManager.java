@@ -29,7 +29,7 @@ public final class Lib_FileManager {
         if (rootDirName.trim().length() == 0) {
             return;
         }
-        if (!Lib_Util_System.isPermisson(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (!Lib_Util_System.isPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             if (LogUtil.DEBUG) {
                 LogUtil.e(Lib_FileManager.class, "需要权限:" + Manifest.permission.WRITE_EXTERNAL_STORAGE);
             }

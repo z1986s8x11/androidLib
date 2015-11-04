@@ -94,7 +94,7 @@ public final class Lib_UncaughtException implements UncaughtExceptionHandler {
         if (LogUtil.DEBUG) {
             LogUtil.e(ex);
         }
-        if (Lib_Util_System.isPermisson(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (Lib_Util_System.isPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             // 收集设备参数信息
             Map<String, String> infos = collectDeviceInfo(mContext);
             // 保存日志文件

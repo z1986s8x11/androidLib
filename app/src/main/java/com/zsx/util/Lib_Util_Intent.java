@@ -1,10 +1,12 @@
 package com.zsx.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import com.zsx.debug.LogUtil;
@@ -134,5 +136,33 @@ public class Lib_Util_Intent {
     public static Intent startApp(Activity activity, String packageName) {
         Intent intent = activity.getPackageManager().getLaunchIntentForPackage(packageName);
         return intent;
+    }
+
+    /**
+     * 创建快捷方式
+     */
+    private void createShortCut(Context context, int titleRes, int iconRes) {
+        if(!Lib_Util_System.isPermission(context, Manifest.permission.INSTALL_SHORTCUT)){
+            if(LogUtil.DEBUG){
+                LogUtil.e(Lib_Util_Intent.class,"need usePermission uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"");
+            }
+            return;
+        }
+        // 创建快捷方式的Intent
+        Intent shortcutIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+        // 不允许重复创建
+        shortcutIntent.putExtra("duplicate", false);
+        // 快捷方式的名字
+        shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, context.getString(titleRes));
+        // 快捷方式icon
+        Parcelable icon = Intent.ShortcutIconResource.fromContext(
+                context, iconRes);
+        //设置icon
+        shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
+        // 点击快捷图片，运行的程序主入口
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+        shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+        // 发送广播,创建快捷方式
+        context.sendBroadcast(shortcutIntent);
     }
 }

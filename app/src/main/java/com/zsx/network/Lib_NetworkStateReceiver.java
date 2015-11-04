@@ -61,7 +61,7 @@ public class Lib_NetworkStateReceiver extends BroadcastReceiver {
      * @param mContext
      */
     public void registerNetworkStateReceiver(Context mContext) {
-        if (Lib_Util_System.isPermisson(mContext, Manifest.permission.ACCESS_NETWORK_STATE)) {
+        if (Lib_Util_System.isPermission(mContext, Manifest.permission.ACCESS_NETWORK_STATE)) {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ANDROID_NET_CHANGE_ACTION);
             mContext.getApplicationContext().registerReceiver(this, filter);

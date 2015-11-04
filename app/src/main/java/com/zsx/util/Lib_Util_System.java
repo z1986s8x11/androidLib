@@ -266,7 +266,7 @@ public class Lib_Util_System {
             //boolean b = wifiManager.setWifiEnabled(true);
             return null;
         }
-        if (Lib_Util_System.isPermisson(context, Manifest.permission.ACCESS_WIFI_STATE)) {
+        if (Lib_Util_System.isPermission(context, Manifest.permission.ACCESS_WIFI_STATE)) {
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
             int ipAddress = wifiInfo.getIpAddress();
             String ip = (ipAddress & 0xFF) + "." + ((ipAddress >> 8) & 0xFF) + "." + ((ipAddress >> 16) & 0xFF) + "." + (ipAddress >> 24 & 0xFF);
@@ -537,7 +537,7 @@ public class Lib_Util_System {
      * @param permission android.Manifest.permission.常量
      * @return 是否有此权限
      */
-    public static boolean isPermisson(Context context, String... permission) {
+    public static boolean isPermission(Context context, String... permission) {
 
         try {
             int pCount = permission.length;
