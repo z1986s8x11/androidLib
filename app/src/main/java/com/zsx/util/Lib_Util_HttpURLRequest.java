@@ -66,6 +66,9 @@ public class Lib_Util_HttpURLRequest {
         BufferedReader bufferReader = null;
         HttpURLConnection urlConn = null;
         try {
+            if (LogUtil.DEBUG) {
+                LogUtil.e("requestData params:", String.valueOf(requestUrl) + String.valueOf(param));
+            }
             URL url = new URL(requestUrl);
             urlConn = (HttpURLConnection) url.openConnection();
             urlConn.setDoInput(true); // 设置输入流采用字节流
@@ -132,9 +135,6 @@ public class Lib_Util_HttpURLRequest {
             }
             getUrl = requestUrl + getParam;
         }
-        if (LogUtil.DEBUG) {
-            LogUtil.e("requestData params:", String.valueOf(getUrl));
-        }
         return get(getUrl);
     }
 
@@ -143,6 +143,9 @@ public class Lib_Util_HttpURLRequest {
         HttpURLConnection urlConn = null;
         String result = null;
         try {
+            if (LogUtil.DEBUG) {
+                LogUtil.e("requestData params:", String.valueOf(requestUrl));
+            }
             URL url = new URL(requestUrl);
             urlConn = (HttpURLConnection) url.openConnection();
             urlConn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
