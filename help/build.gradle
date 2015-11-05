@@ -11,10 +11,30 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    //签名
+//    signingConfigs {
+//        debug {
+//            storeFile file("C:/Users/Administrator/.android/debug.keystore")
+//        }
+//        relealse {
+//            storeFile file("F:/gradle.jks")                 //Android Studio --> Build --> Generate Signed APK --> Create New 可以生成
+//            storePassword "gradle"                          //在生成.jks文件时需要填入的参数一一对应即可
+//            keyAlias "gradle"
+//            keyPassword "gradle"
+//        }
+//    }
     buildTypes {
         release {
-            minifyEnabled false
+            //混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            //加载默认混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            //signingConfig signingConfigs.relealse
         }
     }
 }
