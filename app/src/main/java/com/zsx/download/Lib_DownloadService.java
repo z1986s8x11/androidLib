@@ -62,6 +62,9 @@ public class Lib_DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent==null){
+            return super.onStartCommand(intent, flags, startId);
+        }
         Object object = intent.getSerializableExtra(_EXTRA_DOWNLOAD_DATA);
         Lib_DownloadInterface data;
         if (object == null) {
