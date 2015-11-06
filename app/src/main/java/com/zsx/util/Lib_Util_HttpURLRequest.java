@@ -1,14 +1,8 @@
 package com.zsx.util;
 
-import android.text.TextUtils;
-
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,38 +26,27 @@ public class Lib_Util_HttpURLRequest {
     public static int READ_TIMEOUT_INT = 5000;
 
     public static String post(String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
-        if (map == null) {
-            return post(requestUrl, "");
+        if (map == null || map.size() == 0) {
+            return post(requestUrl, "", null);
         }
-        JSONObject json = new JSONObject();
+        StringBuffer sb = new StringBuffer();
         for (String key : map.keySet()) {
-            try {
-                json.put(key, map.get(key));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            sb.append("&");
+            sb.append(key);
+            sb.append("=");
+            sb.append(URLEncoder.encode(map.get(key) == null ? "" : String.valueOf(map.get(key)), "utf-8"));
         }
-        return post(requestUrl, json.toString(), null);
-    }
-
-    public static String post(String requestUrl, JSONObject json) throws IOException, Lib_Exception {
-        if (json == null) {
-            return post(requestUrl, "");
-        }
-        return post(requestUrl, json.toString(), null);
-    }
-
-    public static String post(String requestUrl, String param) throws IOException, Lib_Exception {
-        return post(requestUrl, param, null);
+        sb.deleteCharAt(0);
+        return post(requestUrl, sb.toString(), null);
     }
 
     private static String post(String requestUrl, String param, String cookie) throws IOException, Lib_Exception {
-        if (TextUtils.isEmpty(param)) {
-            param = "{}";
+        if (param == null) {
+            param = "";
         }
         String result = null;
         String encoding = "utf-8";
-        BufferedReader bufferReader = null;
+        InputStreamReader bufferReader = null;
         HttpURLConnection urlConn = null;
         try {
             if (LogUtil.DEBUG) {
@@ -76,7 +59,10 @@ public class Lib_Util_HttpURLRequest {
             urlConn.setRequestMethod("POST");
             urlConn.setUseCaches(false); // 设置缓存
             byte[] data = param.getBytes(encoding);
-            urlConn.setRequestProperty("Content-Type", "application/x-javascript; charset=" + encoding);
+            //urlConn.setInstanceFollowRedirects(true);//是否连接遵循重定向
+            //Content-Type: application/x-www-form-urlencoded   默认的提交方式，同GET类似，将参数组装成Key-value方式，用&分隔，但数据存放在body中提交
+            //Content-Type: multipart/form-data                 这种方式一般用来上传文件，或大批量数据时。
+            urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=" + encoding);
             urlConn.setRequestProperty("Content-Length", String.valueOf(data.length));
             urlConn.setRequestProperty("Charset", encoding);
             urlConn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
@@ -88,12 +74,14 @@ public class Lib_Util_HttpURLRequest {
             dop.close(); // 关闭
             if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 // 下面开始做接收工作
-                bufferReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-                String readLine = null;
-                result = "";
-                while ((readLine = bufferReader.readLine()) != null) {
-                    result += readLine;
+                bufferReader = new InputStreamReader(urlConn.getInputStream());
+                StringBuffer sb = new StringBuffer();
+                char[] chars = new char[128];
+                int length;
+                while ((length = bufferReader.read(chars)) != -1) {
+                    sb.append(chars, 0, length);
                 }
+                result = sb.toString();
             } else {
                 throw new Lib_Exception(urlConn.getResponseCode(), "HTTP CODE:" + urlConn.getResponseCode());
             }
@@ -139,7 +127,7 @@ public class Lib_Util_HttpURLRequest {
     }
 
     public static String get(String requestUrl) throws IOException, Lib_Exception {
-        BufferedReader bufferReader = null;
+        InputStreamReader bufferReader = null;
         HttpURLConnection urlConn = null;
         String result = null;
         try {
@@ -154,12 +142,14 @@ public class Lib_Util_HttpURLRequest {
             urlConn.connect(); // 连接既往服务端发送消息
             if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 // 下面开始做接收工作
-                bufferReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-                String readLine = null;
-                result = "";
-                while ((readLine = bufferReader.readLine()) != null) {
-                    result += readLine;
+                bufferReader = new InputStreamReader(urlConn.getInputStream());
+                StringBuffer sb = new StringBuffer();
+                char[] chars = new char[128];
+                int length;
+                while ((length = bufferReader.read(chars)) != -1) {
+                    sb.append(chars, 0, length);
                 }
+                result = sb.toString();
             } else {
                 throw new Lib_Exception(urlConn.getResponseCode(), "HTTP CODE:" + urlConn.getResponseCode());
             }

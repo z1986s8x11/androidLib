@@ -23,6 +23,7 @@
         <activity android:name=".ui.adapter.InsertAdapterActivity" />
         <activity android:name=".ui.download.DownloadActivity" />
         <activity android:name=".ui.network.LoadDataActivity" />
+        <activity android:name=".ui.network.HttpUrlConnectActivity" />
         <activity android:name=".ui.widget.SlidingMenuActivity" />
         <activity android:name=".ui.widget.ViewPagerIndicatorActivity" />
         <activity android:name=".ui.widget.KeywordsFlowActivity" />
