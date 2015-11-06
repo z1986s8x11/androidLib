@@ -257,6 +257,7 @@ public class Lib_DownloadService extends Service {
                             loadingDownload(progress);
                         }
                     }
+                    fos.close();
                     if (file.exists() && file.isFile()) {
                         file.delete();
                     }
@@ -309,6 +310,13 @@ public class Lib_DownloadService extends Service {
                 }
                 if (conn != null) {
                     conn.disconnect();
+                }
+                if (fos != null) {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
