@@ -98,7 +98,10 @@ public class Lib_Util_Network {
         int nType = networkInfo.getType();
 
         if (nType == ConnectivityManager.TYPE_MOBILE) {
-            if (networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) {
+            if (networkInfo.getExtraInfo() == null) {
+                return NetType.NoneNet;
+            }
+            if ("cmnet".equals(networkInfo.getExtraInfo().toLowerCase())) {
                 return NetType.NET;
             } else {
                 return NetType.WAP;
