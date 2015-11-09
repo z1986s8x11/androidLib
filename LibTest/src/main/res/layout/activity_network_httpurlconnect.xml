@@ -23,4 +23,18 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="get请求" />
+
+    <Button
+        android:id="@+id/btn_client_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="HttpClient post请求" />
+
+    <Button
+        android:id="@+id/btn_client_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="HttpClient get请求" />
 </LinearLayout>

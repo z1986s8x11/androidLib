@@ -1,5 +1,7 @@
 package com.zsx.util;
 
+import android.text.TextUtils;
+
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
 
@@ -19,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Created by Administrator on 2015/11/5.
+ * Created by zhusx on 2015/11/5.
  */
 public class Lib_Util_HttpURLRequest {
     public static int CONNECTION_TIMEOUT_INT = 10000;
@@ -27,7 +29,7 @@ public class Lib_Util_HttpURLRequest {
 
     public static String post(String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
         if (map == null || map.size() == 0) {
-            return post(requestUrl, "", null);
+            return post(requestUrl, "", true);
         }
         StringBuffer sb = new StringBuffer();
         for (String key : map.keySet()) {
@@ -37,15 +39,22 @@ public class Lib_Util_HttpURLRequest {
             sb.append(URLEncoder.encode(map.get(key) == null ? "" : String.valueOf(map.get(key)), "utf-8"));
         }
         sb.deleteCharAt(0);
-        return post(requestUrl, sb.toString(), null);
+        return post(requestUrl, sb.toString(), true);
     }
 
-    private static String post(String requestUrl, String param, String cookie) throws IOException, Lib_Exception {
+    public static String post(String requestUrl, String textString) throws IOException, Lib_Exception {
+        if (TextUtils.isEmpty(textString)) {
+            return post(requestUrl, "", false);
+        }
+        return post(requestUrl, textString, false);
+    }
+
+    private static String post(String requestUrl, String param, boolean isUrlEncoded) throws IOException, Lib_Exception {
         if (param == null) {
             param = "";
         }
         String result = null;
-        String encoding = "utf-8";
+        String encoding = "UTF-8";
         InputStreamReader bufferReader = null;
         HttpURLConnection urlConn = null;
         try {
@@ -62,7 +71,11 @@ public class Lib_Util_HttpURLRequest {
             //urlConn.setInstanceFollowRedirects(true);//是否连接遵循重定向
             //Content-Type: application/x-www-form-urlencoded   默认的提交方式，同GET类似，将参数组装成Key-value方式，用&分隔，但数据存放在body中提交
             //Content-Type: multipart/form-data                 这种方式一般用来上传文件，或大批量数据时。
-            urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=" + encoding);
+            if (isUrlEncoded) {
+                urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=" + encoding);
+            } else {
+                urlConn.setRequestProperty("Content-Type", "text/plain; charset=" + encoding);
+            }
             urlConn.setRequestProperty("Content-Length", String.valueOf(data.length));
             urlConn.setRequestProperty("Charset", encoding);
             urlConn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
