@@ -9,9 +9,8 @@ import android.widget.TextView;
 import com.zsx.download.Lib_DownloadInterface;
 import com.zsx.download.Lib_DownloadReceiver;
 import com.zsx.download.Lib_DownloadService;
-import com.zsx.manager.Lib_FileManager;
-import com.zsx.util.Lib_Util_Network;
 import com.zsx.network.Lib_NetworkStateReceiver;
+import com.zsx.util.Lib_Util_Network;
 
 import java.io.File;
 
@@ -52,7 +51,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         }
         switch (v.getId()) {
             case R.id.btn_start:
-                Lib_DownloadService._startService(this, "22", "www.baidu.com", new File(Lib_FileManager.getCachePath(), "ff.html").getPath());
+                Lib_DownloadService._startService(this, "22", "www.baidu.com", new File(getExternalCacheDir(), "ff.html").getPath());
                 break;
             case R.id.btn_stop:
                 stopService(new Intent(this, Lib_DownloadService.class));

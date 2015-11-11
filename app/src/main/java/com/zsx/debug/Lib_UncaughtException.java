@@ -14,8 +14,8 @@ import android.util.Log;
 
 import com.zsx.app.Lib_BaseActivity;
 import com.zsx.app._PublicFragmentActivity;
-import com.zsx.manager.Lib_FileManager;
 import com.zsx.manager.Lib_SystemExitManager;
+import com.zsx.util.Lib_Util_File;
 import com.zsx.util.Lib_Util_System;
 
 import java.io.File;
@@ -66,11 +66,16 @@ public final class Lib_UncaughtException implements UncaughtExceptionHandler {
             } else {
                 this.mContext = context.getApplicationContext();
             }
+            Lib_Util_File.deleteLastModifiedFile(getLogPath(context), 10);
         } else {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "_init() is Repeat Call");
             }
         }
+    }
+
+    private String getLogPath(Context context) {
+        return new File(context.getCacheDir(), "log/").getPath();
     }
 
     /**
@@ -203,7 +208,7 @@ public final class Lib_UncaughtException implements UncaughtExceptionHandler {
             @SuppressLint("SimpleDateFormat")
             DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String time = formatter.format(new Date());
-            File saveFile = new File(Lib_FileManager.getLogPath(), time + "_log.txt");
+            File saveFile = new File(getLogPath(mContext), time + "_log.txt");
             FileOutputStream fos = new FileOutputStream(saveFile);
             fos.write(sb.toString().getBytes());
             fos.close();

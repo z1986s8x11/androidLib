@@ -1,14 +1,18 @@
 package com.zsx.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.storage.StorageManager;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.tools.Lib_UnicodeInputStream;
@@ -26,6 +30,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * @author zsx
@@ -365,6 +371,28 @@ public class Lib_Util_File {
         return path;
     }
 
+    /**
+     * 文件或者文件夹的大小
+     */
+    public static long getFileSize(File f) {
+        if (!f.exists()) {
+            return -1;
+        }
+        if (f.isFile()) {
+            return f.length();
+        }
+        long size = 0;
+        File flist[] = f.listFiles();
+        for (int i = 0; i < flist.length; i++) {
+            if (flist[i].isDirectory()) {
+                size = size + getFileSize(flist[i]);
+            } else {
+                size = size + flist[i].length();
+            }
+        }
+        return size;
+    }
+
     public static void copyAssetToSDCard(Context context,
                                          String assetsFileName, File sdFile) {
         if (!sdFile.canWrite()) {
@@ -403,6 +431,9 @@ public class Lib_Util_File {
         }
     }
 
+    /**
+     * 只支持本地文件
+     */
     public File toFile(Activity activity, Uri uri) {
         File file = null;
         if ("file:".contains(uri.getScheme())) {
@@ -421,5 +452,104 @@ public class Lib_Util_File {
             file = new File(img_path);
         }
         return file;
+    }
+
+    /**
+     * 复制Assets文件到Data/包名/files/下
+     * <p/>
+     * 使用数据库用 SQLiteDatabase.openOrCreateDatabase(new File(context.getFilesDir(), dbName).getPath(), null);
+     */
+    public static void copyAssetsFileToDataPath(final Context context, String assetsName, String dbName) {
+        File file = new File(context.getFilesDir(), dbName);
+        if (file.exists() && file.length() > 0) {
+            return;
+        }
+        new AsyncTask<String, Void, Void>() {
+            @Override
+            protected Void doInBackground(String... params) {
+                // 拷贝资产目录下的数据库 到系统的data/data/包名/files/目录
+                AssetManager am = context.getAssets();
+                try {
+                    InputStream is = am.open(params[0]);
+                    File file = new File(context.getFilesDir(), params[1]);
+                    FileOutputStream fos = new FileOutputStream(file);
+                    byte[] buffer = new byte[1024];
+                    int len;
+                    while ((len = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, len);
+                    }
+                    fos.close();
+                    is.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute(assetsName, dbName);
+    }
+
+    public static void deleteLastModifiedFile(String dirFile, int cacheMaxFileCount) {
+        File logFile = new File(dirFile);
+        File[] fs = logFile.listFiles();
+        if (fs == null) {
+            return;
+        }
+        if (fs.length > cacheMaxFileCount) {
+            Arrays.sort(fs, new Comparator<File>() {
+                public int compare(File f1, File f2) {
+                    long diff = f1.lastModified() - f2.lastModified();
+                    if (diff > 0)
+                        return -1;
+                    else if (diff == 0)
+                        return 0;
+                    else
+                        return 1;
+                }
+            });
+            for (int i = Math.max(0, cacheMaxFileCount); i < fs.length; i++) {
+                fs[i].delete();
+            }
+        }
+    }
+
+    /**
+     * @param context
+     * @param rootDirName rootPath
+     * @param dirName     rootPath 下面的子目录
+     */
+    public static void createFileDir(Context context, String rootDirName, String... dirName) {
+        if (TextUtils.isEmpty(rootDirName)) {
+            return;
+        }
+        if (!Lib_Util_System.isPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(Lib_Util_File.class, "需要权限:" + Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            return;
+        }
+        File rootPathFile;
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            rootPathFile = new File(Environment.getExternalStorageDirectory()
+                    .getPath(), rootDirName);
+        } else {
+            rootPathFile = new File(context.getDir(rootDirName, Context.MODE_PRIVATE).toString());
+        }
+        if (!rootPathFile.exists() || !rootPathFile.isDirectory()) {
+            rootPathFile.mkdirs();
+        }
+        if (dirName == null) {
+            return;
+        }
+        for (int i = 0; i < dirName.length; i++) {
+            File cacheFile = new File(rootPathFile, dirName[i]);
+            if (!cacheFile.exists() || !cacheFile.isDirectory()) {
+                if (!cacheFile.mkdir()) {
+                    if (LogUtil.DEBUG) {
+                        LogUtil.e(Lib_Util_File.class, "mkdir() is Error,Path:" + cacheFile.getPath());
+                    }
+                }
+            }
+        }
     }
 }

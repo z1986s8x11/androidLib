@@ -1,15 +1,11 @@
 package com.zsx.app;
 
-import android.app.Activity;
 import android.app.Application;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.TextUtils;
 
 import com.zsx.debug.Lib_UncaughtException;
 import com.zsx.debug.LogUtil;
-import com.zsx.manager.Lib_FileManager;
 import com.zsx.network.Lib_NetworkStateReceiver;
 
 
@@ -28,7 +24,6 @@ public class ZsxApplicationManager {
         private Application context;
         private boolean monitorNet;
         private boolean uncaughtException;
-        private String fileManagerDir;
         private Application.ActivityLifecycleCallbacks activityCallbacks;
         private Lib_NetworkStateReceiver receiver;
 
@@ -59,21 +54,7 @@ public class ZsxApplicationManager {
         }
 
 
-        /**
-         * 设置存储数据的文件夹目录名称
-         */
-        public Builder setFileManagerDir(String dir) {
-            this.fileManagerDir = dir;
-            return this;
-        }
-
         private void init() {
-            if (fileManagerDir != null) {
-                if (!TextUtils.isEmpty(fileManagerDir.trim())) {
-                    /* 初始化文件系统 (创建目录) */
-                    Lib_FileManager.init(fileManagerDir, context);
-                }
-            }
             /*监听网络变化*/
             if (monitorNet) {
                 receiver = new Lib_NetworkStateReceiver();

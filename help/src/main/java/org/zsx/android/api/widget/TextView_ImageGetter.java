@@ -10,7 +10,6 @@ import android.text.Html.ImageGetter;
 import android.text.Spanned;
 import android.widget.TextView;
 
-import com.zsx.manager.Lib_FileManager;
 import com.zsx.util.Lib_Util_Encryption;
 
 import org.apache.http.HttpResponse;
@@ -71,9 +70,7 @@ public class TextView_ImageGetter implements ImageGetter {
 		String ext = ss[ss.length - 1];
 
 		// 最终图片保持的地址
-		String savePath = Lib_FileManager.getCachePath() + File.separator
-				+ imageName + "." + ext;
-
+		String savePath = new File(mImageTV.getContext().getExternalCacheDir() , imageName + "." + ext).getPath();
 		File file = new File(savePath);
 		if (file.exists()) {
 			// 如果文件已经存在，直接返回
