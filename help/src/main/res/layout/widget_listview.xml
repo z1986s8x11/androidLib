@@ -4,11 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </SearchView>
     <!-- choiceMode	设置ListView的选择行为 -->
     <!-- divider	设置List列表项的分隔条(既可用颜色分隔,也可以用Drawable分隔) -->
     <!-- dividerHeight	设置分隔条的高度 -->

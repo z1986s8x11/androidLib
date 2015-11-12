@@ -24,7 +24,7 @@ android {
 //        }
 //    }
     buildTypes {
-        debug{
+        debug {
             buildConfigField "boolean", "SHOW_LOGS", "Boolean.parseBoolean(\"true\")"
         }
         release {
