@@ -11,6 +11,6 @@ public class _BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LogUtil.DEBUG = true;
-        ZsxApplicationManager.builder(this).setFileManagerDir("Api");
+        ZsxApplicationManager.builder(this).setMonitorNet(true).setUncaughtException(true);
     }
 }

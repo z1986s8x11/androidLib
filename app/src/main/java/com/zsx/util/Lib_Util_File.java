@@ -530,8 +530,7 @@ public class Lib_Util_File {
         File rootPathFile;
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
-            rootPathFile = new File(Environment.getExternalStorageDirectory()
-                    .getPath(), rootDirName);
+            rootPathFile = new File(Environment.getExternalStorageDirectory(), rootDirName);
         } else {
             rootPathFile = new File(context.getDir(rootDirName, Context.MODE_PRIVATE).toString());
         }

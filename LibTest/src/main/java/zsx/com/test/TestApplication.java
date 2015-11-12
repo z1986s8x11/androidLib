@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.zsx.app.ZsxApplicationManager;
 import com.zsx.debug.LogUtil;
+import com.zsx.util.Lib_Util_File;
 
 /**
  * Created by zhusx on 2015/8/5.
@@ -17,7 +18,8 @@ public class TestApplication extends Application {
         if (LogUtil.DEBUG) {
             LogUtil.e(this, "onCreate");
         }
-        ZsxApplicationManager.builder(this).setMonitorNet(true).setFileManagerDir("Lib").setUncaughtException(true).build();
+        ZsxApplicationManager.builder(this).setMonitorNet(true).setUncaughtException(true).build();
+        Lib_Util_File.createFileDir(this,"Lib");
     }
 
     @Override
