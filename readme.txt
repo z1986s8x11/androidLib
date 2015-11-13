@@ -1,6 +1,4 @@
 需要的权限
-<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -124,30 +122,19 @@ http://pcottle.github.io/learnGitBranching/
 http://www.devtf.cn/?p=730
 
 1. 如果已经启动了四个Activity：A，B，C和D。在D Activity里，我们要跳到B Activity，同时希望C finish掉，可以在startActivity(intent)里的intent里添加flags标记，如下所示：
-
 Java代码
 1.Intent intent = new Intent(this, B.class);
 2.intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 3.startActivity(intent);
-Intent intent = new Intent(this, B.class);
-intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-startActivity(intent);
-
   这样启动B Activity，就会把D，C都finished掉，如果你的B Activity的启动模式是默认的（multiple） ，则B Activity会finished掉，再启动一个新的Activity B。
-
   如果不想重新再创建一个新的B Activity，则在上面的代码里再加上：
 
 
 Java代码
 1.intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-
 这样B Activity就会再创建一个新的了，而是会重用之前的B Activity，同时调用B Activity的onNewIntent()方法。
 
-
 2. 如果已经启动了四个Activity：A，B，C和D，在D Activity里，想再启动一个Actvity B，但不变成A,B,C,D,B，而是希望是A,C,D,B，则可以像下面写代码：
-
 Java代码
 1.Intent intent = new Intent(this, MainActivity.class);
 2.intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
