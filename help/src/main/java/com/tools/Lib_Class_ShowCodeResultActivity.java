@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
  * @date 2013-12-27 11:03:26
  *
  * @description 需要在AndroidMainifest.xml 注册
- * 				{@link zsx.lib.classOverwrite.Lib_Class_ShowCodeResultActivity}
+ * 				{@link com.tools.Lib_Class_ShowCodeResultActivity}
  */
 public class Lib_Class_ShowCodeResultActivity extends Activity {
     public static final String RM_EXTRA_SHOW_CODE_FILE_KEY = "SHOW_CODE_FILE_KEY";
