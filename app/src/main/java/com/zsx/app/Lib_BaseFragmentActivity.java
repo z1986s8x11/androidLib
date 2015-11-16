@@ -187,6 +187,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     @Override
     public void finish() {
         super.finish();
+        pisDestroy = true;
         destroyActivity();
     }
 

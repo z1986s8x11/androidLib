@@ -162,7 +162,6 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     protected void onResume() {
         super.onResume();
         pIsPause = false;
-        //FIXME 如果onCreate已经执行...这里可能执行2次
         for (Lib_OnCycleListener l : cycleListener) {
             l.onResume();
         }
@@ -182,6 +181,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         super.onDestroy();
         pisDestroy = true;
         destroyActivity();
+        cycleListener.clear();
     }
 
     public boolean _isDestroy() {
@@ -203,6 +203,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     public void finish() {
         super.finish();
+        pisDestroy = true;
         destroyActivity();
     }
 
@@ -235,6 +236,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
+
     /**
      * 拿到屏幕的高度
      */
@@ -242,6 +244,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return displayMetrics.heightPixels;
     }
+
     @Override
     public void onBackPressed() {
         if (!isDoubleBack) {
