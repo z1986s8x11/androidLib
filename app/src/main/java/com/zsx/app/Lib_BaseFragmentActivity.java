@@ -165,6 +165,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
         super.onDestroy();
         pisDestroy = true;
         destroyActivity();
+        cycleListener.clear();
     }
 
     public boolean _isDestroy() {

@@ -91,7 +91,9 @@ public class Lib_Widget_ScaleImageView extends ImageView {
 		if (!gintama.isRecycled()) {
 			gintama.recycle();
 		}
-		LogUtil.e(this, "onDetachedFromWindow");
+		if (LogUtil.DEBUG) {
+			LogUtil.e(this, "onDetachedFromWindow");
+		}
 	}
 
 	private void init(Context context) {
