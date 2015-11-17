@@ -23,6 +23,7 @@ import zsx.com.test.ui.parse.JavaParseActivity;
 import zsx.com.test.ui.widget.AutoListViewActivity;
 import zsx.com.test.ui.widget.DragListViewActivity;
 import zsx.com.test.ui.widget.KeywordsFlowActivity;
+import zsx.com.test.ui.widget.PinnedSectionActivity;
 import zsx.com.test.ui.widget.SlidingMenuActivity;
 import zsx.com.test.ui.widget.ViewPagerIndicatorActivity;
 
@@ -47,6 +48,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("dragListView", DragListViewActivity.class));
         list.add(new Item("parse", JavaParseActivity.class));
         list.add(new Item("httpUrlTest", HttpUrlConnectActivity.class));
+        list.add(new Item("PinnedSectionListView", PinnedSectionActivity.class));
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
             public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {
