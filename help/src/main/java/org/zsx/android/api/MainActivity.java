@@ -24,6 +24,7 @@ import org.zsx.android.api.animator.RotateAnimation_Activity;
 import org.zsx.android.api.animator.ScaleAnimation_Activity;
 import org.zsx.android.api.animator.TranslateAnimation_Activity;
 import org.zsx.android.api.animator.ValueAnimator_Activity;
+import org.zsx.android.api.animator.ViewAnimator_Activity;
 import org.zsx.android.api.animator.ViewPropertyAnimator_Activity;
 import org.zsx.android.api.device.Configuration_Activity;
 import org.zsx.android.api.device.SoftInputModes_Activity;
@@ -148,7 +149,7 @@ public class MainActivity extends _BaseActivity {
     private Class<?>[] bitmap_Cls = new Class<?>[]{ShapeDrawable_Activity.class};
     private Class<?>[] anim_Cls = new Class<?>[]{Animator_Activity.class, AlphaAnimation_Activity.class, AnimatorSet_Activity.class,
             FrameAnimation_Activity.class, Keyframe_Activity.class, RotateAnimation_Activity.class, ScaleAnimation_Activity.class,
-            LayoutAnimation_Activity.class, LayoutTransition_Activity.class, TranslateAnimation_Activity.class, ObjectAnimator_Activity.class,
+            LayoutAnimation_Activity.class, LayoutTransition_Activity.class, TranslateAnimation_Activity.class, ObjectAnimator_Activity.class, ViewAnimator_Activity.class,
             ValueAnimator_Activity.class, ViewPropertyAnimator_Activity.class};
     private Class<?>[] io_Cls = new Class<?>[]{OpenFileStrem_Activity.class, SharedPreference_Activity.class, SQLiteDatabase_Activity.class};
     private Class<?>[] sensor_Cls = new Class<?>[]{SensorLight_Activity.class};

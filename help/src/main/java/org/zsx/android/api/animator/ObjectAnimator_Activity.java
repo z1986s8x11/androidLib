@@ -47,6 +47,11 @@ public class ObjectAnimator_Activity extends _BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.anim_object_animator);
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+			_showToast("必须大于Android 3.0");
+			finish();
+			return;
+		}
 		initWidget();
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
