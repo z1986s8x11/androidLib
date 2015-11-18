@@ -16,6 +16,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
+import android.content.pm.Signature;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.net.wifi.WifiInfo;
@@ -665,8 +666,34 @@ public class Lib_Util_System {
             return null;
         }
     }
+
+    /**
+     * 获取应用签名
+     *
+     * @return
+     */
+    public static String getSignature(Context context) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            /** 通过包管理器获得指定包名包含签名的包信息 **/
+            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+            /******* 通过返回的包信息获得签名数组 *******/
+            Signature[] signatures = packageInfo.signatures;
+            /******* 循环遍历签名数组拼接应用签名 *******/
+            StringBuilder builder = new StringBuilder();
+            for (Signature signature : signatures) {
+                builder.append(signature.toCharsString());
+            }
+            /************** 得到应用签名 **************/
+            return builder.toString();
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     // 设置字体
     // Typeface mFace =
     // Typeface.createFromAsset(getContext().getAssets(),"fonts/samplefont.ttf");
     // mPaint.setTypeface(mFace);
+
 }
