@@ -40,6 +40,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -668,29 +670,51 @@ public class Lib_Util_System {
     }
 
     /**
-     * 获取应用签名
-     *
-     * @return
+     * 获取32位应用签名
      */
     public static String getSignature(Context context) {
+        return getSignature(context, context.getPackageName());
+    }
+
+    /**
+     * 获取32位应用签名
+     */
+    public static String getSignature(Context context, String packName) {
+        char[] hexDigits = {48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102};
         try {
-            PackageManager pm = context.getPackageManager();
             /** 通过包管理器获得指定包名包含签名的包信息 **/
-            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packName, PackageManager.GET_SIGNATURES);
             /******* 通过返回的包信息获得签名数组 *******/
             Signature[] signatures = packageInfo.signatures;
             /******* 循环遍历签名数组拼接应用签名 *******/
-            StringBuilder builder = new StringBuilder();
-            for (Signature signature : signatures) {
-                builder.append(signature.toCharsString());
+            if (signatures.length == 0) {
+                return null;
             }
-            /************** 得到应用签名 **************/
-            return builder.toString();
-        } catch (NameNotFoundException e) {
+            MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
+            localMessageDigest.update(signatures[0].toByteArray());
+            byte[] arrayOfByte = localMessageDigest.digest();
+            char[] arrayOfChar = new char[32];
+            int i = 0;
+            int j = 0;
+            while (true) {
+                if (i >= 16) {
+                    return new String(arrayOfChar);
+                }
+                int k = arrayOfByte[i];
+                int m = j + 1;
+                arrayOfChar[j] = hexDigits[(0xF & k >>> 4)];
+                j = m + 1;
+                arrayOfChar[m] = hexDigits[(k & 0xF)];
+                i++;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return null;
     }
+
     // 设置字体
     // Typeface mFace =
     // Typeface.createFromAsset(getContext().getAssets(),"fonts/samplefont.ttf");

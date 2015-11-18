@@ -19,7 +19,7 @@ import org.zsx.android.api._BaseActivity;
 import java.util.Arrays;
 
 /**
- * Created by Administrator on 2015/11/18.
+ * Created by zhusx on 2015/11/18.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ViewAnimator_Activity extends _BaseActivity implements SeekBar.OnSeekBarChangeListener {
@@ -43,14 +43,20 @@ public class ViewAnimator_Activity extends _BaseActivity implements SeekBar.OnSe
             @Override
             public View getView(LayoutInflater inflater, final String bean, int position, View convertView, ViewGroup parent) {
                 TextView t = new TextView(inflater.getContext());
+                t.setPadding(10, 10, 10, 10);
                 t.setText(bean);
                 return t;
             }
         });
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 type = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         seekBar = (SeekBar) findViewById(R.id.global_seekbar);
@@ -62,36 +68,45 @@ public class ViewAnimator_Activity extends _BaseActivity implements SeekBar.OnSe
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        float f = 1.0f * progress / 100;
+        float f;
         if (fromUser) {
             switch (type) {
                 case "setRotation":
+                    f = 1.0f * progress;
                     view.setRotation(f);
                     break;
                 case "setRotationX":
+                    f = 1.0f * progress;
                     view.setRotationX(f);
                     break;
                 case "setRotationY":
+                    f = 1.0f * progress;
                     view.setRotationY(f);
                     break;
                 case "setTranslationX":
+                    f = 1.0f * progress;
                     view.setTranslationX(f);
                     break;
                 case "setTranslationY":
+                    f = 1.0f * progress;
                     view.setTranslationY(f);
                     break;
                 case "setTranslationZ":
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        f = 1.0f * progress;
                         view.setTranslationZ(f);
                     }
                     break;
                 case "setScaleX":
+                    f = 1.0f * progress / 100;
                     view.setScaleX(f);
                     break;
                 case "setScaleY":
+                    f = 1.0f * progress / 100;
                     view.setScaleY(f);
                     break;
                 case "setAlpha":
+                    f = 1.0f * progress / 100;
                     view.setAlpha(f);
                     break;
             }
