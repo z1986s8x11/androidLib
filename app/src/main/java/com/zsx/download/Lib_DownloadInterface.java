@@ -22,7 +22,7 @@ public interface Lib_DownloadInterface extends Serializable{
 	/**
 	 * 下载完成时候会回调
 	 */
-	void doSucess(Context context);
+	void doSuccess(Context context);
 
 //	/**
 //	 * 下载失败时候会回调

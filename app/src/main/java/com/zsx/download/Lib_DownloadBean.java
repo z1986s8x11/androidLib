@@ -27,7 +27,7 @@ public final class Lib_DownloadBean implements Lib_DownloadInterface {
 	/**
 	 * 执行成功 之后去做的操作
 	 */
-	public void doSucess(Context context) {
+	public void doSuccess(Context context) {
 
 	}
 

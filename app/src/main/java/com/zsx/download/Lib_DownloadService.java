@@ -214,7 +214,7 @@ public class Lib_DownloadService extends Service {
                     }
                 }
                 if (file.exists() && Math.abs(System.currentTimeMillis() - file.lastModified()) < 10 * 60 * 1000) {
-                    data.doSucess(getApplicationContext());
+                    data.doSuccess(getApplicationContext());
                     completeDownload();
                     return;
                 }
@@ -265,7 +265,7 @@ public class Lib_DownloadService extends Service {
                         file.delete();
                     }
                     fileTemp.renameTo(file);
-                    data.doSucess(getApplicationContext());
+                    data.doSuccess(getApplicationContext());
                     completeDownload();
                 } else {
                     errorDownload("HttpCode:"
