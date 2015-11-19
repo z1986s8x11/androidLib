@@ -199,7 +199,7 @@ public class Lib_Util_HttpURLRequest {
      * @param requestURL 请求的rul
      * @return 返回响应的内容
      */
-    public static String uploadFile(File file, String requestURL, ProgressListener listener)
+    public static String uploadFile(File file, String requestURL, OnProgressListener listener)
             throws IOException, Lib_Exception {
         if (!file.exists()) {
             throw new FileNotFoundException("File Not Found Exception!!");
@@ -249,6 +249,9 @@ public class Lib_Util_HttpURLRequest {
         while ((len = is.read(bytes)) != -1) {
             dos.write(bytes, 0, len);
             if (listener != null) {
+                if (listener.isCanceled()) {
+                    throw new Lib_Exception("取消上传");
+                }
                 num += len;
                 int current_progress = totalByte > 0 ? (int) ((float) num / totalByte * 100) : 0;
                 if (progress != current_progress) {
@@ -280,7 +283,11 @@ public class Lib_Util_HttpURLRequest {
         return result;
     }
 
-    public static boolean downloadFile(String url, String savePath, ProgressListener listener) throws Lib_Exception, IOException {
+    public static boolean downloadFile(String url, String savePath) throws Lib_Exception, IOException {
+        return downloadFile(url, savePath, null);
+    }
+
+    public static boolean downloadFile(String url, String savePath, OnProgressListener listener) throws Lib_Exception, IOException {
         InputStream input = null;
         FileOutputStream fos = null;
         HttpURLConnection conn = null;
@@ -336,6 +343,9 @@ public class Lib_Util_HttpURLRequest {
                 while ((count = input.read(b)) != -1) {
                     fos.write(b, 0, count);
                     if (listener != null) {
+                        if (listener.isCanceled()) {
+                            throw new Lib_Exception("取消下载");
+                        }
                         num += count;
                         int current_progress = totalByte > 0 ? (int) ((float) num / totalByte * 100) : 0;
                         if (progress != current_progress) {
@@ -367,7 +377,9 @@ public class Lib_Util_HttpURLRequest {
         }
     }
 
-    public interface ProgressListener {
+    public interface OnProgressListener {
         void onProgress(int progress, int currentSize, int totalSize);
+
+        boolean isCanceled();
     }
 }
