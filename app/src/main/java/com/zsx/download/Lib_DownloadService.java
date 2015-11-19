@@ -38,7 +38,7 @@ import java.util.concurrent.Executors;
  * @author zsx
  */
 public class Lib_DownloadService extends Service {
-    public static ExecutorService EXCUTORS = Executors.newFixedThreadPool(2);
+    public static ExecutorService EXECUTORS = Executors.newFixedThreadPool(2);
     public static Map<String, Lib_DownloadInterface> map = new ConcurrentHashMap<String, Lib_DownloadInterface>();
     public static final String _EXTRA_DOWNLOAD_DATA = "download_data";
 
@@ -93,7 +93,7 @@ public class Lib_DownloadService extends Service {
                     return super.onStartCommand(intent, flags, startId);
                 }
                 map.put(data.getDownloadKey(), data);
-                EXCUTORS.execute(new downloadTask(data));
+                EXECUTORS.execute(new downloadTask(data));
                 return super.onStartCommand(intent, flags, startId);
             } else {
                 if (LogUtil.DEBUG) {
@@ -123,9 +123,9 @@ public class Lib_DownloadService extends Service {
                 LogUtil.e(this, "正在关闭下载");
             }
             map.clear();
-            EXCUTORS.shutdownNow();
-            EXCUTORS = null;
-            EXCUTORS = Executors.newFixedThreadPool(2);
+            EXECUTORS.shutdownNow();
+            EXECUTORS = null;
+            EXECUTORS = Executors.newFixedThreadPool(2);
         }
     }
 

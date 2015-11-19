@@ -51,7 +51,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         }
         switch (v.getId()) {
             case R.id.btn_start:
-                Lib_DownloadService._startService(this, "22", "www.baidu.com", new File(getExternalCacheDir(), "ff.html").getPath());
+                Lib_DownloadService._startService(this, "22", "http://s.qw.cc/app/app1112.apk", new File(getExternalCacheDir(), "quwang.apk").getPath());
                 break;
             case R.id.btn_stop:
                 stopService(new Intent(this, Lib_DownloadService.class));
