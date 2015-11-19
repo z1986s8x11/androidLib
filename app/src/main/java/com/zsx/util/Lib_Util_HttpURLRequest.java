@@ -344,7 +344,7 @@ public class Lib_Util_HttpURLRequest {
                     fos.write(b, 0, count);
                     if (listener != null) {
                         if (listener.isCanceled()) {
-                            throw new Lib_Exception("取消下载");
+                            throw new Lib_Exception(Lib_Exception.ERROR_CODE_CANCEL, "取消下载");
                         }
                         num += count;
                         int current_progress = totalByte > 0 ? (int) ((float) num / totalByte * 100) : 0;
