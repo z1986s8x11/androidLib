@@ -96,38 +96,38 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         }
     }
 
-    public void onDownloadStart(String key) {
+    public void onDownloadStart(final String key) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("start");
+                mMessageTV.setText("start"+key);
             }
         });
     }
 
-    public void onDownloadProgress(String key, final int progress) {
+    public void onDownloadProgress(final String key, final int progress) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("loading " + progress + "%");
+                mMessageTV.setText("loading " + progress + "%"+key);
             }
         });
     }
 
-    public void onDownloadComplete(String key, String path) {
+    public void onDownloadComplete(final String key, String path) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("Download ok");
+                mMessageTV.setText("Download ok"+key);
             }
         });
     }
 
-    public void onDownloadError(String key, String errorMessage) {
+    public void onDownloadError(final String key, String errorMessage) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("Download error");
+                mMessageTV.setText("Download error"+key);
             }
         });
     }
