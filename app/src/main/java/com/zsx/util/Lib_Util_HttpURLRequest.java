@@ -9,12 +9,11 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -185,14 +184,22 @@ public class Lib_Util_HttpURLRequest {
      * 上传文件到服务器
      *
      * @param file       需要上传的文件
-     * @param RequestURL 请求的rul
+     * @param requestURL 请求的rul
      * @return 返回响应的内容
-     * @throws ProtocolException
-     * @throws FileNotFoundException
-     * @throws MalformedURLException
-     * @throws Lib_Exception
      */
-    public static String uploadFile(File file, String RequestURL)
+    public static String uploadFile(File file, String requestURL)
+            throws IOException, Lib_Exception {
+        return uploadFile(file, requestURL, null);
+    }
+
+    /**
+     * 上传文件到服务器
+     *
+     * @param file       需要上传的文件
+     * @param requestURL 请求的rul
+     * @return 返回响应的内容
+     */
+    public static String uploadFile(File file, String requestURL, ProgressListener listener)
             throws IOException, Lib_Exception {
         if (!file.exists()) {
             throw new FileNotFoundException("File Not Found Exception!!");
@@ -204,10 +211,10 @@ public class Lib_Util_HttpURLRequest {
         String PREFIX = "--", LINE_END = "\r\n";
         String CONTENT_TYPE = "multipart/form-data"; // 内容类型
         String Charset = "UTF-8";
-        URL url = new URL(RequestURL);
+        URL url = new URL(requestURL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(20000);
-        conn.setConnectTimeout(60000);
+        conn.setReadTimeout(READ_TIMEOUT_INT);
+        conn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
         conn.setDoInput(true); // 允许输入流
         conn.setDoOutput(true); // 允许输出流
         conn.setUseCaches(false); // 不允许使用缓存
@@ -233,11 +240,22 @@ public class Lib_Util_HttpURLRequest {
                 + LINE_END);
         sb.append(LINE_END);
         dos.write(sb.toString().getBytes());
-        InputStream is = new FileInputStream(file);
+        FileInputStream is = new FileInputStream(file);
         byte[] bytes = new byte[1024];
-        int len = 0;
+        int totalByte = is.available();
+        int len;
+        int num = 0;
+        int progress = 0;
         while ((len = is.read(bytes)) != -1) {
             dos.write(bytes, 0, len);
+            if (listener != null) {
+                num += len;
+                int current_progress = totalByte > 0 ? (int) ((float) num / totalByte * 100) : 0;
+                if (progress != current_progress) {
+                    progress = current_progress;
+                    listener.onProgress(progress, num, totalByte);
+                }
+            }
         }
         is.close();
         dos.write(LINE_END.getBytes());
@@ -262,4 +280,94 @@ public class Lib_Util_HttpURLRequest {
         return result;
     }
 
+    public static boolean downloadFile(String url, String savePath, ProgressListener listener) throws Lib_Exception, IOException {
+        InputStream input = null;
+        FileOutputStream fos = null;
+        HttpURLConnection conn = null;
+        try {
+            File file = new File(savePath);
+            if (!file.getParentFile().exists()) {
+                if (!file.getParentFile().mkdirs()) {
+                    if (LogUtil.DEBUG) {
+                        LogUtil.e(Lib_Util_HttpURLRequest.class, "创建文件夹失败:"
+                                + file.getParentFile().getPath()
+                                + "\n检查是否加入android.permission.WRITE_EXTERNAL_STORAGE和android.permission.MOUNT_UNMOUNT_FILESYSTEMS");
+                    }
+                    throw new Lib_Exception("创建文件夹失败");
+                }
+            }
+            if (file.exists() && Math.abs(System.currentTimeMillis() - file.lastModified()) < 10 * 60 * 1000) {
+                return true;
+            }
+            File fileTemp = new File(file.getPath() + ".tmp");
+            if (fileTemp.exists()) {
+                if (!fileTemp.delete()) {
+                    if (LogUtil.DEBUG) {
+                        LogUtil.e(Lib_Util_HttpURLRequest.class, "删除文件失败:" + fileTemp.getPath());
+                    }
+                    throw new Lib_Exception("删除文件失败");
+                }
+            }
+            fos = new FileOutputStream(fileTemp);
+            int totalByte = 0;
+            int progress = -1;
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            // 设置超时
+            conn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
+            // 读取超时 一般不设置
+            // conn.setReadTimeout(30000);
+            conn.setRequestMethod("GET");
+//            // 设置续传开始
+//            conn.setRequestProperty("Range", "bytes=" + start + "-" + end);
+            // 设置方法为 GET
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                String contentLength = conn.getHeaderField("Content-Length");
+                if (contentLength == null) {
+                    if (LogUtil.DEBUG) {
+                        LogUtil.e(Lib_Util_HttpURLRequest.class, "Content-Length 文件大小获取失败");
+                    }
+                } else {
+                    totalByte = Integer.parseInt(contentLength);
+                }
+                input = conn.getInputStream();
+                int count = 0;
+                int num = 0;
+                byte[] b = new byte[1024 * 2];
+                while ((count = input.read(b)) != -1) {
+                    fos.write(b, 0, count);
+                    if (listener != null) {
+                        num += count;
+                        int current_progress = totalByte > 0 ? (int) ((float) num / totalByte * 100) : 0;
+                        if (progress != current_progress) {
+                            progress = current_progress;
+                            listener.onProgress(progress, num, totalByte);
+                        }
+                    }
+                }
+                fos.close();
+                if (file.exists() && file.isFile()) {
+                    file.delete();
+                }
+                fileTemp.renameTo(file);
+                return true;
+            } else {
+                throw new Lib_Exception(conn.getResponseCode(), "HTTP CODE:" + conn.getResponseCode());
+            }
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public interface ProgressListener {
+        void onProgress(int progress, int currentSize, int totalSize);
+    }
 }
