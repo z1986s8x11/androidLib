@@ -289,10 +289,19 @@ public class Lib_Util_HttpURLRequest {
     }
 
     public static boolean downloadFile(String url, String savePath, OnProgressListener listener) throws Lib_Exception, IOException {
+        return downloadFile(url, savePath, listener, 10 * 60 * 1000);
+    }
+
+    public static boolean downloadFile(String url, String savePath, OnProgressListener listener, int cacheTime) throws Lib_Exception, IOException {
         InputStream input = null;
         FileOutputStream fos = null;
         HttpURLConnection conn = null;
         RandomAccessFile raf = null;
+        if (listener != null) {
+            if (listener.isCanceled()) {
+                throw new Lib_Exception(Lib_Exception.ERROR_CODE_CANCEL, "取消下载");
+            }
+        }
         try {
             File file = new File(savePath);
             if (!file.getParentFile().exists()) {
@@ -305,7 +314,7 @@ public class Lib_Util_HttpURLRequest {
                     throw new Lib_Exception("创建文件夹失败");
                 }
             }
-            if (file.exists() && Math.abs(System.currentTimeMillis() - file.lastModified()) < 10 * 60 * 1000) {
+            if (file.exists() && Math.abs(System.currentTimeMillis() - file.lastModified()) < cacheTime) {
                 return true;
             }
             File fileTemp = new File(file.getPath() + ".tmp");
@@ -328,6 +337,11 @@ public class Lib_Util_HttpURLRequest {
                 }
             }
             // 设置方法为 GET
+            if (listener != null) {
+                if (listener.isCanceled()) {
+                    throw new Lib_Exception(Lib_Exception.ERROR_CODE_CANCEL, "取消下载");
+                }
+            }
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 if (fileTemp.exists()) {
                     if (!fileTemp.delete()) {

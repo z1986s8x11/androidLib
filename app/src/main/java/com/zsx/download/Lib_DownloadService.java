@@ -8,19 +8,14 @@ import android.widget.Toast;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
-import com.zsx.util.Lib_Util_Network;
 import com.zsx.network.Lib_NetworkStateReceiver;
+import com.zsx.util.Lib_Util_HttpURLRequest;
+import com.zsx.util.Lib_Util_Network;
 
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.conn.ConnectTimeoutException;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -39,7 +34,7 @@ import java.util.concurrent.Executors;
  */
 public class Lib_DownloadService extends Service {
     public static ExecutorService EXECUTORS = Executors.newFixedThreadPool(2);
-    public static Map<String, Lib_DownloadInterface> map = new ConcurrentHashMap<String, Lib_DownloadInterface>();
+    public static Map<String, DownloadTask> map = new ConcurrentHashMap<String, DownloadTask>();
     public static final String _EXTRA_DOWNLOAD_DATA = "download_data";
 
     @Override
@@ -62,7 +57,7 @@ public class Lib_DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(intent==null){
+        if (intent == null) {
             return super.onStartCommand(intent, flags, startId);
         }
         Object object = intent.getSerializableExtra(_EXTRA_DOWNLOAD_DATA);
@@ -92,8 +87,9 @@ public class Lib_DownloadService extends Service {
                             Toast.LENGTH_SHORT).show();
                     return super.onStartCommand(intent, flags, startId);
                 }
-                map.put(data.getDownloadKey(), data);
-                EXECUTORS.execute(new downloadTask(data));
+                DownloadTask task = new DownloadTask(data);
+                map.put(data.getDownloadKey(), task);
+                EXECUTORS.execute(task);
                 return super.onStartCommand(intent, flags, startId);
             } else {
                 if (LogUtil.DEBUG) {
@@ -122,6 +118,9 @@ public class Lib_DownloadService extends Service {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "正在关闭下载");
             }
+            for (String key : map.keySet()) {
+                map.get(key).setCancel();
+            }
             map.clear();
             EXECUTORS.shutdownNow();
             EXECUTORS = null;
@@ -129,13 +128,18 @@ public class Lib_DownloadService extends Service {
         }
     }
 
-    private class downloadTask implements Runnable {
+    private class DownloadTask implements Runnable {
         private Lib_DownloadInterface data;
         private Intent intent;
+        private boolean isCancel = false;
 
-        public downloadTask(Lib_DownloadInterface data) {
+        public DownloadTask(Lib_DownloadInterface data) {
             this.data = data;
             intent = new Intent(Lib_DownloadReceiver._DOWNLOAD_ACTION);
+        }
+
+        public void setCancel() {
+            this.isCancel = true;
         }
 
         private void startDownload() {
@@ -195,108 +199,43 @@ public class Lib_DownloadService extends Service {
 
         @Override
         public void run() {
-            startDownload();
-            InputStream input = null;
-            FileOutputStream fos = null;
-            HttpURLConnection conn = null;
             try {
-                File file = new File(data.getSavePath());
-                if (!file.getParentFile().exists()) {
-                    if (!file.getParentFile().mkdirs()) {
-                        if (LogUtil.DEBUG) {
-                            LogUtil.e(
-                                    this,
-                                    "创建文件夹失败:"
-                                            + file.getParentFile().getPath()
-                                            + "\n检查是否加入android.permission.WRITE_EXTERNAL_STORAGE和android.permission.MOUNT_UNMOUNT_FILESYSTEMS");
-                        }
-                        throw new Lib_Exception("创建文件夹失败");
+                startDownload();
+                Lib_Util_HttpURLRequest.downloadFile(data.getDownloadUrl(), data.getSavePath(), new Lib_Util_HttpURLRequest.OnProgressListener() {
+                    @Override
+                    public void onProgress(final int progress, int currentSize, int totalSize) {
+                        loadingDownload(progress);
                     }
-                }
-                if (file.exists() && Math.abs(System.currentTimeMillis() - file.lastModified()) < 10 * 60 * 1000) {
-                    data.doSuccess(getApplicationContext());
-                    completeDownload();
-                    return;
-                }
-                File fileTemp = new File(file.getPath() + ".tmp");
-                if (fileTemp.exists()) {
-                    if (!fileTemp.delete()) {
-                        if (LogUtil.DEBUG) {
-                            LogUtil.e(this, "删除文件失败:" + fileTemp.getPath());
-                        }
-                        throw new Lib_Exception("删除文件失败");
+
+                    @Override
+                    public boolean isCanceled() {
+                        return isCancel;
                     }
-                }
-                fos = new FileOutputStream(fileTemp);
-                int totalByte = 0;
-                int progress = -1;
-                conn = (HttpURLConnection) new URL(data.getDownloadUrl()).openConnection();
-                // 设置超时
-                conn.setConnectTimeout(60000);
-                // 读取超时 一般不设置
-                // conn.setReadTimeout(30000);
-                conn.setRequestMethod("GET");
-                // 设置方法为 GET
-                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    String contentLength = conn
-                            .getHeaderField("Content-Length");
-                    if (contentLength == null) {
-                        if (LogUtil.DEBUG) {
-                            LogUtil.e(this, "Content-Length 文件大小获取失败");
-                        }
-                    } else {
-                        totalByte = Integer.parseInt(contentLength);
-                    }
-                    input = conn.getInputStream();
-                    int count = 0;
-                    int num = 0;
-                    byte[] b = new byte[1024 * 2];
-                    while ((count = input.read(b)) != -1) {
-                        fos.write(b, 0, count);
-                        num += count;
-                        int current_progress = getProgress(num, totalByte);
-                        if (progress != current_progress) {
-                            progress = current_progress;
-                            loadingDownload(progress);
-                        }
-                    }
-                    fos.close();
-                    if (file.exists() && file.isFile()) {
-                        file.delete();
-                    }
-                    fileTemp.renameTo(file);
-                    data.doSuccess(getApplicationContext());
-                    completeDownload();
-                } else {
-                    errorDownload("HttpCode:"
-                            + conn.getResponseCode());
-                }
+                });
+                data.doSuccess(getApplicationContext());
+                completeDownload();
             } catch (Lib_Exception e) {
-                if (LogUtil.DEBUG) {
-                    LogUtil.w(e);
+                e.printStackTrace();
+                if (e._getErrorCode() != Lib_Exception.ERROR_CODE_CANCEL) {
+                    errorDownload(e._getErrorMessage());
+                } else {
+//                    onDownloadCancel(key);
                 }
-                errorDownload(e.getMessage());
             } catch (ConnectTimeoutException e) {
                 if (LogUtil.DEBUG) {
                     LogUtil.w(e);
                 }
-                errorDownload("链接超时");
+                errorDownload("连接超时");
             } catch (SocketTimeoutException e) {
                 if (LogUtil.DEBUG) {
                     LogUtil.w(e);
                 }
                 errorDownload("请求超时");
-            } catch (ClientProtocolException e) {
-                if (LogUtil.DEBUG) {
-                    LogUtil.w(e);
-                }
-                errorDownload("客户端协议异常");
             } catch (IOException e) {
                 if (LogUtil.DEBUG) {
                     LogUtil.w(e);
                 }
-                if (e.getMessage().contains(
-                        "write failed: ENOSPC (No space left on device)")) {
+                if (e.getMessage().contains("write failed: ENOSPC (No space left on device)")) {
                     errorDownload("磁盘空间不足");
                 } else {
                     errorDownload("发生未知错误");
@@ -311,24 +250,7 @@ public class Lib_DownloadService extends Service {
                 if (map.isEmpty()) {
                     stopSelf();
                 }
-                if (conn != null) {
-                    conn.disconnect();
-                }
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
-        }
-
-        public int getProgress(int current, int total) {
-            if (total > 0) {
-                return (int) ((float) current / total * 100);
-            }
-            return 0;
         }
     }
 
