@@ -390,17 +390,19 @@ public class Lib_Util_HttpURLRequest {
                 int num = (int) start;
                 byte[] b = new byte[1024 * 2];
                 while ((count = input.read(b)) != -1) {
-                    raf.write(b, 0, count);
                     if (listener != null) {
                         if (listener.isCanceled()) {
                             throw new Lib_Exception(Lib_Exception.ERROR_CODE_CANCEL, "取消下载");
                         }
+                        raf.write(b, 0, count);
                         num += count;
                         int current_progress = totalByte > 0 ? (int) ((float) num / totalByte * 100) : 0;
                         if (progress != current_progress) {
                             progress = current_progress;
                             listener.onProgress(progress, num, totalByte);
                         }
+                    } else {
+                        raf.write(b, 0, count);
                     }
                 }
                 input.close();
