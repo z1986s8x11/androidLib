@@ -38,6 +38,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
 
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -55,15 +56,13 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
             _showToast("请在wifi状态下测试...");
             return;
         }
-
+        String key = "key";
         switch (v.getId()) {
             case R.id.btn_start:
-                int aaa = i++ % 2;
-                String key = "key" + aaa;
                 if (map.containsKey(key)) {
                     return;
                 }
-                DownloadRunnable runnable = new DownloadRunnable(key, "http://s.qw.cc/app/app1112.apk", new File(getExternalCacheDir(), "quwang.apk" + aaa).getPath());
+                DownloadRunnable runnable = new DownloadRunnable(key, "http://s.qw.cc/app/app1112.apk", new File(getExternalCacheDir(), "quwang.apk").getPath());
                 map.put(key, runnable);
                 list.add(runnable);
                 if (t == null) {
@@ -86,10 +85,10 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_stop:
-                if (map.containsKey("key1")) {
-                    DownloadRunnable run = map.get("key1");
+                if (map.containsKey(key)) {
+                    DownloadRunnable run = map.get(key);
                     run.isCancel = true;
-                    map.remove("key1");
+                    map.remove(key);
                     list.remove(run);
                 }
                 break;
@@ -100,7 +99,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("start"+key);
+                mMessageTV.setText("start" + key);
             }
         });
     }
@@ -109,7 +108,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("loading " + progress + "%"+key);
+                mMessageTV.setText("loading " + progress + "%" + key);
             }
         });
     }
@@ -118,7 +117,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("Download ok"+key);
+                mMessageTV.setText("Download ok" + key);
             }
         });
     }
@@ -127,7 +126,16 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mMessageTV.setText("Download error"+key);
+                mMessageTV.setText("Download error" + key + System.err);
+            }
+        });
+    }
+
+    public void onDownloadCancel(final String key) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMessageTV.setText("Download cancel");
             }
         });
     }
@@ -153,6 +161,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
                     @Override
                     public void onProgress(final int progress, int currentSize, int totalSize) {
                         onDownloadProgress(key, progress);
+                        LogUtil.e(this, String.valueOf(progress + ":" + currentSize + ":" + totalSize));
                     }
 
                     @Override
@@ -166,7 +175,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
                 if (e._getErrorCode() != Lib_Exception.ERROR_CODE_CANCEL) {
                     onDownloadError(key, e._getErrorMessage());
                 } else {
-                    //用户取消
+                    onDownloadCancel(key);
                 }
             } catch (ConnectTimeoutException e) {
                 if (LogUtil.DEBUG) {

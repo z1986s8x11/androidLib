@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -291,6 +292,7 @@ public class Lib_Util_HttpURLRequest {
         InputStream input = null;
         FileOutputStream fos = null;
         HttpURLConnection conn = null;
+        RandomAccessFile raf = null;
         try {
             File file = new File(savePath);
             if (!file.getParentFile().exists()) {
@@ -307,15 +309,6 @@ public class Lib_Util_HttpURLRequest {
                 return true;
             }
             File fileTemp = new File(file.getPath() + ".tmp");
-            if (fileTemp.exists()) {
-                if (!fileTemp.delete()) {
-                    if (LogUtil.DEBUG) {
-                        LogUtil.e(Lib_Util_HttpURLRequest.class, "删除文件失败:" + fileTemp.getPath());
-                    }
-                    throw new Lib_Exception("删除文件失败");
-                }
-            }
-            fos = new FileOutputStream(fileTemp);
             int totalByte = 0;
             int progress = -1;
             conn = (HttpURLConnection) new URL(url).openConnection();
@@ -325,9 +318,26 @@ public class Lib_Util_HttpURLRequest {
             // conn.setReadTimeout(30000);
             conn.setRequestMethod("GET");
 //            // 设置续传开始
-//            conn.setRequestProperty("Range", "bytes=" + start + "-" + end);
+            long start = 0;
+            if (fileTemp.exists() && Math.abs(System.currentTimeMillis() - fileTemp.lastModified()) < 10 * 60 * 1000) {
+                raf = new RandomAccessFile(fileTemp, "rw");
+                start = raf.length();
+                conn.setRequestProperty("Range", "bytes=" + start + "-");
+                if (LogUtil.DEBUG) {
+                    LogUtil.e(Lib_Util_HttpURLRequest.class, "start Range:" + start);
+                }
+            }
             // 设置方法为 GET
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                if (fileTemp.exists()) {
+                    if (!fileTemp.delete()) {
+                        if (LogUtil.DEBUG) {
+                            LogUtil.e(Lib_Util_HttpURLRequest.class, "删除文件失败:" + fileTemp.getPath());
+                        }
+                        throw new Lib_Exception("删除文件失败");
+                    }
+                }
+                fos = new FileOutputStream(fileTemp);
                 String contentLength = conn.getHeaderField("Content-Length");
                 if (contentLength == null) {
                     if (LogUtil.DEBUG) {
@@ -354,7 +364,47 @@ public class Lib_Util_HttpURLRequest {
                         }
                     }
                 }
+                input.close();
                 fos.close();
+                if (file.exists() && file.isFile()) {
+                    file.delete();
+                }
+                fileTemp.renameTo(file);
+                return true;
+            } else if (conn.getResponseCode() == HttpURLConnection.HTTP_PARTIAL) {
+                if (LogUtil.DEBUG) {
+                    LogUtil.e(Lib_Util_HttpURLRequest.class, "服务器返回 206");
+                }
+                raf.seek(start);
+                String contentLength = conn.getHeaderField("Content-Length");
+                if (contentLength == null) {
+                    if (LogUtil.DEBUG) {
+                        LogUtil.e(Lib_Util_HttpURLRequest.class, "Content-Length 文件大小获取失败");
+                    }
+                } else {
+                    //contentLength 是剩余下载大小的长度
+                    totalByte = Integer.parseInt(contentLength) + (int) start;
+                }
+                input = conn.getInputStream();
+                int count = 0;
+                int num = (int) start;
+                byte[] b = new byte[1024 * 2];
+                while ((count = input.read(b)) != -1) {
+                    raf.write(b, 0, count);
+                    if (listener != null) {
+                        if (listener.isCanceled()) {
+                            throw new Lib_Exception(Lib_Exception.ERROR_CODE_CANCEL, "取消下载");
+                        }
+                        num += count;
+                        int current_progress = totalByte > 0 ? (int) ((float) num / totalByte * 100) : 0;
+                        if (progress != current_progress) {
+                            progress = current_progress;
+                            listener.onProgress(progress, num, totalByte);
+                        }
+                    }
+                }
+                input.close();
+                raf.close();
                 if (file.exists() && file.isFile()) {
                     file.delete();
                 }
@@ -370,6 +420,13 @@ public class Lib_Util_HttpURLRequest {
             if (fos != null) {
                 try {
                     fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (raf != null) {
+                try {
+                    raf.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
