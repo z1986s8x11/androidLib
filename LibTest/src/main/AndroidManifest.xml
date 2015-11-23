@@ -31,6 +31,7 @@
         <activity android:name=".ui.widget.DragListViewActivity" />
         <activity android:name=".ui.parse.JavaParseActivity" />
         <activity android:name=".ui.widget.PinnedSectionActivity" />
+        <activity android:name=".ui.viewpagelooper.ViewPagerLooperActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>
