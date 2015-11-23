@@ -37,8 +37,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 
-import com.zsx.BuildConfig;
 import com.zsx.adapter.Lib_BaseAdapter;
+import com.zsx.debug.LogUtil;
 
 import java.util.List;
 
@@ -382,7 +382,7 @@ public class Lib_Widget_PinnedSectionListView extends ListView {
     public void setAdapter(ListAdapter adapter) {
 
         // assert adapter in debug mode
-        if (BuildConfig.DEBUG && adapter != null) {
+        if (LogUtil.DEBUG && adapter != null) {
             if (!(adapter instanceof PinnedSectionListAdapter))
                 throw new IllegalArgumentException(
                         "Does your adapter implement PinnedSectionListAdapter?");
