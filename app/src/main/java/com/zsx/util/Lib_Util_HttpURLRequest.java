@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -28,12 +27,13 @@ import java.util.UUID;
 public class Lib_Util_HttpURLRequest {
     public static int CONNECTION_TIMEOUT_INT = 10000;
     public static int READ_TIMEOUT_INT = 5000;
+    public static Map<String, String> requestPropertys;
 
     public static String post(String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
         if (map == null || map.size() == 0) {
             return httpRequest(Lib_HttpParams.POST, requestUrl, "", null);
         }
-        return httpRequest(Lib_HttpParams.POST, requestUrl, mapToUrlEncoderString(map), null);
+        return httpRequest(Lib_HttpParams.POST, requestUrl, map);
     }
 
     public static String post(String requestUrl, String textString) throws IOException, Lib_Exception {
@@ -73,20 +73,18 @@ public class Lib_Util_HttpURLRequest {
         return httpRequest(Lib_HttpParams.GET, requestUrl, null, null);
     }
 
-    private static String mapToUrlEncoderString(Map<String, Object> map) throws UnsupportedEncodingException {
-        StringBuffer sb = new StringBuffer();
-        for (String key : map.keySet()) {
-            sb.append("&");
-            sb.append(key);
-            sb.append("=");
-            sb.append(URLEncoder.encode(map.get(key) == null ? "" : String.valueOf(map.get(key)), "utf-8"));
-        }
-        sb.deleteCharAt(0);
-        return sb.toString();
-    }
-
     public static String httpRequest(String requestMethod, String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
-        return httpRequest(requestMethod, requestUrl, mapToUrlEncoderString(map), null);
+        StringBuffer sb = new StringBuffer();
+        if (map != null) {
+            for (String key : map.keySet()) {
+                sb.append("&");
+                sb.append(key);
+                sb.append("=");
+                sb.append(URLEncoder.encode(map.get(key) == null ? "" : String.valueOf(map.get(key)), "utf-8"));
+            }
+            sb.deleteCharAt(0);
+        }
+        return httpRequest(requestMethod, requestUrl, sb.toString(), null);
     }
 
     public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType) throws IOException, Lib_Exception {
@@ -134,6 +132,11 @@ public class Lib_Util_HttpURLRequest {
             }
             urlConn.setRequestProperty("Content-Length", String.valueOf(data.length));
             urlConn.setRequestProperty("Charset", encoding);
+            if (requestPropertys != null) {
+                for (String key : requestPropertys.keySet()) {
+                    urlConn.setRequestProperty(key, requestPropertys.get(key));
+                }
+            }
             urlConn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
             urlConn.setReadTimeout(READ_TIMEOUT_INT);
             urlConn.connect(); // 连接既往服务端发送消息
