@@ -118,6 +118,12 @@ public class Lib_Util_HttpURLRequest {
                     break;
                 case Lib_HttpParams.DELETE:
                     urlConn.setRequestMethod("DELETE");
+                    if (LogUtil.DEBUG) {
+                        if (TextUtils.isEmpty(param)) {
+                            LogUtil.e(Lib_Util_HttpURLRequest.class, "DELETE 不支持提交参数");
+                        }
+                    }
+                    param = "";//DELETE 不支持提交参数
                     break;
                 default:
                     throw new Lib_Exception("no requestMethod: " + String.valueOf(requestMethod));
