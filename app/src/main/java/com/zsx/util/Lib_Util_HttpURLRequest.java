@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
+import com.zsx.network.Lib_HttpParams;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -29,88 +31,16 @@ public class Lib_Util_HttpURLRequest {
 
     public static String post(String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
         if (map == null || map.size() == 0) {
-            return post(requestUrl, "", true);
+            return httpRequest(Lib_HttpParams.POST, requestUrl, "", null);
         }
-        StringBuffer sb = new StringBuffer();
-        for (String key : map.keySet()) {
-            sb.append("&");
-            sb.append(key);
-            sb.append("=");
-            sb.append(URLEncoder.encode(map.get(key) == null ? "" : String.valueOf(map.get(key)), "utf-8"));
-        }
-        sb.deleteCharAt(0);
-        return post(requestUrl, sb.toString(), true);
+        return httpRequest(Lib_HttpParams.POST, requestUrl, mapToUrlEncoderString(map), null);
     }
 
     public static String post(String requestUrl, String textString) throws IOException, Lib_Exception {
         if (TextUtils.isEmpty(textString)) {
-            return post(requestUrl, "", false);
+            return httpRequest(Lib_HttpParams.POST, requestUrl, "", null);
         }
-        return post(requestUrl, textString, false);
-    }
-
-    private static String post(String requestUrl, String param, boolean isUrlEncoded) throws IOException, Lib_Exception {
-        if (param == null) {
-            param = "";
-        }
-        String result = null;
-        String encoding = "UTF-8";
-        InputStreamReader bufferReader = null;
-        HttpURLConnection urlConn = null;
-        try {
-            if (LogUtil.DEBUG) {
-                LogUtil.e("requestData params:", String.valueOf(requestUrl) + String.valueOf(param));
-            }
-            URL url = new URL(requestUrl);
-            urlConn = (HttpURLConnection) url.openConnection();
-            urlConn.setDoInput(true); // 设置输入流采用字节流
-            urlConn.setDoOutput(true); // 设置输出流采用字节流
-            urlConn.setRequestMethod("POST");
-            urlConn.setUseCaches(false); // 设置缓存
-            byte[] data = param.getBytes(encoding);
-            //urlConn.setInstanceFollowRedirects(true);//是否连接遵循重定向
-            //Content-Type: application/x-www-form-urlencoded   默认的提交方式，同GET类似，将参数组装成Key-value方式，用&分隔，但数据存放在body中提交
-            //Content-Type: multipart/form-data                 这种方式一般用来上传文件，或大批量数据时。
-            if (isUrlEncoded) {
-                urlConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=" + encoding);
-            } else {
-                urlConn.setRequestProperty("Content-Type", "text/plain; charset=" + encoding);
-            }
-            urlConn.setRequestProperty("Content-Length", String.valueOf(data.length));
-            urlConn.setRequestProperty("Charset", encoding);
-            urlConn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
-            urlConn.setReadTimeout(READ_TIMEOUT_INT);
-            urlConn.connect(); // 连接既往服务端发送消息
-            DataOutputStream dop = new DataOutputStream(urlConn.getOutputStream());
-            dop.write(data); // 发送参数
-            dop.flush(); // 发送，清空缓存
-            dop.close(); // 关闭
-            if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                // 下面开始做接收工作
-                bufferReader = new InputStreamReader(urlConn.getInputStream());
-                StringBuffer sb = new StringBuffer();
-                char[] chars = new char[128];
-                int length;
-                while ((length = bufferReader.read(chars)) != -1) {
-                    sb.append(chars, 0, length);
-                }
-                result = sb.toString();
-            } else {
-                throw new Lib_Exception(urlConn.getResponseCode(), "HTTP CODE:" + urlConn.getResponseCode());
-            }
-        } finally {
-            if (urlConn != null) {
-                urlConn.disconnect();
-            }
-            if (bufferReader != null) {
-                try {
-                    bufferReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return result;
+        return httpRequest(Lib_HttpParams.POST, requestUrl, textString, "application/json");
     }
 
     public static String get(String requestUrl, Map<String, Object> param) throws IOException, Lib_Exception {
@@ -140,19 +70,79 @@ public class Lib_Util_HttpURLRequest {
     }
 
     public static String get(String requestUrl) throws IOException, Lib_Exception {
+        return httpRequest(Lib_HttpParams.GET, requestUrl, null, null);
+    }
+
+    private static String mapToUrlEncoderString(Map<String, Object> map) throws UnsupportedEncodingException {
+        StringBuffer sb = new StringBuffer();
+        for (String key : map.keySet()) {
+            sb.append("&");
+            sb.append(key);
+            sb.append("=");
+            sb.append(URLEncoder.encode(map.get(key) == null ? "" : String.valueOf(map.get(key)), "utf-8"));
+        }
+        sb.deleteCharAt(0);
+        return sb.toString();
+    }
+
+    public static String httpRequest(String requestMethod, String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
+        return httpRequest(requestMethod, requestUrl, mapToUrlEncoderString(map), null);
+    }
+
+    public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType) throws IOException, Lib_Exception {
+        String result = null;
+        String encoding = "UTF-8";
         InputStreamReader bufferReader = null;
         HttpURLConnection urlConn = null;
-        String result = null;
+        if (param == null) {
+            param = "";
+        }
         try {
             if (LogUtil.DEBUG) {
-                LogUtil.e("requestData params:", String.valueOf(requestUrl));
+                LogUtil.e("requestData params:", String.valueOf(requestUrl) + String.valueOf(param));
             }
             URL url = new URL(requestUrl);
             urlConn = (HttpURLConnection) url.openConnection();
+            switch (requestMethod) {
+                case Lib_HttpParams.GET:
+                    urlConn.setRequestMethod("GET");
+                    break;
+                case Lib_HttpParams.POST:
+                    urlConn.setDoInput(true); // 设置输入流采用字节流
+                    urlConn.setDoOutput(true); // 设置输出流采用字节流
+                    urlConn.setUseCaches(false); // 设置缓存
+                    urlConn.setRequestMethod("POST");
+                    break;
+                case Lib_HttpParams.PUT:
+                    urlConn.setDoInput(true);
+                    urlConn.setDoOutput(true);
+                    urlConn.setRequestMethod("PUT");
+                    break;
+                case Lib_HttpParams.DELETE:
+                    urlConn.setRequestMethod("DELETE");
+                    break;
+                default:
+                    throw new Lib_Exception("no requestMethod: " + String.valueOf(requestMethod));
+            }
+            byte[] data = param.getBytes(encoding);
+            //urlConn.setInstanceFollowRedirects(true);//是否连接遵循重定向
+            //Content-Type: application/x-www-form-urlencoded   默认的提交方式，同GET类似，将参数组装成Key-value方式，用&分隔，但数据存放在body中提交
+            //Content-Type: multipart/form-data                 这种方式一般用来上传文件，或大批量数据时。
+            //Content-Type: text/plain                           这种方式一般用来上传字符串。
+            if (!TextUtils.isEmpty(contentType)) {
+                urlConn.setRequestProperty("Content-Type", contentType + "; charset=" + encoding);
+            }
+            urlConn.setRequestProperty("Content-Length", String.valueOf(data.length));
+            urlConn.setRequestProperty("Charset", encoding);
             urlConn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
             urlConn.setReadTimeout(READ_TIMEOUT_INT);
-            urlConn.setRequestMethod("GET");
             urlConn.connect(); // 连接既往服务端发送消息
+            if (data.length > 0) {
+                DataOutputStream dop = new DataOutputStream(urlConn.getOutputStream());
+                dop.write(data); // 发送参数
+                dop.flush(); // 发送，清空缓存
+                dop.close(); // 关闭
+            }
             if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 // 下面开始做接收工作
                 bufferReader = new InputStreamReader(urlConn.getInputStream());
@@ -163,6 +153,9 @@ public class Lib_Util_HttpURLRequest {
                     sb.append(chars, 0, length);
                 }
                 result = sb.toString();
+                if (LogUtil.DEBUG) {
+                    LogUtil.e("requestData result:", String.valueOf(result));
+                }
             } else {
                 throw new Lib_Exception(urlConn.getResponseCode(), "HTTP CODE:" + urlConn.getResponseCode());
             }

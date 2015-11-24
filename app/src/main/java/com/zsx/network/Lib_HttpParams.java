@@ -3,7 +3,6 @@ package com.zsx.network;
 import org.json.JSONObject;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 请求 参数 JavaBean
@@ -14,6 +13,8 @@ import java.util.Set;
 public class Lib_HttpParams {
     public static final String GET = "GET";
     public static final String POST = "POST";
+    public static final String PUT = "PUT";
+    public static final String DELETE = "DELETE";
     private String apiUrl;
     private String method = POST;
     private Object param;
@@ -71,14 +72,6 @@ public class Lib_HttpParams {
     }
 
     public void setParams(Map<String, Object> param) {
-        this.param = param;
-    }
-
-    public void setParams(JSONObject param) {
-        this.param = param;
-    }
-
-    public void setParams(Set<Object> param) {
         this.param = param;
     }
 

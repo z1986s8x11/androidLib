@@ -26,7 +26,7 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
         findViewById(R.id.btn_load).setOnClickListener(this);
         findViewById(R.id.btn_loadError).setOnClickListener(this);
         mMessageTV = (TextView) findViewById(R.id.tv_message);
-        loadData = new LoadData(LoadData.Api.B,this);
+        loadData = new LoadData(LoadData.Api.GET, this);
         loadData._setOnLoadingListener(new OnSimpleLoadListener<String>() {
             @Override
             public void onLoadStart(LoadData.Api id) {

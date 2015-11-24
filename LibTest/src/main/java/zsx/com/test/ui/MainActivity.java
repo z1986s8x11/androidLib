@@ -17,6 +17,7 @@ import zsx.com.test.base._BaseAdapter;
 import zsx.com.test.ui.adapter.InsertAdapterActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
 import zsx.com.test.ui.download.DownloadActivity;
+import zsx.com.test.ui.network.HttpRequestActivity;
 import zsx.com.test.ui.network.HttpUrlConnectActivity;
 import zsx.com.test.ui.network.LoadDataActivity;
 import zsx.com.test.ui.parse.JavaParseActivity;
@@ -51,6 +52,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("httpUrlTest", HttpUrlConnectActivity.class));
         list.add(new Item("PinnedSectionListView", PinnedSectionActivity.class));
         list.add(new Item("ViewPagerLooper", ViewPagerLooperActivity.class));
+        list.add(new Item("httpRequest", HttpRequestActivity.class));
 
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override

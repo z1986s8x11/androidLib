@@ -1,24 +1,20 @@
 package zsx.com.test.ui.network;
 
-import com.zsx.debug.LogUtil;
-import com.zsx.exception.Lib_Exception;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.network.Lib_BaseHttpRequestData;
 import com.zsx.network.Lib_HttpParams;
 import com.zsx.network.Lib_HttpResult;
 
-import org.apache.http.ParseException;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhusx on 2015/8/6.
  */
 public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, String> {
     public enum Api {
-        A, B, C;
+        GET, POST, PUT, DELETE
     }
 
     public LoadData(LoadData.Api id, Lib_LifeCycle lifeCycle) {
@@ -34,32 +30,36 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
     @Override
     protected Lib_HttpParams getHttpParams(LoadData.Api id, String... objects) {
         Lib_HttpParams params = new Lib_HttpParams();
-        params.setRequestMethod(Lib_HttpParams.POST);
-        params.setApiUrl("http://www.baidu.com");
+        switch (id) {
+            case GET:
+                params.setRequestMethod(Lib_HttpParams.GET);
+//                params.setApiUrl("http://192.168.10.202/test/get");
+                break;
+            case POST:
+                params.setRequestMethod(Lib_HttpParams.POST);
+//                params.setApiUrl("http://192.168.10.202/test/post");
+                break;
+            case PUT:
+                params.setRequestMethod(Lib_HttpParams.PUT);
+//                params.setApiUrl("http://192.168.10.202/test/put");
+                break;
+            case DELETE:
+                params.setRequestMethod(Lib_HttpParams.DELETE);
+//                params.setApiUrl("http://192.168.10.202/test/delete");
+                break;
+        }
+        params.setApiUrl("http://3.cqgod.sinaapp.com/tanmao.php");
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "zhusixiang");
+        params.setParams(map);
         return params;
     }
 
     @Override
     protected Lib_HttpResult<String> parseStr(LoadData.Api id, String currentDownloadText, Lib_HttpResult<String> lastData) throws Exception {
         Lib_HttpResult<String> result = new Lib_HttpResult<String>();
-        result.setMessage(_getRequestParams().isRefresh ? "成功" : "失败");
-        result.setSuccess(_getRequestParams().isRefresh);
-        result.setData("data");
+        result.setSuccess(true);
+        result.setData(currentDownloadText);
         return result;
-    }
-
-    @Override
-    protected String __requestProtocol(LoadData.Api id, Lib_HttpParams params) throws ParseException, URISyntaxException, IOException, Lib_Exception {
-        int i = 0;
-        while (i < 1) {
-            i++;
-            try {
-                LogUtil.e(this, "loading..." + i);
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return "成功拿到数据";
     }
 }
