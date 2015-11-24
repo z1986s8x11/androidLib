@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 /**
  * A PagerAdapter wrapper responsible for providing a proper page to
  * LoopViewPager
- * 
+ * <p/>
  * This class shouldn't be used directly
  */
 public class LoopPagerAdapterWrapper extends PagerAdapter {
@@ -48,7 +48,7 @@ public class LoopPagerAdapterWrapper extends PagerAdapter {
 
     @Override
     public void notifyDataSetChanged() {
-        mToDestroy = new SparseArray<ToDestroy>();
+        mToDestroy.clear();
         super.notifyDataSetChanged();
     }
 
@@ -56,7 +56,7 @@ public class LoopPagerAdapterWrapper extends PagerAdapter {
         int realCount = getRealCount();
         if (realCount == 0)
             return 0;
-        int realPosition = (position-1) % realCount;
+        int realPosition = (position - 1) % realCount;
         if (realPosition < 0)
             realPosition += realCount;
 
@@ -78,6 +78,9 @@ public class LoopPagerAdapterWrapper extends PagerAdapter {
 
     @Override
     public int getCount() {
+        if (mAdapter.getCount() == 0) {
+            return 0;
+        }
         return mAdapter.getCount() + 2;
     }
 

@@ -23,18 +23,18 @@ import android.util.AttributeSet;
 
 /**
  * A ViewPager subclass enabling infinte scrolling of the viewPager elements
- * 
+ * <p/>
  * When used for paginating views (in opposite to fragments), no code changes
  * should be needed only change xml's from <android.support.v4.view.ViewPager>
  * to <com.imbryk.viewPager.LoopViewPager>
- * 
+ * <p/>
  * If "blinking" can be seen when paginating to first or last view, simply call
  * seBoundaryCaching( true ), or change DEFAULT_BOUNDARY_CASHING to true
- * 
+ * <p/>
  * When using a FragmentPagerAdapter or FragmentStatePagerAdapter,
- * additional changes in the adapter must be done. 
+ * additional changes in the adapter must be done.
  * The adapter must be prepared to create 2 extra items e.g.:
- * 
+ * <p/>
  * The original adapter creates 4 items: [0,1,2,3]
  * The modified adapter will have to create 6 items [0,1,2,3,4,5]
  * with mapping realPosition=(position-1)%count
@@ -47,29 +47,29 @@ public class LoopViewPager extends ViewPager {
     OnPageChangeListener mOuterPageChangeListener;
     private LoopPagerAdapterWrapper mAdapter;
     private boolean mBoundaryCaching = DEFAULT_BOUNDARY_CASHING;
-    
-    
+
+
     /**
      * helper function which may be used when implementing FragmentPagerAdapter
-     *   
+     *
      * @param position
      * @param count
      * @return (position-1)%count
      */
-    public static int toRealPosition( int position, int count ){
-        position = position-1;
-        if( position < 0 ){
+    public static int toRealPosition(int position, int count) {
+        position = position - 1;
+        if (position < 0) {
             position += count;
-        }else{
-            position = position%count;
+        } else {
+            position = position % count;
         }
         return position;
     }
-    
+
     /**
      * If set to true, the boundary views (i.e. first and last) will never be destroyed
-     * This may help to prevent "blinking" of some views 
-     * 
+     * This may help to prevent "blinking" of some views
+     *
      * @param flag
      */
     public void setBoundaryCaching(boolean flag) {
@@ -97,6 +97,7 @@ public class LoopViewPager extends ViewPager {
         return mAdapter != null ? mAdapter.toRealPosition(super.getCurrentItem()) : 0;
     }
 
+    @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
         int realItem = mAdapter.toInnerPosition(item);
         super.setCurrentItem(realItem, smoothScroll);
@@ -112,7 +113,7 @@ public class LoopViewPager extends ViewPager {
     @Override
     public void setOnPageChangeListener(OnPageChangeListener listener) {
         mOuterPageChangeListener = listener;
-    };
+    }
 
     public LoopViewPager(Context context) {
         super(context);
@@ -134,7 +135,6 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void onPageSelected(int position) {
-
             int realPosition = mAdapter.toRealPosition(position);
             if (mPreviousPosition != realPosition) {
                 mPreviousPosition = realPosition;
@@ -146,7 +146,7 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void onPageScrolled(int position, float positionOffset,
-                int positionOffsetPixels) {
+                                   int positionOffsetPixels) {
             int realPosition = position;
             if (mAdapter != null) {
                 realPosition = mAdapter.toRealPosition(position);

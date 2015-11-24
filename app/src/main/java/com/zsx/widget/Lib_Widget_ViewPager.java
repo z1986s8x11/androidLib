@@ -45,8 +45,6 @@ public class Lib_Widget_ViewPager extends ViewPager {
             lifeCycle._addOnCycleListener(cycleListener);
         }
     }
-
-    private int i = 0;
     private Handler pHandler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
