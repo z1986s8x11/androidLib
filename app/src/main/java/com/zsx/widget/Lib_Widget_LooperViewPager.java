@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package zsx.com.test.ui.viewpagelooper;
+package com.zsx.widget;
 
 import android.content.Context;
+import android.os.Parcelable;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.SparseArray;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * A ViewPager subclass enabling infinte scrolling of the viewPager elements
@@ -40,7 +46,7 @@ import android.util.AttributeSet;
  * with mapping realPosition=(position-1)%count
  * [0->3, 1->0, 2->1, 3->2, 4->3, 5->0]
  */
-public class LoopViewPager extends ViewPager {
+public class Lib_Widget_LooperViewPager extends ViewPager {
 
     private static final boolean DEFAULT_BOUNDARY_CASHING = false;
 
@@ -115,12 +121,12 @@ public class LoopViewPager extends ViewPager {
         mOuterPageChangeListener = listener;
     }
 
-    public LoopViewPager(Context context) {
+    public Lib_Widget_LooperViewPager(Context context) {
         super(context);
         init();
     }
 
-    public LoopViewPager(Context context, AttributeSet attrs) {
+    public Lib_Widget_LooperViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -177,7 +183,7 @@ public class LoopViewPager extends ViewPager {
         @Override
         public void onPageScrollStateChanged(int state) {
             if (mAdapter != null) {
-                int position = LoopViewPager.super.getCurrentItem();
+                int position = Lib_Widget_LooperViewPager.super.getCurrentItem();
                 int realPosition = mAdapter.toRealPosition(position);
                 if (state == ViewPager.SCROLL_STATE_IDLE
                         && (position == 0 || position == mAdapter.getCount() - 1)) {
@@ -190,4 +196,144 @@ public class LoopViewPager extends ViewPager {
         }
     };
 
+    private static class LoopPagerAdapterWrapper extends PagerAdapter {
+        private PagerAdapter mAdapter;
+        private SparseArray<ToDestroy> mToDestroy = new SparseArray<ToDestroy>();
+        private boolean mBoundaryCaching;
+
+        public void setBoundaryCaching(boolean flag) {
+            mBoundaryCaching = flag;
+        }
+
+        LoopPagerAdapterWrapper(PagerAdapter adapter) {
+            this.mAdapter = adapter;
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            mToDestroy.clear();
+            super.notifyDataSetChanged();
+        }
+
+        int toRealPosition(int position) {
+            int realCount = getRealCount();
+            if (realCount == 0)
+                return 0;
+            int realPosition = (position - 1) % realCount;
+            if (realPosition < 0)
+                realPosition += realCount;
+
+            return realPosition;
+        }
+
+        public int toInnerPosition(int realPosition) {
+            int position = (realPosition + 1);
+            return position;
+        }
+
+        private int getRealFirstPosition() {
+            return 1;
+        }
+
+        private int getRealLastPosition() {
+            return getRealFirstPosition() + getRealCount() - 1;
+        }
+
+        @Override
+        public int getCount() {
+            if (mAdapter.getCount() == 0) {
+                return 0;
+            }
+            return mAdapter.getCount() + 2;
+        }
+
+        public int getRealCount() {
+            return mAdapter.getCount();
+        }
+
+        public PagerAdapter getRealAdapter() {
+            return mAdapter;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            int realPosition = (mAdapter instanceof FragmentPagerAdapter || mAdapter instanceof FragmentStatePagerAdapter)
+                    ? position
+                    : toRealPosition(position);
+
+            if (mBoundaryCaching) {
+                ToDestroy toDestroy = mToDestroy.get(position);
+                if (toDestroy != null) {
+                    mToDestroy.remove(position);
+                    return toDestroy.object;
+                }
+            }
+            return mAdapter.instantiateItem(container, realPosition);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            int realFirst = getRealFirstPosition();
+            int realLast = getRealLastPosition();
+            int realPosition = (mAdapter instanceof FragmentPagerAdapter || mAdapter instanceof FragmentStatePagerAdapter)
+                    ? position
+                    : toRealPosition(position);
+
+            if (mBoundaryCaching && (position == realFirst || position == realLast)) {
+                mToDestroy.put(position, new ToDestroy(container, realPosition,
+                        object));
+            } else {
+                mAdapter.destroyItem(container, realPosition, object);
+            }
+        }
+
+    /*
+     * Delegate rest of methods directly to the inner adapter.
+     */
+
+        @Override
+        public void finishUpdate(ViewGroup container) {
+            mAdapter.finishUpdate(container);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return mAdapter.isViewFromObject(view, object);
+        }
+
+        @Override
+        public void restoreState(Parcelable bundle, ClassLoader classLoader) {
+            mAdapter.restoreState(bundle, classLoader);
+        }
+
+        @Override
+        public Parcelable saveState() {
+            return mAdapter.saveState();
+        }
+
+        @Override
+        public void startUpdate(ViewGroup container) {
+            mAdapter.startUpdate(container);
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            mAdapter.setPrimaryItem(container, position, object);
+        }
+    }
+
+    /**
+     * Container class for caching the boundary views
+     */
+    static class ToDestroy {
+        ViewGroup container;
+        int position;
+        Object object;
+
+        public ToDestroy(ViewGroup container, int position, Object object) {
+            this.container = container;
+            this.position = position;
+            this.object = object;
+        }
+    }
 }

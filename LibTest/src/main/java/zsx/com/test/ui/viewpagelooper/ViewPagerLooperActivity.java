@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zsx.debug.LogUtil;
+import com.zsx.widget.Lib_Widget_LooperViewPager;
 
 import zsx.com.test.base._BaseActivity;
 
@@ -19,7 +20,7 @@ public class ViewPagerLooperActivity extends _BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LoopViewPager viewPager = new LoopViewPager(this);
+        Lib_Widget_LooperViewPager viewPager = new Lib_Widget_LooperViewPager(this);
         viewPager.setBoundaryCaching(true);
         setContentView(viewPager);
         viewPager.setAdapter(new PagerAdapter() {
@@ -42,7 +43,7 @@ public class ViewPagerLooperActivity extends _BaseActivity {
 
             @Override
             public int getCount() {
-                return 1;
+                return 0;
             }
 
             @Override
