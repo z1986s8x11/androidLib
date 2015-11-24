@@ -40,14 +40,12 @@ public class ViewPagerIndicatorActivity extends _BaseFragmentActivity implements
         findViewById(R.id.btn_circle).setOnClickListener(this);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mLayout = (LinearLayout) findViewById(R.id.tab_layout);
-        mViewPager.setAdapter(new Lib_BasePagerAdapter<String, TextView>(this, Arrays.asList(names)) {
+        mViewPager.setAdapter(new Lib_BasePagerAdapter<String>(this, Arrays.asList(names)) {
             @Override
-            public TextView getView(LayoutInflater inflater, int position, String s, TextView convertView) {
-                if (convertView == null) {
-                    convertView = new TextView(inflater.getContext());
-                }
-                convertView.setText(s);
-                return convertView;
+            public View getView(LayoutInflater inflater, int position, String s) {
+                TextView t=  new TextView(inflater.getContext());
+                t.setText(s);
+                return t;
             }
 
             @Override
