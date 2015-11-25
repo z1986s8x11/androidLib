@@ -4,10 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zsx.adapter.Lib_BasePagerAdapter;
+import com.zsx.debug.LogUtil;
 import com.zsx.widget.Lib_Widget_DirectionalViewPager;
 
 import java.util.Arrays;
@@ -29,9 +31,16 @@ public class DirectionViewPagerActivity extends _BaseActivity {
         setContentView(layout);
         viewPager.setAdapter(new Lib_BasePagerAdapter<String>(this, Arrays.asList("1", "2", "3", "4", "5", "6", "7")) {
             @Override
-            public View getView(LayoutInflater inflater, int position, String s) {
-                TextView t = new TextView(inflater.getContext());
-                t.setBackgroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)));
+            public View getView(LayoutInflater inflater, int position, String s, View view, ViewGroup viewGroup) {
+                TextView t;
+                if (view == null) {
+                    LogUtil.e(this, "null" + position);
+                    t = new TextView(inflater.getContext());
+                    t.setBackgroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)));
+                } else {
+                    LogUtil.e(this, "not null" + position);
+                    t = (TextView) view;
+                }
                 t.setText(s);
                 return t;
             }

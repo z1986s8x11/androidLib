@@ -42,8 +42,8 @@ public class ViewPagerIndicatorActivity extends _BaseFragmentActivity implements
         mLayout = (LinearLayout) findViewById(R.id.tab_layout);
         mViewPager.setAdapter(new Lib_BasePagerAdapter<String>(this, Arrays.asList(names)) {
             @Override
-            public View getView(LayoutInflater inflater, int position, String s) {
-                TextView t=  new TextView(inflater.getContext());
+            public View getView(LayoutInflater inflater, int position, String s, View view, ViewGroup viewGroup) {
+                TextView t = new TextView(inflater.getContext());
                 t.setText(s);
                 return t;
             }
