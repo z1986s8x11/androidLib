@@ -22,12 +22,52 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * 100 继续
+ * 101 分组交换协
+ * 200 OK
+ * 201 被创建
+ * 202 被采纳
+ * 203 非授权信息
+ * 204 无内容
+ * 205 重置内容
+ * 206 部分内容
+ * 300 多选项
+ * 301 永久地传送
+ * 302 找到
+ * 303 参见其他
+ * 304 未改动
+ * 305 使用代理
+ * 307 暂时重定向
+ * 400 错误请求
+ * 401 未授权
+ * 402 要求付费
+ * 403 禁止
+ * 404 未找到
+ * 405 不允许的方法
+ * 406 不被采纳
+ * 407 要求代理授权
+ * 408 请求超时
+ * 409 冲突
+ * 410 过期的
+ * 411 要求的长度
+ * 412 前提不成立
+ * 413 请求实例太大
+ * 414 请求URI太大
+ * 415 不支持的媒体类型
+ * 416 无法满足的请求范围
+ * 417 失败的预期
+ * 500 内部服务器错误
+ * 501 未被使用
+ * 502 网关错误
+ * 503 不可用的服务
+ * 504 网关超时
+ * 505 HTTP版本未被支持
+ * <p/>
  * Created by zhusx on 2015/11/5.
  */
 public class Lib_Util_HttpURLRequest {
     public static int CONNECTION_TIMEOUT_INT = 10000;
     public static int READ_TIMEOUT_INT = 5000;
-    public static Map<String, String> requestPropertys;
 
     public static String post(String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
         if (map == null || map.size() == 0) {
@@ -88,6 +128,10 @@ public class Lib_Util_HttpURLRequest {
     }
 
     public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType) throws IOException, Lib_Exception {
+        return httpRequest(requestMethod, requestUrl, param, contentType, null);
+    }
+
+    public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType, Map<String, String> requestPropertys) throws IOException, Lib_Exception {
         String result = null;
         String encoding = "UTF-8";
         InputStreamReader bufferReader = null;
