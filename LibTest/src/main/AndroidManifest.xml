@@ -33,6 +33,7 @@
         <activity android:name=".ui.widget.PinnedSectionActivity" />
         <activity android:name=".ui.viewpagelooper.ViewPagerLooperActivity" />
         <activity android:name=".ui.network.HttpRequestActivity" />
+        <activity android:name=".ui.widget.DirectionViewPagerActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>
