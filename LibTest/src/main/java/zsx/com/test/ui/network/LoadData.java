@@ -34,28 +34,27 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
         switch (id) {
             case GET:
                 params.setRequestMethod(Lib_HttpParams.GET);
-//                params.setApiUrl("http://192.168.10.202/test/get");
+                params.setApiUrl("http://api.m.qu.cn/test/get");
                 map.put("name", "zhusixiang");
                 params.setParams(map);
                 break;
             case POST:
                 params.setRequestMethod(Lib_HttpParams.POST);
-//                params.setApiUrl("http://192.168.10.202/test/post");
+                params.setApiUrl("http://api.m.qu.cn/test/post");
                 map.put("name", "zhusixiang");
                 params.setParams(map);
                 break;
             case PUT:
                 params.setRequestMethod(Lib_HttpParams.PUT);
-//                params.setApiUrl("http://192.168.10.202/test/put");
+                params.setApiUrl("http://api.m.qu.cn/test/put");
                 map.put("name", "zhusixiang");
                 params.setParams(map);
                 break;
             case DELETE:
                 params.setRequestMethod(Lib_HttpParams.DELETE);
-//                params.setApiUrl("http://192.168.10.202/test/delete");
+                params.setApiUrl("http://api.m.qu.cn/test/delete");
                 break;
         }
-        params.setApiUrl("http://3.cqgod.sinaapp.com/tanmao.php");
         return params;
     }
 
