@@ -1,5 +1,6 @@
 package zsx.com.test.ui.widget;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.zsx.adapter.Lib_BasePagerAdapter;
 import com.zsx.widget.Lib_Widget_DirectionalViewPager;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import zsx.com.test.base._BaseActivity;
 
@@ -29,6 +31,7 @@ public class DirectionViewPagerActivity extends _BaseActivity {
             @Override
             public View getView(LayoutInflater inflater, int position, String s) {
                 TextView t = new TextView(inflater.getContext());
+                t.setBackgroundColor(Color.rgb(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)));
                 t.setText(s);
                 return t;
             }
