@@ -136,6 +136,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     private class HttpWork extends Thread {
         private Lib_HttpParams mParams;
         private Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> mListener;
+        private boolean isCancel = false;
 
         public HttpWork(Lib_HttpParams params, Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
             this.mParams = params;
@@ -144,10 +145,14 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
         public void cancel() {
             this.mListener = null;
+            this.isCancel = true;
         }
 
 
         private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+            if(isCancel){
+                return;
+            }
             pHandler.post(new Runnable() {
 
                 @Override
@@ -158,6 +163,9 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         }
 
         private void onPostComplete(final Lib_HttpResult<Result> bean, final Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+            if(isCancel){
+                return;
+            }
             pHandler.post(new Runnable() {
 
                 @Override
