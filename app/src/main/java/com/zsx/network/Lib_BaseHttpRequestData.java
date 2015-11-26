@@ -150,7 +150,8 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
 
         private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
-            if(isCancel){
+            if (isCancel) {
+                pIsDownding = false;
                 return;
             }
             pHandler.post(new Runnable() {
@@ -163,7 +164,8 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         }
 
         private void onPostComplete(final Lib_HttpResult<Result> bean, final Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
-            if(isCancel){
+            if (isCancel) {
+                pIsDownding = false;
                 return;
             }
             pHandler.post(new Runnable() {
