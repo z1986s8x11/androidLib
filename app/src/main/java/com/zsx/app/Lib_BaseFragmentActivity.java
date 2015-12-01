@@ -23,9 +23,13 @@ import java.util.Set;
 
 public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_LifeCycle {
     public static final String _EXTRA_Serializable = Lib_BaseActivity._EXTRA_Serializable;
+    public static final String _EXTRA_ListSerializable = Lib_BaseActivity._EXTRA_ListSerializable;
     public static final String _EXTRA_String = Lib_BaseActivity._EXTRA_String;
+    public static final String _EXTRA_Strings = Lib_BaseActivity._EXTRA_Strings;
     public static final String _EXTRA_Integer = Lib_BaseActivity._EXTRA_Integer;
     public static final String _EXTRA_Boolean = Lib_BaseActivity._EXTRA_Boolean;
+    public static final String _EXTRA_Double = Lib_BaseActivity._EXTRA_Double;
+    public static final String _EXTRA_String_ID = Lib_BaseActivity._EXTRA_Strig_ID;
     protected String mToastMessage = "再次点击退出";
     private boolean pIsPause;
     private boolean pisDestroy;

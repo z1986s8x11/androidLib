@@ -24,6 +24,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     public static final String _EXTRA_Integer = Lib_BaseActivity._EXTRA_Integer;
     public static final String _EXTRA_Boolean = Lib_BaseActivity._EXTRA_Boolean;
     public static final String _EXTRA_Double = Lib_BaseActivity._EXTRA_Double;
+    public static final String _EXTRA_String_ID = Lib_BaseActivity._EXTRA_Strig_ID;
     private Toast toast;
     /**
      * 基于Activity生命周期回调
@@ -100,6 +101,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
+
     /**
      * 拿到屏幕的高度
      */

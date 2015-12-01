@@ -33,6 +33,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     public static final String _EXTRA_Integer = "extra_Integer";
     public static final String _EXTRA_Boolean = "extra_boolean";
     public static final String _EXTRA_Double = "extra_double";
+    public static final String _EXTRA_Strig_ID = "extra_id";
     protected String mToastMessage = "再次点击退出";
     private boolean pIsPause;
     private boolean pisDestroy;
