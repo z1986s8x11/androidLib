@@ -141,7 +141,7 @@ public class Lib_Util_HttpURLRequest {
         }
         try {
             if (LogUtil.DEBUG) {
-                LogUtil.e("requestData params:", String.valueOf(requestUrl) + String.valueOf(param));
+                LogUtil.e("requestData params:", String.valueOf(requestUrl) +" ; "+ String.valueOf(param));
             }
             URL url = new URL(requestUrl);
             urlConn = (HttpURLConnection) url.openConnection();
