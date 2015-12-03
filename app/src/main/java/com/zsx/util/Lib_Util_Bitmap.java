@@ -6,7 +6,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.os.Build;
 import android.view.View;
@@ -15,6 +21,54 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class Lib_Util_Bitmap {
+
+    public static Bitmap toBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    public static Bitmap toBitmap(byte[] b) {
+        if (b.length != 0) {
+            return BitmapFactory.decodeByteArray(b, 0, b.length);
+        }
+        return null;
+    }
+
+    public static Bitmap zoomBitmap(Bitmap bitmap, int width, int height) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        Matrix matrix = new Matrix();
+        float scaleWidth = ((float) width / w);
+        float scaleHeight = ((float) height / h);
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+        return newbmp;
+    }
+
+    public static Bitmap toRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        Bitmap output = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, w, h);
+        final RectF rectF = new RectF(rect);
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
     /**
      * 压缩图片
      */
@@ -107,29 +161,31 @@ public class Lib_Util_Bitmap {
         }
         return inSampleSize;
     }
+
     /**
      * 设置高斯模糊
-     *
+     * <p/>
      * ps:
      * 设置高斯模糊是依靠scaleFactor和radius配合使用的，比如这里默认设置是：scaleFactor = 8;radius = 2; 模糊效果和scaleFactor = 1;radius = 20;是一样的，而且效率高
-     * @param fromView 从某个View获取截图
-     * @param toView 高斯模糊设置到某个View上
-     * @param radius 模糊度
+     *
+     * @param fromView    从某个View获取截图
+     * @param toView      高斯模糊设置到某个View上
+     * @param radius      模糊度
      * @param scaleFactor 缩放比例
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static void blur(View fromView, View toView,float radius,float scaleFactor) {
+    public static void blur(View fromView, View toView, float radius, float scaleFactor) {
         //获取View的截图
         fromView.buildDrawingCache();
         Bitmap bkg = fromView.getDrawingCache();
-        if (radius<1||radius>26) {
+        if (radius < 1 || radius > 26) {
             scaleFactor = 8;
             radius = 2;
         }
-        Bitmap overlay = Bitmap.createBitmap((int) (toView.getMeasuredWidth()/scaleFactor),
-                (int) (toView.getMeasuredHeight()/scaleFactor), Bitmap.Config.ARGB_8888);
+        Bitmap overlay = Bitmap.createBitmap((int) (toView.getMeasuredWidth() / scaleFactor),
+                (int) (toView.getMeasuredHeight() / scaleFactor), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(overlay);
-        canvas.translate(-toView.getLeft()/scaleFactor, -toView.getTop() / scaleFactor);
+        canvas.translate(-toView.getLeft() / scaleFactor, -toView.getTop() / scaleFactor);
         canvas.scale(1 / scaleFactor, 1 / scaleFactor);
         Paint paint = new Paint();
         paint.setFlags(Paint.FILTER_BITMAP_FLAG);
@@ -141,6 +197,7 @@ public class Lib_Util_Bitmap {
 
     /**
      * 高斯模糊操作
+     *
      * @param sentBitmap
      * @param radius
      * @param canReuseInBitmap

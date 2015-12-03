@@ -1,21 +1,10 @@
 package com.zsx.util;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.util.DisplayMetrics;
 
 public class Lib_Util_Drawable {
-	/**
-	 * 屏幕高度,单位像素(px).
-	 */
-	public static int getHeight(Context context) {
-		DisplayMetrics displayMetrics = context.getResources()
-				.getDisplayMetrics();
-		return displayMetrics.heightPixels;
-	}
-
 	public static ColorStateList getColorStateListForPress(int stateColor,
 			int normalColor) {
 		return getColorState(stateColor, normalColor,
