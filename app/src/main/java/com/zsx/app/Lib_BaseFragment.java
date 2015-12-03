@@ -75,12 +75,12 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDetach() {
         for (Lib_OnCancelListener l : cancelListener) {
             l.onCancel();
         }
         cancelListener.clear();
+        super.onDetach();
     }
 
     public void _showToast(String message) {
