@@ -27,7 +27,19 @@ public class BadgeViewActivity extends _BaseActivity {
         final View v1 = findViewById(R.id.btn_get);
         final View v2 = findViewById(R.id.btn_post);
         final View startView = findViewById(R.id.btn_start);
+        startView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _showToast("startView");
+            }
+        });
         final View endView = findViewById(R.id.btn_end);
+        endView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _showToast("endView");
+            }
+        });
         findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
