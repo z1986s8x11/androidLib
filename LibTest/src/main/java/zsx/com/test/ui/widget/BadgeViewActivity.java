@@ -1,5 +1,9 @@
 package zsx.com.test.ui.widget;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,12 +19,15 @@ public class BadgeViewActivity extends _BaseActivity {
     Lib_Widget_BadgeView badge1;
     Lib_Widget_BadgeView badge2;
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget_bageview);
         final View v1 = findViewById(R.id.btn_get);
         final View v2 = findViewById(R.id.btn_post);
+        final View startView = findViewById(R.id.btn_start);
+        final View endView = findViewById(R.id.btn_end);
         findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,6 +43,10 @@ public class BadgeViewActivity extends _BaseActivity {
                     badge2.setText("3");
                 }
                 badge2._toggle();
+                PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("TranslationX", 0F, endView.getX() - startView.getX());
+                PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("TranslationY", 0F, 300F, 0f);
+                final ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(startView, pvhX, pvhY);
+                objectAnimator.start();
             }
         });
     }
