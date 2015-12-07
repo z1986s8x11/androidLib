@@ -23,6 +23,7 @@ import zsx.com.test.ui.network.LoadDataActivity;
 import zsx.com.test.ui.parse.JavaParseActivity;
 import zsx.com.test.ui.viewpagelooper.ViewPagerLooperActivity;
 import zsx.com.test.ui.widget.AutoListViewActivity;
+import zsx.com.test.ui.widget.BadgeViewActivity;
 import zsx.com.test.ui.widget.DirectionViewPagerActivity;
 import zsx.com.test.ui.widget.DragListViewActivity;
 import zsx.com.test.ui.widget.KeywordsFlowActivity;
@@ -55,6 +56,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("ViewPagerLooper", ViewPagerLooperActivity.class));
         list.add(new Item("DirectionViewPager", DirectionViewPagerActivity.class));
         list.add(new Item("httpRequest", HttpRequestActivity.class));
+        list.add(new Item("badgeView", BadgeViewActivity.class));
 
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override

@@ -163,7 +163,7 @@ public class Lib_Widget_BadgeView extends TextView {
 			int index = group.indexOfChild(target);
 			group.removeView(target);
 			group.addView(container, index, lp);
-			container.addView(target);
+			container.addView(target,new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT));
 			this.setVisibility(View.GONE);
 			container.addView(this);
 			group.invalidate();
@@ -398,7 +398,7 @@ public class Lib_Widget_BadgeView extends TextView {
 	 * POSITION_BOTTOM_RIGHT, POSTION_CENTER.
 	 * 
 	 */
-	public int _getBadgePosition() {
+	public int _getBadgeGravity() {
 		return badgePosition;
 	}
 
@@ -410,7 +410,7 @@ public class Lib_Widget_BadgeView extends TextView {
 	 *            POSITION_BOTTOM_LEFT, POSITION_BOTTOM_RIGHT, POSTION_CENTER.
 	 * 
 	 */
-	public void _setBadgePosition(int layoutPosition) {
+	public void _setBadgeGravity(int layoutPosition) {
 		this.badgePosition = layoutPosition;
 	}
 
