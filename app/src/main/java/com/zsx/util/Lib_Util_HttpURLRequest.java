@@ -210,6 +210,9 @@ public class Lib_Util_HttpURLRequest {
                     LogUtil.e("requestData result:", String.valueOf(result));
                 }
             } else {
+                if (LogUtil.DEBUG) {
+                    LogUtil.e("requestData result:", "HTTP CODE:" + urlConn.getResponseCode());
+                }
                 throw new Lib_Exception(urlConn.getResponseCode(), "HTTP CODE:" + urlConn.getResponseCode());
             }
         } finally {
