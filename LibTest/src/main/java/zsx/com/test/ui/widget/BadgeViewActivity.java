@@ -5,6 +5,7 @@ import android.animation.PropertyValuesHolder;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.zsx.widget.Lib_Widget_BadgeView;
@@ -45,6 +46,7 @@ public class BadgeViewActivity extends _BaseActivity {
             public void onClick(View v) {
                 if (badge1 == null) {
                     badge1 = new Lib_Widget_BadgeView(v.getContext(), v1);
+                    badge1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 6);
                     badge1._setBadgeGravity(Lib_Widget_BadgeView.POSITION_TOP_RIGHT);
                     badge1.setText("2");
                 }

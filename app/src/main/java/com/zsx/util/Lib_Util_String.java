@@ -133,6 +133,9 @@ public class Lib_Util_String {
      * 转化为最多2位小数
      */
     public static String to2DecimalsForMaximum(String doubleValue) {
+        if (TextUtils.isEmpty(doubleValue)) {
+            return null;
+        }
         BigDecimal bd = new BigDecimal(doubleValue);
         bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
         return to2DecimalsForMaximum(bd.doubleValue());
