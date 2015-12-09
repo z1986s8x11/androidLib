@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
@@ -117,8 +118,32 @@ public class Lib_Util_String {
     /**
      * 转化为2位小数
      */
-    public static String to2Decimals(Object doubleValue) {
+    public static String to2Decimals(double doubleValue) {
         return new java.text.DecimalFormat("#.00").format(doubleValue);
+    }
+
+    /**
+     * 转化为2位小数
+     */
+    public static String to2Decimals(float doubleValue) {
+        return new java.text.DecimalFormat("#.00").format(doubleValue);
+    }
+
+    /**
+     * 转化为最多2位小数
+     */
+    public static String to2DecimalsForMaximum(String doubleValue) {
+        BigDecimal bd = new BigDecimal(doubleValue);
+        bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+        return to2DecimalsForMaximum(bd.doubleValue());
+    }
+
+    /**
+     * 转化为最多2位小数
+     */
+    public static String to2DecimalsForMaximum(double doubleValue) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(doubleValue);
     }
 
     /**
