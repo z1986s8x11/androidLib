@@ -412,6 +412,9 @@ public class Lib_Util_File {
                 out.write(buffer, 0, count);
             }
         } catch (IOException e) {
+            if (sdFile.exists()) {
+                sdFile.delete();
+            }
             e.printStackTrace();
         } finally {
             if (ins != null) {
@@ -469,9 +472,10 @@ public class Lib_Util_File {
             protected Void doInBackground(String... params) {
                 // 拷贝资产目录下的数据库 到系统的data/data/包名/files/目录
                 AssetManager am = context.getAssets();
+                File file = null;
                 try {
                     InputStream is = am.open(params[0]);
-                    File file = new File(context.getFilesDir(), params[1]);
+                    file = new File(context.getFilesDir(), params[1]);
                     FileOutputStream fos = new FileOutputStream(file);
                     byte[] buffer = new byte[1024];
                     int len;
@@ -481,6 +485,11 @@ public class Lib_Util_File {
                     fos.close();
                     is.close();
                 } catch (Exception e) {
+                    if (file != null) {
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
                     e.printStackTrace();
                 }
                 return null;
