@@ -1,5 +1,6 @@
 package com.zsx.tools;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import com.zsx.debug.LogUtil;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
+import com.zsx.util.Lib_Util_System;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +36,12 @@ public class Lib_SMSReceiver {
     public <T extends Context & Lib_LifeCycle> Lib_SMSReceiver(final T context, OnSMSMessageListener onSMSMessage) {
         observer = new SmsObserver(context, new Handler(), onSMSMessage);
         this.context = context;
+        if (!Lib_Util_System.isPermission(context, Manifest.permission.READ_SMS)) {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(this, " please AndroidManifest.xml add  'android.permission.READ_SMS '");
+            }
+            return;
+        }
         context.getContentResolver().registerContentObserver(uri, true, observer);
         context._addOnCancelListener(new Lib_OnCancelListener() {
             @Override
