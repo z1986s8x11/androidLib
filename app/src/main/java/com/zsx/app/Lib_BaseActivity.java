@@ -179,10 +179,10 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         pisDestroy = true;
         destroyActivity();
         cycleListener.clear();
+        super.onDestroy();
     }
 
     public boolean _isDestroy() {

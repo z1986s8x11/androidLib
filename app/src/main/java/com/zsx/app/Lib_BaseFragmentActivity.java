@@ -166,10 +166,10 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         pisDestroy = true;
         destroyActivity();
         cycleListener.clear();
+        super.onDestroy();
     }
 
     public boolean _isDestroy() {
