@@ -119,14 +119,14 @@ public class Lib_Util_String {
      * 转化为2位小数
      */
     public static String to2Decimals(double doubleValue) {
-        return new java.text.DecimalFormat("#.00").format(doubleValue);
+        return new java.text.DecimalFormat("0.00").format(doubleValue);
     }
 
     /**
      * 转化为2位小数
      */
     public static String to2Decimals(float doubleValue) {
-        return new java.text.DecimalFormat("#.00").format(doubleValue);
+        return new java.text.DecimalFormat("0.00").format(doubleValue);
     }
 
     /**
