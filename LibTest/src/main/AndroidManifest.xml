@@ -35,6 +35,7 @@
         <activity android:name=".ui.network.HttpRequestActivity" />
         <activity android:name=".ui.widget.DirectionViewPagerActivity" />
         <activity android:name=".ui.widget.BadgeViewActivity" />
+        <activity android:name=".ui.anim.AnimActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>

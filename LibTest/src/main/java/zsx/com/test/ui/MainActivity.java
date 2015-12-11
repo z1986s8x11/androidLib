@@ -15,6 +15,7 @@ import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
 import zsx.com.test.base._BaseAdapter;
 import zsx.com.test.ui.adapter.InsertAdapterActivity;
+import zsx.com.test.ui.anim.AnimActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
 import zsx.com.test.ui.download.DownloadActivity;
 import zsx.com.test.ui.network.HttpRequestActivity;
@@ -57,6 +58,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("DirectionViewPager", DirectionViewPagerActivity.class));
         list.add(new Item("httpRequest", HttpRequestActivity.class));
         list.add(new Item("badgeView", BadgeViewActivity.class));
+        list.add(new Item("anim", AnimActivity.class));
 
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
