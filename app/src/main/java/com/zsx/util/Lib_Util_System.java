@@ -35,14 +35,17 @@ import android.widget.EditText;
 
 import com.zsx.debug.LogUtil;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -714,6 +717,50 @@ public class Lib_Util_System {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 需要android.permission.READ_LOGS
+     * <p/>
+     * 拿到过滤过的Log 日志
+     */
+    public static String getLogCatForLogUtil() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("--------LogCat start--------" + "\n"); // 方法启动
+        try {
+             /*
+             * Logcat 命名
+             * -s 设置过滤器
+             * -f 输出到日志文件
+             * -c 清除日志
+             * -d 获取日志
+             * -g 获取日志的大小
+             * -v 设置日志打印格式
+             */
+            ArrayList<String> cmdLine = new ArrayList<String>();   //设置命令   logcat -d 读取日志
+            cmdLine.add("logcat");
+            cmdLine.add("-d");
+            cmdLine.add(" *:E");
+            ArrayList<String> clearLog = new ArrayList<String>();  //设置命令  logcat -c 清除日志
+            clearLog.add("logcat");
+            clearLog.add("-c");
+            Process process = Runtime.getRuntime().exec(cmdLine.toArray(new String[cmdLine.size()]));   //捕获日志
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));    //将捕获内容转换为BufferedReader
+            //Runtime.runFinalizersOnExit(true);
+            String str = null;
+            //开始读取日志，每次读取一行
+            while ((str = bufferedReader.readLine()) != null) {
+                Runtime.getRuntime().exec(clearLog.toArray(new String[clearLog.size()]));  //清理日志....这里至关重要，不清理的话，任何操作都将产生新的日志，代码进入死循环，直到bufferreader满
+                if (str.startsWith("E/[Log]")) {
+                    sb.append(str + "\n");    //输出，在logcat中查看效果，也可以是其他操作，比如发送给服务器..
+                }
+            }
+            sb.append("--------LogCat end--------" + "\n");
+        } catch (Exception e) {
+            sb.append("--------LogCat error  android.permission.READ_LOGS ? --------" + "\n");
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
     // 设置字体

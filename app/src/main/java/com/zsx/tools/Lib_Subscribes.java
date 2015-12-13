@@ -40,7 +40,7 @@ public class Lib_Subscribes {
         }).start();
     }
 
-    public abstract class Subscriber<T> {
+    public static abstract class Subscriber<T> {
         public void onComplete(T t) {
         }
 

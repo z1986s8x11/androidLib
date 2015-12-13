@@ -15,9 +15,6 @@ public class TestApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LogUtil.DEBUG = true;
-        if (LogUtil.DEBUG) {
-            LogUtil.e(this, "onCreate");
-        }
         ZsxApplicationManager.builder(this).setMonitorNet(true).setUncaughtException(true).build();
         Lib_Util_File.createFileDir(this,"Lib");
     }

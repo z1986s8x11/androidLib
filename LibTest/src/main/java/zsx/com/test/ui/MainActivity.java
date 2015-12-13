@@ -22,6 +22,7 @@ import zsx.com.test.ui.network.HttpRequestActivity;
 import zsx.com.test.ui.network.HttpUrlConnectActivity;
 import zsx.com.test.ui.network.LoadDataActivity;
 import zsx.com.test.ui.parse.JavaParseActivity;
+import zsx.com.test.ui.parse.LogcatActivity;
 import zsx.com.test.ui.viewpagelooper.ViewPagerLooperActivity;
 import zsx.com.test.ui.widget.AutoListViewActivity;
 import zsx.com.test.ui.widget.BadgeViewActivity;
@@ -59,7 +60,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("httpRequest", HttpRequestActivity.class));
         list.add(new Item("badgeView", BadgeViewActivity.class));
         list.add(new Item("anim", AnimActivity.class));
-
+        list.add(new Item("logcat", LogcatActivity.class));
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
             public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {
