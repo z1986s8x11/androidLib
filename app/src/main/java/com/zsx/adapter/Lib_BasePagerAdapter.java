@@ -29,11 +29,21 @@ public abstract class Lib_BasePagerAdapter<T> extends PagerAdapter {
         this(context, list, new RecycleBin());
     }
 
+    public Lib_BasePagerAdapter(Context context, boolean isCache) {
+        this(context, new ArrayList<T>(), null);
+    }
+
+    public Lib_BasePagerAdapter(Context context, List<T> list, boolean isCache) {
+        this(context, list, null);
+    }
+
     Lib_BasePagerAdapter(Context context, List<T> list, RecycleBin recycleBin) {
         this.mList = list;
         this.mInflater = LayoutInflater.from(context);
         this.recycleBin = recycleBin;
-        recycleBin.setViewTypeCount(getViewTypeCount());
+        if (recycleBin != null) {
+            recycleBin.setViewTypeCount(getViewTypeCount());
+        }
     }
 
     @Override
@@ -46,10 +56,12 @@ public abstract class Lib_BasePagerAdapter<T> extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        int viewType = getItemViewType(position);
         View view = null;
-        if (viewType != IGNORE_ITEM_VIEW_TYPE) {
-            view = recycleBin.getScrapView(position, viewType);
+        if (recycleBin != null) {
+            int viewType = getItemViewType(position);
+            if (viewType != IGNORE_ITEM_VIEW_TYPE) {
+                view = recycleBin.getScrapView(position, viewType);
+            }
         }
         view = getView(mInflater, position, mList.get(position), view, container);
         container.addView(view);
@@ -60,9 +72,11 @@ public abstract class Lib_BasePagerAdapter<T> extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         View view = (View) object;
         container.removeView(view);
-        int viewType = getItemViewType(position);
-        if (viewType != IGNORE_ITEM_VIEW_TYPE) {
-            recycleBin.addScrapView(view, position, viewType);
+        if (recycleBin != null) {
+            int viewType = getItemViewType(position);
+            if (viewType != IGNORE_ITEM_VIEW_TYPE) {
+                recycleBin.addScrapView(view, position, viewType);
+            }
         }
     }
 

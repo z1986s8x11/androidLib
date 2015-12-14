@@ -89,8 +89,11 @@ public class Lib_SMSReceiver {
                 }
                 list.add(map);
             }
-            if (listener != null) {
-                listener.onMessage(list);
+            //短信有可能被某些软件拦截后 放入黑名单,无法正常查询
+            if (list.size() != 0) {
+                if (listener != null) {
+                    listener.onMessage(list);
+                }
             }
         }
     }
