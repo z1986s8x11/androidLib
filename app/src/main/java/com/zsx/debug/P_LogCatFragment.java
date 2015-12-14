@@ -41,6 +41,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
         });
         infoTV = new TextView(inflater.getContext());
         infoTV.setMovementMethod(ScrollingMovementMethod.getInstance());
+        infoTV.setText("正在初始化...");
         infoTV.setClickable(true);
         infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 8);
         rootView.addView(infoTV);
