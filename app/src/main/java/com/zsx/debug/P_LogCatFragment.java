@@ -3,6 +3,7 @@ package com.zsx.debug;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.method.ScrollingMovementMethod;
+import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
         infoTV = new TextView(inflater.getContext());
         infoTV.setMovementMethod(ScrollingMovementMethod.getInstance());
         infoTV.setClickable(true);
+        infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 8);
         rootView.addView(infoTV);
         Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
             @Override
