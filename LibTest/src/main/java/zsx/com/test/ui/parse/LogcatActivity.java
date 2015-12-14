@@ -3,6 +3,7 @@ package zsx.com.test.ui.parse;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class LogcatActivity extends _BaseActivity implements View.OnClickListene
         findViewById(R.id.btn_get).setOnClickListener(this);
         infoTV = (TextView) findViewById(R.id.tv_message);
         infoTV.setClickable(true);
+        infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 6);
         infoTV.setMovementMethod(ScrollingMovementMethod.getInstance());
         Log.i("[]", "i");
         Log.d("[]", "d");

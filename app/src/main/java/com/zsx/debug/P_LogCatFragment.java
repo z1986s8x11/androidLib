@@ -43,7 +43,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
         infoTV.setMovementMethod(ScrollingMovementMethod.getInstance());
         infoTV.setText("正在初始化...");
         infoTV.setClickable(true);
-        infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 8);
+        infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 6);
         rootView.addView(infoTV);
         Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
             @Override
