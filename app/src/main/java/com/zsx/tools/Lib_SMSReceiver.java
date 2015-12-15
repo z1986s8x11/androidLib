@@ -23,7 +23,7 @@ import java.util.Map;
  * Created by zhusx on 2015/12/9.
  */
 public class Lib_SMSReceiver {
-    private Uri uri = Uri.parse("content://sms/");
+    private Uri uri = Uri.parse("content://sms/inbox");
     public static final String EXTRA__ID = "_id";
     public static final String EXTRA_BODY = "body";//短信内容
     public static final String EXTRA_ADDRESS = "address";//手机号
@@ -89,6 +89,7 @@ public class Lib_SMSReceiver {
                 }
                 list.add(map);
             }
+            cur.close();
             //短信有可能被某些软件拦截后 放入黑名单,无法正常查询
             if (list.size() != 0) {
                 if (listener != null) {

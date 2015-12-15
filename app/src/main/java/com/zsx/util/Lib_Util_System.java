@@ -727,6 +727,7 @@ public class Lib_Util_System {
     public static String getLogCatForLogUtil() {
         StringBuffer sb = new StringBuffer();
         sb.append("--------LogCat start--------" + "\n"); // 方法启动
+        BufferedReader bufferedReader = null;
         try {
              /*
              * Logcat 命名
@@ -745,7 +746,7 @@ public class Lib_Util_System {
             clearLog.add("logcat");
             clearLog.add("-c");
             Process process = Runtime.getRuntime().exec(cmdLine.toArray(new String[cmdLine.size()]));   //捕获日志
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));    //将捕获内容转换为BufferedReader
+            bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));    //将捕获内容转换为BufferedReader
             //Runtime.runFinalizersOnExit(true);
             String str = null;
             //开始读取日志，每次读取一行
@@ -759,6 +760,14 @@ public class Lib_Util_System {
         } catch (Exception e) {
             sb.append("--------LogCat error  android.permission.READ_LOGS ? --------" + "\n");
             e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return sb.toString();
     }

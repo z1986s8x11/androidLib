@@ -76,11 +76,21 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
 
     @Override
     public void onDetach() {
+        super.onDetach();
         for (Lib_OnCancelListener l : cancelListener) {
             l.onCancel();
         }
         cancelListener.clear();
-        super.onDetach();
+//        try {
+//            //参数是固定写法
+//            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+//            childFragmentManager.setAccessible(true);
+//            childFragmentManager.set(this, null);
+//        } catch (NoSuchFieldException e) {
+//            throw new RuntimeException(e);
+//        } catch (IllegalAccessException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void _showToast(String message) {
