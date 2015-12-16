@@ -3,10 +3,9 @@ package com.zsx.tools;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.zsx.itf.Lib_EmptyViewInterface;
-import com.zsx.network.Lib_BaseHttpRequestData;
 import com.zsx.network.Lib_HttpRequest;
 import com.zsx.network.Lib_HttpResult;
 import com.zsx.network.Lib_OnHttpLoadingListener;
@@ -15,16 +14,16 @@ import com.zsx.network.Lib_OnHttpLoadingListener;
  * 用于需要网络请求时,显示Loading页面
  * Created by zhusx on 2015/9/25.
  */
-public abstract class Lib_LoadingHelper<I, M, O> implements Lib_OnHttpLoadingListener<I, Lib_HttpResult<M>, O> {
-    private View resLayout;
-    private Lib_EmptyViewInterface pEmptyView;
-    private Lib_BaseHttpRequestData<I, Lib_HttpResult<M>, O> pLoadData;
+public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> {
+    private FrameLayout helperLayout;
+    private View loadingView;
+    private View errorView;
+    private boolean isRepeat = false;
     private boolean isSuccess = false;
+    private View resLayout;
 
-    public <T extends View & Lib_EmptyViewInterface> Lib_LoadingHelper(View resLayout, T emptyView, Lib_BaseHttpRequestData<I, Lib_HttpResult<M>, O> loadData) {
+    public Lib_LoadingHelper(View resLayout) {
         this.resLayout = resLayout;
-        this.pLoadData = loadData;
-        this.pEmptyView = emptyView;
         ViewParent parent = resLayout.getParent();
         if (parent == null) {
             throw new IllegalStateException("resLayout 不能为null");
@@ -32,16 +31,14 @@ public abstract class Lib_LoadingHelper<I, M, O> implements Lib_OnHttpLoadingLis
         if (parent.getParent() instanceof ViewGroup) {
             ViewGroup.LayoutParams lp = resLayout.getLayoutParams();
             LinearLayout parentLayout = new LinearLayout(resLayout.getContext());
-            parentLayout.setLayoutParams(lp);
             parentLayout.setOrientation(LinearLayout.VERTICAL);
-            parentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
+            parentLayout.setLayoutParams(lp);
             ViewGroup group = (ViewGroup) parent;
             int index = group.indexOfChild(resLayout);
             group.removeView(resLayout);
             group.addView(parentLayout, index, lp);
-            parentLayout.addView(resLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            parentLayout.addView(emptyView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            parentLayout.addView(resLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            parentLayout.addView(helperLayout = new FrameLayout(resLayout.getContext()), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             resLayout.setVisibility(View.GONE);
             parentLayout.invalidate();
         } else {
@@ -49,40 +46,81 @@ public abstract class Lib_LoadingHelper<I, M, O> implements Lib_OnHttpLoadingLis
         }
     }
 
-    /**
-     * 用于重新加载
-     */
-    protected void reLoad() {
-        pLoadData._reLoadData();
+    public final void _setLoadingView(View child) {
+        if (loadingView != null) {
+            helperLayout.removeView(loadingView);
+        }
+        if (child.getParent() != null) {
+            ((ViewGroup) child.getParent()).removeView(child);
+        }
+        helperLayout.addView(child, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        child.setVisibility(View.GONE);
+        loadingView = child;
+    }
+
+    public final void _setErrorView(View child) {
+        if (errorView != null) {
+            helperLayout.removeView(errorView);
+        }
+        if (child.getParent() != null) {
+            ((ViewGroup) child.getParent()).removeView(child);
+        }
+        helperLayout.addView(child, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        child.setVisibility(View.GONE);
+        errorView = child;
+    }
+
+    public void _setRepeat(boolean isRepeat) {
+        this.isRepeat = isRepeat;
+    }
+
+    public void __onError(View errorView, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
+    }
+
+    public abstract void __onComplete(Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data);
+
+    @Override
+    public final void onLoadStart(Id id) {
+        if (!isRepeat) {
+            if (isSuccess) {
+                return;
+            }
+        }
+        loadingView.setVisibility(View.VISIBLE);
+        if (resLayout.getVisibility() == View.VISIBLE) {
+            resLayout.setVisibility(View.GONE);
+        }
+        if (errorView != null && errorView.getVisibility() == View.VISIBLE) {
+            errorView.setVisibility(View.GONE);
+        }
     }
 
     @Override
-    public void onLoadStart(I i) {
-        if (!isSuccess) {
-            return;
+    public final void onLoadError(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
+        if (!isRepeat) {
+            if (isSuccess) {
+                __onError(errorView, request, data, isAPIError, error_message);
+                return;
+            }
         }
-        pEmptyView.showLoadingView();
+        loadingView.setVisibility(View.GONE);
+        if (errorView != null) {
+            errorView.setVisibility(View.VISIBLE);
+        }
+        __onError(errorView, request, data, isAPIError, error_message);
     }
 
     @Override
-    public void onLoadError(I i, Lib_HttpRequest<O> requestData, Lib_HttpResult<M> mLib_httpResult, boolean isAPIError, String error_message) {
-        if (!isSuccess) {
-            return;
+    public final void onLoadComplete(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data) {
+        if (!isRepeat) {
+            if (isSuccess) {
+                __onComplete(request, data);
+                return;
+            }
         }
-        pEmptyView.showLoadErrorView(error_message);
-    }
-
-    @Override
-    public void onLoadComplete(I i, Lib_HttpRequest<O> requestData, Lib_HttpResult<M> b) {
-        if (!isSuccess) {
-            return;
-        }
-        isSuccess = true;
-        pEmptyView.showLoadComplete();
+        loadingView.setVisibility(View.GONE);
         resLayout.setVisibility(View.VISIBLE);
-        onSuccess(requestData, b);
+        isSuccess = true;
+        __onComplete(request, data);
     }
-
-    public abstract void onSuccess(Lib_HttpRequest<O> request, Lib_HttpResult<M> result);
-
 }

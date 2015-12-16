@@ -1,12 +1,14 @@
 package zsx.com.test.ui.network;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zsx.debug.LogUtil;
+import com.zsx.network.Lib_BaseHttpRequestData;
 import com.zsx.network.Lib_HttpRequest;
 import com.zsx.network.Lib_HttpResult;
+import com.zsx.tools.Lib_LoadingHelper;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -17,49 +19,53 @@ import zsx.com.test.base._BaseActivity;
 public class LoadDataActivity extends _BaseActivity implements View.OnClickListener {
     TextView mMessageTV;
     LoadData loadData;
+    LoadingHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network_loaddata);
-        findViewById(R.id.btn_stop).setOnClickListener(this);
         findViewById(R.id.btn_load).setOnClickListener(this);
-        findViewById(R.id.btn_loadError).setOnClickListener(this);
         mMessageTV = (TextView) findViewById(R.id.tv_message);
-        loadData = new LoadData(LoadData.Api.GET, this);
-        loadData._setOnLoadingListener(new OnSimpleLoadListener<String>() {
-            @Override
-            public void onLoadStart(LoadData.Api id) {
-                LogUtil.e("onLoadStart", "onLoadStart");
-                mMessageTV.setText("onLoadStart");
-            }
-
-            @Override
-            public void onLoadError(LoadData.Api id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> stringLib_httpResult, boolean isAPIError, String error_message) {
-                LogUtil.e("onLoadError", String.valueOf(isAPIError) + ":" + String.valueOf(error_message));
-                mMessageTV.setText("onLoadError:" + String.valueOf(error_message));
-            }
-
-            @Override
-            public void onLoadComplete(LoadData.Api id, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
-                LogUtil.e("onLoadComplete", String.valueOf(b.getData()));
-                mMessageTV.setText("onLoadComplete" + b.getData());
-            }
-        });
+        loadData = new LoadData(LoadData.Api.TEST, this);
+        helper = new LoadingHelper(mMessageTV, loadData);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_stop:
-                loadData._cancelLoadData();
-                break;
             case R.id.btn_load:
-                loadData._refreshData();
-                break;
-            case R.id.btn_loadError:
                 loadData._loadData();
                 break;
+        }
+    }
+
+    public static class LoadingHelper extends Lib_LoadingHelper<Object, Object, Object> {
+        public TextView loadingTV;
+        public TextView errorTV;
+        public TextView noDataTV;
+
+        public LoadingHelper(View resLayout, Lib_BaseHttpRequestData requestData) {
+            super(resLayout);
+            _setRepeat(true);
+            loadingTV = new TextView(resLayout.getContext());
+            loadingTV.setGravity(Gravity.CENTER);
+            loadingTV.setText("loading...");
+            _setLoadingView(loadingTV);
+            errorTV = new TextView(resLayout.getContext());
+            errorTV.setGravity(Gravity.CENTER);
+            errorTV.setText("error...");
+            _setErrorView(errorTV);
+            requestData._setOnLoadingListener(this);
+//            noDataTV = new TextView(resLayout.getContext());
+//            noDataTV.setGravity(Gravity.CENTER);
+//            noDataTV.setText("no Data...");
+//            setNoDataView(noDataTV);
+        }
+
+        @Override
+        public void __onComplete(Lib_HttpRequest<Object> request, Lib_HttpResult<Object> data) {
+
         }
     }
 }

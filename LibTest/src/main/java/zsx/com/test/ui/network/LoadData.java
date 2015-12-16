@@ -1,11 +1,16 @@
 package zsx.com.test.ui.network;
 
+import com.zsx.exception.Lib_Exception;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.network.Lib_BaseHttpRequestData;
 import com.zsx.network.Lib_HttpParams;
 import com.zsx.network.Lib_HttpResult;
 
+import org.apache.http.ParseException;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +19,7 @@ import java.util.Map;
  */
 public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, String> {
     public enum Api {
-        GET, POST, PUT, DELETE
+        GET, POST, PUT, DELETE, TEST
     }
 
     public LoadData(LoadData.Api id, Lib_LifeCycle lifeCycle) {
@@ -54,8 +59,26 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
                 params.setRequestMethod(Lib_HttpParams.DELETE);
                 params.setApiUrl("http://api.m.qu.cn/test/delete");
                 break;
+            case TEST:
+                break;
         }
         return params;
+    }
+
+    @Override
+    protected String __requestProtocol(Api api, Lib_HttpParams params) throws ParseException, URISyntaxException, IOException, Lib_Exception {
+        switch (api) {
+            case TEST:
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return "";
+            default:
+                return super.__requestProtocol(api, params);
+        }
+
     }
 
     @Override

@@ -15,23 +15,14 @@
             android:id="@+id/btn_load"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="读取内容" />
-
-        <Button
-            android:id="@+id/btn_stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="停止读取" />
-
-        <Button
-            android:id="@+id/btn_loadError"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="读取错误" />
+            android:text="开始读取" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/lib_yellow"
+        android:gravity="center"
+        android:text="原始文本" />
 </LinearLayout>
