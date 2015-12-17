@@ -6,6 +6,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,8 @@ import com.zsx.util.Lib_Util_System;
  * Created by zhusx on 2015/12/13.
  */
 public class P_LogCatFragment extends Lib_BaseFragment {
-    TextView infoTV;
+    private TextView infoTV;
+    private int fontSize = 6;
 
     @Nullable
     @Override
@@ -43,7 +46,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
         infoTV.setMovementMethod(ScrollingMovementMethod.getInstance());
         infoTV.setText("正在初始化...");
         infoTV.setClickable(true);
-        infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 6);
+        infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
         rootView.addView(infoTV);
         Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
             @Override
@@ -58,7 +61,30 @@ public class P_LogCatFragment extends Lib_BaseFragment {
                 }
             }
         });
+        setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(1, 1, 1, "字体+");
+        menu.add(2, 2, 1, "字体-");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 1:
+                fontSize++;
+                infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
+                break;
+            case 2:
+                fontSize--;
+                infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

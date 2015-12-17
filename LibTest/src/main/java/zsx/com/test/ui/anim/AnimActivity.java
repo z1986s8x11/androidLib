@@ -1,14 +1,14 @@
 package zsx.com.test.ui.anim;
 
-import android.annotation.TargetApi;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.zsx.tools.Lib_FullViewAnimator;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -19,7 +19,7 @@ import zsx.com.test.base._BaseActivity;
 public class AnimActivity extends _BaseActivity implements View.OnClickListener {
     Button startBtn;
     Button endBtn;
-    Lib_Util_ViewAnimator animatorUtil;
+    Lib_FullViewAnimator animatorUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +35,9 @@ public class AnimActivity extends _BaseActivity implements View.OnClickListener 
         t.setGravity(Gravity.CENTER);
         t.setText("+1");
         t.setVisibility(View.GONE);
-        animatorUtil = new Lib_Util_ViewAnimator(this, t);
+        animatorUtil = new Lib_FullViewAnimator(this, t);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

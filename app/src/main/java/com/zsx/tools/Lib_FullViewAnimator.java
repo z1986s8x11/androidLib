@@ -1,25 +1,23 @@
-package zsx.com.test.ui.anim;
+package com.zsx.tools;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewHelper;
 import com.zsx.util.Lib_Util_Widget;
 
 /**
  * Created by Administrator on 2015/12/11.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class Lib_Util_ViewAnimator {
+public class Lib_FullViewAnimator {
     private FrameLayout rootView;
     private View animView;
 
-    public Lib_Util_ViewAnimator(Activity activity, View v) {
+    public Lib_FullViewAnimator(Activity activity, View v) {
         ViewGroup decor = (ViewGroup) activity.getWindow().getDecorView();
         ViewGroup decorChild = (ViewGroup) decor.getChildAt(0);
         decor.removeView(decorChild);
@@ -39,8 +37,8 @@ public class Lib_Util_ViewAnimator {
         fromView.getLocationOnScreen(location);
         int[] location1 = new int[2];
         toView.getLocationOnScreen(location1);
-        animView.setX(fromView.getX());
-        animView.setY(fromView.getY());
+        ViewHelper.setX(animView, ViewHelper.getX(fromView));
+        ViewHelper.setY(animView, ViewHelper.getY(fromView));
         ObjectAnimator.ofFloat(animView, "translationY", location[1], location1[1]).start();
         ObjectAnimator animator = ObjectAnimator.ofFloat(animView, "translationX", fromView.getLeft(), toView.getLeft());
         animator.addListener(new Animator.AnimatorListener() {
@@ -69,27 +67,27 @@ public class Lib_Util_ViewAnimator {
     public void startTop(View fromView, int top) {
         int[] location = new int[2];
         fromView.getLocationOnScreen(location);
-        animView.setX(fromView.getX() + (fromView.getMeasuredWidth()-animView.getMeasuredWidth()) / 2);
-        animView.setY(fromView.getY());
+        ViewHelper.setX(animView, ViewHelper.getX(fromView) + (fromView.getMeasuredWidth() - animView.getMeasuredWidth()) / 2);
+        ViewHelper.setY(animView, ViewHelper.getY(fromView));
         ObjectAnimator.ofFloat(animView, "translationY", location[1], location[1] - top).start();
         ObjectAnimator animator = ObjectAnimator.ofFloat(animView, "alpha", 1, 0);
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                animView.setAlpha(1.0f);
+                ViewHelper.setAlpha(animView, 1.0f);
                 animView.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 animView.setVisibility(View.GONE);
-                animView.setAlpha(1.0f);
+                ViewHelper.setAlpha(animView, 1.0f);
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
                 animView.setVisibility(View.GONE);
-                animView.setAlpha(1.0f);
+                ViewHelper.setAlpha(animView, 1.0f);
             }
 
             @Override
