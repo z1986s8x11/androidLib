@@ -43,7 +43,7 @@ public class ViewPagerLooperActivity extends _BaseActivity {
 
             @Override
             public int getCount() {
-                return 0;
+                return 5;
             }
 
             @Override

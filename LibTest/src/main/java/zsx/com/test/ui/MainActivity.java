@@ -30,6 +30,7 @@ import zsx.com.test.ui.widget.DirectionViewPagerActivity;
 import zsx.com.test.ui.widget.DragListViewActivity;
 import zsx.com.test.ui.widget.KeywordsFlowActivity;
 import zsx.com.test.ui.widget.PinnedSectionActivity;
+import zsx.com.test.ui.widget.RefreshLinearLayoutActivity;
 import zsx.com.test.ui.widget.SlidingMenuActivity;
 import zsx.com.test.ui.widget.ViewPagerIndicatorActivity;
 
@@ -44,6 +45,7 @@ public class MainActivity extends _BaseActivity {
         ListView mListView = (ListView) findViewById(R.id.listView);
         List<Item> list = new ArrayList<>();
         list.add(new Item("InsertAdapter", InsertAdapterActivity.class));
+        list.add(new Item("refreshLinearLayout", RefreshLinearLayoutActivity.class));
         list.add(new Item("Debug", ExceptionActivity.class));
         list.add(new Item("Donwload", DownloadActivity.class));
         list.add(new Item("loadData", LoadDataActivity.class));

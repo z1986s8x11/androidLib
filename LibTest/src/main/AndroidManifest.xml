@@ -38,6 +38,7 @@
         <activity android:name=".ui.widget.BadgeViewActivity" />
         <activity android:name=".ui.anim.AnimActivity" />
         <activity android:name=".ui.parse.LogcatActivity" />
+        <activity android:name=".ui.widget.RefreshLinearLayoutActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>
