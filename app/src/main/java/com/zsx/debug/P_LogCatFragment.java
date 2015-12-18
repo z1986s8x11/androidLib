@@ -67,19 +67,19 @@ public class P_LogCatFragment extends Lib_BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.add(1, 1, 1, "字体+");
-        menu.add(2, 2, 1, "字体-");
+        menu.add(1, 811, 1, "字体+");
+        menu.add(2, 822, 1, "字体-");
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 1:
+            case 811:
                 fontSize++;
                 infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
                 break;
-            case 2:
+            case 822:
                 fontSize--;
                 infoTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
                 break;
