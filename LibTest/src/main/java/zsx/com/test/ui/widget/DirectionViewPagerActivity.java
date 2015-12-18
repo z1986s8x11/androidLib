@@ -2,6 +2,7 @@ package zsx.com.test.ui.widget;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,13 @@ import zsx.com.test.base._BaseActivity;
  * Created by Administrator on 2015/11/25.
  */
 public class DirectionViewPagerActivity extends _BaseActivity {
+    Lib_Widget_DirectionalViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LinearLayout layout = new LinearLayout(this);
-        Lib_Widget_DirectionalViewPager viewPager = new Lib_Widget_DirectionalViewPager(this);
+        viewPager = new Lib_Widget_DirectionalViewPager(this);
         layout.addView(viewPager);
         viewPager._setOrientation(Lib_Widget_DirectionalViewPager.VERTICAL);
         setContentView(layout);
@@ -45,5 +48,17 @@ public class DirectionViewPagerActivity extends _BaseActivity {
                 return t;
             }
         });
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Parcelable savedState = viewPager.onSaveInstanceState();
+        outState.putParcelable("hello", savedState);
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Parcelable savedState = savedInstanceState.getParcelable("hello");
+        viewPager.onRestoreInstanceState(savedState);
     }
 }
