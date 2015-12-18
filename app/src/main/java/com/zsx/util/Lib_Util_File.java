@@ -3,11 +3,9 @@ package com.zsx.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.StatFs;
 import android.os.storage.StorageManager;
@@ -393,11 +391,13 @@ public class Lib_Util_File {
         return size;
     }
 
-    public static void copyAssetToSDCard(Context context,
-                                         String assetsFileName, File sdFile) {
-        if (!sdFile.canWrite()) {
-            throw new IllegalArgumentException("sdFile 不能写");
-        }
+    /**
+     * 复制Assets文件到指定file下
+     * <p/>
+     * 使用数据库用 SQLiteDatabase.openOrCreateDatabase(new File(context.getFilesDir(), dbName).getPath(), null);
+     */
+    public static void copyAssetToFile(Context context,
+                                       String assetsFileName, File sdFile) {
         if (sdFile.exists()) {
             return;
         }
@@ -455,46 +455,6 @@ public class Lib_Util_File {
             file = new File(img_path);
         }
         return file;
-    }
-
-    /**
-     * 复制Assets文件到Data/包名/files/下
-     * <p/>
-     * 使用数据库用 SQLiteDatabase.openOrCreateDatabase(new File(context.getFilesDir(), dbName).getPath(), null);
-     */
-    public static void copyAssetsFileToDataPath(final Context context, String assetsName, String dbName) {
-        File file = new File(context.getFilesDir(), dbName);
-        if (file.exists() && file.length() > 0) {
-            return;
-        }
-        new AsyncTask<String, Void, Void>() {
-            @Override
-            protected Void doInBackground(String... params) {
-                // 拷贝资产目录下的数据库 到系统的data/data/包名/files/目录
-                AssetManager am = context.getAssets();
-                File file = null;
-                try {
-                    InputStream is = am.open(params[0]);
-                    file = new File(context.getFilesDir(), params[1]);
-                    FileOutputStream fos = new FileOutputStream(file);
-                    byte[] buffer = new byte[1024];
-                    int len;
-                    while ((len = is.read(buffer)) != -1) {
-                        fos.write(buffer, 0, len);
-                    }
-                    fos.close();
-                    is.close();
-                } catch (Exception e) {
-                    if (file != null) {
-                        if (file.exists()) {
-                            file.delete();
-                        }
-                    }
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }.execute(assetsName, dbName);
     }
 
     public static void deleteLastModifiedFile(String dirFile, int cacheMaxFileCount) {
