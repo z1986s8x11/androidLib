@@ -399,7 +399,10 @@ public class Lib_Util_File {
     public static void copyAssetToFile(Context context,
                                        String assetsFileName, File sdFile) {
         if (sdFile.exists()) {
-            return;
+            if (sdFile.length() != 0) {
+                return;
+            }
+            sdFile.delete();
         }
         InputStream ins = null;
         FileOutputStream out = null;
@@ -412,6 +415,14 @@ public class Lib_Util_File {
                 out.write(buffer, 0, count);
             }
         } catch (IOException e) {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                }
+                out = null;
+            }
             if (sdFile.exists()) {
                 sdFile.delete();
             }
