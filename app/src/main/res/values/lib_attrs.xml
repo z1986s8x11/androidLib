@@ -61,4 +61,10 @@
         <attr name="autoScroll" format="boolean" />
         <attr name="interval" format="integer" />
     </declare-styleable>
+    <!--ShapeTextView-->
+    <declare-styleable name="Lib_ShapeTextView">
+        <attr name="bottomLeftRadius" format="boolean" />
+        <attr name="bottomRightRadius" format="boolean" />
+        <attr name="radius" format="integer" />
+    </declare-styleable>
 </resources>
