@@ -30,7 +30,7 @@ import zsx.com.test.ui.widget.DirectionViewPagerActivity;
 import zsx.com.test.ui.widget.DragListViewActivity;
 import zsx.com.test.ui.widget.KeywordsFlowActivity;
 import zsx.com.test.ui.widget.PinnedSectionActivity;
-import zsx.com.test.ui.widget.RefreshLinearLayoutActivity;
+import zsx.com.test.ui.refresh.RefreshLinearLayoutActivity;
 import zsx.com.test.ui.widget.SlidingMenuActivity;
 import zsx.com.test.ui.widget.ViewPagerIndicatorActivity;
 

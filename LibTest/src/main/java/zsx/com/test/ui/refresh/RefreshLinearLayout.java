@@ -1,4 +1,4 @@
-package zsx.com.test.ui.widget;
+package zsx.com.test.ui.refresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -27,43 +27,47 @@ public class RefreshLinearLayout extends LinearLayout {
         listView = (ListView) getChildAt(1);
     }
 
-    private boolean isIntercept;
-    float interceptY;
+    protected boolean isTop() {
+        return true;
+    }
+
+    protected boolean isBottom() {
+        return true;
+    }
 
     @Override
     public final boolean onInterceptTouchEvent(MotionEvent event) {
+        //如果没有滑动顶部 或者底部 不拦截
+        if (!isTop() && !isBottom()) {
+            return false;
+        }
         switch (event.getAction() & event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                isIntercept = false;
-                interceptY = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (isIntercept) {
-                    return isIntercept;
-                }
-                if (interceptY < event.getY()) {
-                    isIntercept = true;
-                }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                isIntercept = false;
                 break;
         }
-        return isIntercept;
+        return super.onInterceptTouchEvent(event);
     }
-//
-//    @Override
-//    public final boolean onTouchEvent(MotionEvent event) {
-//        switch (event.getAction() & event.getActionMasked()) {
-//            case MotionEvent.ACTION_DOWN:
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                break;
-//            case MotionEvent.ACTION_UP:
-//            case MotionEvent.ACTION_CANCEL:
-//                break;
-//        }
-//        return true;
-//    }
+
+    @Override
+    public final boolean onTouchEvent(MotionEvent event) {
+        //如果没有滑动顶部 或者底部 不拦截
+        if (!isTop() && !isBottom()) {
+            return false;
+        }
+        switch (event.getAction() & event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
 }
