@@ -206,7 +206,9 @@ public class Lib_ViewPager_CirclePageIndicator extends View implements PageIndic
         if (count == 0) {
             return;
         }
-
+        if (count == 1) {  // count = 1 不绘制
+            return;
+        }
         if (mCurrentPage >= count) {
             _setCurrentItem(count - 1);
             return;
