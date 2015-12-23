@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.zsx.widget.Lib_Widget_ShapeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:gradientEndColor="@color/lib_green"
+        app:gradientStartColor="@color/lib_blue"
+        app:solidColor="#888888" />
+
+    <com.zsx.widget.Lib_Widget_ShapeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:solidColor="#888888"
+        app:strokeColor="#ff22ff"
+        app:strokeWidth="3dp"
+        app:topLeftRadius="10dp" />
+
+    <com.zsx.widget.Lib_Widget_ShapeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:solidColor="#888888"
+        app:strokeColor="#ff22ff"
+        app:strokeDashGap="2dp"
+        app:strokeDashWidth="2dp"
+        app:strokeWidth="3dp" />
+
+    <com.zsx.widget.Lib_Widget_ShapeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:radius="6dp"
+        app:solidColor="#888888" />
+
+    <com.zsx.widget.Lib_Widget_ShapeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:bottomLeftRadius="6dp"
+        app:bottomRightRadius="6dp"
+        app:solidColor="#888888" />
+
+    <com.zsx.widget.Lib_Widget_ShapeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:bottomLeftRadius="6dp"
+        app:bottomRightRadius="6dp"
+        app:solidColor="#88ff11"
+        app:solidColor2="#FFDD11"
+        app:status="pressed" />
+</LinearLayout>

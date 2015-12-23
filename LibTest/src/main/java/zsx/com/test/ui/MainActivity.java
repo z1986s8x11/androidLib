@@ -23,6 +23,7 @@ import zsx.com.test.ui.network.HttpUrlConnectActivity;
 import zsx.com.test.ui.network.LoadDataActivity;
 import zsx.com.test.ui.parse.JavaParseActivity;
 import zsx.com.test.ui.parse.LogcatActivity;
+import zsx.com.test.ui.refresh.RefreshLinearLayoutActivity;
 import zsx.com.test.ui.viewpagelooper.ViewPagerLooperActivity;
 import zsx.com.test.ui.widget.AutoListViewActivity;
 import zsx.com.test.ui.widget.BadgeViewActivity;
@@ -30,7 +31,7 @@ import zsx.com.test.ui.widget.DirectionViewPagerActivity;
 import zsx.com.test.ui.widget.DragListViewActivity;
 import zsx.com.test.ui.widget.KeywordsFlowActivity;
 import zsx.com.test.ui.widget.PinnedSectionActivity;
-import zsx.com.test.ui.refresh.RefreshLinearLayoutActivity;
+import zsx.com.test.ui.widget.ShapeTextViewActivity;
 import zsx.com.test.ui.widget.SlidingMenuActivity;
 import zsx.com.test.ui.widget.ViewPagerIndicatorActivity;
 
@@ -46,6 +47,7 @@ public class MainActivity extends _BaseActivity {
         List<Item> list = new ArrayList<>();
         list.add(new Item("InsertAdapter", InsertAdapterActivity.class));
         list.add(new Item("refreshLinearLayout", RefreshLinearLayoutActivity.class));
+        list.add(new Item("ShapeTextView", ShapeTextViewActivity.class));
         list.add(new Item("Debug", ExceptionActivity.class));
         list.add(new Item("Donwload", DownloadActivity.class));
         list.add(new Item("loadData", LoadDataActivity.class));
