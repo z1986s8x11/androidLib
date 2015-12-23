@@ -84,5 +84,12 @@
             <enum name="checked" value="2" />
             <enum name="selected" value="3" />
         </attr>
+        <attr name="textColorStatus">
+            <enum name="pressed" value="0" />
+            <enum name="enabled" value="1" />
+            <enum name="checked" value="2" />
+            <enum name="selected" value="3" />
+        </attr>
+        <attr name="textColor2" format="color" />
     </declare-styleable>
 </resources>

@@ -78,4 +78,18 @@
         app:strokeColor="#ff22ff"
         app:strokeColor2="#2222ff"
         app:strokeWidth="3dp" />
+
+    <com.zsx.widget.Lib_Widget_ShapeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:strokeColor="#ff22ff"
+        app:strokeColor2="#2222ff"
+        app:strokeWidth="3dp"
+        app:textColor2="@color/lib_yellow"
+        app:textColorStatus="pressed" />
 </LinearLayout>

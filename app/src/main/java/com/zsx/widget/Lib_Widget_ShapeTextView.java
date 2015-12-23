@@ -2,6 +2,7 @@ package com.zsx.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -161,7 +162,41 @@ public class Lib_Widget_ShapeTextView extends TextView {
                 }
             }
         }
+        int textColorStatus = typedArray.getInt(R.styleable.Lib_ShapeTextView_textColorStatus, -1);
+        if (textColorStatus != -1) {
+            /**
+             <enum name="pressed" value="0" />
+             <enum name="enabled" value="1" />
+             <enum name="checked" value="2" />
+             <enum name="selected" value="3" />
+             */
+            switch (textColorStatus) {
+                case 0:
+                    textColorStatus = android.R.attr.state_pressed;
+                    break;
+                case 1:
+                    textColorStatus = android.R.attr.state_enabled;
+                    break;
+                case 2:
+                    textColorStatus = android.R.attr.state_checked;
+                    break;
+                case 3:
+                    textColorStatus = android.R.attr.state_selected;
+                    break;
+                default:
+                    textColorStatus = -1;
+                    break;
+            }
+        }
         typedArray.recycle();
+        if (textColorStatus != -1) {
+            int textColor = getTextColors().getDefaultColor();
+            int textColor2 = typedArray.getColor(R.styleable.Lib_ShapeTextView_textColor2, -1);
+            if (textColor2 != -1) {
+                ColorStateList colorStateList = new ColorStateList(new int[][]{new int[]{textColorStatus}, new int[]{-textColorStatus}, new int[]{}}, new int[]{textColor2, textColor, textColor});
+                setTextColor(colorStateList);
+            }
+        }
         if (gradientDrawable2 != null) {
             StateListDrawable stateListDrawable = new StateListDrawable();
             stateListDrawable.addState(new int[]{status}, gradientDrawable);
