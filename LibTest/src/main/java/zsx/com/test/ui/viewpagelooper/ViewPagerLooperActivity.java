@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zsx.debug.LogUtil;
 import com.zsx.widget.Lib_Widget_LooperViewPager;
 
 import zsx.com.test.base._BaseActivity;
@@ -32,7 +31,6 @@ public class ViewPagerLooperActivity extends _BaseActivity {
                 convertView.setTextColor(Color.BLACK);
                 convertView.setGravity(Gravity.CENTER);
                 container.addView(convertView);
-                LogUtil.e(this, "======" + position);
                 return convertView;
             }
 
@@ -43,7 +41,7 @@ public class ViewPagerLooperActivity extends _BaseActivity {
 
             @Override
             public int getCount() {
-                return 1;
+                return 2;
             }
 
             @Override

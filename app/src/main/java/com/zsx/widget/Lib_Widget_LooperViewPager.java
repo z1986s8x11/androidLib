@@ -105,6 +105,12 @@ public class Lib_Widget_LooperViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
+        //取消只有一个item的时候还可以滑动
+        if (mAdapter != null) {
+            if (mAdapter.getRealAdapter().getCount() == 1) {
+                return;
+            }
+        }
         int realItem = mAdapter.toInnerPosition(item);
         super.setCurrentItem(realItem, smoothScroll);
     }
@@ -243,6 +249,10 @@ public class Lib_Widget_LooperViewPager extends ViewPager {
         public int getCount() {
             if (mAdapter.getCount() == 0) {
                 return 0;
+            }
+            //取消只有一个item的时候还可以滑动
+            if (mAdapter.getCount() == 1) {
+                return 1;
             }
             return mAdapter.getCount() + 2;
         }
