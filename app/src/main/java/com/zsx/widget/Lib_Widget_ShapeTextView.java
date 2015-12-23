@@ -2,10 +2,11 @@ package com.zsx.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class Lib_Widget_ShapeTextView extends TextView {
     private void init(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Lib_ShapeTextView);
         GradientDrawable gradientDrawable = new GradientDrawable();
-        gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+        GradientDrawable gradientDrawable2 = null;
         int status = typedArray.getInt(R.styleable.Lib_ShapeTextView_status, -1);
         if (status != -1) {
             /**
@@ -84,9 +85,19 @@ public class Lib_Widget_ShapeTextView extends TextView {
                     break;
             }
         }
+        if (status != -1) {
+            gradientDrawable2 = new GradientDrawable();
+        }
+        gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+        if (gradientDrawable2 != null) {
+            gradientDrawable2.setShape(GradientDrawable.RECTANGLE);
+        }
         int radius = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeTextView_radius, 0);
         if (radius != 0) {
             gradientDrawable.setCornerRadius(radius);
+            if (gradientDrawable2 != null) {
+                gradientDrawable2.setCornerRadius(radius);
+            }
         } else {
             int bottomLeftRadius = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeTextView_bottomLeftRadius, 0);
             int bottomRightRadius = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeTextView_bottomRightRadius, 0);
@@ -94,21 +105,19 @@ public class Lib_Widget_ShapeTextView extends TextView {
             int topRightRadius = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeTextView_topRightRadius, 0);
             //1、2两个参数表示左上角，3、4表示右上角，5、6表示右下角，7、8表示左下角
             gradientDrawable.setCornerRadii(new float[]{topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
+            if (gradientDrawable2 != null) {
+                gradientDrawable2.setCornerRadii(new float[]{topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
+            }
         }
         int strokeColor = typedArray.getColor(R.styleable.Lib_ShapeTextView_strokeColor, Color.GRAY);
         int strokeDashGap = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeTextView_strokeDashGap, 0);
         int strokeWidth = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeTextView_strokeWidth, -1);
         int strokeDashWidth = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeTextView_strokeDashWidth, 0);
         if (strokeWidth > 0) {
-            if (status != -1) {
-                int strokeColor2 = typedArray.getColor(R.styleable.Lib_ShapeTextView_strokeColor, strokeColor);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    gradientDrawable.setStroke(strokeWidth, new ColorStateList(new int[][]{new int[]{status}, new int[]{-status}}, new int[]{strokeColor, strokeColor2}));
-                } else {
-                    gradientDrawable.setStroke(strokeWidth, strokeColor, strokeDashWidth, strokeDashGap);
-                }
-            } else {
-                gradientDrawable.setStroke(strokeWidth, strokeColor, strokeDashWidth, strokeDashGap);
+            gradientDrawable.setStroke(strokeWidth, strokeColor, strokeDashWidth, strokeDashGap);
+            if (gradientDrawable2 != null) {
+                int strokeColor2 = typedArray.getColor(R.styleable.Lib_ShapeTextView_strokeColor2, strokeColor);
+                gradientDrawable2.setStroke(strokeWidth, strokeColor2, strokeDashWidth, strokeDashGap);
             }
         }
         int gradientStartColor = typedArray.getColor(R.styleable.Lib_ShapeTextView_gradientStartColor, -1);
@@ -118,37 +127,57 @@ public class Lib_Widget_ShapeTextView extends TextView {
                 int gradientCenterColor = typedArray.getColor(R.styleable.Lib_ShapeTextView_gradientCenterColor, -1);
                 if (gradientCenterColor == -1) {
                     gradientDrawable.setColors(new int[]{gradientStartColor, gradientEndColor});
+                    if (gradientDrawable2 != null) {
+                        gradientDrawable2.setColors(new int[]{gradientStartColor, gradientEndColor});
+                    }
                 } else {
                     gradientDrawable.setColors(new int[]{gradientStartColor, gradientCenterColor, gradientEndColor});
+                    if (gradientDrawable2 != null) {
+                        gradientDrawable2.setColors(new int[]{gradientStartColor, gradientCenterColor, gradientEndColor});
+                    }
                 }
             } else {
                 int solidColor = typedArray.getColor(R.styleable.Lib_ShapeTextView_solidColor, -1);
                 if (solidColor != -1) {
-                    if (status != -1) {
+                    gradientDrawable.setColor(solidColor);
+                    if (gradientDrawable2 != null) {
                         int solidColor2 = typedArray.getColor(R.styleable.Lib_ShapeTextView_solidColor2, solidColor);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            gradientDrawable.setColor(new ColorStateList(new int[][]{new int[]{status}, new int[]{-status}}, new int[]{solidColor, solidColor2}));
-                        } else {
-                            gradientDrawable.setColor(solidColor);
-                        }
-                    } else {
-                        gradientDrawable.setColor(solidColor);
+                        gradientDrawable2.setColor(solidColor2);
                     }
                 } else {
                     gradientDrawable.setColor(gradientStartColor);
+                    if (gradientDrawable2 != null) {
+                        gradientDrawable2.setColor(gradientStartColor);
+                    }
                 }
             }
         } else {
             int solidColor = typedArray.getColor(R.styleable.Lib_ShapeTextView_solidColor, -1);
             if (solidColor != -1) {
                 gradientDrawable.setColor(solidColor);
+                if (gradientDrawable2 != null) {
+                    int solidColor2 = typedArray.getColor(R.styleable.Lib_ShapeTextView_solidColor2, solidColor);
+                    gradientDrawable2.setColor(solidColor2);
+                }
             }
         }
         typedArray.recycle();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            setBackground(gradientDrawable);
+        if (gradientDrawable2 != null) {
+            StateListDrawable stateListDrawable = new StateListDrawable();
+            stateListDrawable.addState(new int[]{status}, gradientDrawable);
+            stateListDrawable.addState(new int[]{-status}, gradientDrawable2);
+            stateListDrawable.addState(new int[]{}, gradientDrawable);
+            _setBackgroundDrawable(stateListDrawable);
         } else {
-            setBackgroundDrawable(gradientDrawable);
+            _setBackgroundDrawable(gradientDrawable);
+        }
+    }
+
+    private void _setBackgroundDrawable(Drawable drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            setBackground(drawable);
+        } else {
+            setBackgroundDrawable(drawable);
         }
     }
 

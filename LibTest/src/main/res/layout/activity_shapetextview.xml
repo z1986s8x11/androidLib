@@ -66,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:clickable="true"
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
@@ -73,5 +74,8 @@
         app:bottomRightRadius="6dp"
         app:solidColor="#88ff11"
         app:solidColor2="#FFDD11"
-        app:status="pressed" />
+        app:status="pressed"
+        app:strokeColor="#ff22ff"
+        app:strokeColor2="#2222ff"
+        app:strokeWidth="3dp" />
 </LinearLayout>
