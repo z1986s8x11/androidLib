@@ -13,6 +13,7 @@ import android.widget.TextView;
  */
 public class RefreshLinearLayout extends LinearLayout {
     TextView headView;
+    TextView footView;
 
     public RefreshLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -26,6 +27,7 @@ public class RefreshLinearLayout extends LinearLayout {
         super.onAttachedToWindow();
         headView = (TextView) getChildAt(0);
         listView = (ListView) getChildAt(1);
+        footView = (TextView) getChildAt(2);
         init();
     }
 
@@ -39,33 +41,17 @@ public class RefreshLinearLayout extends LinearLayout {
     }
 
     private enum Status {
-        Default, 滚动, 刷新, Done
+        Default, 顶部滚动, 底部滚动, 刷新, Done
     }
 
     private Mode mMode = Mode.TopRefresh;
     private Status mStatus = Status.Default;
     private int mTouchSlop;
 
-    protected boolean isTop() {
-        return listView.getFirstVisiblePosition() == 0;
-    }
-
-    protected boolean isBottom() {
-        return listView.getLastVisiblePosition() == listView.getAdapter().getCount();
-    }
-
     private boolean isIntercept;
     private float mInterceptX, mInterceptY, mLastMotionY, mLastMotionX;
     private boolean mRefreshScrollEnabled;//刷新的时候 是否可以滑动
     private boolean mFilterTouchEvents;//是否过滤掉Touch事件
-
-    private boolean isRefreshing() {
-        return mStatus == Status.刷新;
-    }
-
-    private boolean isReadyForPull() {
-        return listView.getFirstVisiblePosition() == 0 || listView.getLastVisiblePosition() == listView.getCount();
-    }
 
     @Override
     public final boolean onInterceptTouchEvent(MotionEvent event) {
@@ -79,42 +65,11 @@ public class RefreshLinearLayout extends LinearLayout {
         }
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                if (isReadyForPull()) {
-                    mLastMotionY = mInterceptX = event.getY();
-                    mLastMotionX = mInterceptY = event.getX();
-                    isIntercept = false;
-                }
+                mLastMotionY = mInterceptX = event.getY();
+                mLastMotionX = mInterceptY = event.getX();
+                isIntercept = true;
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (!mRefreshScrollEnabled && isRefreshing()) {
-                    return true;
-                }
-                if (isReadyForPull()) {
-//                    float y = event.getY();
-//                    float x = event.getX();
-//                    final float diff, oppositeDiff, absDiff;
-//                    diff = y - mLastMotionY;
-//                    oppositeDiff = x - mLastMotionX;
-//                    absDiff = Math.abs(diff);
-//
-//                    if (absDiff > mTouchSlop && (!mFilterTouchEvents || absDiff > Math.abs(oppositeDiff))) {
-//                        if (mMode.showHeaderLoadingLayout() && diff >= 1f && isReadyForPullStart()) {
-//                            mLastMotionY = y;
-//                            mLastMotionX = x;
-//                            mIsBeingDragged = true;
-//                            if (mMode == Mode.BOTH) {
-//                                mCurrentMode = Mode.PULL_FROM_START;
-//                            }
-//                        } else if (mMode.showFooterLoadingLayout() && diff <= -1f && isReadyForPullEnd()) {
-//                            mLastMotionY = y;
-//                            mLastMotionX = x;
-//                            mIsBeingDragged = true;
-//                            if (mMode == Mode.BOTH) {
-//                                mCurrentMode = Mode.PULL_FROM_END;
-//                            }
-//                        }
-//                    }
-                }
                 break;
         }
         return isIntercept;
@@ -122,13 +77,39 @@ public class RefreshLinearLayout extends LinearLayout {
 
     @Override
     public final boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction() & event.getActionMasked()) {
+        int action = event.getAction() & event.getActionMasked();
+
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
+                if (!isIntercept) {
+                    mLastMotionY = mInterceptX = event.getY();
+                    mLastMotionX = mInterceptY = event.getX();
+                    isIntercept = true;
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
+                mLastMotionX = event.getX();
+                mLastMotionY = event.getY();
+                if (mStatus == Status.顶部滚动) {
+                    headView.setPadding(0, (int) (mLastMotionY - mInterceptY), 0, 0);
+                } else if (mStatus == Status.底部滚动) {
+                    footView.setPadding(0, (int) (mLastMotionY - mInterceptY), 0, 0);
+                } else if (mLastMotionY - mInterceptY > 0) {
+                    mStatus = Status.顶部滚动;
+                } else {
+                    mStatus = Status.底部滚动;
+                }
+
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                if (mStatus == Status.顶部滚动) {
+                    mStatus = Status.Default;
+                    headView.setPadding(0, 0, 0, 0);
+                } else if (mStatus == Status.底部滚动) {
+                    mStatus = Status.Default;
+                    footView.setPadding(0, 0, 0, 0);
+                }
                 break;
         }
         return super.onTouchEvent(event);
