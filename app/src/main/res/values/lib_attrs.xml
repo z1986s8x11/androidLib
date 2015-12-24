@@ -62,7 +62,7 @@
         <attr name="interval" format="integer" />
     </declare-styleable>
     <!--ShapeTextView-->
-    <declare-styleable name="Lib_ShapeTextView">
+    <declare-styleable name="Lib_ShapeBackground">
         <attr name="bottomLeftRadius" format="dimension" />
         <attr name="bottomRightRadius" format="dimension" />
         <attr name="radius" format="dimension" />
@@ -84,6 +84,9 @@
             <enum name="checked" value="2" />
             <enum name="selected" value="3" />
         </attr>
+    </declare-styleable>
+    <!--ShapeTextView-->
+    <declare-styleable name="Lib_TextViewColor">
         <attr name="textColorStatus">
             <enum name="pressed" value="0" />
             <enum name="enabled" value="1" />
