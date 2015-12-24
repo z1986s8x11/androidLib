@@ -10,7 +10,18 @@
         <item name="android:windowAnimationStyle">@style/activityAnimation</item> 配置跳转动画
     -->
 
+    <!--启动页背景 -->
+    <!--<style name="lib_AppStartTheme" parent="android:Theme">-->
+    <!--<item name="android:windowBackground">@drawable/splash_bg</item>-->
+    <!--<item name="android:windowNoTitle">true</item>-->
+    <!--</style>-->
+    <!--启动页背景 -->
+    <!--<style name="lib_AppStartTheme" parent="android:Theme">-->
+    <!--<item name="android:windowIsTranslucent">true</item>-->
+    <!--<item name="android:windowNoTitle">true</item>-->
+    <!--</style>-->
 
+    
     <!-- Activity 半透明 -->
     <style name="lib_activity_translucent">
         <item name="android:windowIsTranslucent">true</item>
