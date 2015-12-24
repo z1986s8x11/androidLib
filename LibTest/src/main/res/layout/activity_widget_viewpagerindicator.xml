@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" />
 
-    <com.zsx.widget.Lib_Widget_ViewPager
+    <com.zsx.widget.view.Lib_Widget_ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

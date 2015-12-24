@@ -33,6 +33,8 @@ import com.zsx.tools.Lib_ShapeHelper;
  * Created by zhusx on 2015/12/24.
  */
 public class Lib_Widget_LinearLayout extends LinearLayout {
+    private boolean isSquare;
+
     public Lib_Widget_LinearLayout(Context context) {
         super(context);
         init(context, null);
@@ -57,5 +59,20 @@ public class Lib_Widget_LinearLayout extends LinearLayout {
 
     private void init(Context context, AttributeSet attrs) {
         Lib_ShapeHelper.init(this, context, attrs);
+    }
+
+    protected void _setSquare(boolean isSquare) {
+        this.isSquare = isSquare;
+        invalidate();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (isSquare) {
+            setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
+            int childWidthSize = getMeasuredWidth();
+            heightMeasureSpec = widthMeasureSpec = MeasureSpec.makeMeasureSpec(childWidthSize, MeasureSpec.EXACTLY);
+        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }
