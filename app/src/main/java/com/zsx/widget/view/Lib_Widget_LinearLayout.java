@@ -33,7 +33,7 @@ import com.zsx.tools.Lib_ShapeHelper;
  * Created by zhusx on 2015/12/24.
  */
 public class Lib_Widget_LinearLayout extends LinearLayout {
-    private boolean isSquare;
+    private boolean isSquare;//是否正方形
 
     public Lib_Widget_LinearLayout(Context context) {
         super(context);
