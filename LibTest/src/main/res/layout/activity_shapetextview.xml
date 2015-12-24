@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <com.zsx.widget.Lib_Widget_ShapeTextView
+    <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -16,7 +16,7 @@
         app:gradientStartColor="@color/lib_blue"
         app:solidColor="#888888" />
 
-    <com.zsx.widget.Lib_Widget_ShapeTextView
+    <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -28,7 +28,7 @@
         app:strokeWidth="3dp"
         app:topLeftRadius="10dp" />
 
-    <com.zsx.widget.Lib_Widget_ShapeTextView
+    <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -41,7 +41,7 @@
         app:strokeDashWidth="2dp"
         app:strokeWidth="3dp" />
 
-    <com.zsx.widget.Lib_Widget_ShapeTextView
+    <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -51,7 +51,7 @@
         app:radius="6dp"
         app:solidColor="#888888" />
 
-    <com.zsx.widget.Lib_Widget_ShapeTextView
+    <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -62,7 +62,7 @@
         app:bottomRightRadius="6dp"
         app:solidColor="#888888" />
 
-    <com.zsx.widget.Lib_Widget_ShapeTextView
+    <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -79,7 +79,7 @@
         app:strokeColor2="#2222ff"
         app:strokeWidth="3dp" />
 
-    <com.zsx.widget.Lib_Widget_ShapeTextView
+    <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

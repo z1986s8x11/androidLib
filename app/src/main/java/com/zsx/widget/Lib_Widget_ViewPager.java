@@ -17,9 +17,9 @@ import com.zsx.itf.Lib_OnCycleListener;
  * @author zsx
  */
 public class Lib_Widget_ViewPager extends ViewPager {
-    private boolean isScrollable = true;
-    private boolean isAutoScroll;
-    private int interval = 5000;
+    private boolean isScrollable = true;//是否可以滑动
+    private boolean isAutoScroll;//是否自动滚动
+    private int interval = 5000;//滑动间隔时间
 
     public Lib_Widget_ViewPager(Context context) {
         super(context);
@@ -28,23 +28,18 @@ public class Lib_Widget_ViewPager extends ViewPager {
     public Lib_Widget_ViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Lib_ViewPager);
-        int n = typedArray.getIndexCount();
-        for (int i = 0; i < n; i++) {
-            int index = typedArray.getIndex(i);
-            if (index == R.styleable.Lib_ViewPager_scrollable) {
-                isScrollable = typedArray.getBoolean(index, isScrollable);
-            } else if (index == R.styleable.Lib_ViewPager_autoScroll) {
-                isAutoScroll = typedArray.getBoolean(index, isAutoScroll);
-            } else if (index == R.styleable.Lib_ViewPager_interval) {
-                interval = typedArray.getInt(index, interval);
+        isScrollable = typedArray.getBoolean(R.styleable.Lib_ViewPager_scrollable, isScrollable);
+        isAutoScroll = typedArray.getBoolean(R.styleable.Lib_ViewPager_autoScroll, isAutoScroll);
+        interval = typedArray.getInt(R.styleable.Lib_ViewPager_interval, interval);
+        typedArray.recycle();
+        if (isAutoScroll) {
+            if (getContext() instanceof Lib_LifeCycle) {
+                Lib_LifeCycle lifeCycle = (Lib_LifeCycle) getContext();
+                lifeCycle._addOnCycleListener(cycleListener);
             }
         }
-        typedArray.recycle();
-        if (getContext() instanceof Lib_LifeCycle) {
-            Lib_LifeCycle lifeCycle = (Lib_LifeCycle) getContext();
-            lifeCycle._addOnCycleListener(cycleListener);
-        }
     }
+
     private Handler pHandler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
