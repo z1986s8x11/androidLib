@@ -10,18 +10,19 @@
         <item name="android:windowAnimationStyle">@style/activityAnimation</item> 配置跳转动画
     -->
 
-    <!--启动页背景 -->
+    <!--方式一 启动页背景 启动时,如果桌面启动卡住...卡住时间会显示占位图,不能滑动.-->
     <!--<style name="lib_AppStartTheme" parent="android:Theme">-->
     <!--<item name="android:windowBackground">@drawable/splash_bg</item>-->
     <!--<item name="android:windowNoTitle">true</item>-->
     <!--</style>-->
-    <!--启动页背景 -->
-    <!--<style name="lib_AppStartTheme" parent="android:Theme">-->
-    <!--<item name="android:windowIsTranslucent">true</item>-->
-    <!--<item name="android:windowNoTitle">true</item>-->
-    <!--</style>-->
 
-    
+    <!--方式二 启动页背景  启动时,如果桌面启动卡住...卡住时间会显示 桌面,不能滑动.-->
+    <style name="lib_AppStartTheme" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
     <!-- Activity 半透明 -->
     <style name="lib_activity_translucent">
         <item name="android:windowIsTranslucent">true</item>
