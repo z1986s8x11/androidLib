@@ -546,7 +546,6 @@ public class Lib_Util_System {
      * @return 是否有此权限
      */
     public static boolean isPermission(Context context, String... permission) {
-
         try {
             int pCount = permission.length;
             PackageManager pm = context.getPackageManager();
@@ -724,9 +723,9 @@ public class Lib_Util_System {
      * <p/>
      * 拿到过滤过的Log 日志
      */
-    public static String getLogCatForLogUtil() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("--------LogCat start--------" + "\n"); // 方法启动
+    public static List<String> getLogCatForLogUtil() {
+        List<String> list = new ArrayList<>();
+        list.add("--------LogCat start--------"); // 方法启动
         BufferedReader bufferedReader = null;
         try {
              /*
@@ -753,12 +752,12 @@ public class Lib_Util_System {
             while ((str = bufferedReader.readLine()) != null) {
                 Runtime.getRuntime().exec(clearLog.toArray(new String[clearLog.size()]));  //清理日志....这里至关重要，不清理的话，任何操作都将产生新的日志，代码进入死循环，直到bufferreader满
                 if (str.startsWith("E/[Log]")) {
-                    sb.append(str + "\n");    //输出，在logcat中查看效果，也可以是其他操作，比如发送给服务器..
+                    list.add(str);    //输出，在logcat中查看效果，也可以是其他操作，比如发送给服务器..
                 }
             }
-            sb.append("--------LogCat end--------" + "\n");
+            list.add("--------LogCat end--------");
         } catch (Exception e) {
-            sb.append("--------LogCat error  android.permission.READ_LOGS ? --------" + "\n");
+            list.add("--------LogCat error  android.permission.READ_LOGS ? --------");
             e.printStackTrace();
         } finally {
             if (bufferedReader != null) {
@@ -769,7 +768,7 @@ public class Lib_Util_System {
                 }
             }
         }
-        return sb.toString();
+        return list;
     }
 
     // 设置字体

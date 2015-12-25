@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.zsx.debug.LogUtil;
@@ -78,10 +79,9 @@ public class Lib_Util_Intent {
      * @param msgText       消息内容
      * @param imgPath       图片路径，不分享图片则传null
      */
-    public void shareMsg(Context context, String activityTitle,
-                         String msgTitle, String msgText, String imgPath) {
+    public static void shareMsg(Context context, String activityTitle, String msgTitle, String msgText, String imgPath) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        if (imgPath == null || imgPath.equals("")) {
+        if (TextUtils.isEmpty(imgPath)) {
             intent.setType("text/plain"); // 纯文本
         } else {
             File f = new File(imgPath);
@@ -142,9 +142,9 @@ public class Lib_Util_Intent {
      * 创建快捷方式
      */
     private void createShortCut(Context context, int titleRes, int iconRes) {
-        if(!Lib_Util_System.isPermission(context, Manifest.permission.INSTALL_SHORTCUT)){
-            if(LogUtil.DEBUG){
-                LogUtil.e(Lib_Util_Intent.class,"need usePermission uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"");
+        if (!Lib_Util_System.isPermission(context, Manifest.permission.INSTALL_SHORTCUT)) {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(Lib_Util_Intent.class, "need usePermission uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"");
             }
             return;
         }
