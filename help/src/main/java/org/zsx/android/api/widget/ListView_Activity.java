@@ -1,6 +1,8 @@
 package org.zsx.android.api.widget;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,6 +33,14 @@ public class ListView_Activity extends _BaseActivity implements
         // mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         // 这段代码的意思是设置你的listview的item不能被获取焦点，焦点由listview里的控件获得。如果被去掉，表面上看上去没什么区别，实际上获取的焦点目标变为了listview里的item。
         // mListView.setItemsCanFocus(false);
+
+        registerForContextMenu(mListView);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterForContextMenu(mListView);
     }
 
     @Override
@@ -42,5 +52,26 @@ public class ListView_Activity extends _BaseActivity implements
         } else {
             Toast.makeText(this, arg2, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(1, 1, 1, "ContextMenu1");
+        menu.add(2, 2, 2, "ContextMenu2");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getGroupId()) {
+            case 1:
+                _showToast("ContextMenu1 position:" + menuInfo.position);
+                break;
+            case 2:
+                _showToast("ContextMenu2 position:" + menuInfo.position);
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 }
