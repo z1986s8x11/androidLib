@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.zsx.adapter.Lib_BaseAdapter;
 import com.zsx.app.Lib_BaseFragment;
-import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.tools.Lib_Subscribes;
 import com.zsx.util.Lib_Util_Intent;
 import com.zsx.util.Lib_Util_System;
@@ -32,24 +31,15 @@ public class P_LogCatFragment extends Lib_BaseFragment {
     private int fontSize = 6;
     private Lib_BaseAdapter<String> adapter;
     private boolean isChange;
+    private ListView listView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         LinearLayout rootView = new LinearLayout(inflater.getContext());
         rootView.setOrientation(LinearLayout.VERTICAL);
-        final ListView listView = new ListView(getActivity());
-        _addOnCycleListener(new Lib_OnCycleListener() {
-            @Override
-            public void onResume() {
-                registerForContextMenu(listView);
-            }
-
-            @Override
-            public void onPause() {
-                unregisterForContextMenu(listView);
-            }
-        });
+        listView = new ListView(getActivity());
+        registerForContextMenu(listView);
         listView.setAdapter(adapter = new Lib_BaseAdapter<String>(getActivity()) {
             @Override
             public View getView(LayoutInflater inflater, String bean, int position, View convertView, ViewGroup parent) {
@@ -88,6 +78,12 @@ public class P_LogCatFragment extends Lib_BaseFragment {
         });
         setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterForContextMenu(listView);
     }
 
     @Override
