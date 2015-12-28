@@ -171,7 +171,7 @@ public class Lib_Util_System {
      * getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
      * onWindowVisibilityChanged() onSystemUiVisibilityChange() 显示系统状态栏
      */
-    public void showAndroidToolsBar(Activity activity) {
+    public static void showSystemStatusBar(Activity activity) {
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         activity.getWindow().setAttributes(lp);
@@ -181,7 +181,7 @@ public class Lib_Util_System {
     /**
      * onWindowVisibilityChanged() onSystemUiVisibilityChange 隐藏系统状态栏
      */
-    public void hideAndroidToolsBar(Activity activity) {
+    public static void hideSystemStatusBar(Activity activity) {
         WindowManager.LayoutParams attr = activity.getWindow().getAttributes();
         attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
         activity.getWindow().setAttributes(attr);
