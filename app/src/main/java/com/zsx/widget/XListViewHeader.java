@@ -45,7 +45,7 @@ public class XListViewHeader extends LinearLayout {
     /**
      * 下拉状态 松开刷新
      */
-    protected void onDownReleaseToRefresh() {
+    public void onDownReleaseToRefresh() {
         arrowIV.startAnimation(__getStartRotateAnimation());
         loadingPB.setVisibility(View.INVISIBLE);
         messageTV.setText(strReleaseRefresh);
@@ -56,7 +56,7 @@ public class XListViewHeader extends LinearLayout {
      *
      * @param isBack 是否由RELEASE_To_REFRESH 转变而来
      */
-    protected void onDownPullToRefresh(boolean isBack) {
+    public void onDownPullToRefresh(boolean isBack) {
         loadingPB.setVisibility(View.INVISIBLE);
         messageTV.setText(strPushRefresh);
         arrowIV.setVisibility(View.VISIBLE);
@@ -68,7 +68,7 @@ public class XListViewHeader extends LinearLayout {
     /**
      * 下拉状态,正在刷新...
      */
-    protected void onDownToRefreshing() {
+    public void onDownToRefreshing() {
         loadingPB.setVisibility(View.VISIBLE);
         messageTV.setText(strLoading);
         arrowIV.clearAnimation();
@@ -78,7 +78,7 @@ public class XListViewHeader extends LinearLayout {
     /**
      * 当前状态，刷新完成done
      */
-    protected void onDoneToRefresh() {
+    public void onDoneToRefresh() {
         loadingPB.setVisibility(View.INVISIBLE);
         messageTV.setText(strLoadComplete);
         arrowIV.setVisibility(View.INVISIBLE);
@@ -87,13 +87,13 @@ public class XListViewHeader extends LinearLayout {
     /**
      * 当前状态，刷新完成done
      */
-    protected void onDoneToError() {
+    public void onDoneToError() {
         loadingPB.setVisibility(View.INVISIBLE);
         messageTV.setText(strLoadError);
         arrowIV.setVisibility(View.INVISIBLE);
     }
 
-    protected RotateAnimation __getReverseRotateAnimation() {
+    public RotateAnimation __getReverseRotateAnimation() {
         if (reverseAnimation == null) {
             reverseAnimation = new RotateAnimation(-180, 0,
                     RotateAnimation.RELATIVE_TO_SELF, 0.5f,
@@ -105,7 +105,7 @@ public class XListViewHeader extends LinearLayout {
         return reverseAnimation;
     }
 
-    protected RotateAnimation __getStartRotateAnimation() {
+    public RotateAnimation __getStartRotateAnimation() {
         if (animation == null) {
             animation = new RotateAnimation(0, -180,
                     RotateAnimation.RELATIVE_TO_SELF, 0.5f,
