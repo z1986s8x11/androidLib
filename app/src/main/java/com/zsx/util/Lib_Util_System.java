@@ -170,22 +170,19 @@ public class Lib_Util_System {
      * 显示或者隐藏 系统状态栏 在OnCreate 中加入
      * getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
      * onWindowVisibilityChanged() onSystemUiVisibilityChange() 显示系统状态栏
-     */
-    public static void showSystemStatusBar(Activity activity) {
-        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
-        lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        activity.getWindow().setAttributes(lp);
-        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-    }
-
-    /**
      * onWindowVisibilityChanged() onSystemUiVisibilityChange 隐藏系统状态栏
      */
-    public static void hideSystemStatusBar(Activity activity) {
-        WindowManager.LayoutParams attr = activity.getWindow().getAttributes();
-        attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        activity.getWindow().setAttributes(attr);
-        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    public static void setSystemFulllScreen(Activity activity, boolean isFullScreen) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        if (isFullScreen) {
+            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            activity.getWindow().setAttributes(lp);
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        } else {
+            lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            activity.getWindow().setAttributes(lp);
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 
     /**
