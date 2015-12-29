@@ -4,27 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <zsx.com.test.ui.refresh.RefreshLinearLayout
+    <zsx.com.test.ui.refresh.AutoListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="headView" />
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:entries="@array/test" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="footView" />
-    </zsx.com.test.ui.refresh.RefreshLinearLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -3,34 +3,32 @@ package zsx.com.test.ui.refresh;
 import android.graphics.Color;
 import android.view.MotionEvent;
 import android.widget.AbsListView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 
-import com.zsx.widget.XListViewFooter;
+import com.zsx.util.Lib_Util_Widget;
 import com.zsx.widget.XListViewHeader;
 
 /**
  * Created by Administrator on 2015/12/24.
  */
-public class RefreshHelper implements AbsListView.OnScrollListener {
+public class RefreshHelper {
     private AbsListView mAbsListView;
+    private XListViewHeader headView;
 
-    private RefreshHelper() {
+    public RefreshHelper(AbsListView mAbsListView) {
+        this.mAbsListView = mAbsListView;
         mAbsListView.setBackgroundDrawable(null);
         mAbsListView.setCacheColorHint(Color.TRANSPARENT);
         mAbsListView.setHorizontalFadingEdgeEnabled(false);
         mAbsListView.setVerticalFadingEdgeEnabled(false);
     }
 
-    private LinearLayout headViewLayout;
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
+    public void initHeadView() {
+        headView = new XListViewHeader(mAbsListView.getContext());
+        Lib_Util_Widget.measureView(headView);
+        headContentHeight = headView.getMeasuredHeight();
+        headView.setPadding(0, -headContentHeight, 0, 0);
+        ((ListView) mAbsListView).addHeaderView(headView);
     }
 
     private enum HeadStatus {
@@ -48,12 +46,10 @@ public class RefreshHelper implements AbsListView.OnScrollListener {
         ERROR// 加载数据失败
     }
 
-    private HeadStatus headStatus = null;
+    private HeadStatus headStatus = HeadStatus.DONE;
     private FootStatus footStatus = null;
     // 实际的padding的距离与界面上偏移距离的比例
     private final static int RATIO = 3;
-    private XListViewHeader headView;
-    private XListViewFooter footView;
     // 用于保证startY的值在一个完整的touch事件中只被记录一次
     private boolean isRecored;
     private int headContentHeight;
@@ -95,6 +91,7 @@ public class RefreshHelper implements AbsListView.OnScrollListener {
                         // Log.v(TAG, "由松开刷新状态，到done状态");
                     }
                 }
+                isUserTouch = false;
                 isRecored = false;
                 isBack = false;
                 break;
@@ -174,24 +171,6 @@ public class RefreshHelper implements AbsListView.OnScrollListener {
                         && footStatus != FootStatus.LOADING) {
                     changeHeaderViewByState(HeadStatus.DONE);
                 }
-                break;
-        }
-    }
-
-    private void changeFootViewByState(FootStatus state) {
-        this.footStatus = state;
-        switch (state) {
-            case DONE:
-                footView._onDone();
-                break;
-            case LOADING:
-                footView._onDoneToLoadMore();
-                break;
-            case NO_DATA:
-                footView._onNoData();
-                break;
-            case ERROR:
-                footView._onLoadMoreToError();
                 break;
         }
     }
