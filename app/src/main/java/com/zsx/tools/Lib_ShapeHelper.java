@@ -91,10 +91,12 @@ public class Lib_ShapeHelper {
             int bottomRightRadius = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_bottomRightRadius, 0);
             int topLeftRadius = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_topLeftRadius, 0);
             int topRightRadius = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_topRightRadius, 0);
-            //1、2两个参数表示左上角，3、4表示右上角，5、6表示右下角，7、8表示左下角
-            gradientDrawable.setCornerRadii(new float[]{topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
-            if (gradientDrawable2 != null) {
-                gradientDrawable2.setCornerRadii(new float[]{topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
+            if (bottomLeftRadius != 0 && bottomRightRadius != 0 && topLeftRadius != 0 && topRightRadius != 0) {
+                //1、2两个参数表示左上角，3、4表示右上角，5、6表示右下角，7、8表示左下角
+                gradientDrawable.setCornerRadii(new float[]{topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
+                if (gradientDrawable2 != null) {
+                    gradientDrawable2.setCornerRadii(new float[]{topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
+                }
             }
         }
         int strokeColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_strokeColor, Color.GRAY);
