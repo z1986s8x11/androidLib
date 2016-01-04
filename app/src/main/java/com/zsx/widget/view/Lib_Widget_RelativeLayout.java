@@ -33,7 +33,7 @@ public class Lib_Widget_RelativeLayout extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        Lib_ShapeHelper.init(this, context, attrs);
+        Lib_ShapeHelper.initBackground(this, context, attrs);
     }
 
     @Override

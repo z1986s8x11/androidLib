@@ -15,35 +15,50 @@ import android.widget.TextView;
 import com.zsx.R;
 
 /**
- * Created by Administrator on 2015/12/24.
+ * <selector xmlns:android="http://schemas.android.com/apk/res/android">
+ * <item android:state_enabled="true">
+ * <shape>
+ * <corners android:bottomLeftRadius="" android:bottomRightRadius="" android:radius="" android:topLeftRadius="" android:topRightRadius=""/>
+ * <gradient android:angle="" android:centerColor="" android:centerX="" android:centerY="" android:endColor=""
+ * android:gradientRadius="" android:startColor="" android:type="" android:useLevel=""/>
+ * <padding android:bottom="" android:left="" android:right="" android:top=""/>
+ * <size android:width="" android:height=""/>
+ * <solid android:color=""/>
+ * <stroke android:color="" android:dashGap="" android:dashWidth="" android:width=""/>
+ * </shape>
+ * </item>
+ * </selector>
+ * <p/>
+ * Created by zhusx on 2015/12/24.
  */
 public class Lib_ShapeHelper {
     /**
-     * <selector xmlns:android="http://schemas.android.com/apk/res/android">
-     * <item android:state_enabled="true">
-     * <shape>
-     * <corners android:bottomLeftRadius="" android:bottomRightRadius="" android:radius="" android:topLeftRadius="" android:topRightRadius=""/>
-     * <gradient android:angle="" android:centerColor="" android:centerX="" android:centerY="" android:endColor=""
-     * android:gradientRadius="" android:startColor="" android:type="" android:useLevel=""/>
-     * <padding android:bottom="" android:left="" android:right="" android:top=""/>
-     * <size android:width="" android:height=""/>
-     * <solid android:color=""/>
-     * <stroke android:color="" android:dashGap="" android:dashWidth="" android:width=""/>
-     * </shape>
-     * </item>
-     * </selector>
+     * <attr name="bottomLeftRadius" format="dimension" />
+     * <attr name="bottomRightRadius" format="dimension" />
+     * <attr name="radius" format="dimension" />
+     * <attr name="topLeftRadius" format="dimension" />
+     * <attr name="topRightRadius" format="dimension" />
+     * <attr name="solidColor" format="color" />
+     * <attr name="solidColor2" format="color" />
+     * <attr name="strokeColor" format="color" />
+     * <attr name="strokeColor2" format="color" />
+     * <attr name="strokeDashWidth" format="dimension" />
+     * <attr name="strokeDashGap" format="dimension" />
+     * <attr name="strokeWidth" format="dimension" />
+     * <attr name="gradientStartColor" format="color" />
+     * <attr name="gradientCenterColor" format="color" />
+     * <attr name="gradientEndColor" format="color" />
+     * <attr name="status">
+     * <enum name="pressed" value="0" />
+     * <enum name="enabled" value="1" />
+     * <enum name="checked" value="2" />
+     * <enum name="selected" value="3" />
+     * </attr>
      */
-    public static void init(View view, Context context, AttributeSet attrs) {
+    public static void initBackground(View view, Context context, AttributeSet attrs) {
         if (view == null || context == null || attrs == null) {
             return;
         }
-        initBackground(view, context, attrs);
-        if (view instanceof TextView) {
-            initTextColor((TextView) view, context, attrs);
-        }
-    }
-
-    private static void initBackground(View view, Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Lib_ShapeBackground);
         GradientDrawable gradientDrawable = new GradientDrawable();
         GradientDrawable gradientDrawable2 = null;
@@ -163,7 +178,19 @@ public class Lib_ShapeHelper {
         typedArray.recycle();
     }
 
-    private static void initTextColor(TextView view, Context context, AttributeSet attrs) {
+    /**
+     * <attr name="textColorStatus">
+     * <enum name="pressed" value="0" />
+     * <enum name="enabled" value="1" />
+     * <enum name="checked" value="2" />
+     * <enum name="selected" value="3" />
+     * </attr>
+     * <attr name="textColor2" format="color" />
+     */
+    public static void initTextColor(TextView view, Context context, AttributeSet attrs) {
+        if (view == null || context == null || attrs == null) {
+            return;
+        }
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Lib_TextViewColor);
         int textColorStatus = typedArray.getInt(R.styleable.Lib_TextViewColor_textColorStatus, -1);
         if (textColorStatus != -1) {

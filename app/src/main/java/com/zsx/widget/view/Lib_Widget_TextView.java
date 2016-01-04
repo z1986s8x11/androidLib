@@ -37,7 +37,7 @@ import com.zsx.tools.Lib_ShapeHelper;
  * <enum name="selected" value="3" />
  * </attr>
  * <attr name="textColor2" format="color" />
- * <p>
+ * <p/>
  * Created by Administrator on 2015/12/22.
  */
 public class Lib_Widget_TextView extends TextView {
@@ -64,6 +64,7 @@ public class Lib_Widget_TextView extends TextView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        Lib_ShapeHelper.init(this, context, attrs);
+        Lib_ShapeHelper.initBackground(this, context, attrs);
+        Lib_ShapeHelper.initTextColor(this, context, attrs);
     }
 }
