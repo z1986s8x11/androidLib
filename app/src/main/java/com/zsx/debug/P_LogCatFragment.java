@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.zsx.adapter.Lib_BaseAdapter;
 import com.zsx.app.Lib_BaseFragment;
+import com.zsx.storage.Lib_SharedPreferences;
 import com.zsx.tools.Lib_Subscribes;
 import com.zsx.util.Lib_Util_Intent;
 import com.zsx.util.Lib_Util_System;
@@ -40,6 +41,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
         rootView.setOrientation(LinearLayout.VERTICAL);
         listView = new ListView(getActivity());
         registerForContextMenu(listView);
+        fontSize = Lib_SharedPreferences.getInstance(getContext()).get("fontSize", 6);
         listView.setAdapter(adapter = new Lib_BaseAdapter<String>(getActivity()) {
             @Override
             public View getView(LayoutInflater inflater, String bean, int position, View convertView, ViewGroup parent) {
@@ -106,6 +108,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
                 break;
         }
         isChange = true;
+        Lib_SharedPreferences.getInstance(getContext()).put("fontSize", fontSize);
         return true;
     }
 
