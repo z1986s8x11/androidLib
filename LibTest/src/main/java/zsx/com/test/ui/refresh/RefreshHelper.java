@@ -23,7 +23,7 @@ public class RefreshHelper {
         mAbsListView.setVerticalFadingEdgeEnabled(false);
     }
 
-    public void initHeadView() {
+    protected void initHeadView() {
         headView = new XListViewHeader(mAbsListView.getContext());
         Lib_Util_Widget.measureView(headView);
         headContentHeight = headView.getMeasuredHeight();
@@ -36,7 +36,6 @@ public class RefreshHelper {
         PULL_To_REFRESH, // 下拉刷新
         REFRESHING, // 正在刷新
         DONE // 默认
-
     }
 
     private enum FootStatus {
@@ -154,14 +153,14 @@ public class RefreshHelper {
 
                         // 更新headView的size
                         if (headStatus == HeadStatus.PULL_To_REFRESH) {
-                            headView.setPadding(0, -1 * headContentHeight
-                                    + (tempY - startY) / RATIO, 0, 0);
+                            int offset = -1 * headContentHeight + (tempY - startY) / RATIO;
+                            changeHeaderViewByState(HeadStatus.PULL_To_REFRESH, offset);
                         }
 
                         // 更新headView的paddingTop
                         if (headStatus == HeadStatus.RELEASE_To_REFRESH) {
-                            headView.setPadding(0, (tempY - startY) / RATIO
-                                    - headContentHeight, 0, 0);
+                            int offset = (tempY - startY) / RATIO - headContentHeight;
+                            changeHeaderViewByState(HeadStatus.RELEASE_To_REFRESH, offset);
                         }
                     }
                 }
@@ -202,6 +201,17 @@ public class RefreshHelper {
                 headView.onDoneToRefresh();
                 headView.setPadding(0, -1 * headContentHeight, 0, 0);
                 // Log.v(TAG, "当前状态，done");
+                break;
+        }
+    }
+
+    private void changeHeaderViewByState(HeadStatus state, int offset) {
+        switch (state) {
+            case RELEASE_To_REFRESH:
+                headView.setPadding(0, offset, 0, 0);
+                break;
+            case PULL_To_REFRESH:
+                headView.setPadding(0, offset, 0, 0);
                 break;
         }
     }
