@@ -61,7 +61,7 @@
         <attr name="autoScroll" format="boolean" />
         <attr name="interval" format="integer" />
     </declare-styleable>
-    <!--ShapeTextView-->
+    <!--Background-->
     <declare-styleable name="Lib_ShapeBackground">
         <attr name="bottomLeftRadius" format="dimension" />
         <attr name="bottomRightRadius" format="dimension" />
@@ -85,7 +85,7 @@
             <enum name="selected" value="3" />
         </attr>
     </declare-styleable>
-    <!--ShapeTextView-->
+    <!--TextView-->
     <declare-styleable name="Lib_TextViewColor">
         <attr name="textColorStatus">
             <enum name="pressed" value="0" />
@@ -94,5 +94,8 @@
             <enum name="selected" value="3" />
         </attr>
         <attr name="textColor2" format="color" />
+    </declare-styleable>
+    <declare-styleable name="Lib_AbsListView">
+        <attr name="isExpand" format="boolean" />
     </declare-styleable>
 </resources>
