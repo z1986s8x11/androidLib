@@ -3,6 +3,7 @@ package com.zsx.widget.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -42,6 +43,16 @@ public class Lib_Widget_ViewPager extends ViewPager {
         typedArray.recycle();
     }
 
+    @Override
+    public void setAdapter(PagerAdapter adapter) {
+        super.setAdapter(adapter);
+        if (autoScroll != null) {
+            autoScroll._stopAutoScroll();
+            if (adapter.getCount() > 1) {
+                autoScroll._startAutoScroll();
+            }
+        }
+    }
 
     /**
      * 是否可以滑动
