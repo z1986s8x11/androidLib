@@ -38,11 +38,13 @@ public class Lib_Widget_CleanableEditText extends EditText {
     private void init() {
         Drawable[] drawables = this.getCompoundDrawables();
         mRightDrawable = drawables[2];
-        InvisibleDrawable = new InvisibleDrawable(this);
-        InvisibleDrawable.setBounds(mRightDrawable.getBounds());
-        this.setOnFocusChangeListener(new FocusChangeListenerImpl());
-        this.addTextChangedListener(new TextWatcherImpl());
-        setClearDrawableVisible(false);
+        if (mRightDrawable != null) {
+            InvisibleDrawable = new InvisibleDrawable(this);
+            InvisibleDrawable.setBounds(mRightDrawable.getBounds());
+            this.setOnFocusChangeListener(new FocusChangeListenerImpl());
+            this.addTextChangedListener(new TextWatcherImpl());
+            setClearDrawableVisible(false);
+        }
     }
 
     @Override
@@ -113,13 +115,17 @@ public class Lib_Widget_CleanableEditText extends EditText {
 
     protected void setClearDrawableVisible(boolean isVisible) {
         if (isVisible) {
-            setCompoundDrawables(getCompoundDrawables()[0],
-                    getCompoundDrawables()[1], mRightDrawable,
-                    getCompoundDrawables()[3]);
+            if (mRightDrawable != null) {
+                setCompoundDrawables(getCompoundDrawables()[0],
+                        getCompoundDrawables()[1], mRightDrawable,
+                        getCompoundDrawables()[3]);
+            }
         } else {
-            setCompoundDrawables(getCompoundDrawables()[0],
-                    getCompoundDrawables()[1], InvisibleDrawable,
-                    getCompoundDrawables()[3]);
+            if (InvisibleDrawable != null) {
+                setCompoundDrawables(getCompoundDrawables()[0],
+                        getCompoundDrawables()[1], InvisibleDrawable,
+                        getCompoundDrawables()[3]);
+            }
         }
     }
 
