@@ -58,7 +58,7 @@ public class Lib_Widget_LinearLayout extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        Lib_ShapeHelper.init(this, context, attrs);
+        Lib_ShapeHelper.initBackground(this, context, attrs);
     }
 
     protected void _setSquare(boolean isSquare) {
