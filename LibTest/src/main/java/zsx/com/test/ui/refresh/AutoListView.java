@@ -39,4 +39,12 @@ public class AutoListView extends ListView {
         helper.onTouchEvent(ev);
         return super.onTouchEvent(ev);
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (helper.dispatchTouchEvent(ev)) {
+            return super.dispatchTouchEvent(ev);
+        }
+        return true;
+    }
 }

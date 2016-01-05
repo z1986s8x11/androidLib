@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.zsx.debug.LogUtil;
 import com.zsx.util.Lib_Util_Widget;
 import com.zsx.widget.XListViewHeader;
 
@@ -172,6 +173,32 @@ public class RefreshHelper {
                 }
                 break;
         }
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        int action = ev.getAction() & ev.getActionMasked();
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN) {
+            return true;
+        }
+        switch (action) {
+//            case MotionEvent.ACTION_CANCEL:
+//                LogUtil.e("dispatchTouchEvent", "ACTION_CANCEL");
+//                return true;
+//            case MotionEvent.ACTION_UP:
+//                LogUtil.e("dispatchTouchEvent", "ACTION_UP");
+//                return true;
+            case MotionEvent.ACTION_MOVE:
+                LogUtil.e("dispatchTouchEvent", "ACTION_MOVE");
+                if (HeadStatus.DONE != headStatus) {
+                    return false;
+                }
+                break;
+//            case MotionEvent.ACTION_DOWN:
+//                LogUtil.e("dispatchTouchEvent", "ACTION_DOWN");
+//                return true;
+
+        }
+        return true;
     }
 
     private void changeHeaderViewByState(HeadStatus state) {

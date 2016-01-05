@@ -39,7 +39,7 @@ public class TestApplication extends Application {
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         if (LogUtil.DEBUG) {
-            LogUtil.e(this, "onTrimMemory");
+            LogUtil.e(this, "onTrimMemory"+level);
         }
     }
 }
