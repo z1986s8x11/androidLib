@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -88,23 +89,7 @@ public class Lib_Util_HttpURLRequest {
         if (param == null) {
             getUrl = requestUrl;
         } else {
-            String getParam = "";
-            if (param.size() != 0) {
-                if (!requestUrl.endsWith("?")) {
-                    getParam = "?";
-                }
-                for (String key : param.keySet()) {
-                    Object o = param.get(key);
-                    getParam += key
-                            + "="
-                            + URLEncoder.encode(
-                            String.valueOf(o == null ? "" : o),
-                            "UTF-8");
-                    getParam += "&";
-                }
-                getParam = getParam.substring(0, getParam.length() - 1);
-            }
-            getUrl = requestUrl + getParam;
+            getUrl = encodeUrl(requestUrl, param);
         }
         return get(getUrl);
     }
@@ -497,6 +482,93 @@ public class Lib_Util_HttpURLRequest {
                 }
             }
         }
+    }
+
+    /**
+     * [scheme:][//host:port][path][?query][#fragment]
+     *
+     * @param url 需要转换的url
+     *            必须以http:// 开头 转换中文url为可以访问的url
+     */
+    public static String encodeUrl(String url, Map<String, ?> map) {
+        try {
+            URI uri = URI.create(url.trim());
+            String host = uri.getHost();
+            if (host == null) {
+                return url;
+            }
+            if (host.length() == url.length()) {
+                return url;
+            }
+            StringBuffer urlSb = new StringBuffer();
+            if (uri.getScheme() == null) {
+                urlSb.append("http://");
+            } else {
+                urlSb.append(uri.getScheme());
+                urlSb.append("://");
+            }
+            urlSb.append(host);
+            if (uri.getPort() != -1) {
+                urlSb.append(":");
+                urlSb.append(uri.getPort());
+            }
+            String urlPath = uri.getPath();
+            String[] paths = urlPath.split("/");
+            if (paths.length > 0) {
+                for (int i = 0; i < paths.length; i++) {
+                    urlSb.append(URLEncoder.encode(paths[i], "utf-8"));
+                    if (i != paths.length - 1) {
+                        urlSb.append("/");
+                    }
+                }
+            }
+            String paramArray = uri.getQuery();
+            if (paramArray != null) {
+                urlSb.append("?");
+                String[] keyValues = paramArray.split("&");
+                int index = urlSb.length();
+                for (int i = 0; i < keyValues.length; i++) {
+                    urlSb.append("&");
+                    String[] keyValue = keyValues[i].split("=");
+                    if (keyValue.length == 1) {
+                        urlSb.append(URLEncoder.encode(keyValue[0], "utf-8"));
+                        urlSb.append("=");
+                    } else {
+                        urlSb.append(URLEncoder.encode(keyValue[0], "utf-8"));
+                        urlSb.append("=");
+                        urlSb.append(URLEncoder.encode(keyValue[1], "utf-8"));
+                    }
+                }
+                urlSb.deleteCharAt(index);
+            }
+            if (map != null && !map.isEmpty()) {
+                if (TextUtils.isEmpty(paramArray)) {
+                    urlSb.append("?");
+                }
+                int index = urlSb.length();
+                for (String key : map.keySet()) {
+                    urlSb.append("&");
+                    urlSb.append(URLEncoder.encode(key, "utf-8"));
+                    urlSb.append("=");
+                    if (map.get(key) != null) {
+                        urlSb.append(URLEncoder.encode(String.valueOf(map.get(key)), "utf-8"));
+                    }
+                }
+                if (TextUtils.isEmpty(paramArray)) {
+                    urlSb.deleteCharAt(index);
+                }
+            }
+            if (uri.getFragment() != null) {
+                urlSb.append("#");
+                urlSb.append(uri.getFragment());
+            }
+            return urlSb.toString();
+        } catch (Exception e) {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(e);
+            }
+        }
+        return url;
     }
 
     public interface OnProgressListener {
