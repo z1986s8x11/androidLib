@@ -27,6 +27,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zsx.widget.view.Lib_Widget_ViewPager;
+
 /**
  * A ViewPager subclass enabling infinte scrolling of the viewPager elements
  * <p/>
@@ -46,7 +48,7 @@ import android.view.ViewGroup;
  * with mapping realPosition=(position-1)%count
  * [0->3, 1->0, 2->1, 3->2, 4->3, 5->0]
  */
-public class Lib_Widget_LooperViewPager extends ViewPager {
+public class Lib_Widget_LooperViewPager extends Lib_Widget_ViewPager {
 
     private static final boolean DEFAULT_BOUNDARY_CASHING = false;
 
