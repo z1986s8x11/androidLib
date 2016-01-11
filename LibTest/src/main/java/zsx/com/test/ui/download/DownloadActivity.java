@@ -39,7 +39,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         String key = "key" + (i++ % 3);
         switch (v.getId()) {
             case R.id.btn_start:
-                downloadHelper.download(key, key, "");
+                downloadHelper.download(new DownloadBean(key, key, ""));
                 break;
             case R.id.btn_stop:
                 downloadHelper.cancelDownload(key);
@@ -53,7 +53,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void onComplete(String s, String key) {
+    public void onComplete(String key) {
         mMessageTV.setText("完成");
     }
 
