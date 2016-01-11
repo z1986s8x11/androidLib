@@ -13,7 +13,7 @@ import zsx.com.test.base._BaseActivity;
 /**
  * Created by zhusx on 2015/8/6.
  */
-public class DownloadActivity extends _BaseActivity implements View.OnClickListener {
+public class DownloadActivity extends _BaseActivity implements View.OnClickListener, DownloadHelper.OnDownloadListener {
     TextView mMessageTV;
     DownloadHelper downloadHelper;
 
@@ -25,6 +25,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         findViewById(R.id.btn_start).setOnClickListener(this);
         findViewById(R.id.btn_stop).setOnClickListener(this);
         downloadHelper = new DownloadHelper(this);
+        downloadHelper.setDownloadListener(this);
     }
 
     int i = 0;
@@ -44,5 +45,25 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
                 downloadHelper.cancelDownload(key);
                 break;
         }
+    }
+
+    @Override
+    public void onStart(String key) {
+        mMessageTV.setText("开始");
+    }
+
+    @Override
+    public void onComplete(String s, String key) {
+        mMessageTV.setText("完成");
+    }
+
+    @Override
+    public void onError(String key, String errorMessage) {
+        mMessageTV.setText(errorMessage);
+    }
+
+    @Override
+    public void onProgress(String key, int progress) {
+        mMessageTV.setText(String.format("已下载:%d%%", progress));
     }
 }
