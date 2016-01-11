@@ -117,6 +117,10 @@ public class Lib_Util_HttpURLRequest {
     }
 
     public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType, Map<String, String> requestPropertys) throws IOException, Lib_Exception {
+        return httpRequest(requestMethod, requestUrl, param, contentType, requestPropertys, false);
+    }
+
+    public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType, Map<String, String> requestPropertys, boolean isReadHttpCodeError) throws IOException, Lib_Exception {
         String result = null;
         String encoding = "UTF-8";
         InputStreamReader bufferReader = null;
@@ -198,7 +202,22 @@ public class Lib_Util_HttpURLRequest {
                 if (LogUtil.DEBUG) {
                     LogUtil.e("requestData result:", "HTTP CODE:" + urlConn.getResponseCode());
                 }
-                throw new Lib_Exception(urlConn.getResponseCode(), "HTTP CODE:" + urlConn.getResponseCode());
+                result = "HTTP CODE:" + urlConn.getResponseCode();
+                if (isReadHttpCodeError) {
+                    // 下面开始做接收工作
+                    bufferReader = new InputStreamReader(urlConn.getInputStream());
+                    StringBuffer sb = new StringBuffer();
+                    char[] chars = new char[128];
+                    int length;
+                    while ((length = bufferReader.read(chars)) != -1) {
+                        sb.append(chars, 0, length);
+                    }
+                    result = sb.toString();
+                    if (LogUtil.DEBUG) {
+                        LogUtil.e("requestData result:", String.valueOf(result));
+                    }
+                }
+                throw new Lib_Exception(urlConn.getResponseCode(), result);
             }
         } finally {
             if (urlConn != null) {

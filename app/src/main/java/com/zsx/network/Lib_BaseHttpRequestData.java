@@ -16,7 +16,6 @@ import org.apache.http.conn.ConnectTimeoutException;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -34,6 +33,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     private boolean pIsDownding = false;
     private Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> pListener;
     private Lib_HttpRequest<Parameter> pLastRequestData;
+    protected boolean isReadHttpCodeError;
 
     /**
      * @return 最后一次调教的参数
@@ -240,7 +240,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     protected String __requestProtocol(Id id, Lib_HttpParams params)
             throws ParseException, URISyntaxException, IOException,
             Lib_Exception {
-        String str = null;
+        String str;
         Object paramObject = params.getParams();
         switch (params.getRequestMethod()) {
             case Lib_HttpParams.GET:
@@ -248,28 +248,12 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                 if (paramObject == null) {
                     getUrl = params.getRequestUrl();
                 } else {
-                    String getParam = null;
                     if (paramObject instanceof Map) {
                         Map<String, Object> param = (Map<String, Object>) paramObject;
-                        if (param.size() == 0) {
-                            getParam = "";
-                        } else {
-                            getParam = "?";
-                            for (String key : param.keySet()) {
-                                Object o = param.get(key);
-                                getParam += key
-                                        + "="
-                                        + URLEncoder.encode(
-                                        String.valueOf(o == null ? "" : o),
-                                        "UTF-8");
-                                getParam += "&";
-                            }
-                            getParam = getParam.substring(0, getParam.length() - 1);
-                        }
+                        getUrl = Lib_Util_HttpURLRequest.encodeUrl(getUrl, param);
                     } else {
-                        getParam = String.valueOf(paramObject);
+                        getUrl = params.getRequestUrl() + String.valueOf(paramObject);
                     }
-                    getUrl = params.getRequestUrl() + getParam;
                 }
                 str = Lib_Util_HttpURLRequest.get(getUrl);
                 break;
