@@ -1,4 +1,4 @@
-package zsx.com.test.ui.download;
+package com.zsx.download;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
 /**
  * Created by Administrator on 2016/1/9.
  */
-public class DownloadHelper {
+public class Lib_DownloadHelper {
     public final int requestCode = 0x583;
     public final int notifyId = 0x432;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -36,7 +36,7 @@ public class DownloadHelper {
     public static ConcurrentHashMap<String, Item> map = new ConcurrentHashMap<>();
     private NotificationManager mNotificationManager;
     private Context context;
-    private List<OnDownloadListener> listeners = new LinkedList<>();
+    private static List<OnDownloadListener> listeners = new LinkedList<>();
 
     public void _openNotification(Context context) {
         this.context = context.getApplicationContext();
@@ -225,7 +225,11 @@ public class DownloadHelper {
                 if (LogUtil.DEBUG) {
                     LogUtil.w(e);
                 }
-                onDownloadError(key, "发生未知错误");
+                if (isCancel) {
+                    onDownloadCancel(key);
+                } else {
+                    onDownloadError(key, "发生未知错误");
+                }
             } finally {
                 map.remove(key);
             }
@@ -243,7 +247,7 @@ public class DownloadHelper {
     }
 
     protected String __getStartText() {
-        return "开始下载";
+        return "准备下载";
     }
 
     protected String __getProgressText(int progress) {

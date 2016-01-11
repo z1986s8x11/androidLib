@@ -15,6 +15,7 @@ import com.zsx.debug.LogUtil;
  * @author zsx
  * 
  */
+@Deprecated
 public class Lib_DownloadReceiver extends BroadcastReceiver {
 	private OnDownloadListener listener;
 

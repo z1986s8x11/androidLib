@@ -3,7 +3,7 @@ package com.zsx.download;
 import android.content.Context;
 
 import java.io.File;
-
+@Deprecated
 public final class Lib_DownloadBean implements Lib_DownloadInterface {
 	private static final long serialVersionUID = -5117983034683759527L;
 	private String downloadKey;

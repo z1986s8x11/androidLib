@@ -32,6 +32,7 @@ import java.util.concurrent.Executors;
  *
  * @author zsx
  */
+@Deprecated
 public class Lib_DownloadService extends Service {
     public static ExecutorService EXECUTORS = Executors.newFixedThreadPool(2);
     public static Map<String, DownloadTask> map = new ConcurrentHashMap<String, DownloadTask>();

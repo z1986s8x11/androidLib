@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @date 2015-03-31
  * 
  */
+@Deprecated
 public interface Lib_DownloadInterface extends Serializable{
 
 	String getDownloadUrl();
