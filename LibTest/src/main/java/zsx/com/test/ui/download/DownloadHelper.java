@@ -11,7 +11,15 @@ import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 
 import com.zsx.debug.LogUtil;
+import com.zsx.exception.Lib_Exception;
+import com.zsx.util.Lib_Util_HttpURLRequest;
 
+import org.apache.http.conn.ConnectTimeoutException;
+
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,8 +36,9 @@ public class DownloadHelper {
     public static ConcurrentHashMap<String, Item> map = new ConcurrentHashMap<>();
     private NotificationManager mNotificationManager;
     private Context context;
+    private List<OnDownloadListener> listeners = new LinkedList<>();
 
-    public DownloadHelper(Context context) {
+    public void _openNotification(Context context) {
         this.context = context.getApplicationContext();
         mNotificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
     }
@@ -51,16 +60,13 @@ public class DownloadHelper {
         return builder.build();
     }
 
-    public void download(DownloadBean bean) {
-        if (bean == null) {
+    public void download(String key, String url, String savePath) {
+        if (map.containsKey(key)) {
             return;
         }
-        if (map.containsKey(bean.getKey())) {
-            return;
-        }
-        DownloadRunnable runnable = new DownloadRunnable(bean);
+        DownloadRunnable runnable = new DownloadRunnable(key, url, savePath);
         Future<?> future = executor.submit(runnable);
-        map.put(bean.getKey(), new Item(future, runnable));
+        map.put(key, new Item(future, runnable));
     }
 
     public void cancelDownload(String key) {
@@ -72,57 +78,76 @@ public class DownloadHelper {
         }
     }
 
-    public void onDownloadStart(final DownloadBean en) {
-        if (mNotificationManager != null) {
-            mNotificationManager.notify(notifyId, createNotification(context, "准备下载", 1));
+    public void cancelAllDownload() {
+        if (!map.isEmpty()) {
+            for (String key : map.keySet()) {
+                Item item = map.get(key);
+                item.future.cancel(true);
+                item.runnable.isCancel = true;
+            }
+            map.clear();
         }
-        if (listener != null) {
+    }
+
+    public void onDownloadStart(final String key) {
+        if (mNotificationManager != null) {
+            mNotificationManager.notify(notifyId, createNotification(context, __getStartText(), 1));
+        }
+        if (!listeners.isEmpty()) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onStart(en.getKey());
+                    for (int i = 0; i < listeners.size(); i++) {
+                        listeners.get(i).onStart(key);
+                    }
                 }
             });
         }
     }
 
-    private void onDownloadProgress(final DownloadBean en, final int progress) {
+    private void onDownloadProgress(final String key, final int progress) {
         if (mNotificationManager != null) {
-            mNotificationManager.notify(notifyId, createNotification(context, String.format("正在下载: %d %%", progress), progress));
+            mNotificationManager.notify(notifyId, createNotification(context, __getProgressText(progress), progress));
         }
-        if (listener != null) {
+        if (!listeners.isEmpty()) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onProgress(en.getKey(), progress);
+                    for (int i = 0; i < listeners.size(); i++) {
+                        listeners.get(i).onProgress(key, progress);
+                    }
                 }
             });
         }
     }
 
-    private void onDownloadComplete(final DownloadBean en) {
+    private void onDownloadComplete(final String key, final String savePath) {
         if (mNotificationManager != null) {
             mNotificationManager.cancel(notifyId);
         }
-        if (listener != null) {
+        if (!listeners.isEmpty()) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onComplete(en.getKey());
+                    for (int i = 0; i < listeners.size(); i++) {
+                        listeners.get(i).onComplete(key, savePath);
+                    }
                 }
             });
         }
     }
 
-    private void onDownloadError(final DownloadBean en, final String errorMessage) {
+    private void onDownloadError(final String key, final String errorMessage) {
         if (mNotificationManager != null) {
-            mNotificationManager.notify(notifyId, createNotification(context, "下载发生错误", 100));
+            mNotificationManager.notify(notifyId, createNotification(context, __getErrorText(errorMessage), 100));
         }
-        if (listener != null) {
+        if (!listeners.isEmpty()) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    listener.onError(en.getKey(), errorMessage);
+                    for (int i = 0; i < listeners.size(); i++) {
+                        listeners.get(i).onError(key, errorMessage);
+                    }
                 }
             });
         }
@@ -145,83 +170,95 @@ public class DownloadHelper {
     }
 
     public class DownloadRunnable implements Runnable {
-        private DownloadBean en;
+        private String key, url, savePath;
         private boolean isCancel = false;
 
-        public DownloadRunnable(DownloadBean bean) {
-            this.en = bean;
+        public DownloadRunnable(String key, String url, String savePath) {
+            this.key = key;
+            this.url = url;
+            this.savePath = savePath;
         }
 
         @Override
         public void run() {
             try {
-                onDownloadStart(en);
-//                Lib_Util_HttpURLRequest.downloadFile(url, path, new Lib_Util_HttpURLRequest.OnProgressListener() {
-//                    @Override
-//                    public void onProgress(int progress, int currentSize, int totalSize) {
-//                        onDownloadProgress(key, progress);
-//                    }
-//
-//                    @Override
-//                    public boolean isCanceled() {
-//                        return isCancel;
-//                    }
-//                });
-                for (int i = 0; i < 100; i++) {
-                    Thread.sleep(200);
-                    onDownloadProgress(en, i);
+                onDownloadStart(key);
+                Lib_Util_HttpURLRequest.downloadFile(url, savePath, new Lib_Util_HttpURLRequest.OnProgressListener() {
+                    @Override
+                    public void onProgress(int progress, int currentSize, int totalSize) {
+                        onDownloadProgress(key, progress);
+                    }
+
+                    @Override
+                    public boolean isCanceled() {
+                        return isCancel;
+                    }
+                });
+                onDownloadComplete(key, savePath);
+            } catch (Lib_Exception e) {
+                e.printStackTrace();
+                if (e._getErrorCode() != Lib_Exception.ERROR_CODE_CANCEL) {
+                    onDownloadError(key, e._getErrorMessage());
+                } else {
+                    onDownloadCancel(key);
                 }
-                onDownloadComplete(en);
-//            } catch (Lib_Exception e) {
-//                e.printStackTrace();
-//                if (e._getErrorCode() != Lib_Exception.ERROR_CODE_CANCEL) {
-//                    onDownloadError(key, e._getErrorMessage());
-//                } else {
-//                    onDownloadCancel(key);
-//                }
-//            } catch (ConnectTimeoutException e) {
-//                if (LogUtil.DEBUG) {
-//                    LogUtil.w(e);
-//                }
-//                onDownloadError(key, "连接超时");
-//            } catch (SocketTimeoutException e) {
-//                if (LogUtil.DEBUG) {
-//                    LogUtil.w(e);
-//                }
-//                onDownloadError(key, "请求超时");
-//            } catch (IOException e) {
-//                if (LogUtil.DEBUG) {
-//                    LogUtil.w(e);
-//                }
-//                if (e.getMessage().contains("write failed: ENOSPC (No space left on device)")) {
-//                    onDownloadError(key, "磁盘空间不足");
-//                } else {
-//                    onDownloadError(key, "发生未知错误");
-//                }
+            } catch (ConnectTimeoutException e) {
+                if (LogUtil.DEBUG) {
+                    LogUtil.w(e);
+                }
+                onDownloadError(key, "连接超时");
+            } catch (SocketTimeoutException e) {
+                if (LogUtil.DEBUG) {
+                    LogUtil.w(e);
+                }
+                onDownloadError(key, "请求超时");
+            } catch (IOException e) {
+                if (LogUtil.DEBUG) {
+                    LogUtil.w(e);
+                }
+                if (e.getMessage().contains("write failed: ENOSPC (No space left on device)")) {
+                    onDownloadError(key, "磁盘空间不足");
+                } else {
+                    onDownloadError(key, "发生未知错误");
+                }
             } catch (Exception e) {
                 if (LogUtil.DEBUG) {
                     LogUtil.w(e);
                 }
-                onDownloadError(en, "发生未知错误");
+                onDownloadError(key, "发生未知错误");
             } finally {
-                map.remove(en.getKey());
+                map.remove(key);
             }
         }
     }
 
-    private OnDownloadListener listener;
-
     public interface OnDownloadListener {
         void onStart(String key);
 
-        void onComplete(String key);
+        void onComplete(String key, String savePath);
 
         void onError(String key, String errorMessage);
 
         void onProgress(String key, int progress);
     }
 
-    public void setDownloadListener(OnDownloadListener listener) {
-        this.listener = listener;
+    protected String __getStartText() {
+        return "开始下载";
+    }
+
+    protected String __getProgressText(int progress) {
+        return String.format("正在下载: %d%%", progress);
+    }
+
+    protected String __getErrorText(String errorMessage) {
+        return "下载失败";
+    }
+
+    public void _registerDownloadListener(OnDownloadListener listener) {
+        listeners.add(listener);
+    }
+
+    public void _unregisterDownloadListener(OnDownloadListener listener) {
+        listeners.remove(listener);
     }
 }

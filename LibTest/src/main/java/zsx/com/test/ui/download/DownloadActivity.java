@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.network.Lib_NetworkStateReceiver;
 import com.zsx.util.Lib_Util_Network;
 
@@ -24,8 +25,20 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         mMessageTV = (TextView) findViewById(R.id.tv_message);
         findViewById(R.id.btn_start).setOnClickListener(this);
         findViewById(R.id.btn_stop).setOnClickListener(this);
-        downloadHelper = new DownloadHelper(this);
-        downloadHelper.setDownloadListener(this);
+        downloadHelper = new DownloadHelper();
+        downloadHelper._openNotification(this);
+        _addOnCycleListener(new Lib_OnCycleListener() {
+            @Override
+            public void onResume() {
+                downloadHelper._registerDownloadListener(DownloadActivity.this);
+            }
+
+            @Override
+            public void onPause() {
+                downloadHelper._unregisterDownloadListener(DownloadActivity.this);
+            }
+        });
+
     }
 
     int i = 0;
@@ -39,7 +52,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
         String key = "key" + (i++ % 3);
         switch (v.getId()) {
             case R.id.btn_start:
-                downloadHelper.download(new DownloadBean(key, key, ""));
+                downloadHelper.download(key, key, "");
                 break;
             case R.id.btn_stop:
                 downloadHelper.cancelDownload(key);
@@ -53,7 +66,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void onComplete(String key) {
+    public void onComplete(String key, String path) {
         mMessageTV.setText("完成");
     }
 
