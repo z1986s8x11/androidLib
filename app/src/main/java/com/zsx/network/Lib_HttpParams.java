@@ -2,6 +2,7 @@ package com.zsx.network;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,6 +19,8 @@ public class Lib_HttpParams {
     private String apiUrl;
     private String method = POST;
     private Object param;
+    private boolean isReadHttpCodeErrorMessage = false; //是否读取httpCode > 300的错误信息
+    private Map<String, Object> httpHead;  //http头
 
     public Object getParam() {
         return param;
@@ -86,5 +89,28 @@ public class Lib_HttpParams {
      */
     public final String getRequestMethod() {
         return method;
+    }
+
+    public Map<String, ?> getHttpHead() {
+        return httpHead;
+    }
+
+    public void setHttpHead(Map<String, Object> httpHead) {
+        this.httpHead = httpHead;
+    }
+
+    public boolean isReadHttpCodeErrorMessage() {
+        return isReadHttpCodeErrorMessage;
+    }
+
+    public void setReadHttpCodeErrorMessage(boolean isRead) {
+        this.isReadHttpCodeErrorMessage = isRead;
+    }
+
+    public void putHttpHead(String key, Object value) {
+        if (httpHead == null) {
+            httpHead = new HashMap<>();
+        }
+        httpHead.put(key, value);
     }
 }

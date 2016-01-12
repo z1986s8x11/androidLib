@@ -187,7 +187,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
             } catch (Lib_Exception e) {
                 if (e._getErrorCode() > HttpURLConnection.HTTP_OK) {
                     try {
-                        error_message = __parseReadHttpCodeError(e._getErrorMessage());
+                        error_message = __parseReadHttpCodeError(pId,e._getErrorMessage());
                     } catch (Exception ee) {
                         error_message = e._getErrorMessage();
                     }
@@ -264,15 +264,15 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                         getUrl = params.getRequestUrl() + String.valueOf(paramObject);
                     }
                 }
-                str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), getUrl, null, null, __getHttpHead(), __isReadHttpError());
+                str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), getUrl, null, null, params.getHttpHead(), params.isReadHttpCodeErrorMessage());
                 break;
             case Lib_HttpParams.POST:
             case Lib_HttpParams.PUT:
             case Lib_HttpParams.DELETE:
                 if (paramObject instanceof Map) {
-                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), (Map<String, Object>) paramObject, __getHttpHead(), __isReadHttpError());
+                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), (Map<String, Object>) paramObject, params.getHttpHead(), params.isReadHttpCodeErrorMessage());
                 } else {
-                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), paramObject == null ? "" : paramObject.toString(), __getHttpHead(), __isReadHttpError());
+                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), paramObject == null ? "" : paramObject.toString(), params.getHttpHead(), params.isReadHttpCodeErrorMessage());
                 }
                 break;
             default:
@@ -352,23 +352,9 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     }
 
     /**
-     * 拿到Http头信息
-     */
-    protected Map<String, Object> __getHttpHead() {
-        return null;
-    }
-
-    /**
-     * 是否获取HttpCode !=200 的错误信息
-     */
-    protected boolean __isReadHttpError() {
-        return false;
-    }
-
-    /**
      * 解析HttpCode !=200 的错误信息
      */
-    protected String __parseReadHttpCodeError(String errorMessage) throws Exception{
+    protected String __parseReadHttpCodeError(Id id,String errorMessage) throws Exception{
         return errorMessage;
     }
 }

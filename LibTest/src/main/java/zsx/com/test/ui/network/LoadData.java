@@ -41,16 +41,19 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
             case GET:
                 params.setRequestMethod(Lib_HttpParams.GET);
                 params.setApiUrl("http://api.m.qu.cn/goods/5520");
+                map.put("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
                 params.setParams(map);
                 break;
             case POST:
                 params.setRequestMethod(Lib_HttpParams.GET);
                 params.setApiUrl("http://api.m.qu.cn/goods/55202131");
+                params.putHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
                 params.setParams(map);
                 break;
             case PUT:
                 params.setRequestMethod(Lib_HttpParams.POST);
                 params.setApiUrl("http://api.m.qu.cn/token/obtain");
+                params.putHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
                 params.setParams(map);
                 break;
             case DELETE:
@@ -87,20 +90,9 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
         return result;
     }
 
-    @Override
-    protected Map<String, Object> __getHttpHead() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
-        return map;
-    }
 
     @Override
-    protected boolean __isReadHttpError() {
-        return true;
-    }
-
-    @Override
-    protected String __parseReadHttpCodeError(String errorMessage) throws Exception {
+    protected String __parseReadHttpCodeError(LoadData.Api id, String errorMessage) throws Exception {
         JSONObject json = new JSONObject(errorMessage);
         return json.getString("message");
     }
