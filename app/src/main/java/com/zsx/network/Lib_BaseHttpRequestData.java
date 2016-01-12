@@ -14,6 +14,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.conn.ConnectTimeoutException;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.util.Map;
@@ -184,7 +185,15 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
             try {
                 returnStr = __requestProtocol(pId, mParams);
             } catch (Lib_Exception e) {
-                error_message = e._getErrorMessage();
+                if (e._getErrorCode() > HttpURLConnection.HTTP_OK) {
+                    try {
+                        error_message = __parseReadHttpCodeError(e._getErrorMessage());
+                    } catch (Exception ee) {
+                        error_message = e._getErrorMessage();
+                    }
+                } else {
+                    error_message = e._getErrorMessage();
+                }
             } catch (ClassCastException e) {
                 LogUtil.e(e);
                 error_message = "参数类型错误";
@@ -250,20 +259,20 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                 } else {
                     if (paramObject instanceof Map) {
                         Map<String, Object> param = (Map<String, Object>) paramObject;
-                        getUrl = Lib_Util_HttpURLRequest.encodeUrl(getUrl, param);
+                        getUrl = Lib_Util_HttpURLRequest.encodeUrl(params.getRequestUrl(), param);
                     } else {
                         getUrl = params.getRequestUrl() + String.valueOf(paramObject);
                     }
                 }
-                str = Lib_Util_HttpURLRequest.get(getUrl);
+                str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), getUrl, null, null, __getHttpHead(), __isReadHttpError());
                 break;
             case Lib_HttpParams.POST:
             case Lib_HttpParams.PUT:
             case Lib_HttpParams.DELETE:
                 if (paramObject instanceof Map) {
-                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), (Map<String, Object>) paramObject);
+                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), (Map<String, Object>) paramObject, __getHttpHead(), __isReadHttpError());
                 } else {
-                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), paramObject == null ? "" : paramObject.toString(), null);
+                    str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), paramObject == null ? "" : paramObject.toString(), __getHttpHead(), __isReadHttpError());
                 }
                 break;
             default:
@@ -340,5 +349,26 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
     protected void __onComplete(Id id, Lib_HttpRequest<Parameter> requestData,
                                 Lib_HttpResult<Result> b) {
+    }
+
+    /**
+     * 拿到Http头信息
+     */
+    protected Map<String, Object> __getHttpHead() {
+        return null;
+    }
+
+    /**
+     * 是否获取HttpCode !=200 的错误信息
+     */
+    protected boolean __isReadHttpError() {
+        return false;
+    }
+
+    /**
+     * 解析HttpCode !=200 的错误信息
+     */
+    protected String __parseReadHttpCodeError(String errorMessage) throws Exception{
+        return errorMessage;
     }
 }

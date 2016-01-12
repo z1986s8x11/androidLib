@@ -71,17 +71,11 @@ public class Lib_Util_HttpURLRequest {
     public static int READ_TIMEOUT_INT = 5000;
 
     public static String post(String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
-        if (map == null || map.size() == 0) {
-            return httpRequest(Lib_HttpParams.POST, requestUrl, "", null);
-        }
-        return httpRequest(Lib_HttpParams.POST, requestUrl, map);
+        return httpRequest(Lib_HttpParams.POST, requestUrl, map, null, false);
     }
 
     public static String post(String requestUrl, String textString) throws IOException, Lib_Exception {
-        if (TextUtils.isEmpty(textString)) {
-            return httpRequest(Lib_HttpParams.POST, requestUrl, "", null);
-        }
-        return httpRequest(Lib_HttpParams.POST, requestUrl, textString, "application/json");
+        return httpRequest(Lib_HttpParams.POST, requestUrl, textString, "application/json", null, false);
     }
 
     public static String get(String requestUrl, Map<String, Object> param) throws IOException, Lib_Exception {
@@ -95,12 +89,12 @@ public class Lib_Util_HttpURLRequest {
     }
 
     public static String get(String requestUrl) throws IOException, Lib_Exception {
-        return httpRequest(Lib_HttpParams.GET, requestUrl, null, null);
+        return httpRequest(Lib_HttpParams.GET, requestUrl, null, null, null, false);
     }
 
-    public static String httpRequest(String requestMethod, String requestUrl, Map<String, Object> map) throws IOException, Lib_Exception {
+    public static String httpRequest(String requestMethod, String requestUrl, Map<String, Object> map, Map<String, ?> requestPropertys, boolean isReadHttpCodeError) throws IOException, Lib_Exception {
         StringBuffer sb = new StringBuffer();
-        if (map != null) {
+        if (map != null && !map.isEmpty()) {
             for (String key : map.keySet()) {
                 sb.append("&");
                 sb.append(key);
@@ -109,18 +103,18 @@ public class Lib_Util_HttpURLRequest {
             }
             sb.deleteCharAt(0);
         }
-        return httpRequest(requestMethod, requestUrl, sb.toString(), null);
+        return httpRequest(requestMethod, requestUrl, sb.toString(), null, requestPropertys, isReadHttpCodeError);
     }
 
-    public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType) throws IOException, Lib_Exception {
-        return httpRequest(requestMethod, requestUrl, param, contentType, null);
+    public static String httpRequest(String requestMethod, String requestUrl, String param, Map<String, ?> requestPropertys, boolean isReadHttpCodeError) throws IOException, Lib_Exception {
+        return httpRequest(requestMethod, requestUrl, param, "application/json", requestPropertys, isReadHttpCodeError);
     }
 
-    public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType, Map<String, String> requestPropertys) throws IOException, Lib_Exception {
-        return httpRequest(requestMethod, requestUrl, param, contentType, requestPropertys, false);
+    public static String httpRequest(String requestMethod, String requestUrl, String param, Map<String, ?> requestPropertys) throws IOException, Lib_Exception {
+        return httpRequest(requestMethod, requestUrl, param, "application/json", requestPropertys, false);
     }
 
-    public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType, Map<String, String> requestPropertys, boolean isReadHttpCodeError) throws IOException, Lib_Exception {
+    public static String httpRequest(String requestMethod, String requestUrl, String param, String contentType, Map<String, ?> requestPropertys, boolean isReadHttpCodeError) throws IOException, Lib_Exception {
         String result = null;
         String encoding = "UTF-8";
         InputStreamReader bufferReader = null;
@@ -173,7 +167,8 @@ public class Lib_Util_HttpURLRequest {
             urlConn.setRequestProperty("Charset", encoding);
             if (requestPropertys != null) {
                 for (String key : requestPropertys.keySet()) {
-                    urlConn.setRequestProperty(key, requestPropertys.get(key));
+                    Object value = requestPropertys.get(key);
+                    urlConn.setRequestProperty(key, value == null ? "" : String.valueOf(value));
                 }
             }
             urlConn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
@@ -185,7 +180,7 @@ public class Lib_Util_HttpURLRequest {
                 dop.flush(); // 发送，清空缓存
                 dop.close(); // 关闭
             }
-            if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            if (urlConn.getResponseCode() >= HttpURLConnection.HTTP_OK || urlConn.getResponseCode() < HttpURLConnection.HTTP_MULT_CHOICE) {
                 // 下面开始做接收工作
                 bufferReader = new InputStreamReader(urlConn.getInputStream());
                 StringBuffer sb = new StringBuffer();
@@ -205,16 +200,23 @@ public class Lib_Util_HttpURLRequest {
                 result = "HTTP CODE:" + urlConn.getResponseCode();
                 if (isReadHttpCodeError) {
                     // 下面开始做接收工作
-                    bufferReader = new InputStreamReader(urlConn.getInputStream());
-                    StringBuffer sb = new StringBuffer();
-                    char[] chars = new char[128];
-                    int length;
-                    while ((length = bufferReader.read(chars)) != -1) {
-                        sb.append(chars, 0, length);
-                    }
-                    result = sb.toString();
-                    if (LogUtil.DEBUG) {
-                        LogUtil.e("requestData result:", String.valueOf(result));
+                    InputStream in = urlConn.getErrorStream();
+                    if (in != null && in.available() >= 0) {
+                        bufferReader = new InputStreamReader(in);
+                        StringBuffer sb = new StringBuffer();
+                        char[] chars = new char[128];
+                        int length;
+                        while ((length = bufferReader.read(chars)) != -1) {
+                            sb.append(chars, 0, length);
+                        }
+                        result = sb.toString();
+                        if (LogUtil.DEBUG) {
+                            LogUtil.e("requestData result:", String.valueOf(result));
+                        }
+                    } else {
+                        if (in != null) {
+                            in.close();
+                        }
                     }
                 }
                 throw new Lib_Exception(urlConn.getResponseCode(), result);

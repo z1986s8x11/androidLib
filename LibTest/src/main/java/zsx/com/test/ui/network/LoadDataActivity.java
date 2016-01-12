@@ -27,8 +27,19 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_network_loaddata);
         findViewById(R.id.btn_load).setOnClickListener(this);
         mMessageTV = (TextView) findViewById(R.id.tv_message);
-        loadData = new LoadData(LoadData.Api.TEST, this);
-        helper = new LoadingHelper(mMessageTV, loadData);
+        loadData = new LoadData(LoadData.Api.PUT, this);
+        helper = new LoadingHelper(mMessageTV, loadData) {
+            @Override
+            public void __onComplete(Lib_HttpRequest<String> request, Lib_HttpResult<String> data) {
+                mMessageTV.setText(data.getData());
+            }
+
+            @Override
+            public void __onError(View errorView, Lib_HttpRequest<String> request, Lib_HttpResult<String> data, boolean isAPIError, String error_message) {
+                ((TextView) errorView).setText(error_message);
+            }
+        };
+        loadData._setOnLoadingListener(helper);
     }
 
     @Override
@@ -40,7 +51,7 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
         }
     }
 
-    public static class LoadingHelper extends Lib_LoadingHelper<Object, Object, Object> {
+    public abstract static class LoadingHelper extends Lib_LoadingHelper<LoadData.Api, String, String> {
         public TextView loadingTV;
         public TextView errorTV;
         public TextView noDataTV;
@@ -61,11 +72,6 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
 //            noDataTV.setGravity(Gravity.CENTER);
 //            noDataTV.setText("no Data...");
 //            setNoDataView(noDataTV);
-        }
-
-        @Override
-        public void __onComplete(Lib_HttpRequest<Object> request, Lib_HttpResult<Object> data) {
-
         }
     }
 }

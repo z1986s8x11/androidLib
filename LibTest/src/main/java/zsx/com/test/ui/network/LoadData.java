@@ -8,6 +8,7 @@ import com.zsx.network.Lib_HttpParams;
 import com.zsx.network.Lib_HttpResult;
 
 import org.apache.http.ParseException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -39,20 +40,17 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
         switch (id) {
             case GET:
                 params.setRequestMethod(Lib_HttpParams.GET);
-                params.setApiUrl("http://api.m.qu.cn/test/get");
-                map.put("name", "zhusixiang");
+                params.setApiUrl("http://api.m.qu.cn/goods/5520");
                 params.setParams(map);
                 break;
             case POST:
-                params.setRequestMethod(Lib_HttpParams.POST);
-                params.setApiUrl("http://api.m.qu.cn/test/post");
-                map.put("name", "zhusixiang");
+                params.setRequestMethod(Lib_HttpParams.GET);
+                params.setApiUrl("http://api.m.qu.cn/goods/55202131");
                 params.setParams(map);
                 break;
             case PUT:
-                params.setRequestMethod(Lib_HttpParams.PUT);
-                params.setApiUrl("http://api.m.qu.cn/test/put");
-                map.put("name", "zhusixiang");
+                params.setRequestMethod(Lib_HttpParams.POST);
+                params.setApiUrl("http://api.m.qu.cn/token/obtain");
                 params.setParams(map);
                 break;
             case DELETE:
@@ -87,5 +85,23 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
         result.setSuccess(true);
         result.setData(currentDownloadText);
         return result;
+    }
+
+    @Override
+    protected Map<String, Object> __getHttpHead() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
+        return map;
+    }
+
+    @Override
+    protected boolean __isReadHttpError() {
+        return true;
+    }
+
+    @Override
+    protected String __parseReadHttpCodeError(String errorMessage) throws Exception {
+        JSONObject json = new JSONObject(errorMessage);
+        return json.getString("message");
     }
 }
