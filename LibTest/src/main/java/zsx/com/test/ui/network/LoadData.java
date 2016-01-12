@@ -47,13 +47,13 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
             case POST:
                 params.setRequestMethod(Lib_HttpParams.GET);
                 params.setApiUrl("http://api.m.qu.cn/goods/55202131");
-                params.putHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
+                params.addHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
                 params.setParams(map);
                 break;
             case PUT:
                 params.setRequestMethod(Lib_HttpParams.POST);
                 params.setApiUrl("http://api.m.qu.cn/token/obtain");
-                params.putHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
+                params.addHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
                 params.setParams(map);
                 break;
             case DELETE:

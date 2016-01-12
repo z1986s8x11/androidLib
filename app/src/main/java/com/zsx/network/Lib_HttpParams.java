@@ -107,7 +107,7 @@ public class Lib_HttpParams {
         this.isReadHttpCodeErrorMessage = isRead;
     }
 
-    public void putHttpHead(String key, Object value) {
+    public void addHttpHead(String key, Object value) {
         if (httpHead == null) {
             httpHead = new HashMap<>();
         }
