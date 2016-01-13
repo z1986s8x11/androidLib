@@ -2,9 +2,9 @@ package zsx.com.test.ui.refresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
+
+import com.zsx.widget.XListViewHeader;
 
 
 /**
@@ -12,39 +12,43 @@ import android.widget.ListView;
  *
  * @description onRefreshComplete() Activity中调用, 通知ListView 刷新完成<br/>
  */
-public class AutoListView extends ListView {
-
-    public AutoListView(Context context) {
-        super(context);
-    }
+public class AutoListView extends Lib_AutoListView {
+    XListViewHeader headView;
 
     public AutoListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    RefreshHelper helper;
-
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus) {
-            helper = new RefreshHelper(this);
-            helper.initHeadView();
-            setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, new String[]{"a", "b", "a", "b", "a", "b", "a", "b", "a", "b", "a", "b"}));
-        }
+    protected View initHeadView() {
+        headView = new XListViewHeader(getContext());
+        addHeaderView(headView);
+        return headView;
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        helper.onTouchEvent(ev);
-        return super.onTouchEvent(ev);
+    protected void moveToReversal(View v, boolean isBack) {
+        headView.onDownPullToRefresh(isBack);
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (helper.dispatchTouchEvent(ev)) {
-            return super.dispatchTouchEvent(ev);
-        }
-        return true;
+    protected void moveToRefresh(View v) {
+        headView.onDownReleaseToRefresh();
+    }
+
+    @Override
+    protected void upToRefresh(View v) {
+        headView.setPadding(0, 0, 0, 0);
+        headView.onDownToRefreshing();
+    }
+
+    @Override
+    protected void defaultStatus(View v) {
+        this.headView.onDoneToRefresh();
+        headView.setPadding(0, -1 * headContentHeight, 0, 0);
+    }
+
+    @Override
+    protected void scrollToRefresh(View headView, int offset, boolean isTop) {
+        headView.setPadding(0, offset, 0, 0);
     }
 }
