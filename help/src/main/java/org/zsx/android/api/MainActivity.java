@@ -68,6 +68,7 @@ import org.zsx.android.api.util.LauncherActivity_Activity;
 import org.zsx.android.api.util.QRCode_Activity;
 import org.zsx.android.api.util.SystemDrawable_Activity;
 import org.zsx.android.api.util.VelocityTracker_Activity;
+import org.zsx.android.api.util.ViewDragHelper_Activity;
 import org.zsx.android.api.view.CustomFullView_Activity;
 import org.zsx.android.api.view.Secure_Activity;
 import org.zsx.android.api.widget.AlertDialog_Activity;
@@ -159,7 +160,7 @@ public class MainActivity extends _BaseActivity {
             WindowManager_Activity.class};
     private Class<?>[] util_Cls = new Class<?>[]{AccountManager_Activity.class, AsyncTask_Activity.class, BroadcastReceiver_Activity.class,
             CountDownTimer_Activity.class, Environment_Activity.class, Handler_Activity.class, ID_Activity.class, Intent_Activity.class,
-            LauncherActivity_Activity.class, QRCode_Activity.class, SystemDrawable_Activity.class, VelocityTracker_Activity.class};
+            LauncherActivity_Activity.class, QRCode_Activity.class, SystemDrawable_Activity.class, VelocityTracker_Activity.class, ViewDragHelper_Activity.class};
     private Class<?>[] parse_Cls = new Class<?>[]{Attrs_Activity.class, XmlResourceParser_Activity.class};
     private Class<?>[] media_Cls = new Class<?>[]{AsyncPlayer_Activity.class, AudioRecord_Activity.class, Camera_Activity.class, MediaPlayer_Activity.class,
             MediaRecorder_Activity.class, SoundPool_Activity.class};

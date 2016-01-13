@@ -193,6 +193,7 @@
         <activity android:name="org.zsx.android.api.util.QRCode_Activity" />
         <activity android:name="org.zsx.android.api.util.SystemDrawable_Activity" />
         <activity android:name="org.zsx.android.api.util.VelocityTracker_Activity" />
+        <activity android:name=".util.ViewDragHelper_Activity" />
         <!-- widget -->
         <activity android:name="org.zsx.android.api.widget.AlertDialog_Activity" />
         <activity android:name="org.zsx.android.api.widget.AnalogClock_Activity" />
