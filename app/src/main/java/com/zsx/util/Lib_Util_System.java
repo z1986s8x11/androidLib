@@ -768,7 +768,7 @@ public class Lib_Util_System {
         return list;
     }
 
-    public int getCPUCount() {
+    public static int getCPUCount() {
         return Runtime.getRuntime().availableProcessors();
     }
 
