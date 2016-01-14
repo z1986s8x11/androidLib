@@ -77,7 +77,9 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
     @Override
     public final void onLoadStart(Id id, Lib_HttpRequest<Parameter> request) {
         if (request.isRefresh || !isSuccess) {
-            loadingView.setVisibility(View.VISIBLE);
+            if (loadingView != null) {
+                loadingView.setVisibility(View.VISIBLE);
+            }
             if (resLayout.getVisibility() == View.VISIBLE) {
                 resLayout.setVisibility(View.GONE);
             }
