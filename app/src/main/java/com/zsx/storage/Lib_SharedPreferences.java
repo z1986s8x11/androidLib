@@ -10,14 +10,28 @@ import java.util.Set;
 /**
  * Created by zhusx on 2016/1/4.
  */
-public class Lib_SharedPreferences {
-    protected SharedPreferences mSharedPreferences;
+public final class Lib_SharedPreferences {
+    private static Lib_SharedPreferences lib_preferences;
+    private SharedPreferences mSharedPreferences;
 
-    private Lib_SharedPreferences() {
+    private Lib_SharedPreferences(Context context) {
+        mSharedPreferences = __createSharedPreferences(context);
     }
 
-    protected Lib_SharedPreferences(Context context) {
-        mSharedPreferences = __getSharedPreferences(context.getApplicationContext());
+    public static Lib_SharedPreferences getInstance(Context context) {
+        if (lib_preferences != null) {
+            return lib_preferences;
+        }
+        return lib_preferences = new Lib_SharedPreferences(context.getApplicationContext());
+    }
+
+    protected SharedPreferences __createSharedPreferences(Context context) {
+        return context.getSharedPreferences(context.getPackageName() + "_zhusx", Context.MODE_PRIVATE);
+    }
+
+    public void gc() {
+        mSharedPreferences = null;
+        lib_preferences = null;
     }
 
     /**
