@@ -1,5 +1,6 @@
 package com.zsx.tools;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -43,6 +44,22 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
         } else {
             throw new IllegalStateException("resLayout.getParent() 必须是ViewGroup!!");
         }
+    }
+
+    public Lib_LoadingHelper(Activity activity) {
+        ViewGroup group = (ViewGroup) activity.getWindow().getDecorView();
+        this.resLayout = group.getChildAt(0);
+        ViewGroup.LayoutParams lp = resLayout.getLayoutParams();
+        LinearLayout parentLayout = new LinearLayout(resLayout.getContext());
+        parentLayout.setOrientation(LinearLayout.VERTICAL);
+        parentLayout.setLayoutParams(lp);
+        int index = group.indexOfChild(resLayout);
+        group.removeView(resLayout);
+        group.addView(parentLayout, index, lp);
+        parentLayout.addView(resLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        parentLayout.addView(helperLayout = new FrameLayout(resLayout.getContext()), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        resLayout.setVisibility(View.GONE);
+        parentLayout.invalidate();
     }
 
     public final void _setLoadingView(View child) {
