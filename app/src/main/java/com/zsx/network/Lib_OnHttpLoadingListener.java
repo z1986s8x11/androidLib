@@ -7,7 +7,7 @@ public interface Lib_OnHttpLoadingListener<Id,Result, Parameter> {
      *
      * @param id
      */
-    void onLoadStart(Id id);
+    void onLoadStart(Id id,Lib_HttpRequest<Parameter> request);
 
     /**
      * 请求发生错误

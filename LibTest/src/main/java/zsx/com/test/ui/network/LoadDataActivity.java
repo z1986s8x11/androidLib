@@ -46,7 +46,7 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_load:
-                loadData._loadData();
+                loadData._refreshData();
                 break;
         }
     }
@@ -58,7 +58,6 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
 
         public LoadingHelper(View resLayout, Lib_BaseHttpRequestData requestData) {
             super(resLayout);
-            _setRepeat(true);
             loadingTV = new TextView(resLayout.getContext());
             loadingTV.setGravity(Gravity.CENTER);
             loadingTV.setText("loading...");

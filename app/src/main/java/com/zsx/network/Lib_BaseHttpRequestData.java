@@ -124,12 +124,12 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "网络连接异常" + pId);
             }
-            onRequestStart(pListener);
+            onRequestStart(pListener, pLastRequestData);
             onRequestError(null, false, "网络连接异常", pListener);
             return;
         }
         Lib_HttpParams pParams = getHttpParams(pId, objects);
-        onRequestStart(pListener);
+        onRequestStart(pListener, pLastRequestData);
         pWorkThread = new HttpWork(pParams, pListener);
         pWorkThread.start();
     }
@@ -187,7 +187,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
             } catch (Lib_Exception e) {
                 if (e._getErrorCode() > HttpURLConnection.HTTP_OK) {
                     try {
-                        error_message = __parseReadHttpCodeError(pId,e._getErrorMessage());
+                        error_message = __parseReadHttpCodeError(pId, e._getErrorMessage());
                     } catch (Exception ee) {
                         error_message = e._getErrorMessage();
                     }
@@ -282,11 +282,11 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     }
 
 
-    private void onRequestStart(Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+    private void onRequestStart(Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener, Lib_HttpRequest<Parameter> request) {
         pIsDownding = true;
-        __onStart(pId);
+        __onStart(pId, request);
         if (listener != null) {
-            listener.onLoadStart(pId);
+            listener.onLoadStart(pId, request);
         }
     }
 
@@ -329,7 +329,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
      *
      * @param id
      */
-    protected void __onStart(Id id) {
+    protected void __onStart(Id id, Lib_HttpRequest<Parameter> request) {
     }
 
     /**
@@ -354,7 +354,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     /**
      * 解析HttpCode !=200 的错误信息
      */
-    protected String __parseReadHttpCodeError(Id id,String errorMessage) throws Exception{
+    protected String __parseReadHttpCodeError(Id id, String errorMessage) throws Exception {
         return errorMessage;
     }
 }

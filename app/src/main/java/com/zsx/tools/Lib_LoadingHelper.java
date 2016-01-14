@@ -15,10 +15,9 @@ import com.zsx.network.Lib_OnHttpLoadingListener;
  * Created by zhusx on 2015/9/25.
  */
 public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> {
-    private FrameLayout helperLayout;
+    private ViewGroup helperLayout;
     private View loadingView;
     private View errorView;
-    private boolean isRepeat = false;
     private boolean isSuccess = false;
     private View resLayout;
 
@@ -70,56 +69,45 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
         errorView = child;
     }
 
-    public void _setRepeat(boolean isRepeat) {
-        this.isRepeat = isRepeat;
-    }
-
     public void __onError(View errorView, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
     }
 
     public abstract void __onComplete(Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data);
 
     @Override
-    public final void onLoadStart(Id id) {
-        if (!isRepeat) {
-            if (isSuccess) {
-                return;
+    public final void onLoadStart(Id id, Lib_HttpRequest<Parameter> request) {
+        if (request.isRefresh || !isSuccess) {
+            loadingView.setVisibility(View.VISIBLE);
+            if (resLayout.getVisibility() == View.VISIBLE) {
+                resLayout.setVisibility(View.GONE);
             }
-        }
-        loadingView.setVisibility(View.VISIBLE);
-        if (resLayout.getVisibility() == View.VISIBLE) {
-            resLayout.setVisibility(View.GONE);
-        }
-        if (errorView != null && errorView.getVisibility() == View.VISIBLE) {
-            errorView.setVisibility(View.GONE);
+            if (errorView != null && errorView.getVisibility() == View.VISIBLE) {
+                errorView.setVisibility(View.GONE);
+            }
         }
     }
 
     @Override
     public final void onLoadError(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
-        if (!isRepeat) {
-            if (isSuccess) {
-                __onError(errorView, request, data, isAPIError, error_message);
-                return;
+        if (request.isRefresh || !isSuccess) {
+            if (loadingView != null) {
+                loadingView.setVisibility(View.GONE);
             }
-        }
-        loadingView.setVisibility(View.GONE);
-        if (errorView != null) {
-            errorView.setVisibility(View.VISIBLE);
+            if (errorView != null) {
+                errorView.setVisibility(View.VISIBLE);
+            }
         }
         __onError(errorView, request, data, isAPIError, error_message);
     }
 
     @Override
     public final void onLoadComplete(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data) {
-        if (!isRepeat) {
-            if (isSuccess) {
-                __onComplete(request, data);
-                return;
+        if (request.isRefresh || !isSuccess) {
+            if (loadingView != null) {
+                loadingView.setVisibility(View.GONE);
             }
+            resLayout.setVisibility(View.VISIBLE);
         }
-        loadingView.setVisibility(View.GONE);
-        resLayout.setVisibility(View.VISIBLE);
         isSuccess = true;
         __onComplete(request, data);
     }

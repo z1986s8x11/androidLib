@@ -10,7 +10,7 @@ import com.zsx.network.Lib_OnHttpLoadingListener;
 public class OnSimpleLoadListener<Result> implements Lib_OnHttpLoadingListener<LoadData.Api, Lib_HttpResult<Result>, String> {
 
     @Override
-    public void onLoadStart(LoadData.Api api) {
+    public void onLoadStart(LoadData.Api api, Lib_HttpRequest<String> request) {
 
     }
 
