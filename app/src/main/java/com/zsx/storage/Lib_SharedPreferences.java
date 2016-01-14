@@ -11,18 +11,13 @@ import java.util.Set;
  * Created by zhusx on 2016/1/4.
  */
 public class Lib_SharedPreferences {
-    private static Lib_SharedPreferences lib_preferences;
-    private SharedPreferences sharedPreferences;
+    protected SharedPreferences mSharedPreferences;
 
-    private Lib_SharedPreferences(Context context) {
-        sharedPreferences = context.getSharedPreferences(getStorageName(context), Context.MODE_PRIVATE);
+    private Lib_SharedPreferences() {
     }
 
-    public static Lib_SharedPreferences getInstance(Context context) {
-        if (lib_preferences != null) {
-            return lib_preferences;
-        }
-        return lib_preferences = new Lib_SharedPreferences(context.getApplicationContext());
+    protected Lib_SharedPreferences(Context context) {
+        mSharedPreferences = __getSharedPreferences(context.getApplicationContext());
     }
 
     /**
@@ -36,37 +31,37 @@ public class Lib_SharedPreferences {
         return key.name() + key.ordinal();
     }
 
-    protected String getStorageName(Context context) {
-        return context.getPackageName() + "_lib";
+    protected SharedPreferences __getSharedPreferences(Context context) {
+        return context.getSharedPreferences(context.getPackageName() + "_lib", Context.MODE_PRIVATE);
     }
 
     public final String get(String key, String defValue) {
-        return sharedPreferences.getString(key, defValue);
+        return mSharedPreferences.getString(key, defValue);
     }
 
     public final int get(String key, int defValue) {
-        return sharedPreferences.getInt(key, defValue);
+        return mSharedPreferences.getInt(key, defValue);
     }
 
     public final long get(String key, long defValue) {
-        return sharedPreferences.getLong(key, defValue);
+        return mSharedPreferences.getLong(key, defValue);
     }
 
     public final float get(String key, float defValue) {
-        return sharedPreferences.getFloat(key, defValue);
+        return mSharedPreferences.getFloat(key, defValue);
     }
 
     public boolean get(String key, boolean defValue) {
-        return sharedPreferences.getBoolean(key, defValue);
+        return mSharedPreferences.getBoolean(key, defValue);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public final Set<String> get(String key, Set<String> defValue) {
-        return sharedPreferences.getStringSet(key, defValue);
+        return mSharedPreferences.getStringSet(key, defValue);
     }
 
     public final void put(String key, String value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(key, value);
         if (__isAsync()) {
             editor.apply();//异步提交
@@ -76,7 +71,7 @@ public class Lib_SharedPreferences {
     }
 
     public final void put(String key, int value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putInt(key, value);
         if (__isAsync()) {
             editor.apply();//异步提交
@@ -86,7 +81,7 @@ public class Lib_SharedPreferences {
     }
 
     public final void put(String key, boolean value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(key, value);
         if (__isAsync()) {
             editor.apply();//异步提交
@@ -96,7 +91,7 @@ public class Lib_SharedPreferences {
     }
 
     public final void put(String key, float value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putFloat(key, value);
         if (__isAsync()) {
             editor.apply();//异步提交
@@ -106,7 +101,7 @@ public class Lib_SharedPreferences {
     }
 
     public final void put(String key, long value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putLong(key, value);
         if (__isAsync()) {
             editor.apply();//异步提交
@@ -117,7 +112,7 @@ public class Lib_SharedPreferences {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public final void put(String key, Set<String> value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putStringSet(key, value);
         if (__isAsync()) {
             editor.apply();//异步提交
