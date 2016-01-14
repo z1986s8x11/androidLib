@@ -768,6 +768,10 @@ public class Lib_Util_System {
         return list;
     }
 
+    public int getCPUCount() {
+        return Runtime.getRuntime().availableProcessors();
+    }
+
     // 设置字体
     // Typeface mFace =
     // Typeface.createFromAsset(getContext().getAssets(),"fonts/samplefont.ttf");
