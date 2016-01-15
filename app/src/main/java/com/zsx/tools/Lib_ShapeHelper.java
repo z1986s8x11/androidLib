@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -157,7 +158,13 @@ public class Lib_ShapeHelper {
                 }
             }
         } else {
-            int solidColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor, -1);
+            int backgroundColor = -1;
+            if (view.getBackground() instanceof ColorDrawable) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    backgroundColor = ((ColorDrawable) view.getBackground()).getColor();
+                }
+            }
+            int solidColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor, backgroundColor);
             if (solidColor != -1) {
                 gradientDrawable.setColor(solidColor);
                 if (gradientDrawable2 != null) {
