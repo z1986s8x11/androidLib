@@ -45,10 +45,6 @@ public final class Lib_SharedPreferences {
         return key.name() + key.ordinal();
     }
 
-    protected SharedPreferences __getSharedPreferences(Context context) {
-        return context.getSharedPreferences(context.getPackageName() + "_lib", Context.MODE_PRIVATE);
-    }
-
     public final String get(String key, String defValue) {
         return mSharedPreferences.getString(key, defValue);
     }
