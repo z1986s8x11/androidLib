@@ -3,13 +3,13 @@ package zsx.com.test.ui.viewpagelooper;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zsx.widget.Lib_Widget_LooperViewPager;
-
+import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
 
 /**
@@ -19,9 +19,8 @@ public class ViewPagerLooperActivity extends _BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Lib_Widget_LooperViewPager viewPager = new Lib_Widget_LooperViewPager(this);
-        viewPager.setBoundaryCaching(true);
-        setContentView(viewPager);
+        setContentView(R.layout.activity_viewpager_looper);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new PagerAdapter() {
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
@@ -41,7 +40,7 @@ public class ViewPagerLooperActivity extends _BaseActivity {
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
 
             @Override
