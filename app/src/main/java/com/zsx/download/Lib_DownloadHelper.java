@@ -31,12 +31,12 @@ import java.util.concurrent.Future;
 public class Lib_DownloadHelper {
     public final int requestCode = 0x583;
     public final int notifyId = 0x432;
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static ConcurrentHashMap<String, Item> map = new ConcurrentHashMap<>();
+    private static List<OnDownloadListener> listeners = new LinkedList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper());
-    public static ConcurrentHashMap<String, Item> map = new ConcurrentHashMap<>();
     private NotificationManager mNotificationManager;
     private Context context;
-    private static List<OnDownloadListener> listeners = new LinkedList<>();
 
     public void _openNotification(Context context) {
         this.context = context.getApplicationContext();
@@ -258,11 +258,11 @@ public class Lib_DownloadHelper {
         return "下载失败";
     }
 
-    public void _registerDownloadListener(OnDownloadListener listener) {
+    public static void _registerDownloadListener(OnDownloadListener listener) {
         listeners.add(listener);
     }
 
-    public void _unregisterDownloadListener(OnDownloadListener listener) {
+    public static void _unregisterDownloadListener(OnDownloadListener listener) {
         listeners.remove(listener);
     }
 }
