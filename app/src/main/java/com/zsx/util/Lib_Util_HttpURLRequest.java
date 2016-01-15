@@ -180,7 +180,7 @@ public class Lib_Util_HttpURLRequest {
                 dop.flush(); // 发送，清空缓存
                 dop.close(); // 关闭
             }
-            if (urlConn.getResponseCode() >= HttpURLConnection.HTTP_OK || urlConn.getResponseCode() < HttpURLConnection.HTTP_MULT_CHOICE) {
+            if (urlConn.getResponseCode() >= HttpURLConnection.HTTP_OK && urlConn.getResponseCode() < HttpURLConnection.HTTP_MULT_CHOICE) {
                 // 下面开始做接收工作
                 bufferReader = new InputStreamReader(urlConn.getInputStream());
                 StringBuffer sb = new StringBuffer();
