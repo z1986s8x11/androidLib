@@ -88,8 +88,7 @@ public class Lib_ShapeHelper {
                     status = -1;
                     break;
             }
-        }
-        if (status != -1) {
+            view.setClickable(true);
             gradientDrawable2 = new GradientDrawable();
         }
         gradientDrawable.setShape(GradientDrawable.RECTANGLE);
@@ -134,27 +133,24 @@ public class Lib_ShapeHelper {
                 if (gradientCenterColor == -1) {
                     gradientDrawable.setColors(new int[]{gradientStartColor, gradientEndColor});
                     if (gradientDrawable2 != null) {
-                        gradientDrawable2.setColors(new int[]{gradientStartColor, gradientEndColor});
+                        int gradientStartColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_gradientStartColor, gradientStartColor);
+                        int gradientEndColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_gradientEndColor, gradientEndColor);
+                        gradientDrawable2.setColors(new int[]{gradientStartColor2, gradientEndColor2});
                     }
                 } else {
                     gradientDrawable.setColors(new int[]{gradientStartColor, gradientCenterColor, gradientEndColor});
                     if (gradientDrawable2 != null) {
-                        gradientDrawable2.setColors(new int[]{gradientStartColor, gradientCenterColor, gradientEndColor});
+                        int gradientStartColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_gradientStartColor, gradientStartColor);
+                        int gradientEndColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_gradientEndColor, gradientEndColor);
+                        int gradientCenterColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_gradientCenterColor, gradientCenterColor);
+                        gradientDrawable2.setColors(new int[]{gradientStartColor2, gradientCenterColor2, gradientEndColor2});
                     }
                 }
             } else {
-                int solidColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor, -1);
-                if (solidColor != -1) {
-                    gradientDrawable.setColor(solidColor);
-                    if (gradientDrawable2 != null) {
-                        int solidColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor2, solidColor);
-                        gradientDrawable2.setColor(solidColor2);
-                    }
-                } else {
-                    gradientDrawable.setColor(gradientStartColor);
-                    if (gradientDrawable2 != null) {
-                        gradientDrawable2.setColor(gradientStartColor);
-                    }
+                gradientDrawable.setColor(gradientStartColor);
+                if (gradientDrawable2 != null) {
+                    int gradientStartColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_gradientStartColor, gradientStartColor);
+                    gradientDrawable2.setColor(gradientStartColor2);
                 }
             }
         } else {
@@ -224,6 +220,7 @@ public class Lib_ShapeHelper {
                     textColorStatus = -1;
                     break;
             }
+            view.setClickable(true);
         }
         if (textColorStatus != -1) {
             int textColor = view.getTextColors().getDefaultColor();
