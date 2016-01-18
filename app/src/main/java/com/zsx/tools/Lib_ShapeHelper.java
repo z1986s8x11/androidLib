@@ -175,9 +175,9 @@ public class Lib_ShapeHelper {
         }
         if (gradientDrawable2 != null) {
             StateListDrawable stateListDrawable = new StateListDrawable();
-            stateListDrawable.addState(new int[]{status}, gradientDrawable);
-            stateListDrawable.addState(new int[]{-status}, gradientDrawable2);
-            stateListDrawable.addState(new int[]{}, gradientDrawable);
+            stateListDrawable.addState(new int[]{status}, gradientDrawable2);
+            stateListDrawable.addState(new int[]{-status}, gradientDrawable);
+            stateListDrawable.addState(new int[]{}, gradientDrawable2);
             _setBackgroundDrawable(view, stateListDrawable);
         } else {
             _setBackgroundDrawable(view, gradientDrawable);
