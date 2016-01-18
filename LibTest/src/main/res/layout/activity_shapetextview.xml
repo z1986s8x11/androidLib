@@ -66,11 +66,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="#88ff11"
         android:clickable="true"
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        android:background="#88ff11"
         app:bottomLeftRadius="6dp"
         app:bottomRightRadius="6dp"
         app:solidColor2="#FFDD11"
@@ -91,5 +91,38 @@
         app:strokeColor2="#2222ff"
         app:strokeWidth="3dp"
         app:textColor2="@color/lib_yellow"
+        app:textColorStatus="pressed" />
+
+    <com.zsx.widget.view.Lib_Widget_TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/lib_green"
+        android:clickable="true"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_white"
+        app:solidColor2="@color/lib_gray"
+        app:strokeColor="#ff22ff"
+        app:strokeColor2="#2222ff"
+        app:status="pressed"
+        app:strokeWidth="3dp"
+        app:textColor2="@color/lib_yellow"
+        app:textColorStatus="pressed" />
+
+    <com.zsx.widget.view.Lib_Widget_TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="哈哈"
+        android:textColor="@color/lib_black"
+        app:strokeColor="#ff22ff"
+        app:strokeColor2="#553055"
+        app:strokeDashGap="2dp"
+        app:strokeDashWidth="10dp"
+        app:strokeWidth="3dp"
+        app:status="pressed"
+        app:textColor2="@color/lib_gray"
         app:textColorStatus="pressed" />
 </LinearLayout>
