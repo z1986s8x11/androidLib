@@ -60,6 +60,11 @@
         <attr name="scrollable" format="boolean" />
         <attr name="autoScroll" format="boolean" />
         <attr name="interval" format="integer" />
+        <attr name="help">
+            <enum name="scrollable" value="0" />
+            <enum name="autoScroll" value="1" />
+            <enum name="interval" value="2" />
+        </attr>
     </declare-styleable>
     <!--Background-->
     <declare-styleable name="Lib_ShapeBackground">
@@ -84,6 +89,24 @@
             <enum name="checked" value="2" />
             <enum name="selected" value="3" />
         </attr>
+        <attr name="help">
+            <enum name="bottomLeftRadius" value="0" />
+            <enum name="bottomRightRadius" value="1" />
+            <enum name="topLeftRadius" value="2" />
+            <enum name="topRightRadius" value="3" />
+            <enum name="radius" value="4" />
+            <enum name="solidColor" value="5" />
+            <enum name="solidColor2" value="6" />
+            <enum name="strokeColor" value="7" />
+            <enum name="strokeColor2" value="8" />
+            <enum name="strokeDashWidth" value="9" />
+            <enum name="strokeDashGap" value="10" />
+            <enum name="strokeWidth" value="11" />
+            <enum name="gradientStartColor" value="12" />
+            <enum name="gradientCenterColor" value="13" />
+            <enum name="gradientEndColor" value="14" />
+            <enum name="status" value="15" />
+        </attr>
     </declare-styleable>
     <!--TextView-->
     <declare-styleable name="Lib_TextViewColor">
@@ -94,8 +117,15 @@
             <enum name="selected" value="3" />
         </attr>
         <attr name="textColor2" format="color" />
+        <attr name="help">
+            <enum name="textColorStatus" value="0" />
+            <enum name="textColor2" value="1" />
+        </attr>
     </declare-styleable>
     <declare-styleable name="Lib_AbsListView">
         <attr name="isExpand" format="boolean" />
+        <attr name="help">
+            <enum name="isExpand" value="0" />
+        </attr>
     </declare-styleable>
 </resources>
