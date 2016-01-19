@@ -86,6 +86,7 @@
         <attr name="gradientCenterColor2" format="color" />
         <attr name="gradientEndColor" format="color" />
         <attr name="gradientEndColor2" format="color" />
+        <attr name="background2" format="color|reference"/>
         <attr name="status">
             <enum name="pressed" value="0" />
             <enum name="enabled" value="1" />

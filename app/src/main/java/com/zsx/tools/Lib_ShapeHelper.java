@@ -89,7 +89,30 @@ public class Lib_ShapeHelper {
                     break;
             }
             view.setClickable(true);
+            if (status != -1) {
+                Drawable background2 = typedArray.getDrawable(R.styleable.Lib_ShapeBackground_background2);
+                Drawable background = view.getBackground();
+                if (background2 != null && background != null) {
+                    StateListDrawable stateListDrawable = new StateListDrawable();
+                    stateListDrawable.addState(new int[]{status}, background2);
+                    stateListDrawable.addState(new int[]{-status}, background);
+                    stateListDrawable.addState(new int[]{}, background2);
+                    _setBackgroundDrawable(view, stateListDrawable);
+                    typedArray.recycle();
+                    return;
+                }
+            }
             gradientDrawable2 = new GradientDrawable();
+        }
+        if (status == -1) {
+            int solidColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor, -1);
+            int strokeWidth = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_strokeWidth, -1);
+            int gradientStartColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_gradientStartColor, -1);
+            if (solidColor == -1 && strokeWidth == -1 && gradientStartColor == -1) {
+            /*没有颜色改变,默认不进行任何操作*/
+                typedArray.recycle();
+                return;
+            }
         }
         gradientDrawable.setShape(GradientDrawable.RECTANGLE);
         if (gradientDrawable2 != null) {
@@ -116,8 +139,8 @@ public class Lib_ShapeHelper {
         }
         int strokeColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_strokeColor, Color.GRAY);
         int strokeDashGap = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_strokeDashGap, 0);
-        int strokeWidth = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_strokeWidth, -1);
         int strokeDashWidth = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_strokeDashWidth, 0);
+        int strokeWidth = typedArray.getDimensionPixelSize(R.styleable.Lib_ShapeBackground_strokeWidth, -1);
         if (strokeWidth > 0) {
             gradientDrawable.setStroke(strokeWidth, strokeColor, strokeDashWidth, strokeDashGap);
             if (gradientDrawable2 != null) {
