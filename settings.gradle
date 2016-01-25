@@ -1,1 +1,1 @@
-include ':app', ':LibTest', ':help', ':aptlib'
+include ':app', ':LibTest', ':help'
