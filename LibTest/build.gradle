@@ -22,11 +22,6 @@ android {
         }
     }
 }
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-    }
-}
 //配置Android annotations
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
