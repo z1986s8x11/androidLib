@@ -1,8 +1,8 @@
 package zsx.com.test.ui.test;
 
 
-import com.zsx.apt.database.Lib_SQL;
-import com.zsx.apt.database.SQLFieldEnum;
+import zsx.lib.base.database.Lib_SQL;
+import zsx.lib.base.database.SQLFieldEnum;
 
 /**
  * Author       zhusx
