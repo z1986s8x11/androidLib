@@ -54,4 +54,5 @@ dependencies {
     compile project(':app')
     compile files('libs/core.jar')
 //compile(name: 'androidLib-1.0.0', ext: 'aar')
+//apt files('src/libs/apt.jar')
 }

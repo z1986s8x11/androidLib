@@ -3,7 +3,6 @@ apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
-
     defaultConfig {
         applicationId "zsx.com.test"
         minSdkVersion 10
@@ -29,3 +28,4 @@ dependencies {
     compile files('src/libs/apt.jar')
     apt files('src/libs/apt.jar')
 }
+
