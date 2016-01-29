@@ -94,9 +94,20 @@ public class Lib_ShapeHelper {
                 Drawable background = view.getBackground();
                 if (background2 != null && background != null) {
                     StateListDrawable stateListDrawable = new StateListDrawable();
-                    stateListDrawable.addState(new int[]{status}, background2);
-                    stateListDrawable.addState(new int[]{-status}, background);
-                    stateListDrawable.addState(new int[]{}, background2);
+                    switch (status) {
+                        case android.R.attr.state_pressed:
+                        case android.R.attr.state_selected:
+                        case android.R.attr.state_checked:
+                            stateListDrawable.addState(new int[]{status}, background2);
+                            stateListDrawable.addState(new int[]{-status}, background);
+                            stateListDrawable.addState(new int[]{}, background2);
+                            break;
+                        case android.R.attr.state_enabled:
+                            stateListDrawable.addState(new int[]{status}, background);
+                            stateListDrawable.addState(new int[]{-status}, background2);
+                            stateListDrawable.addState(new int[]{}, background);
+                            break;
+                    }
                     _setBackgroundDrawable(view, stateListDrawable);
                     typedArray.recycle();
                     return;
@@ -194,9 +205,20 @@ public class Lib_ShapeHelper {
         }
         if (gradientDrawable2 != null) {
             StateListDrawable stateListDrawable = new StateListDrawable();
-            stateListDrawable.addState(new int[]{status}, gradientDrawable2);
-            stateListDrawable.addState(new int[]{-status}, gradientDrawable);
-            stateListDrawable.addState(new int[]{}, gradientDrawable2);
+            switch (status) {
+                case android.R.attr.state_pressed:
+                case android.R.attr.state_selected:
+                case android.R.attr.state_checked:
+                    stateListDrawable.addState(new int[]{status}, gradientDrawable2);
+                    stateListDrawable.addState(new int[]{-status}, gradientDrawable);
+                    stateListDrawable.addState(new int[]{}, gradientDrawable2);
+                    break;
+                case android.R.attr.state_enabled:
+                    stateListDrawable.addState(new int[]{status}, gradientDrawable);
+                    stateListDrawable.addState(new int[]{-status}, gradientDrawable2);
+                    stateListDrawable.addState(new int[]{}, gradientDrawable);
+                    break;
+            }
             _setBackgroundDrawable(view, stateListDrawable);
         } else {
             _setBackgroundDrawable(view, gradientDrawable);
@@ -249,7 +271,18 @@ public class Lib_ShapeHelper {
             int textColor = view.getTextColors().getDefaultColor();
             int textColor2 = typedArray.getColor(R.styleable.Lib_TextViewColor_textColor2, -1);
             if (textColor2 != -1) {
-                ColorStateList colorStateList = new ColorStateList(new int[][]{new int[]{textColorStatus}, new int[]{-textColorStatus}, new int[]{}}, new int[]{textColor2, textColor, textColor});
+                ColorStateList colorStateList = null;
+                switch (textColorStatus) {
+                    case android.R.attr.state_pressed:
+                    case android.R.attr.state_selected:
+                    case android.R.attr.state_checked:
+                        colorStateList = new ColorStateList(new int[][]{new int[]{textColorStatus}, new int[]{-textColorStatus}, new int[]{}}, new int[]{textColor2, textColor, textColor});
+                        break;
+                    case android.R.attr.state_enabled:
+                        colorStateList = new ColorStateList(new int[][]{new int[]{textColorStatus}, new int[]{-textColorStatus}, new int[]{}}, new int[]{textColor, textColor2, textColor2});
+                        break;
+                }
+
                 view.setTextColor(colorStateList);
             }
         }

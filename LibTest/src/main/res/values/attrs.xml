@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="helper">
+        <attr name="help">
+            <enum name="bottomLeftRadius" value="0" />
+            <enum name="bottomRightRadius" value="1" />
+            <enum name="topLeftRadius" value="2" />
+            <enum name="topRightRadius" value="3" />
+            <enum name="radius" value="4" />
+            <enum name="solidColor" value="5" />
+            <enum name="solidColor2" value="6" />
+            <enum name="strokeColor" value="7" />
+            <enum name="strokeColor2" value="8" />
+            <enum name="strokeDashWidth" value="9" />
+            <enum name="strokeDashGap" value="10" />
+            <enum name="strokeWidth" value="11" />
+            <enum name="gradientStartColor" value="12" />
+            <enum name="gradientStartColor2" value="13" />
+            <enum name="gradientCenterColor" value="14" />
+            <enum name="gradientCenterColor2" value="15" />
+            <enum name="gradientEndColor" value="16" />
+            <enum name="gradientEndColor2" value="17" />
+            <enum name="status" value="18" />
+            <enum name="pressed" value="19" />
+            <enum name="enabled" value="20" />
+            <enum name="checked" value="21" />
+            <enum name="selected" value="22" />
+        </attr>
+    </declare-styleable>
+</resources>
