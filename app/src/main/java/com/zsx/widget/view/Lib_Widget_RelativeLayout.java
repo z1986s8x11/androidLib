@@ -7,7 +7,9 @@ import android.widget.RelativeLayout;
 import com.zsx.tools.Lib_ShapeHelper;
 
 /**
- * Created by zhusx on 2015/9/28.
+ * Author        zhusx
+ * Email         327270607@qq.com
+ * Created       2016/1/29 17:36
  */
 public class Lib_Widget_RelativeLayout extends RelativeLayout {
     private boolean isSquare; //是否正方形
