@@ -28,7 +28,7 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
         if (parent == null) {
             throw new IllegalStateException("resLayout 不能为null");
         }
-        if (parent.getParent() instanceof ViewGroup) {
+        if (parent instanceof ViewGroup) {
             ViewGroup.LayoutParams lp = resLayout.getLayoutParams();
             LinearLayout parentLayout = new LinearLayout(resLayout.getContext());
             parentLayout.setOrientation(LinearLayout.VERTICAL);
