@@ -97,11 +97,17 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
     }
 
     protected void __startLoadingAnim(Id id, Lib_HttpRequest<Parameter> request) {
-        anim.start();
+        if (anim != null) {
+            anim.start();
+        }
     }
 
     protected void __stopLoadingAnim() {
-        anim.stop();
+        if (anim != null) {
+            if (anim.isRunning()) {
+                anim.stop();
+            }
+        }
     }
 
     public void __onError(View errorView, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
