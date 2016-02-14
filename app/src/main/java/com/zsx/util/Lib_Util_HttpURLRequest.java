@@ -236,16 +236,19 @@ public class Lib_Util_HttpURLRequest {
         return result;
     }
 
-    /**
-     * 上传文件到服务器
-     *
-     * @param file       需要上传的文件
-     * @param requestURL 请求的rul
-     * @return 返回响应的内容
-     */
     public static String uploadFile(File file, String requestURL)
             throws IOException, Lib_Exception {
-        return uploadFile(file, requestURL, null);
+        return uploadFile(file, requestURL, null, null);
+    }
+
+    public static String uploadFile(File file, String requestURL, OnProgressListener listener)
+            throws IOException, Lib_Exception {
+        return uploadFile(file, requestURL, null, listener);
+    }
+
+    public static String uploadFile(File file, String requestURL, Map<String, ?> requestPropertys, OnProgressListener listener)
+            throws IOException, Lib_Exception {
+        return uploadFile(file, requestURL, null, requestPropertys, listener);
     }
 
     /**
@@ -255,12 +258,14 @@ public class Lib_Util_HttpURLRequest {
      * @param requestURL 请求的rul
      * @return 返回响应的内容
      */
-    public static String uploadFile(File file, String requestURL, OnProgressListener listener)
+    public static String uploadFile(File file, String requestURL, String contentType, Map<String, ?> requestPropertys, OnProgressListener listener)
             throws IOException, Lib_Exception {
         if (!file.exists()) {
             throw new FileNotFoundException("File Not Found Exception!!");
         }
-        String contentType = "image/jpeg";// 流  application/octet-stream
+        if (contentType == null) {
+            contentType = "image/jpeg";// 流  application/octet-stream
+        }
         int res = 0;
         String result = null;
         String BOUNDARY = UUID.randomUUID().toString(); // 边界标识 随机生成
@@ -275,6 +280,12 @@ public class Lib_Util_HttpURLRequest {
         conn.setDoOutput(true); // 允许输出流
         conn.setUseCaches(false); // 不允许使用缓存
         conn.setRequestMethod("POST"); // 请求方式
+        if (requestPropertys != null) {
+            for (String key : requestPropertys.keySet()) {
+                Object value = requestPropertys.get(key);
+                conn.setRequestProperty(key, value == null ? "" : String.valueOf(value));
+            }
+        }
         conn.setRequestProperty("Charset", Charset); // 设置编码
         conn.setRequestProperty("connection", "keep-alive");
         conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
