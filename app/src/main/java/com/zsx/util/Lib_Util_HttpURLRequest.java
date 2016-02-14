@@ -274,8 +274,8 @@ public class Lib_Util_HttpURLRequest {
         String Charset = "UTF-8";
         URL url = new URL(requestURL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(READ_TIMEOUT_INT);
-        conn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
+        conn.setReadTimeout(6 * READ_TIMEOUT_INT);
+        conn.setConnectTimeout(6 * CONNECTION_TIMEOUT_INT);
         conn.setDoInput(true); // 允许输入流
         conn.setDoOutput(true); // 允许输出流
         conn.setUseCaches(false); // 不允许使用缓存
@@ -388,7 +388,7 @@ public class Lib_Util_HttpURLRequest {
             int progress = -1;
             conn = (HttpURLConnection) new URL(url).openConnection();
             // 设置超时
-            conn.setConnectTimeout(CONNECTION_TIMEOUT_INT);
+            conn.setConnectTimeout(6 * CONNECTION_TIMEOUT_INT);
             // 读取超时 一般不设置
             // conn.setReadTimeout(30000);
             conn.setRequestMethod("GET");
