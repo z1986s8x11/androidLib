@@ -14,6 +14,7 @@ import java.util.List;
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
 import zsx.com.test.base._BaseAdapter;
+import zsx.com.test.ui.adapter.HorizontalActivity;
 import zsx.com.test.ui.adapter.InsertAdapterActivity;
 import zsx.com.test.ui.anim.AnimActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
@@ -67,6 +68,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("badgeView", BadgeViewActivity.class));
         list.add(new Item("anim", AnimActivity.class));
         list.add(new Item("logcat", LogcatActivity.class));
+        list.add(new Item("HorizontalListView",HorizontalActivity.class));
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
             public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {

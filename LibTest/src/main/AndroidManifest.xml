@@ -42,6 +42,7 @@
         <activity android:name=".ui.refresh.RefreshLinearLayoutActivity" />
         <activity android:name=".ui.widget.ShapeTextViewActivity" />
         <activity android:name=".ui.widget.DragViewHelperActivity" />
+        <activity android:name=".ui.adapter.HorizontalActivity" />
 
         <service android:name="com.zsx.download.Lib_DownloadService" />
     </application>
