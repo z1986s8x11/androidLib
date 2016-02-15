@@ -1,8 +1,9 @@
-package zsx.com.test.ui.adapter;
+package com.zsx.widget;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -24,6 +25,8 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Scroller;
 
+import com.zsx.R;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +37,7 @@ import java.util.Queue;
  * Email        327270607@qq.com
  * Created      2016/2/14.16:25
  */
-public class HorizontalListView extends AdapterView<ListAdapter> {
+public class Lib_Widget_HorizontalListView extends AdapterView<ListAdapter> {
     /** Defines where to insert items into the ViewGroup, as defined in {@code ViewGroup #addViewInLayout(View, int, LayoutParams, boolean)} */
     private static final int INSERT_AT_END_OF_LIST = -1;
     private static final int INSERT_AT_START_OF_LIST = 0;
@@ -154,7 +157,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
      */
     private OnClickListener mOnClickListener;
 
-    public HorizontalListView(Context context, AttributeSet attrs) {
+    public Lib_Widget_HorizontalListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mEdgeGlowLeft = new EdgeEffectCompat(context);
         mEdgeGlowRight = new EdgeEffectCompat(context);
@@ -173,7 +176,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
     /** Registers the gesture detector to receive gesture notifications for this view */
     private void bindGestureDetector() {
         // Generic touch listener that can be applied to any view that needs to process gestures
-        final View.OnTouchListener gestureListenerHandler = new View.OnTouchListener() {
+        final OnTouchListener gestureListenerHandler = new OnTouchListener() {
             @Override
             public boolean onTouch(final View v, final MotionEvent event) {
                 // Delegate the touch event to our gesture detector
@@ -216,24 +219,23 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
      * @param attrs The Attribute Set containing the ColumnView attributes
      */
     private void retrieveXmlConfiguration(Context context, AttributeSet attrs) {
-//        if (attrs != null) {
-//            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HorizontalListView);
-//
-//            // Get the provided drawable from the XML
-//            final Drawable d = a.getDrawable(R.styleable.HorizontalListView_android_divider);
-//            if (d != null) {
-//                // If a drawable is provided to use as the divider then use its intrinsic width for the divider width
-//                setDivider(d);
-//            }
-//
-//            // If a width is explicitly specified then use that width
-//            final int dividerWidth = a.getDimensionPixelSize(R.styleable.HorizontalListView_dividerWidth, 0);
-//            if (dividerWidth != 0) {
-//                setDividerWidth(dividerWidth);
-//            }
-//
-//            a.recycle();
-//        }
+        if (attrs != null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Lib_HorizontalListView);
+
+            // Get the provided drawable from the XML
+            final Drawable d = a.getDrawable(R.styleable.Lib_HorizontalListView_divider);
+            if (d != null) {
+                // If a drawable is provided to use as the divider then use its intrinsic width for the divider width
+                setDivider(d);
+            }
+
+            // If a width is explicitly specified then use that width
+            final int dividerWidth = a.getDimensionPixelSize(R.styleable.Lib_HorizontalListView_dividerWidth, 0);
+            if (dividerWidth != 0) {
+                setDividerWidth(dividerWidth);
+            }
+            a.recycle();
+        }
     }
 
     @Override
@@ -434,7 +436,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
      * @param child The child.
      */
     private void measureChild(View child) {
-        ViewGroup.LayoutParams childLayoutParams = getLayoutParams(child);
+        LayoutParams childLayoutParams = getLayoutParams(child);
         int childHeightSpec = ViewGroup.getChildMeasureSpec(mHeightMeasureSpec, getPaddingTop() + getPaddingBottom(), childLayoutParams.height);
 
         int childWidthSpec;
@@ -448,11 +450,11 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
     }
 
     /** Gets a child's layout parameters, defaults if not available. */
-    private ViewGroup.LayoutParams getLayoutParams(View child) {
-        ViewGroup.LayoutParams layoutParams = child.getLayoutParams();
+    private LayoutParams getLayoutParams(View child) {
+        LayoutParams layoutParams = child.getLayoutParams();
         if (layoutParams == null) {
             // Since this is a horizontal list view default to matching the parents height, and wrapping the width
-            layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         }
 
         return layoutParams;
@@ -986,12 +988,12 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDown(MotionEvent e) {
-            return HorizontalListView.this.onDown(e);
+            return Lib_Widget_HorizontalListView.this.onDown(e);
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            return HorizontalListView.this.onFling(e1, e2, velocityX, velocityY);
+            return Lib_Widget_HorizontalListView.this.onFling(e1, e2, velocityX, velocityY);
         }
 
         @Override
@@ -1021,13 +1023,13 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
                 int adapterIndex = mLeftViewAdapterIndex + index;
 
                 if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(HorizontalListView.this, child, adapterIndex, mAdapter.getItemId(adapterIndex));
+                    onItemClickListener.onItemClick(Lib_Widget_HorizontalListView.this, child, adapterIndex, mAdapter.getItemId(adapterIndex));
                     return true;
                 }
             }
 
             if (mOnClickListener != null && !mBlockTouchAction) {
-                mOnClickListener.onClick(HorizontalListView.this);
+                mOnClickListener.onClick(Lib_Widget_HorizontalListView.this);
             }
 
             return false;
@@ -1043,7 +1045,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
                 OnItemLongClickListener onItemLongClickListener = getOnItemLongClickListener();
                 if (onItemLongClickListener != null) {
                     int adapterIndex = mLeftViewAdapterIndex + index;
-                    boolean handled = onItemLongClickListener.onItemLongClick(HorizontalListView.this, child, adapterIndex, mAdapter
+                    boolean handled = onItemLongClickListener.onItemLongClick(Lib_Widget_HorizontalListView.this, child, adapterIndex, mAdapter
                             .getItemId(adapterIndex));
 
                     if (handled) {

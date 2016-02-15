@@ -132,4 +132,8 @@
     <declare-styleable name="Lib_AbsListView">
         <attr name="isExpand" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="Lib_HorizontalListView">
+        <attr name="divider" format="color|reference" />
+        <attr name="dividerWidth" format="dimension" />
+    </declare-styleable>
 </resources>
