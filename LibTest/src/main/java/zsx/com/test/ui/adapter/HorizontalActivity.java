@@ -25,13 +25,14 @@ import zsx.com.test.base._BaseAdapter;
  */
 public class HorizontalActivity extends _BaseActivity {
     Lib_Widget_HorizontalListView listView;
+    _BaseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horizontal);
         listView = (Lib_Widget_HorizontalListView) findViewById(R.id.listView);
-        listView.setAdapter(new _BaseAdapter<String>(this, _Arrays.asList("1", "2", "3", "4", "5", "1", "2", "3", "4", "5", "1", "2", "3", "4", "5", "1", "2", "3", "4", "5")) {
+        listView.setAdapter(adapter = new _BaseAdapter<String>(this, _Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20")) {
             @Override
             public View getView(LayoutInflater inflater, String bean, final int position, View convertView, ViewGroup parent) {
                 TextView t;
@@ -50,7 +51,6 @@ public class HorizontalActivity extends _BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                _showToast("111"+position);
             }
         });
     }
