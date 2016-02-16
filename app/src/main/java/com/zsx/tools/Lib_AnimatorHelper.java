@@ -13,11 +13,11 @@ import com.zsx.util.Lib_Util_Widget;
 /**
  * Created by Administrator on 2015/12/11.
  */
-public class Lib_FullViewAnimator {
+public class Lib_AnimatorHelper {
     private FrameLayout rootView;
     private View animView;
 
-    public Lib_FullViewAnimator(Activity activity, View v) {
+    public Lib_AnimatorHelper(Activity activity, View v) {
         ViewGroup decor = (ViewGroup) activity.getWindow().getDecorView();
         ViewGroup decorChild = (ViewGroup) decor.getChildAt(0);
         decor.removeView(decorChild);

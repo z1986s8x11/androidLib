@@ -8,7 +8,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.zsx.tools.Lib_FullViewAnimator;
+import com.zsx.tools.Lib_AnimatorHelper;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -19,7 +19,7 @@ import zsx.com.test.base._BaseActivity;
 public class AnimActivity extends _BaseActivity implements View.OnClickListener {
     Button startBtn;
     Button endBtn;
-    Lib_FullViewAnimator animatorUtil;
+    Lib_AnimatorHelper animatorUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class AnimActivity extends _BaseActivity implements View.OnClickListener 
         t.setGravity(Gravity.CENTER);
         t.setText("+1");
         t.setVisibility(View.GONE);
-        animatorUtil = new Lib_FullViewAnimator(this, t);
+        animatorUtil = new Lib_AnimatorHelper(this, t);
     }
 
     @Override

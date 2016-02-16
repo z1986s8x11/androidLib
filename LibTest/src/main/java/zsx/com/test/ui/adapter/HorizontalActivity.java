@@ -51,6 +51,7 @@ public class HorizontalActivity extends _BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter._removeItemToUpdate(position);
             }
         });
     }
