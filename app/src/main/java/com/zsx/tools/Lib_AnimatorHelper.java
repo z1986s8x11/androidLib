@@ -15,7 +15,7 @@ import com.zsx.util.Lib_Util_Widget;
  * Created by Administrator on 2015/12/11.
  */
 public class Lib_AnimatorHelper {
-    private FrameLayout rootView;
+    protected FrameLayout rootView;
 
     public Lib_AnimatorHelper(Activity activity) {
         ViewGroup decor = (ViewGroup) activity.getWindow().getDecorView();
