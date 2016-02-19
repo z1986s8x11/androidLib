@@ -420,7 +420,7 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
-                if (headStatus != HeadStatus.REFRESHING && isRecored
+                if (headView != null && headStatus != HeadStatus.REFRESHING && isRecored
                         && footStatus != FootStatus.LOADING) {
                     changeHeaderViewByState(HeadStatus.DONE);
                 }
@@ -449,9 +449,6 @@ public class Lib_Widget_ListView extends ListView implements OnScrollListener {
 
     private void changeHeaderViewByState(HeadStatus state) {
         this.headStatus = state;
-        if (headView == null) {
-            return;
-        }
         switch (state) {
             case RELEASE_To_REFRESH:
                 headView.onDownReleaseToRefresh();
