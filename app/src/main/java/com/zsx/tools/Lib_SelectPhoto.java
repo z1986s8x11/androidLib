@@ -176,7 +176,6 @@ public class Lib_SelectPhoto {
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
-                // TODO handle non-primary volumes
             }
             // Whether the Uri authority is DownloadsProvider.
             else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
