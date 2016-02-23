@@ -22,7 +22,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
- *
  * Created by zhusx on 2015/12/18.
  */
 public class Lib_Widget_GridViewWithHeaderAndFooter extends GridView {
@@ -454,6 +453,17 @@ public class Lib_Widget_GridViewWithHeaderAndFooter extends GridView {
         if (adapter != null && adapter instanceof HeaderViewGridAdapter) {
             ((HeaderViewGridAdapter) adapter).setNumColumns(numColumns);
         }
+    }
+
+    @Override
+    public void setSelection(int position) {
+        ListAdapter adapter = getAdapter();
+        if (adapter != null && adapter instanceof HeaderViewGridAdapter) {
+            if (((HeaderViewGridAdapter) adapter).getWrappedAdapter().getCount() == 0) {
+                return;
+            }
+        }
+        super.setSelection(position);
     }
 
     /**

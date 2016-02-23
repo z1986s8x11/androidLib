@@ -1,11 +1,13 @@
 package com.zsx.tools;
 
 import android.app.Activity;
+import android.graphics.drawable.Animatable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.zsx.network.Lib_HttpRequest;
 import com.zsx.network.Lib_HttpResult;
@@ -21,6 +23,7 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
     private View errorView;
     private boolean isSuccess = false;
     private View resLayout;
+    private Animatable anim;
 
     public Lib_LoadingHelper(View resLayout) {
         this.resLayout = resLayout;
@@ -28,7 +31,7 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
         if (parent == null) {
             throw new IllegalStateException("resLayout 不能为null");
         }
-        if (parent.getParent() instanceof ViewGroup) {
+        if (parent instanceof ViewGroup) {
             ViewGroup.LayoutParams lp = resLayout.getLayoutParams();
             LinearLayout parentLayout = new LinearLayout(resLayout.getContext());
             parentLayout.setOrientation(LinearLayout.VERTICAL);
@@ -86,16 +89,38 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
         errorView = child;
     }
 
+    protected void _setLoadingAnim(Animatable animatable) {
+        if (anim != null && anim.isRunning()) {
+            anim.stop();
+        }
+        anim = animatable;
+    }
+
+    protected void __startLoadingAnim(Id id, Lib_HttpRequest<Parameter> request) {
+        if (anim != null) {
+            anim.start();
+        }
+    }
+
+    protected void __stopLoadingAnim() {
+        if (anim != null) {
+            if (anim.isRunning()) {
+                anim.stop();
+            }
+        }
+    }
+
     public void __onError(View errorView, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
     }
 
     public abstract void __onComplete(Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data);
 
     @Override
-    public final void onLoadStart(Id id, Lib_HttpRequest<Parameter> request) {
+    public void onLoadStart(Id id, Lib_HttpRequest<Parameter> request) {
         if (request.isRefresh || !isSuccess) {
             if (loadingView != null) {
                 loadingView.setVisibility(View.VISIBLE);
+                __startLoadingAnim(id, request);
             }
             if (resLayout.getVisibility() == View.VISIBLE) {
                 resLayout.setVisibility(View.GONE);
@@ -107,10 +132,11 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
     }
 
     @Override
-    public final void onLoadError(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
+    public void onLoadError(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data, boolean isAPIError, String error_message) {
         if (request.isRefresh || !isSuccess) {
             if (loadingView != null) {
                 loadingView.setVisibility(View.GONE);
+                __stopLoadingAnim();
             }
             if (errorView != null) {
                 errorView.setVisibility(View.VISIBLE);
@@ -120,14 +146,42 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
     }
 
     @Override
-    public final void onLoadComplete(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data) {
+    public void onLoadComplete(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<Result> data) {
         if (request.isRefresh || !isSuccess) {
             if (loadingView != null) {
                 loadingView.setVisibility(View.GONE);
+                __stopLoadingAnim();
             }
             resLayout.setVisibility(View.VISIBLE);
         }
         isSuccess = true;
         __onComplete(request, data);
+    }
+
+    protected void _setEmptyView(ListView targetListView, View emptyView) {
+        if (targetListView == null) {
+            return;
+        }
+        if (targetListView.getEmptyView() == null) {
+            ViewParent parent = emptyView.getParent();
+            ViewParent targetParent = targetListView.getParent();
+            if (targetParent == parent) {
+                targetListView.setEmptyView(emptyView);
+                return;
+            }
+            if (parent != null) {
+                if (parent instanceof ViewGroup) {
+                    ((ViewGroup) parent).removeView(emptyView);
+                } else {
+                    return;
+                }
+            }
+            if (targetParent != null) {
+                if (targetParent instanceof ViewGroup) {
+                    ((ViewGroup) targetParent).addView(emptyView, targetListView.getLayoutParams());
+                    targetListView.setEmptyView(emptyView);
+                }
+            }
+        }
     }
 }
