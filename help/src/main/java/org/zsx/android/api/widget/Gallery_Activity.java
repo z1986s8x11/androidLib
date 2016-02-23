@@ -50,7 +50,6 @@ public class Gallery_Activity extends _BaseActivity implements Gallery.OnItemSel
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return images.length;
 		}
 

@@ -76,7 +76,6 @@ import com.zsx.widget.XListViewHeader;
 //                        && headStatus != HeadStatus.REFRESHING) {
 //                    if (headStatus == null || headStatus == HeadStatus.DONE) {
 ////					if (event.getY() - startY < 40) {
-//                        //TODO
 ////					}
 //                    }
 //                    if (headStatus == HeadStatus.DONE) {

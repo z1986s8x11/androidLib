@@ -8,6 +8,5 @@ public class LayerDrawable_Activity extends _BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// TODO
 	}
 }

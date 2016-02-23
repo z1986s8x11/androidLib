@@ -96,10 +96,8 @@ public class TextActivity extends _BaseActivity {
 //        try {
 //            csl= ColorStateList.createFromXml(getResources(),xppcolor);
 //        }catch(XmlPullParserException e){
-//            // TODO: handle exception
 //            e.printStackTrace();
 //        }catch(IOException e){
-//            // TODO: handle exception
 //            e.printStackTrace();
 //        }
 //
@@ -107,10 +105,8 @@ public class TextActivity extends _BaseActivity {
 //        try {
 //            csllink= ColorStateList.createFromXml(getResources(),xpplinkcolor);
 //        }catch(XmlPullParserException e){
-//            // TODO: handle exception
 //            e.printStackTrace();
 //        }catch(IOException e){
-//            // TODO: handle exception
 //            e.printStackTrace();
 //        }
 //        msp.setSpan(new TextAppearanceSpan("monospace", android.graphics.Typeface.BOLD_ITALIC, 30, csl, csllink), 51, 53, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

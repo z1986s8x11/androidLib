@@ -317,7 +317,6 @@ public class Lib_Widget_DirectionalViewPager extends ViewPager {
         }
 
         if (newCurrItem >= 0) {
-            // TODO This currently causes a jump.
             setCurrentItemInternal(newCurrItem, false, true);
             needPopulate = true;
         }
