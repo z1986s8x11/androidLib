@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.zsx.debug.LogUtil;
-import com.zsx.util.Lib_Util_Network;
+import com.zsx.util._NetworkUtil;
 import com.zsx.util.Lib_Util_System;
 
 /**
@@ -32,7 +32,7 @@ import com.zsx.util.Lib_Util_System;
  * @date 2013-5-5 下午 22:47
  */
 public class Lib_NetworkStateReceiver extends BroadcastReceiver {
-    public static Lib_Util_Network.NetType _Current_NetWork_Status = Lib_Util_Network.NetType.Default;
+    public static _NetworkUtil.NetType _Current_NetWork_Status = _NetworkUtil.NetType.Default;
     private final static String ANDROID_NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     @Override
@@ -41,13 +41,13 @@ public class Lib_NetworkStateReceiver extends BroadcastReceiver {
             if (LogUtil.DEBUG) {
                 LogUtil.d(Lib_NetworkStateReceiver.this, "网络状态改变.");
             }
-            if (!Lib_Util_Network.isNetworkConnected(context)) {
+            if (!_NetworkUtil.isNetworkConnected(context)) {
                 if (LogUtil.DEBUG) {
                     LogUtil.d(Lib_NetworkStateReceiver.this, "没有网络连接.");
                 }
-                _Current_NetWork_Status = Lib_Util_Network.NetType.NoneNet;
+                _Current_NetWork_Status = _NetworkUtil.NetType.NoneNet;
             } else {
-                _Current_NetWork_Status = Lib_Util_Network.getAPNType(context);
+                _Current_NetWork_Status = _NetworkUtil.getAPNType(context);
                 if (LogUtil.DEBUG) {
                     LogUtil.d(Lib_NetworkStateReceiver.this, "网络连接成功." + _Current_NetWork_Status.name());
                 }

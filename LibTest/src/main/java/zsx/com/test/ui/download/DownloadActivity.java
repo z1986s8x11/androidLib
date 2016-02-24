@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.zsx.download.Lib_DownloadHelper;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.network.Lib_NetworkStateReceiver;
-import com.zsx.util.Lib_Util_Network;
+import com.zsx.util._NetworkUtil;
 
 import java.io.File;
 
@@ -49,7 +49,7 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (Lib_NetworkStateReceiver._Current_NetWork_Status != Lib_Util_Network.NetType.Wifi) {
+        if (Lib_NetworkStateReceiver._Current_NetWork_Status != _NetworkUtil.NetType.Wifi) {
             _showToast("请在wifi状态下测试...");
             return;
         }

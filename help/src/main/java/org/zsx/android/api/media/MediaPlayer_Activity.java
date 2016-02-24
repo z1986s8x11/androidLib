@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.zsx.network.Lib_NetworkStateReceiver;
-import com.zsx.util.Lib_Util_Network;
+import com.zsx.util._NetworkUtil;
 
 import org.zsx.android.api.R;
 import org.zsx.android.api._BaseActivity;
@@ -36,7 +36,7 @@ public class MediaPlayer_Activity extends _BaseActivity implements OnClickListen
                     // mMediaPlayer = MediaPlayer.create(this, R.raw.xxx);
                 }
                 try {
-                    if (Lib_NetworkStateReceiver._Current_NetWork_Status == Lib_Util_Network.NetType.Wifi) {
+                    if (Lib_NetworkStateReceiver._Current_NetWork_Status == _NetworkUtil.NetType.Wifi) {
                         /** 支持File Path 和 Http URL */
                         mMediaPlayer
                                 .setDataSource("http://58.17.218.66:81/1Q2W3E4R5T6Y7U8I9O0P1Z2X3C4V5B/zhangmenshiting.baidu.com/data2/music/62455549/339768001391958061128.mp3?xcode=902203a4833f06603579c85123d135be32fc4f3d81fce8d4");

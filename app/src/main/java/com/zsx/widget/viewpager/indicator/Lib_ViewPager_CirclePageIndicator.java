@@ -34,7 +34,7 @@ import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
 
 import com.zsx.R;
-import com.zsx.util.Lib_Util_Density;
+import com.zsx.util._DensityUtil;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.widget.LinearLayout.HORIZONTAL;
@@ -90,8 +90,8 @@ public class Lib_ViewPager_CirclePageIndicator extends View implements PageIndic
         int defaultFillColor = res.getColor(R.color.lib_white);
         int defaultOrientation = LinearLayout.HORIZONTAL;
         int defaultStrokeColor = Color.parseColor("#FFDDDDDD");
-        float defaultStrokeWidth = Lib_Util_Density.dip2px(context, 2);
-        float defaultRadius = Lib_Util_Density.dip2px(context, 3);
+        float defaultStrokeWidth = _DensityUtil.dip2px(context, 2);
+        float defaultRadius = _DensityUtil.dip2px(context, 3);
         boolean defaultCentered = true;
         boolean defaultSnap = false;
 

@@ -87,7 +87,7 @@ public class Lib_Util_Widget {
     /**
      * 拿到屏幕的高度
      */
-    public int _getHeight(Context context) {
+    public static int getHeight(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return displayMetrics.heightPixels;
     }

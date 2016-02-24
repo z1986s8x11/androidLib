@@ -116,7 +116,7 @@ public class Lib_Util_Intent {
         context.startActivity(intent);
     }
 
-    public void a() {
+    private void a() {
         Intent intent = new Intent();
         /** 有就不创建 */
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

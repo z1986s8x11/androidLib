@@ -34,7 +34,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import com.zsx.util.Lib_Util_Density;
+import com.zsx.util._DensityUtil;
 
 import java.util.ArrayList;
 
@@ -169,23 +169,23 @@ public class Lib_ViewPager_TitlePageIndicator extends View implements PageIndica
 
 		// Load defaults from resources
 		final int defaultFooterColor = Color.parseColor("#FF33B5E5");
-		final float defaultFooterLineHeight = Lib_Util_Density.dip2px(context,
+		final float defaultFooterLineHeight = _DensityUtil.dip2px(context,
 				2);
 		/** IndicatorStyle.Underline */
 		final int defaultFooterIndicatorStyle = 2;
-		final float defaultFooterIndicatorHeight = Lib_Util_Density.dip2px(
+		final float defaultFooterIndicatorHeight = _DensityUtil.dip2px(
 				context, 4);
-		final float defaultFooterIndicatorUnderlinePadding = Lib_Util_Density
+		final float defaultFooterIndicatorUnderlinePadding = _DensityUtil
 				.dip2px(context, 20);
-		final float defaultFooterPadding = Lib_Util_Density.dip2px(context, 7);
+		final float defaultFooterPadding = _DensityUtil.dip2px(context, 7);
 		final int defaultLinePosition = 0;
 		final int defaultSelectedColor = Color.parseColor("#FFFFFFFF");
 		final boolean defaultSelectedBold = true;
 		final int defaultTextColor = Color.parseColor("#BBFFFFFF");
-		final float defaultTextSize = Lib_Util_Density.dip2px(context, 15);
-		final float defaultTitlePadding = Lib_Util_Density.dip2px(context, 5);
-		final float defaultClipPadding = Lib_Util_Density.dip2px(context, 4);
-		final float defaultTopPadding = Lib_Util_Density.dip2px(context, 7);
+		final float defaultTextSize = _DensityUtil.dip2px(context, 15);
+		final float defaultTitlePadding = _DensityUtil.dip2px(context, 5);
+		final float defaultClipPadding = _DensityUtil.dip2px(context, 4);
+		final float defaultTopPadding = _DensityUtil.dip2px(context, 7);
 
 		// Retrieve the colors to be used for this view and apply them.
 		mFooterLineHeight = defaultFooterLineHeight;

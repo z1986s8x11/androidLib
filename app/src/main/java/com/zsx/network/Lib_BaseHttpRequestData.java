@@ -6,7 +6,7 @@ import android.os.Looper;
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
 import com.zsx.util.Lib_Util_HttpURLRequest;
-import com.zsx.util.Lib_Util_Network;
+import com.zsx.util._NetworkUtil;
 
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.ParseException;
@@ -120,7 +120,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         }
         pLastRequestData.lastObjectsParams = objects;
         pLastRequestData.isRefresh = isRefresh;
-        if (Lib_NetworkStateReceiver._Current_NetWork_Status == Lib_Util_Network.NetType.NoneNet) {
+        if (Lib_NetworkStateReceiver._Current_NetWork_Status == _NetworkUtil.NetType.NoneNet) {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "网络连接异常" + pId);
             }

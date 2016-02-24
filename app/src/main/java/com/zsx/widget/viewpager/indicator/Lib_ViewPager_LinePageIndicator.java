@@ -30,7 +30,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import com.zsx.util.Lib_Util_Density;
+import com.zsx.util._DensityUtil;
 
 /**
  * Draws a line for each page. The current page line is colored differently than
@@ -75,9 +75,9 @@ public class Lib_ViewPager_LinePageIndicator extends View implements PageIndicat
 		// Load defaults from resources
 		final int defaultSelectedColor = Color.parseColor("#FF33B5E5");
 		final int defaultUnselectedColor = Color.parseColor("#FFBBBBBB");
-		final float defaultLineWidth = Lib_Util_Density.dip2px(context, 12);
-		final float defaultGapWidth = Lib_Util_Density.dip2px(context, 4);
-		final float defaultStrokeWidth = Lib_Util_Density.dip2px(context, 1);
+		final float defaultLineWidth = _DensityUtil.dip2px(context, 12);
+		final float defaultGapWidth = _DensityUtil.dip2px(context, 4);
+		final float defaultStrokeWidth = _DensityUtil.dip2px(context, 1);
 		final boolean defaultCentered = true;
 
 		mCentered = defaultCentered;

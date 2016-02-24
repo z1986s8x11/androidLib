@@ -27,7 +27,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.zsx.util.Lib_Util_Density;
+import com.zsx.util._DensityUtil;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -146,8 +146,8 @@ public class IconPageIndicator extends HorizontalScrollView implements
 						LinearLayout.LayoutParams.WRAP_CONTENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT);
 			}
-			lp.leftMargin = Lib_Util_Density.dip2px(getContext(), 6);
-			lp.rightMargin = Lib_Util_Density.dip2px(getContext(), 6);
+			lp.leftMargin = _DensityUtil.dip2px(getContext(), 6);
+			lp.rightMargin = _DensityUtil.dip2px(getContext(), 6);
 			view.setImageResource(iconAdapter.getIconResId(i));
 			mIconsLayout.addView(view);
 		}
