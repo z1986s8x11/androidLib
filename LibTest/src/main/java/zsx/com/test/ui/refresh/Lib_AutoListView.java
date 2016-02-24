@@ -83,7 +83,6 @@ public abstract class Lib_AutoListView extends ListView {
                         && headStatus != HeadStatus.REFRESHING) {
                     if (headStatus == null || headStatus == HeadStatus.DONE) {
 //					if (event.getY() - startY < 40) {
-                        //TODO
 //					}
                     }
                     if (headStatus == HeadStatus.DONE) {

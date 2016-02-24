@@ -25,7 +25,6 @@ public class ViewGroup_Activity extends _BaseActivity {
 		 */
 		@Override
 		public void setPersistentDrawingCache(int drawingCacheToKeep) {
-			// TODO Auto-generated method stub
 			super.setPersistentDrawingCache(drawingCacheToKeep);
 		}
 	}

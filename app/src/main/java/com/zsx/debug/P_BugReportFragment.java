@@ -62,7 +62,6 @@ public final class P_BugReportFragment extends Lib_BaseFragment implements View.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ID) {
             if (resultCode == Activity.RESULT_OK) {
-                //TODO 启动 主页?
                 getActivity().finish();
             }
         }
