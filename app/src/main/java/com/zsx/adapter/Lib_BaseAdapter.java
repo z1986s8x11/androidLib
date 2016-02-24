@@ -199,19 +199,32 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         return views;
     }
 
-    @SuppressWarnings("unchecked")
-    private static <X extends View> X _getViewHolder(View view, int id) {
-        SparseArray<View> viewHolder = (SparseArray<View>) view.getTag();
-        if (viewHolder == null) {
-            viewHolder = new SparseArray<View>();
-            view.setTag(viewHolder);
+    public static class ViewHolder {
+        public SparseArray viewHolder = new SparseArray();
+        public View rootView;
+
+        public void setText(int id, String text) {
+            ((TextView) getView(id)).setText(text);
         }
-        View childView = viewHolder.get(id);
-        if (childView == null) {
-            childView = view.findViewById(id);
-            viewHolder.put(id, childView);
+
+        public <T extends View> T getView(int id) {
+            View childView = (View) viewHolder.get(id);
+            if (childView == null) {
+                childView = rootView.findViewById(id);
+                viewHolder.put(id, childView);
+            }
+            return (T) childView;
         }
-        return (X) childView;
+    }
+
+    public ViewHolder _getViewHolder(int layoutId, View view, ViewGroup parent) {
+        ViewHolder viewTag = (ViewHolder) view.getTag();
+        if (viewTag == null) {
+            viewTag = new ViewHolder();
+            viewTag.rootView = LayoutInflater.from(view.getContext()).inflate(layoutId, parent, false);
+            view.setTag(viewTag);
+        }
+        return viewTag;
     }
 
 
