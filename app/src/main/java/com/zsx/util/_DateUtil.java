@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Lib_Util_Date {
+public class _DateUtil {
 	/**
 	 * 字符串转化成日期 </br> y 年 M 月 d 日 H 小时 m 分钟
 	 *

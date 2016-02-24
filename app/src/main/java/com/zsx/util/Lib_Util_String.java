@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -111,40 +110,6 @@ public class Lib_Util_String {
             return fmt.format(f1) + " G";
         }
         return fmt.format(f1) + " G";
-    }
-
-    /**
-     * 转化为2位小数
-     */
-    public static String to2Decimals(double doubleValue) {
-        return new java.text.DecimalFormat("0.00").format(doubleValue);
-    }
-
-    /**
-     * 转化为2位小数
-     */
-    public static String to2Decimals(float doubleValue) {
-        return new java.text.DecimalFormat("0.00").format(doubleValue);
-    }
-
-    /**
-     * 转化为最多2位小数
-     */
-    public static String to2DecimalsForMaximum(String doubleValue) {
-        if (TextUtils.isEmpty(doubleValue)) {
-            return null;
-        }
-        BigDecimal bd = new BigDecimal(doubleValue);
-        bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
-        return to2DecimalsForMaximum(bd.doubleValue());
-    }
-
-    /**
-     * 转化为最多2位小数
-     */
-    public static String to2DecimalsForMaximum(double doubleValue) {
-        DecimalFormat df = new DecimalFormat("#.##");
-        return df.format(doubleValue);
     }
 
     /**
@@ -306,106 +271,4 @@ public class Lib_Util_String {
     public static String encodeUrl(String url) {
         return Lib_Util_HttpURLRequest.encodeUrl(url, null);
     }
-
-    /**
-     * 图片自适应
-     */
-    public static final String imgMeta = "img { height: auto; width: auto; width:100%;";
-    /**
-     * 文本自动换行
-     */
-    public static final String autoLine = "html{word-break: break-all; word-wrap:break-word; width:100%; height:auto;overflow:hidden;}";
-
-    /**
-     * 简单实现 为文本加Html
-     */
-    public static String addHtmlHead(String sourceData, String css,
-                                     String javaScript, String meta) {
-        StringBuffer sb = new StringBuffer();
-        StringBuffer headData = new StringBuffer();
-        if (meta != null) {
-            headData.append(meta);
-        }
-        if (css != null) {
-            headData.append("<style>");
-            headData.append(css);
-            headData.append("</style>");
-        }
-        if (javaScript != null) {
-            headData.append("<script>");
-            headData.append(javaScript);
-            headData.append("</script>");
-        }
-        int headIndex = sourceData.indexOf("<head");
-        if (headIndex == -1) {
-            int htmlIndex = sourceData.indexOf("<html");
-            if (htmlIndex == -1) {
-                sb.append("<html>");
-                sb.append("<head>");
-                sb.append(headData);
-                sb.append("</head>");
-                int bodyIndex = sourceData.indexOf("<body");
-                if (bodyIndex == -1) {
-                    sb.append("<body>");
-                    sb.append(sourceData);
-                    sb.append("</body>");
-                } else {
-                    sb.append(sourceData);
-                }
-                sb.append("</html>");
-            } else {
-                sb.append(sourceData);
-                int htmlFix = sourceData.indexOf(">", htmlIndex) + 1;
-                sb.insert(htmlFix, headData);
-            }
-        } else {
-            sb.append(sourceData);
-            int headFix = sourceData.indexOf(">", headIndex) + 1;
-            sb.insert(headFix, headData);
-        }
-        return sb.toString();
-    }
-
-    /**
-     * 替换Html所有标签
-     *
-     * @param html
-     * @param html
-     * @param replaceStr
-     * @return
-     */
-    public static String replaceHtmlTag(String html, String replaceStr) {
-        Pattern p = Pattern.compile("<(!|/)?(.|\n)*?>");
-        // 获取 matcher 对象
-        Matcher m = p.matcher(html);
-        StringBuffer sb = new StringBuffer();
-        while (m.find()) {
-            m.appendReplacement(sb, "");
-        }
-        m.appendTail(sb);
-        return sb.toString();
-    }
-
-    /**
-     * 替换Html 标签中的数据
-     *
-     * @param html
-     * @param sourceStr
-     * @param replaceStr
-     * @return
-     */
-    public static String replaceHtmlTagValue(String html, String sourceStr,
-                                             String replaceStr) {
-        /** 匹配>数据< */
-        Pattern p = Pattern.compile(">(!|/)?(.|\n)*?<");
-        Matcher m = p.matcher(html);
-        StringBuffer sb = new StringBuffer();
-        while (m.find()) {
-            m.appendReplacement(sb, m.group().replace(sourceStr, replaceStr));
-        }
-        m.appendTail(sb);
-        return sb.toString();
-    }
-
-
 }

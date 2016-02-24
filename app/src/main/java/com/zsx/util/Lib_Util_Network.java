@@ -110,6 +110,5 @@ public class Lib_Util_Network {
             return NetType.Wifi;
         }
         return NetType.NoneNet;
-
     }
 }

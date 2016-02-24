@@ -44,6 +44,11 @@ public class _EditTextUtil {
         Selection.setSelection(text, text.length());
     }
 
+    public static void setText(EditText ed, String message) {
+        ed.setText(message);
+        setSelection(ed);
+    }
+
     /**
      * 隐藏键盘
      *
@@ -71,6 +76,13 @@ public class _EditTextUtil {
      * 键盘自动弹出
      */
     public static void showInputMethod(final EditText mEditText) {
+        showInputMethod(mEditText, 500);
+    }
+
+    /**
+     * 键盘自动弹出
+     */
+    public static void showInputMethod(final EditText mEditText, long time) {
         mEditText.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -80,6 +92,6 @@ public class _EditTextUtil {
                 inputManager.showSoftInput(mEditText, 0);
                 setSelection(mEditText);
             }
-        }, 500);
+        }, time);
     }
 }

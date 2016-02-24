@@ -8,6 +8,7 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 
 import com.zsx.util.Lib_Util_System;
+import com.zsx.util._EditTextUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -75,7 +76,7 @@ public class Lib_SoftKeyboardStateHelper implements
     }
 
     public void _showInputMethod(EditText et) {
-        Lib_Util_System.showInputMethod(et);
+        _EditTextUtil.showInputMethod(et);
     }
 
     private void notifyOnSoftKeyboardOpened(int keyboardHeightInPx) {

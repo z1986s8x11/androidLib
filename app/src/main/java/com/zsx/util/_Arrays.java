@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Author       zhusx
  * Email        327270607@qq.com
- * Created      2016/2/1.17:19
+ * Created      2016/2/1 17:19
  */
 public final class _Arrays {
     private _Arrays() {
@@ -18,5 +18,12 @@ public final class _Arrays {
             list.add(t[i]);
         }
         return list;
+    }
+
+    public static boolean isEmpty(List<?> list) {
+        if (list == null || list.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }
