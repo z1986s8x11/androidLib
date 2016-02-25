@@ -146,7 +146,7 @@ public class Lib_Util_HttpURLRequest {
                 case Lib_HttpParams.DELETE:
                     urlConn.setRequestMethod("DELETE");
                     if (LogUtil.DEBUG) {
-                        if (TextUtils.isEmpty(param)) {
+                        if (!TextUtils.isEmpty(param)) {
                             LogUtil.e(Lib_Util_HttpURLRequest.class, "DELETE 不支持提交参数");
                         }
                     }
