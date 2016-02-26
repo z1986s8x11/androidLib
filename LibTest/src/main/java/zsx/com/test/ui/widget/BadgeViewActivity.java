@@ -1,13 +1,12 @@
 package zsx.com.test.ui.widget;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.PropertyValuesHolder;
+import com.nineoldandroids.view.ViewHelper;
 import com.zsx.widget.Lib_Widget_BadgeView;
 
 import zsx.com.test.R;
@@ -20,7 +19,6 @@ public class BadgeViewActivity extends _BaseActivity {
     Lib_Widget_BadgeView badge1;
     Lib_Widget_BadgeView badge2;
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +55,8 @@ public class BadgeViewActivity extends _BaseActivity {
                     badge2.setText("3");
                 }
                 badge2._toggle();
-                PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("TranslationX", 0F, endView.getX() - startView.getX());
+                PropertyValuesHolder pvhX = null;
+                pvhX = PropertyValuesHolder.ofFloat("TranslationX", 0F, ViewHelper.getX(endView) - ViewHelper.getX(startView));
                 PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("TranslationY", 0F, 300F, 0f);
                 final ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(startView, pvhX, pvhY);
                 objectAnimator.start();

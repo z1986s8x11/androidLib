@@ -188,19 +188,17 @@ public class Lib_ShapeHelper {
                 }
             }
         } else {
-            int backgroundColor = -1;
+            int backgroundColor = Color.TRANSPARENT;
             if (view.getBackground() instanceof ColorDrawable) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     backgroundColor = ((ColorDrawable) view.getBackground()).getColor();
                 }
             }
             int solidColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor, backgroundColor);
-            if (solidColor != -1) {
-                gradientDrawable.setColor(solidColor);
-                if (gradientDrawable2 != null) {
-                    int solidColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor2, solidColor);
-                    gradientDrawable2.setColor(solidColor2);
-                }
+            gradientDrawable.setColor(solidColor);
+            if (gradientDrawable2 != null) {
+                int solidColor2 = typedArray.getColor(R.styleable.Lib_ShapeBackground_solidColor2, solidColor);
+                gradientDrawable2.setColor(solidColor2);
             }
         }
         if (gradientDrawable2 != null) {
