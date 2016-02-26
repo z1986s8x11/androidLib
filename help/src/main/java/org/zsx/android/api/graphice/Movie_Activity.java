@@ -6,6 +6,7 @@ import org.zsx.android.api._BaseActivity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Movie;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,9 +25,11 @@ public class Movie_Activity extends _BaseActivity {
 			super(context);
 			movie = Movie.decodeStream(context.getResources().openRawResource(
 					R.drawable.animated_gif));
-			if (!isHardwareAccelerated()) {
-				// 必须配置 :android:hardwareAccelerated="false" 或者setLayerType
-				setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				if (!isHardwareAccelerated()) {
+                    // 必须配置 :android:hardwareAccelerated="false" 或者setLayerType
+                    setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                }
 			}
 		}
 
