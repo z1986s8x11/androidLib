@@ -8,10 +8,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:ems="4"
         android:onClick="onClickReturn"
         android:padding="10dp"
-        android:clickable="true"
         android:text="&lt;返回"
         android:textColor="@color/lib_blue" />
 
@@ -26,6 +26,7 @@
         android:textColor="@color/lib_white" />
 
     <TextView
+        android:id="@+id/tv_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="4"

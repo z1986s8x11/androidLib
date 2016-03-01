@@ -27,6 +27,7 @@ import zsx.com.test.ui.parse.JavaParseActivity;
 import zsx.com.test.ui.parse.LogcatActivity;
 import zsx.com.test.ui.refresh.RefreshLinearLayoutActivity;
 import zsx.com.test.ui.viewpagelooper.ViewPagerLooperActivity;
+import zsx.com.test.ui.web.WebViewActivity;
 import zsx.com.test.ui.widget.AutoListViewActivity;
 import zsx.com.test.ui.widget.BadgeViewActivity;
 import zsx.com.test.ui.widget.DirectionViewPagerActivity;
@@ -48,6 +49,7 @@ public class MainActivity extends _BaseActivity {
         setContentView(R.layout.activity_main);
         ListView mListView = (ListView) findViewById(R.id.listView);
         List<Item> list = new ArrayList<>();
+        list.add(new Item("webView", WebViewActivity.class));
         list.add(new Item("InsertAdapter", InsertAdapterActivity.class));
         list.add(new Item("refreshLinearLayout", RefreshLinearLayoutActivity.class));
         list.add(new Item("ShapeTextView", ShapeTextViewActivity.class));
