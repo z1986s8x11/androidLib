@@ -25,6 +25,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':app')
+    compile 'com.android.support:recyclerview-v7:22.0.0'
     compile files('src/libs/apt.jar')
     apt files('src/libs/apt.jar')
 }

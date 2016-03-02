@@ -44,6 +44,7 @@
         <activity android:name=".ui.widget.DragViewHelperActivity" />
         <activity android:name=".ui.adapter.HorizontalActivity" />
         <activity android:name=".ui.web.WebViewActivity" />
+        <activity android:name=".ui.v7.RecyclerViewActivity" />
         <activity
             android:name=".ui.chat.ChatActivity"
             android:windowSoftInputMode="adjustResize" />

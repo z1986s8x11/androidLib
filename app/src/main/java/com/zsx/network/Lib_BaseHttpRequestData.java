@@ -182,10 +182,12 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         public void run() {
             String returnStr = null;
             String error_message = null;
+            int error_code = 0;
             try {
                 returnStr = __requestProtocol(pId, mParams);
             } catch (Lib_Exception e) {
                 if (e._getErrorCode() > HttpURLConnection.HTTP_OK) {
+                    error_code = e._getErrorCode();
                     try {
                         error_message = __parseReadHttpCodeError(pId, e._getErrorMessage());
                     } catch (Exception ee) {
@@ -220,7 +222,14 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                 LogUtil.e(e);
             }
             if (error_message != null) {
-                onPostError(null, false, error_message, mListener);
+                Lib_HttpResult<Result> xx = null;
+                if (error_code != 0) {
+                    xx = new Lib_HttpResult<>();
+                    xx.setSuccess(false);
+                    xx.setMessage(error_message);
+                    xx.setErrorCode(error_code);
+                }
+                onPostError(xx, false, error_message, mListener);
                 return;
             }
             boolean isError = false;

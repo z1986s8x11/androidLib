@@ -26,6 +26,7 @@ import zsx.com.test.ui.network.LoadDataActivity;
 import zsx.com.test.ui.parse.JavaParseActivity;
 import zsx.com.test.ui.parse.LogcatActivity;
 import zsx.com.test.ui.refresh.RefreshLinearLayoutActivity;
+import zsx.com.test.ui.v7.RecyclerViewActivity;
 import zsx.com.test.ui.viewpagelooper.ViewPagerLooperActivity;
 import zsx.com.test.ui.web.WebViewActivity;
 import zsx.com.test.ui.widget.AutoListViewActivity;
@@ -50,6 +51,7 @@ public class MainActivity extends _BaseActivity {
         ListView mListView = (ListView) findViewById(R.id.listView);
         List<Item> list = new ArrayList<>();
         list.add(new Item("webView", WebViewActivity.class));
+        list.add(new Item("recyclerView", RecyclerViewActivity.class));
         list.add(new Item("InsertAdapter", InsertAdapterActivity.class));
         list.add(new Item("refreshLinearLayout", RefreshLinearLayoutActivity.class));
         list.add(new Item("ShapeTextView", ShapeTextViewActivity.class));
