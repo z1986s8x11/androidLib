@@ -12,6 +12,7 @@ import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,16 +82,22 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
             l.onCancel();
         }
         cancelListener.clear();
-//        try {
-//            //参数是固定写法
-//            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-//            childFragmentManager.setAccessible(true);
-//            childFragmentManager.set(this, null);
-//        } catch (NoSuchFieldException e) {
-//            throw new RuntimeException(e);
-//        } catch (IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        }
+    }
+
+    /**
+     * 必须在onDetach中调用.防止fragment嵌套fragment生命周期问题
+     */
+    public void _onDetachClearChildFragment() {
+        try {
+            //参数是固定写法
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void _showToast(String message) {
