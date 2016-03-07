@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <zsx.com.test.ui.refresh.AutoListView
+    <zsx.com.test.ui.refresh.Lib_AutoListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
