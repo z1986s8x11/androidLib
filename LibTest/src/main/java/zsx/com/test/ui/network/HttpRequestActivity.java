@@ -34,60 +34,60 @@ public class HttpRequestActivity extends _BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_get:
-                new LoadData(LoadData.Api.GET, this) {
+                new LoadData<String>(LoadData.Api.GET, this) {
                     @Override
-                    protected void __onError(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
-                        super.__onError(api, requestData, result, isAPIError, error_message);
-                        mTextView.setText(error_message);
+                    protected void __onComplete(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> b) {
+                        super.__onComplete(api, requestData, b);
+                        mTextView.setText(b.getData());
                     }
 
                     @Override
-                    protected void __onComplete(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
-                        super.__onComplete(api, requestData, b);
-                        mTextView.setText(b.getData());
+                    protected void __onError(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
+                        super.__onError(api, requestData, result, isAPIError, error_message);
+                        mTextView.setText(error_message);
                     }
                 }._loadData();
                 break;
             case R.id.btn_post:
-                new LoadData(LoadData.Api.POST, this) {
+                new LoadData<String>(LoadData.Api.POST, this) {
                     @Override
-                    protected void __onError(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
-                        super.__onError(api, requestData, result, isAPIError, error_message);
-                        mTextView.setText(error_message);
+                    protected void __onComplete(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> b) {
+                        super.__onComplete(api, requestData, b);
+                        mTextView.setText(b.getData());
                     }
 
                     @Override
-                    protected void __onComplete(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
-                        super.__onComplete(api, requestData, b);
-                        mTextView.setText(b.getData());
+                    protected void __onError(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
+                        super.__onError(api, requestData, result, isAPIError, error_message);
+                        mTextView.setText(error_message);
                     }
                 }._loadData();
                 break;
             case R.id.btn_put:
-                new LoadData(LoadData.Api.PUT, this) {
+                new LoadData<String>(LoadData.Api.PUT, this) {
                     @Override
-                    protected void __onError(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
+                    protected void __onError(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
                         super.__onError(api, requestData, result, isAPIError, error_message);
                         mTextView.setText(error_message);
                     }
 
                     @Override
-                    protected void __onComplete(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
+                    protected void __onComplete(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> b) {
                         super.__onComplete(api, requestData, b);
                         mTextView.setText(b.getData());
                     }
                 }._loadData();
                 break;
             case R.id.btn_delete:
-                new LoadData(LoadData.Api.DELETE, this) {
+                new LoadData<String>(LoadData.Api.DELETE, this) {
                     @Override
-                    protected void __onError(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
+                    protected void __onError(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> result, boolean isAPIError, String error_message) {
                         super.__onError(api, requestData, result, isAPIError, error_message);
                         mTextView.setText(error_message);
                     }
 
                     @Override
-                    protected void __onComplete(Api api, Lib_HttpRequest<String> requestData, Lib_HttpResult<String> b) {
+                    protected void __onComplete(Api api, Lib_HttpRequest<Object> requestData, Lib_HttpResult<String> b) {
                         super.__onComplete(api, requestData, b);
                         mTextView.setText(b.getData());
                     }

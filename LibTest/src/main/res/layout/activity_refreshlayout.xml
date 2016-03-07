@@ -4,8 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <zsx.com.test.ui.refresh.Lib_AutoListView
+    <zsx.com.test.ui.refresh.AutoListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="空的"
+        android:textColor="@color/lib_black" />
 </LinearLayout>

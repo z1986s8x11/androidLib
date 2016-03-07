@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @param <Parameter> loadData 参数类型
@@ -32,9 +34,8 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     private Id pId;
     private Lib_HttpResult<Result> pBean;
     private boolean pIsDownding = false;
-    private Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> pListener;
+    private Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> pListeners = new LinkedHashSet<>();
     private Lib_HttpRequest<Parameter> pLastRequestData;
-    protected boolean isReadHttpCodeError;
 
     /**
      * @return 最后一次调教的参数
@@ -46,9 +47,13 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         return null;
     }
 
-    public void _setOnLoadingListener(
-            Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
-        this.pListener = listener;
+    public void _setOnLoadingListener(Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+        pListeners.clear();
+        pListeners.add(listener);
+    }
+
+    public void _addOnLoadingListener(Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+        pListeners.add(listener);
     }
 
     public Lib_BaseHttpRequestData(Id id) {
@@ -100,10 +105,10 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
      */
     public void _cancelLoadData() {
         if (pIsDownding) {
+            pIsDownding = false;
             if (pWorkThread != null) {
                 pWorkThread.cancel();
             }
-            pIsDownding = false;
         }
     }
 
@@ -124,33 +129,33 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "网络连接异常" + pId);
             }
-            onRequestStart(pListener, pLastRequestData);
-            onRequestError(null, false, "网络连接异常", pListener);
+            onRequestStart(pListeners, pLastRequestData);
+            onRequestError(null, false, "网络连接异常", pListeners);
             return;
         }
         Lib_HttpParams pParams = getHttpParams(pId, objects);
-        onRequestStart(pListener, pLastRequestData);
-        pWorkThread = new HttpWork(pParams, pListener);
+        onRequestStart(pListeners, pLastRequestData);
+        pWorkThread = new HttpWork(pParams, pListeners);
         pWorkThread.start();
     }
 
     private class HttpWork extends Thread {
         private Lib_HttpParams mParams;
-        private Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> mListener;
+        private Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> mListeners;
         private boolean isCancel = false;
 
-        public HttpWork(Lib_HttpParams params, Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+        public HttpWork(Lib_HttpParams params, Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
             this.mParams = params;
-            this.mListener = listener;
+            this.mListeners = listeners;
         }
 
         public void cancel() {
-            this.mListener = null;
             this.isCancel = true;
+            this.mListeners.clear();
         }
 
 
-        private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+        private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
             if (isCancel) {
                 pIsDownding = false;
                 return;
@@ -159,12 +164,12 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
                 @Override
                 public void run() {
-                    onRequestError(result, isApiError, error_message, listener);
+                    onRequestError(result, isApiError, error_message, listeners);
                 }
             });
         }
 
-        private void onPostComplete(final Lib_HttpResult<Result> bean, final Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+        private void onPostComplete(final Lib_HttpResult<Result> bean, final Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
             if (isCancel) {
                 pIsDownding = false;
                 return;
@@ -173,7 +178,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
                 @Override
                 public void run() {
-                    onRequestComplete(bean, listener);
+                    onRequestComplete(bean, listeners);
                 }
             });
         }
@@ -229,7 +234,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                     xx.setMessage(error_message);
                     xx.setErrorCode(error_code);
                 }
-                onPostError(xx, false, error_message, mListener);
+                onPostError(xx, false, error_message, mListeners);
                 return;
             }
             boolean isError = false;
@@ -241,13 +246,13 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                 if (LogUtil.DEBUG) {
                     LogUtil.e(e);
                 }
-                onPostError(bean, false, "解析异常", mListener);
+                onPostError(bean, false, "解析异常", mListeners);
             }
             if (!isError) {
                 if (bean.isSuccess()) {
-                    onPostComplete(bean, mListener);
+                    onPostComplete(bean, mListeners);
                 } else {
-                    onPostError(bean, true, bean.getMessage(), mListener);
+                    onPostError(bean, true, bean.getMessage(), mListeners);
                 }
                 pBean = bean;
             }
@@ -291,27 +296,33 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     }
 
 
-    private void onRequestStart(Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener, Lib_HttpRequest<Parameter> request) {
+    private void onRequestStart(Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners, Lib_HttpRequest<Parameter> request) {
         pIsDownding = true;
         __onStart(pId, request);
-        if (listener != null) {
-            listener.onLoadStart(pId, request);
+        for (Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener : listeners) {
+            if (listener != null) {
+                listener.onLoadStart(pId, request);
+            }
         }
     }
 
-    private final void onRequestError(Lib_HttpResult<Result> result, boolean isApiError, String error_message, Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+    private final void onRequestError(Lib_HttpResult<Result> result, boolean isApiError, String error_message, Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
         pIsDownding = false;
         __onError(pId, pLastRequestData, result, isApiError, error_message);
-        if (listener != null) {
-            listener.onLoadError(pId, pLastRequestData, result, isApiError, error_message);
+        for (Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener : listeners) {
+            if (listener != null) {
+                listener.onLoadError(pId, pLastRequestData, result, isApiError, error_message);
+            }
         }
     }
 
-    private final void onRequestComplete(Lib_HttpResult<Result> bean, Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener) {
+    private final void onRequestComplete(Lib_HttpResult<Result> bean, Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
         pIsDownding = false;
         __onComplete(pId, pLastRequestData, bean);
-        if (listener != null) {
-            listener.onLoadComplete(pId, pLastRequestData, bean);
+        for (Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener : listeners) {
+            if (listener != null) {
+                listener.onLoadComplete(pId, pLastRequestData, bean);
+            }
         }
     }
 

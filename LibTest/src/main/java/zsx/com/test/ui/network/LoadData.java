@@ -15,10 +15,12 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import zsx.com.test.ui.refresh.DataEntity;
+
 /**
  * Created by zhusx on 2015/8/6.
  */
-public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, String> {
+public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object> {
     public enum Api {
         GET, POST, PUT, DELETE, TEST
     }
@@ -34,7 +36,7 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
     }
 
     @Override
-    protected Lib_HttpParams getHttpParams(LoadData.Api id, String... objects) {
+    protected Lib_HttpParams getHttpParams(LoadData.Api id, Object... objects) {
         Lib_HttpParams params = new Lib_HttpParams();
         Map<String, Object> map = new HashMap<>();
         switch (id) {
@@ -71,7 +73,7 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
         switch (api) {
             case TEST:
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -82,11 +84,30 @@ public class LoadData extends Lib_BaseHttpRequestData<LoadData.Api, String, Stri
 
     }
 
+    int i = 0;
+
     @Override
-    protected Lib_HttpResult<String> parseStr(LoadData.Api id, String currentDownloadText, Lib_HttpResult<String> lastData) throws Exception {
-        Lib_HttpResult<String> result = new Lib_HttpResult<String>();
+    protected Lib_HttpResult<T> parseStr(LoadData.Api id, String currentDownloadText, Lib_HttpResult<T> lastData) throws Exception {
+        Lib_HttpResult<T> result = new Lib_HttpResult<T>();
+        switch (id) {
+            case TEST:
+                DataEntity d = new DataEntity();
+                if (_getRequestParams().isRefresh) {
+                    i = 0;
+                    d.i = i;
+                } else {
+                    d.i = i++;
+                }
+                result.setData((T) d);
+                break;
+            case DELETE:
+            case GET:
+            case POST:
+            case PUT:
+                result.setData((T) currentDownloadText);
+                break;
+        }
         result.setSuccess(true);
-        result.setData(currentDownloadText);
         return result;
     }
 
