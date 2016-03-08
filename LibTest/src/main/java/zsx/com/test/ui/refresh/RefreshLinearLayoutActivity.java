@@ -22,7 +22,6 @@ public class RefreshLinearLayoutActivity extends _BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refreshlayout);
         final AutoListView autoList = (AutoListView) findViewById(R.id.listView);
-        autoList.setEmptyView(findViewById(R.id.tv_empty));
         autoList._setAdapter(new _BaseAdapter<String>(this) {
             @Override
             public View getView(LayoutInflater inflater, final String bean, int position, View convertView, ViewGroup parent) {
