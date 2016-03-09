@@ -5,9 +5,9 @@ import android.graphics.drawable.Animatable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.zsx.network.Lib_HttpRequest;
 import com.zsx.network.Lib_HttpResult;
@@ -158,7 +158,7 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
         __onComplete(request, data);
     }
 
-    protected void _setEmptyView(ListView targetListView, View emptyView) {
+    protected void _setEmptyView(AbsListView targetListView, View emptyView) {
         if (targetListView == null) {
             return;
         }
