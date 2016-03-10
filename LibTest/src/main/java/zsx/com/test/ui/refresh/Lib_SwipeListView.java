@@ -4,11 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ListView;
 
 import com.zsx.adapter.Lib_BaseAdapter;
@@ -23,7 +20,6 @@ import com.zsx.network.Lib_OnHttpLoadingListener;
  * Created      2016/3/7 10:13
  */
 public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> extends ListView implements Lib_OnHttpLoadingListener<Id, Lib_HttpResult<T>, Parameter> {
-    private SwipeRefreshLayout swipeRefreshLayout;
     private Lib_BaseHttpRequestData<Id, T, Parameter> mLoadData;
     private int position = 0;
     private OnReadDataListener readDataListener;
@@ -62,44 +58,6 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
         this.mLoadData = loadData;
         this.readDataListener = listener;
         mLoadData._addOnLoadingListener(this);
-        if (isRefresh) {
-            if (swipeRefreshLayout == null) {
-                ViewParent parent = getParent();
-                if (parent == null) {
-                    throw new NullPointerException(" 必须有父容器");
-                }
-                if (!(parent instanceof ViewGroup)) {
-                    throw new IllegalArgumentException("parent must is ViewGroup");
-                }
-                ViewGroup viewGroup = (ViewGroup) parent;
-                int index = 0;
-                for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                    if (viewGroup.getChildAt(i) == this) {
-                        index = i;
-                        break;
-                    }
-                }
-                viewGroup.removeView(this);
-                ViewGroup.LayoutParams lp = getLayoutParams();
-                swipeRefreshLayout = new SwipeRefreshLayout(getContext());
-                swipeRefreshLayout.addView(this, new SwipeRefreshLayout.LayoutParams(SwipeRefreshLayout.LayoutParams.MATCH_PARENT, SwipeRefreshLayout.LayoutParams.MATCH_PARENT));
-                viewGroup.addView(swipeRefreshLayout, index, lp);
-                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        if (mLoadData._isLoading()) {
-                            swipeRefreshLayout.setRefreshing(false);
-                            return;
-                        }
-                        if (readDataListener != null) {
-                            readDataListener.readData(true, 0);
-                        } else {
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
-                    }
-                });
-            }
-        }
         if (isLoadMore) {
             this.isLoadMoreData = isLoadMore;
         }
@@ -107,12 +65,6 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
 
     public interface OnReadDataListener {
         void readData(boolean isRefresh, int position);
-    }
-
-    public void _setRefresh(boolean refreshing) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(refreshing);
-        }
     }
 
     protected IAutoView __initFootView() {
@@ -167,9 +119,6 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
     public void onLoadComplete(Id id, Lib_HttpRequest<Parameter> request, Lib_HttpResult<T> result) {
         if (request.isRefresh) {
             position = 0;
-            if (swipeRefreshLayout != null) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
             if (adapter != null) {
                 adapter._setItemsToUpdate(result.getData().getList());
             }
@@ -202,11 +151,6 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
     private boolean isLoading() {
         if (mLoadData != null) {
             if (mLoadData._isLoading()) {
-                return true;
-            }
-        }
-        if (swipeRefreshLayout != null) {
-            if (swipeRefreshLayout.isRefreshing()) {
                 return true;
             }
         }
