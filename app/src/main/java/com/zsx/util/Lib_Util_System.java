@@ -56,6 +56,9 @@ public class Lib_Util_System {
      */
     public static String getAppVersionName(Context context) {
         String versionName = "";
+        if (context == null) {
+            return versionName;
+        }
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
@@ -76,6 +79,9 @@ public class Lib_Util_System {
      */
     public static int getAppVersionCode(Context context) {
         int versionCode = -1;
+        if (context == null) {
+            return versionCode;
+        }
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
@@ -193,6 +199,9 @@ public class Lib_Util_System {
      */
     public static String getProvidersName(Context context) {
         String ProvidersName = null;
+        if (context == null) {
+            return ProvidersName;
+        }
         // 返回唯一的用户ID;就是这张卡的编号神马的
         String IMSI = getIMSI(context);
         // IMSI号前面3位460是国家，紧接着后面2位00 02是中国移动，01是中国联通，03是中国电信。
@@ -215,6 +224,9 @@ public class Lib_Util_System {
      * @return 手机IMSI号码(国际移动用户识别码)
      */
     public static String getIMSI(Context context) {
+        if (context == null) {
+            return null;
+        }
         TelephonyManager telephonyManager;
         telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         // 返回唯一的用户ID;就是这张卡的IMSI编号
@@ -225,6 +237,9 @@ public class Lib_Util_System {
      * @return 返回手机ICCID号码(国际移动装备辨识码)
      */
     public static String getICCID(Context context) {
+        if (context == null) {
+            return null;
+        }
         TelephonyManager telephonyManager;
         telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         // 返回唯一的用户ID;就是这张卡的IMSI编号
