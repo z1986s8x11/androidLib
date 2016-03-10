@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zsx.debug.LogUtil;
-
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
 import zsx.com.test.base._BaseAdapter;
@@ -40,7 +38,6 @@ public class RefreshLinearLayoutActivity extends _BaseActivity {
         autoList._setLoadData(loadData, new Lib_SwipeListView.OnReadDataListener() {
             @Override
             public void readData(boolean isRefresh, int position) {
-                LogUtil.e(this, "refresh" + String.valueOf(isRefresh) + ":" + position);
                 if (isRefresh) {
                     loadData._refreshData();
                 } else {
