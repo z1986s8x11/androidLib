@@ -5,10 +5,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.zsx.adapter.Lib_BaseAdapter;
+import com.zsx.debug.LogUtil;
 import com.zsx.network.Lib_BaseHttpRequestData;
 import com.zsx.network.Lib_HttpRequest;
 import com.zsx.network.Lib_HttpResult;
@@ -19,7 +20,7 @@ import com.zsx.network.Lib_OnHttpLoadingListener;
  * Email        327270607@qq.com
  * Created      2016/3/7 10:13
  */
-public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> extends ListView implements Lib_OnHttpLoadingListener<Id, Lib_HttpResult<T>, Parameter> {
+public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> extends ListView implements Lib_OnHttpLoadingListener<Id, Lib_HttpResult<T>, Parameter>, AbsListView.OnScrollListener {
     private Lib_BaseHttpRequestData<Id, T, Parameter> mLoadData;
     private int position = 0;
     private OnReadDataListener readDataListener;
@@ -61,6 +62,40 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
         if (isLoadMore) {
             this.isLoadMoreData = isLoadMore;
         }
+        setOnScrollListener(this);
+    }
+
+    boolean mLastItemVisible;
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        LogUtil.e(this, "===="+String.valueOf(mLastItemVisible));
+        if (scrollState == OnScrollListener.SCROLL_STATE_IDLE && mLastItemVisible) {
+            LogUtil.e(this, "==1==");
+            if (!isLoading()) {
+                LogUtil.e(this, "==2==");
+                if (mLoadData != null && readDataListener != null) {
+                    LogUtil.e(this, "==3==");
+                    if (getCount() == getLastVisiblePosition() + 1) {
+                        LogUtil.e(this, "==4==");
+//                        if (mLoadData._hasCache()) {
+//                            IAutoLoadMore data = mLoadData._getLastData().getData();
+//                            if (data.hasMoreData()) {
+                        if (!mLoadData._isLoading()) {
+                            readDataListener.readData(false, position + 1);
+                        }
+//                            }
+//                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        mLastItemVisible = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount - 1);
     }
 
     public interface OnReadDataListener {
@@ -69,32 +104,6 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
 
     protected IAutoView __initFootView() {
         return null;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        if (!isLoadMoreData) {
-            return super.onTouchEvent(ev);
-        }
-        switch (ev.getAction() & ev.getActionMasked()) {
-            case MotionEvent.ACTION_UP:
-                if (!isLoading()) {
-                    if (mLoadData != null && readDataListener != null) {
-                        if (getCount() == getLastVisiblePosition() + 1) {
-                            if (mLoadData._hasCache()) {
-                                IAutoLoadMore data = mLoadData._getLastData().getData();
-                                if (data.hasMoreData()) {
-                                    if (!mLoadData._isLoading()) {
-                                        readDataListener.readData(false, position + 1);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                break;
-        }
-        return super.onTouchEvent(ev);
     }
 
     @Override

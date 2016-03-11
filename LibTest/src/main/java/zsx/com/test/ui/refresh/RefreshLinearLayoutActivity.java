@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zsx.debug.LogUtil;
+import com.zsx.util._Arrays;
+
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
 import zsx.com.test.base._BaseAdapter;
@@ -20,7 +23,7 @@ public class RefreshLinearLayoutActivity extends _BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refreshlayout);
         final AutoListView autoList = (AutoListView) findViewById(R.id.listView);
-        autoList._setAdapter(new _BaseAdapter<String>(this) {
+        autoList._setAdapter(new _BaseAdapter<String>(this, _Arrays.asList("1")) {
             @Override
             public View getView(LayoutInflater inflater, final String bean, int position, View convertView, ViewGroup parent) {
                 View[] vs = _getViewHolder(inflater, convertView, parent, android.R.layout.simple_list_item_1, android.R.id.text1);
@@ -38,6 +41,7 @@ public class RefreshLinearLayoutActivity extends _BaseActivity {
         autoList._setLoadData(loadData, new Lib_SwipeListView.OnReadDataListener() {
             @Override
             public void readData(boolean isRefresh, int position) {
+                LogUtil.e(this,"111");
                 if (isRefresh) {
                     loadData._refreshData();
                 } else {
