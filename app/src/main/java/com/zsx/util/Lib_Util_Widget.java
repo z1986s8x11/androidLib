@@ -124,10 +124,8 @@ public class Lib_Util_Widget {
         if (parent != null) {
             ViewGroup.LayoutParams lp = resLayout.getLayoutParams();
             LinearLayout parentLayout = new LinearLayout(resLayout.getContext());
-            parentLayout.setLayoutParams(lp);
             parentLayout.setOrientation(LinearLayout.VERTICAL);
-            parentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
+            parentLayout.setLayoutParams(lp);
             ViewGroup group = (ViewGroup) parent;
             int index = group.indexOfChild(resLayout);
             group.removeView(resLayout);
