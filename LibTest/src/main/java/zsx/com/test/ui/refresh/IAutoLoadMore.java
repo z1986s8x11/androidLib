@@ -8,7 +8,7 @@ import java.util.List;
  * Created      2016/3/7 13:47
  */
 public interface IAutoLoadMore<T> {
-    boolean hasMoreData();
+    boolean hasMoreData(int count);
 
     List<T> getList();
 }

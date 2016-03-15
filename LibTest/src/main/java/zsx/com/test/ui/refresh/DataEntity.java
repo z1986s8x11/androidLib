@@ -13,7 +13,7 @@ public class DataEntity implements IAutoLoadMore {
     public int i = 0;
 
     @Override
-    public boolean hasMoreData() {
+    public boolean hasMoreData(int count) {
         if (i < 5) {
             return true;
         }

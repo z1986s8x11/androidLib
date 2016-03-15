@@ -30,7 +30,7 @@ public class ScrollMoreListener<Id, Result extends Lib_ListDataAdapter, Paramete
                         if (mLoadData._hasCache()) {
                             Lib_HttpResult<Lib_ListDataAdapter> result = mLoadData._getLastData();
                             if (result.getData().hasMoreListData()) {
-                                readDataListener.readData(result.getTotalCount());
+                                readDataListener.readData(result.getCurrentCount());
                             }
                         }
                     }

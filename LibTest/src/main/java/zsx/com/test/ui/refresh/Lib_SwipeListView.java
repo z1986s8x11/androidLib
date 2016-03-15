@@ -137,7 +137,7 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
                 adapter._addItemToUpdate(result.getData().getList());
             }
             if (footView != null) {
-                if (!result.getData().hasMoreData()) {
+                if (!result.getData().hasMoreData(result.getCurrentCount())) {
                     footView.noMoreData();
                 } else {
                     footView.reset();
