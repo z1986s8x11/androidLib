@@ -185,7 +185,7 @@ public class BaseWebView {
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
-//                LogUtil.e("onLoadResource:", url);
+                LogUtil.e("onLoadResource:", url);
             }
 
             @Override
@@ -256,7 +256,7 @@ public class BaseWebView {
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                    LogUtil.e("shouldInterceptRequest:", request.getUrl().toString());
 //                } else {
-//                    LogUtil.e("shouldInterceptRequest:", "");
+                LogUtil.e("shouldInterceptRequest:", "");
 //                }
                 return super.shouldInterceptRequest(view, request);
             }
