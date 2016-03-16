@@ -69,7 +69,7 @@ public class Lib_Widget_ScrollView extends ScrollView {
                 }
             }
             swipeRefreshLayout = new SwipeRefreshLayout(getContext());
-            initSwipeRefreshLayout(swipeRefreshLayout);
+            __initSwipeRefreshLayout(swipeRefreshLayout);
             viewGroup.removeView(this);
             ViewGroup.LayoutParams lp = getLayoutParams();
             swipeRefreshLayout.addView(this, new SwipeRefreshLayout.LayoutParams(SwipeRefreshLayout.LayoutParams.MATCH_PARENT, SwipeRefreshLayout.LayoutParams.MATCH_PARENT));
@@ -84,6 +84,18 @@ public class Lib_Widget_ScrollView extends ScrollView {
         }
     }
 
-    protected void initSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
+    /**
+     * 控制ScrollView滑动速度
+     */
+    @Override
+    public void fling(int velocityY) {
+        //super.fling(velocityY / 4);
+        super.fling(velocityY);
+    }
+
+    /**
+     * 初始化刷新的SwipeRefreshLayout
+     */
+    protected void __initSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
     }
 }
