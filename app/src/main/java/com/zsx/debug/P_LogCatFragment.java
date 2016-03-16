@@ -77,7 +77,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
                     adapter._setItemsToUpdate(s);
                 }
             }
-        });
+        }, this);
         setHasOptionsMenu(true);
         return rootView;
     }
