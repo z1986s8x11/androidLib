@@ -9,21 +9,17 @@ import android.view.SubMenu;
 import java.io.File;
 
 /**
- *
  * @author zsx
- *
  * @date 2013-12-27 上午11:48:23
- *
  * @description 需要显示的数据必须存放在Assets目录下面<br/>
- *              <ul>
- *              assets目录下存放项目相关文件
- *              <li>src</li>
- *              <li>xml</li>
- *              <li>layout</li>
- *              <li>drawable</li>
- *              <li>anmi</li>
- *              <ul>
- *
+ * <ul>
+ * assets目录下存放项目相关文件
+ * <li>src</li>
+ * <li>xml</li>
+ * <li>layout</li>
+ * <li>drawable</li>
+ * <li>anmi</li>
+ * <ul>
  */
 public class Lib_Class_ShowCodeUtil {
     private int[] xmlID;
@@ -68,7 +64,7 @@ public class Lib_Class_ShowCodeUtil {
             case javaGroupID:
                 if (item.getItemId() >= javaMenuStartID && item.getItemId() <= javaMenuEndID) {
                     Class<?> cls = clsArr[item.getItemId()];
-                    String fileName = "src/" + cls.getName().replace(".", "/") + ".java";
+                    String fileName = "java/" + cls.getName().replace(".", "/") + ".java";
                     Intent in = new Intent(context, Lib_Class_ShowCodeResultActivity.class);
                     in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, fileName);
                     context.startActivity(in);
@@ -77,7 +73,7 @@ public class Lib_Class_ShowCodeUtil {
             case xmlGroupID:
                 if (item.getItemId() >= xmlMenuStartID && item.getItemId() <= xmlMenuEndID) {
                     int resourceID = xmlID[item.getItemId()];
-                    String fileName = context.getResources().getResourceTypeName(resourceID) + File.separator
+                    String fileName = "res/" + context.getResources().getResourceTypeName(resourceID) + File.separator
                             + context.getResources().getResourceEntryName(resourceID) + ".xml";
                     Intent in = new Intent(context, Lib_Class_ShowCodeResultActivity.class);
                     in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, fileName);

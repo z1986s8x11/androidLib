@@ -2,24 +2,22 @@ package com.tools;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.os.Environment;
+import android.webkit.WebView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
- *
  * @author zsx
- *
  * @date 2013-12-27 11:03:26
- *
  * @description 需要在AndroidMainifest.xml 注册
- * 				{@link com.tools.Lib_Class_ShowCodeResultActivity}
+ * {@link com.tools.Lib_Class_ShowCodeResultActivity}
  */
 public class Lib_Class_ShowCodeResultActivity extends Activity {
     public static final String RM_EXTRA_SHOW_CODE_FILE_KEY = "SHOW_CODE_FILE_KEY";
@@ -27,40 +25,72 @@ public class Lib_Class_ShowCodeResultActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LinearLayout l = new LinearLayout(this);
-        ScrollView mScrollView = new ScrollView(this);
-        HorizontalScrollView hsv = new HorizontalScrollView(this);
-        l.addView(mScrollView);
-        mScrollView.addView(hsv);
-        TextView t = new TextView(this);
-        t.setEnabled(true);
-        hsv.addView(t);
-        setContentView(l);
+        WebView mWebView = new WebView(this);
+        setContentView(mWebView);
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setBuiltInZoomControls(true);
         String fileName = getIntent().getStringExtra(RM_EXTRA_SHOW_CODE_FILE_KEY);
-        if (fileName == null) {
-            Toast.makeText(this, "文件路径为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        ZipFile mZipFile = null;
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(getAssets().open(fileName)));
+            mZipFile = new ZipFile(new File(Environment.getExternalStorageDirectory(), "help.zip"));
             StringBuffer sb = new StringBuffer();
-            String str = null;
-            while ((str = br.readLine()) != null) {
-                sb.append(str);
-                sb.append("\n");
+            ZipEntry entry = mZipFile.getEntry(fileName);
+            br = new BufferedReader(new InputStreamReader(
+                    mZipFile.getInputStream(entry), "utf8"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(toLine(line));
             }
-            t.setText(sb.toString());
+            mWebView.loadDataWithBaseURL(null, sb.toString(), "html/text", "UTF-8", null);
         } catch (IOException e) {
-            Toast.makeText(this, "文件没有找到:" + String.valueOf(fileName), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         } finally {
-            try {
-                if (br != null) {
+            if (br != null) {
+                try {
                     br.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            }
+            if (mZipFile != null) {
+                try {
+                    mZipFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
+
+    protected String toLine(String line) throws UnsupportedEncodingException {
+        StringBuffer sb = new StringBuffer();
+        line = line
+                .replaceAll("&", "&amp;")
+                        // .replaceAll("\t", "&nbsp;")
+                        // .replaceAll(" ", "&nbsp;")
+                .replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+                .replaceAll("\'", "&qpos;").replaceAll("\"", "&quot;");
+        line = addTextColor(line, "package", "red");
+        line = addTextColor(line, "import", "red");
+        line = addTextColor(line, "public", "red");
+        line = addTextColor(line, "protected", "red");
+        line = addTextColor(line, "private", "red");
+        line = addTextColor(line, "static", "red");
+        line = addTextColor(line, "final", "red");
+        line = addTextColor(line, "extends", "red");
+        line = addTextColor(line, "class", "red");
+        line = addTextColor(line, "void", "red");
+
+        sb.append(line);
+        sb.append("</br>");
+        return sb.toString();
+    }
+
+    protected String addTextColor(String line, String replaceText, String color) {
+        return line.replaceAll(replaceText + "\\s+", "<font color='" + color
+                + "' onclick=\"clickMe('" + replaceText + "')\">" + replaceText
+                + "</font> ");
+    }
+
 }
