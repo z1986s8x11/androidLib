@@ -139,3 +139,5 @@ Java代码
 1.Intent intent = new Intent(this, MainActivity.class);
 2.intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 3.startActivity(intent);
+
+视频播放源码:https://github.com/lipangit/jiecaovideoplayer
