@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
@@ -11,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
@@ -21,7 +23,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class Lib_Util_Bitmap {
-
+    /**
+     * 转化为Bitmap
+     */
     public static Bitmap toBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
@@ -40,6 +44,9 @@ public class Lib_Util_Bitmap {
         return null;
     }
 
+    /**
+     * 缩放Bitmap
+     */
     public static Bitmap zoomBitmap(Bitmap bitmap, int width, int height) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
@@ -51,6 +58,9 @@ public class Lib_Util_Bitmap {
         return newbmp;
     }
 
+    /**
+     * 图片加圆角
+     */
     public static Bitmap toRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
@@ -148,6 +158,9 @@ public class Lib_Util_Bitmap {
         return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
     }
 
+    /**
+     * 计算缩放比例
+     */
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         double outMax = Math.max(options.outHeight, options.outWidth);
         double outMin = Math.min(options.outHeight, options.outWidth);
@@ -366,5 +379,43 @@ public class Lib_Util_Bitmap {
         }
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
         return (bitmap);
+    }
+
+    /**
+     * 图片倒影
+     */
+    public static Bitmap toReflection(Bitmap originalImage) {
+        final int reflectionGap = 4;                            //原始图片和反射图片中间的间距
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+        //反转
+        Matrix matrix = new Matrix();
+        matrix.preScale(1, -1);
+        //reflectionImage就是下面透明的那部分,可以设置它的高度为原始的3/4,这样效果会更好些
+        Bitmap reflectionImage = Bitmap.createBitmap(originalImage, 0,
+                0, width, height, matrix, false);
+        //创建一个新的bitmap,高度为原来的两倍
+        Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height), Bitmap.Config.ARGB_8888);
+        Canvas canvasRef = new Canvas(bitmapWithReflection);
+        //先画原始的图片
+        canvasRef.drawBitmap(originalImage, 0, 0, null);
+        //画间距
+        Paint deafaultPaint = new Paint();
+        canvasRef.drawRect(0, height, width, height + reflectionGap, deafaultPaint);
+        //画被反转以后的图片
+        canvasRef.drawBitmap(reflectionImage, 0, height + reflectionGap, null);
+        // 创建一个渐变的蒙版放在下面被反转的图片上面
+        Paint paint = new Paint();
+        LinearGradient shader = new LinearGradient(0,
+                originalImage.getHeight(), 0, bitmapWithReflection.getHeight()
+                + reflectionGap, 0x80ffffff, 0x00ffffff, Shader.TileMode.CLAMP);
+        // Set the paint to use this shader (linear gradient)
+        paint.setShader(shader);
+        // Set the Transfer mode to be porter duff and destination in
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        // Draw a rectangle using the paint with our linear gradient
+        canvasRef.drawRect(0, height, width, bitmapWithReflection.getHeight()
+                + reflectionGap, paint);
+        return bitmapWithReflection;
     }
 }
