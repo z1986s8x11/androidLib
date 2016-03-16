@@ -39,9 +39,21 @@ public class Lib_Class_ShowCodeResultActivity extends Activity {
             br = new BufferedReader(new InputStreamReader(
                     mZipFile.getInputStream(entry), "utf8"));
             String line;
+            sb.append("<html>");
+            sb.append("<head>");
+            sb.append("<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">");
+            sb.append("<script>");
+            sb.append("function clickMe(name){alert(name);}");
+            sb.append("</script>");
+            sb.append("</head>");
+            sb.append("<body>");
+            sb.append("<pre>");
             while ((line = br.readLine()) != null) {
                 sb.append(toLine(line));
             }
+            sb.append("</pre>");
+            sb.append("</body>");
+            sb.append("</html>");
             mWebView.loadDataWithBaseURL(null, sb.toString(), "html/text", "UTF-8", null);
         } catch (IOException e) {
             e.printStackTrace();
