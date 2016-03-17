@@ -125,7 +125,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     }
 
     protected File __getZipFile() {
-        return new File(Environment.getExternalStorageDirectory(), "help.zip");
+        return new File(Environment.getExternalStorageDirectory(), getContext().getPackageName() + ".zip");
     }
 
     protected String toLine(String line) throws UnsupportedEncodingException {
@@ -139,7 +139,9 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         sb.append("</br>");
         return sb.toString();
     }
-    public String[] keyValue=new String[]{"package","import","class","public","final","static","extends","private","new","protected","return","throws"};
+
+    public String[] keyValue = new String[]{"package", "import", "class", "public", "final", "static", "extends", "private", "new", "protected", "return", "throws"};
+
     protected String addTextColor(String line, String replaceText, String color) {
         return line.replaceAll(replaceText, "<font color='" + color + "' "
                 + replaceText + "</font> ");
