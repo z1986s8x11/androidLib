@@ -12,6 +12,10 @@ import android.webkit.WebView;
 
 import com.zsx.app.Lib_BaseFragment;
 import com.zsx.tools.Lib_Subscribes;
+import com.zsx.widget.slidingmenu.SlidingMenu;
+
+import org.zsx.android.api.R;
+import org.zsx.android.api._BaseActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,6 +42,19 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         String fileName = getArguments().getString(_EXTRA_String);
         initData(fileName);
         return mWebView;
+    }
+
+    public static void initContextView(_BaseActivity activity) {
+        SlidingMenu mSlidingMenu = new SlidingMenu(activity, SlidingMenu.SLIDING_CONTENT);
+        final View right = LayoutInflater.from(activity).inflate(R.layout.lib_layout_linearlayout, null, false);
+        mSlidingMenu.setMenu(right);
+        mSlidingMenu.setBehindWidth(activity._getFullScreenWidth() - 200);
+        final String fileName = "java/" + activity.getClass().getName().replace(".", "/") + ".java";
+        Lib_SourceCodeFragment fragment = new Lib_SourceCodeFragment();
+        Bundle b = new Bundle();
+        b.putString(_EXTRA_String, fileName);
+        fragment.setArguments(b);
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.lib_content, fragment).commitAllowingStateLoss();
     }
 
     private void initData(final String fileName) {
@@ -112,32 +129,17 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     }
 
     protected String toLine(String line) throws UnsupportedEncodingException {
-        if (TextUtils.isEmpty(line)) {
-            return "";
-        }
-        line = line.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;").replaceAll("\'", "&qpos;")
-                .replaceAll("\"", "&quot;");
-        if (line.startsWith("import")) {
-            String[] st = line.split(" ");
-            line = addOnClick(line, st[1], "blue");
-        }
         StringBuffer sb = new StringBuffer();
-        line = addTextColor(line, "package", "red");
-        line = addTextColor(line, "import", "red");
-        line = addTextColor(line, "public", "red");
-        line = addTextColor(line, "protected", "red");
-        line = addTextColor(line, "private", "red");
-        line = addTextColor(line, "static", "red");
-        line = addTextColor(line, "final", "red");
-        line = addTextColor(line, "extends", "red");
-        line = addTextColor(line, "class", "red");
-        line = addTextColor(line, "void", "red");
-        sb.append(line);
+        if (!TextUtils.isEmpty(line)) {
+            line = line.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;").replaceAll("\'", "&qpos;")
+                    .replaceAll("\"", "&quot;");
+            sb.append(line);
+        }
         sb.append("</br>");
         return sb.toString();
     }
-
+    public String[] keyValue=new String[]{"package","import","class","public","final","static","extends","private","new","protected","return","throws"};
     protected String addTextColor(String line, String replaceText, String color) {
         return line.replaceAll(replaceText, "<font color='" + color + "' "
                 + replaceText + "</font> ");
