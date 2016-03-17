@@ -35,18 +35,25 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         mWebView = new WebView(inflater.getContext());
         mWebView.getSettings().setSupportZoom(true);
         mWebView.getSettings().setBuiltInZoomControls(true);
+        String fileName = getArguments().getString(_EXTRA_String);
+        initData(fileName);
         return mWebView;
     }
 
     private void initData(final String fileName) {
+        if (TextUtils.isEmpty(fileName)) {
+            _showToast("文件路径有问题");
+            getActivity().finish();
+            return;
+        }
         Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
             @Override
             public String doInBackground() {
                 ZipFile mZipFile = null;
                 BufferedReader br = null;
+                StringBuffer sb = new StringBuffer();
                 try {
-                    mZipFile = new ZipFile(new File(Environment.getExternalStorageDirectory(), "help.zip"));
-                    StringBuffer sb = new StringBuffer();
+                    mZipFile = new ZipFile(__getZipFile());
                     ZipEntry entry = mZipFile.getEntry(fileName);
                     br = new BufferedReader(new InputStreamReader(
                             mZipFile.getInputStream(entry), "utf8"));
@@ -66,7 +73,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                     sb.append("</pre>");
                     sb.append("</body>");
                     sb.append("</html>");
-                    mWebView.loadDataWithBaseURL(null, sb.toString(), "html/text", "UTF-8", null);
+                    return sb.toString();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -89,9 +96,19 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
             }
 
             @Override
-            public void onComplete(String o) {
+            public void onComplete(String html) {
+                if (TextUtils.isEmpty(html)) {
+                    _showToast("文件有问题.打不开");
+                    getActivity().finish();
+                    return;
+                }
+                mWebView.loadDataWithBaseURL(null, html, "html/text", "UTF-8", null);
             }
         }, this);
+    }
+
+    protected File __getZipFile() {
+        return new File(Environment.getExternalStorageDirectory(), "help.zip");
     }
 
     protected String toLine(String line) throws UnsupportedEncodingException {
