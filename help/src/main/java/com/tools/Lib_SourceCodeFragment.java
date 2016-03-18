@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -23,7 +24,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -34,7 +34,6 @@ import java.util.zip.ZipFile;
  */
 public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     private WebView mWebView;
-    public String[] keyValue = new String[]{"package", "import", "class", "public", "final", "static", "extends", "private", "new", "protected", "return", "throws", "this", "super"};
 
     @Nullable
     @Override
@@ -56,6 +55,18 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                 return super.onJsAlert(view, url, message, result);
             }
         });
+        mWebView.addJavascriptInterface(this, "zhusx");
+    }
+
+    @JavascriptInterface
+    public void goReadFile(int type, String className) {
+        switch (type) {
+            case 0:
+                //java
+                initData("java/" + className.replace(".", "/") + ".java");
+                break;
+
+        }
     }
 
     public static void initContextView(_BaseActivity activity) {
@@ -79,6 +90,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
             getActivity().finish();
             return;
         }
+        final String packageName = getActivity().getPackageName();
         Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
             @Override
             public String doInBackground() {
@@ -88,30 +100,19 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                 }
                 ZipFile mZipFile = null;
                 BufferedReader br = null;
-                StringBuffer sb = new StringBuffer();
+                String html = "";
                 try {
                     mZipFile = new ZipFile(new File(getActivity().getExternalCacheDir(), assetsName));
                     ZipEntry entry = mZipFile.getEntry(fileName);
                     if (entry != null) {
                         br = new BufferedReader(new InputStreamReader(mZipFile.getInputStream(entry), "UTF-8"));
-                        sb.append("<html>");
-                        sb.append("<head>");
-                        sb.append("<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">");
-                        sb.append("<script>");
-                        sb.append("function clickMe(name){alert(name);}");
-                        sb.append("</script>");
-                        sb.append("</head>");
-                        sb.append("<body>");
-                        sb.append("<pre>");
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(toLine(line));
+                        switch ("java") {
+                            case "java":
+                                html = new Lib_SourceJavaCode(packageName)._toHtml(br);
+                                break;
                         }
-                        sb.append("</pre>");
-                        sb.append("</body>");
-                        sb.append("</html>");
                     }
-                    return sb.toString();
+                    return html;
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -145,44 +146,6 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         }, this);
     }
 
-    protected String toLine(String line) throws UnsupportedEncodingException {
-        StringBuffer sb = new StringBuffer();
-        if (!TextUtils.isEmpty(line)) {
-            line = line.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
-                    .replaceAll(">", "&gt;").replaceAll("\'", "&qpos;")
-                    .replaceAll("\"", "&quot;");
-            line = lightJavaKey(line);
-            sb.append(line);
-        }
-        sb.append("</br>");
-        return sb.toString();
-    }
-
-    private String lightJavaKey(String line) {
-        if (line.startsWith("import ")) {
-            String[] st = line.split("\\s+");
-            if (st.length == 2) {
-                addOnClick(line, st[1], "red");
-            }
-        }
-        for (String key : keyValue) {
-            line = addTextColor(line, key, "orange");
-        }
-        return line;
-    }
-
-    protected String addOnClick(String line, String replaceText, String color) {
-        return line.replaceAll(replaceText, "<font color='" + color
-                + "' onclick=\"clickMe('" + replaceText + "')\">" + replaceText
-                + "</font> ");
-    }
-
-    protected String addTextColor(String line, String replaceText, String color) {
-        return line.replaceAll(replaceText + "\\s+", "<font color='" + color
-                + "' onclick=\"clickMe('" + replaceText + "')\">" + replaceText
-                + "</font> ");
-//        return line.replaceAll(replaceText + "\\s+",String.format("<font color='%s' onclick='clickMe('%s')'>%s</font>",color,replaceText,replaceText));
-    }
 
     private String getResName(Context context, int resourceID) {
         String fileName = "res/" + context.getResources().getResourceTypeName(resourceID) + File.separator
@@ -193,5 +156,21 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     private String getJavaName(Class<?> cls) {
         String fileName = "java/" + cls.getName().replace(".", "/") + ".java";
         return fileName;
+    }
+
+    public boolean _canGoBack() {
+        return mWebView.canGoBack();
+    }
+
+    public void _goBack() {
+        mWebView.goBack();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mWebView.clearHistory();
+        mWebView.clearFormData();
+        mWebView.clearCache(true);
     }
 }

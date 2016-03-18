@@ -1,7 +1,6 @@
 package com.tools;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 import com.zsx.app.Lib_BaseFragmentActivity;
 
@@ -15,13 +14,23 @@ import org.zsx.android.api.R;
  */
 public class Lib_Class_ShowCodeResultActivity extends Lib_BaseFragmentActivity {
     public static final String RM_EXTRA_SHOW_CODE_FILE_KEY = _EXTRA_String;
+    Lib_SourceCodeFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lib_layout_linearlayout);
-        Fragment fragment = new Lib_SourceCodeFragment();
+        fragment = new Lib_SourceCodeFragment();
         fragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().replace(R.id.lib_content, fragment).commitAllowingStateLoss();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fragment._canGoBack()) {
+            fragment._goBack();
+            return;
+        }
+        super.onBackPressed();
     }
 }
