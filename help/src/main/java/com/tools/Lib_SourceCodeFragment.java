@@ -2,16 +2,18 @@ package com.tools;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.zsx.app.Lib_BaseFragment;
 import com.zsx.tools.Lib_Subscribes;
+import com.zsx.util.Lib_Util_File;
 import com.zsx.widget.slidingmenu.SlidingMenu;
 
 import org.zsx.android.api.R;
@@ -32,16 +34,28 @@ import java.util.zip.ZipFile;
  */
 public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     private WebView mWebView;
+    public String[] keyValue = new String[]{"package", "import", "class", "public", "final", "static", "extends", "private", "new", "protected", "return", "throws", "this", "super"};
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mWebView = new WebView(inflater.getContext());
-        mWebView.getSettings().setSupportZoom(true);
-        mWebView.getSettings().setBuiltInZoomControls(true);
+        initWebView(mWebView);
         String fileName = getArguments().getString(_EXTRA_String);
         initData(fileName);
         return mWebView;
+    }
+
+    private void initWebView(WebView mWebView) {
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                return super.onJsAlert(view, url, message, result);
+            }
+        });
     }
 
     public static void initContextView(_BaseActivity activity) {
@@ -57,6 +71,8 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.lib_content, fragment).commitAllowingStateLoss();
     }
 
+    public String assetsName = "source.zip";
+
     private void initData(final String fileName) {
         if (TextUtils.isEmpty(fileName)) {
             _showToast("文件路径有问题");
@@ -66,30 +82,35 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
             @Override
             public String doInBackground() {
+                File file = new File(getActivity().getExternalCacheDir(), assetsName);
+                if (!file.exists()) {
+                    Lib_Util_File.copyAssetToFile(getActivity(), assetsName, file);
+                }
                 ZipFile mZipFile = null;
                 BufferedReader br = null;
                 StringBuffer sb = new StringBuffer();
                 try {
-                    mZipFile = new ZipFile(__getZipFile());
+                    mZipFile = new ZipFile(new File(getActivity().getExternalCacheDir(), assetsName));
                     ZipEntry entry = mZipFile.getEntry(fileName);
-                    br = new BufferedReader(new InputStreamReader(
-                            mZipFile.getInputStream(entry), "utf8"));
-                    String line;
-                    sb.append("<html>");
-                    sb.append("<head>");
-                    sb.append("<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">");
-                    sb.append("<script>");
-                    sb.append("function clickMe(name){alert(name);}");
-                    sb.append("</script>");
-                    sb.append("</head>");
-                    sb.append("<body>");
-                    sb.append("<pre>");
-                    while ((line = br.readLine()) != null) {
-                        sb.append(toLine(line));
+                    if (entry != null) {
+                        br = new BufferedReader(new InputStreamReader(mZipFile.getInputStream(entry), "UTF-8"));
+                        sb.append("<html>");
+                        sb.append("<head>");
+                        sb.append("<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">");
+                        sb.append("<script>");
+                        sb.append("function clickMe(name){alert(name);}");
+                        sb.append("</script>");
+                        sb.append("</head>");
+                        sb.append("<body>");
+                        sb.append("<pre>");
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            sb.append(toLine(line));
+                        }
+                        sb.append("</pre>");
+                        sb.append("</body>");
+                        sb.append("</html>");
                     }
-                    sb.append("</pre>");
-                    sb.append("</body>");
-                    sb.append("</html>");
                     return sb.toString();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -124,33 +145,43 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         }, this);
     }
 
-    protected File __getZipFile() {
-        return new File(Environment.getExternalStorageDirectory(), getContext().getPackageName() + ".zip");
-    }
-
     protected String toLine(String line) throws UnsupportedEncodingException {
         StringBuffer sb = new StringBuffer();
         if (!TextUtils.isEmpty(line)) {
             line = line.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
                     .replaceAll(">", "&gt;").replaceAll("\'", "&qpos;")
                     .replaceAll("\"", "&quot;");
+            line = lightJavaKey(line);
             sb.append(line);
         }
         sb.append("</br>");
         return sb.toString();
     }
 
-    public String[] keyValue = new String[]{"package", "import", "class", "public", "final", "static", "extends", "private", "new", "protected", "return", "throws"};
-
-    protected String addTextColor(String line, String replaceText, String color) {
-        return line.replaceAll(replaceText, "<font color='" + color + "' "
-                + replaceText + "</font> ");
+    private String lightJavaKey(String line) {
+        if (line.startsWith("import ")) {
+            String[] st = line.split("\\s+");
+            if (st.length == 2) {
+                addOnClick(line, st[1], "red");
+            }
+        }
+        for (String key : keyValue) {
+            line = addTextColor(line, key, "orange");
+        }
+        return line;
     }
 
     protected String addOnClick(String line, String replaceText, String color) {
         return line.replaceAll(replaceText, "<font color='" + color
                 + "' onclick=\"clickMe('" + replaceText + "')\">" + replaceText
                 + "</font> ");
+    }
+
+    protected String addTextColor(String line, String replaceText, String color) {
+        return line.replaceAll(replaceText + "\\s+", "<font color='" + color
+                + "' onclick=\"clickMe('" + replaceText + "')\">" + replaceText
+                + "</font> ");
+//        return line.replaceAll(replaceText + "\\s+",String.format("<font color='%s' onclick='clickMe('%s')'>%s</font>",color,replaceText,replaceText));
     }
 
     private String getResName(Context context, int resourceID) {
