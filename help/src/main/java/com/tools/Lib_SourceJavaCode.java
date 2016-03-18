@@ -80,6 +80,8 @@ public class Lib_SourceJavaCode {
                 line = line.replaceAll(key,
                         String.format("<font color='orange'>%s</font>", key, key));
             }
+//            System.out
+//                    .println(st.replaceAll("R\\.[a-z]+\\.[A-Za-z_0-9]+", "<></>"));
         }
         return line;
     }
