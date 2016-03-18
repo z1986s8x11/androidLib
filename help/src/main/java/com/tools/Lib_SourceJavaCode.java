@@ -55,7 +55,7 @@ public class Lib_SourceJavaCode {
         if (line.startsWith("import ")) {
             String[] st = line.split("\\s+");
             if (st.length == 2) {
-                if (st[1].startsWith(packageName) && st[1].length() > packageName.length() + 2) {
+                if (st[1].startsWith(packageName) && st[1].length() > packageName.length() + 3) {
                     line = line
                             .replaceAll(
                                     st[1],
@@ -65,14 +65,21 @@ public class Lib_SourceJavaCode {
                                                     st[1].length() - 1), st[1]));
                 }
             }
-        }
-        for (String key : keyValue) {
-            line = line.replaceAll(key + "\\s+",
-                    String.format("<font color='orange'>%s</font> ", key, key));
-        }
-        for (String key : keyValue2) {
-            line = line.replaceAll(key,
-                    String.format("<font color='orange'>%s</font>", key, key));
+        } else if (line.trim().startsWith("//")) {
+            line = "<font color='Sienna'>" + line + "</font>";
+        } else if (line.trim().startsWith("/*") || line.trim().startsWith("*")) {
+            line = "<font color='Sienna'>" + line + "</font>";
+        } else if (line.trim().startsWith("@")) {
+            line = "<font color='gold'>" + line + "</font>";
+        } else {
+            for (String key : keyValue) {
+                line = line.replaceAll(key + "\\s+",
+                        String.format("<font color='orange'>%s</font> ", key, key));
+            }
+            for (String key : keyValue2) {
+                line = line.replaceAll(key,
+                        String.format("<font color='orange'>%s</font>", key, key));
+            }
         }
         return line;
     }

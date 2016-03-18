@@ -1,6 +1,7 @@
 package com.tools;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -61,11 +62,18 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     }
 
     @JavascriptInterface
-    public void goReadFile(int type, String className) {
+    public void goReadFile(int type, final String className) {
         switch (type) {
             case 0:
                 //java
-                initData("java/" + className.replace(".", "/") + ".java");
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent in = new Intent(getActivity(), Lib_Class_ShowCodeResultActivity.class);
+                        in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "java/" + className.replace(".", "/") + ".java");
+                        getActivity().startActivity(in);
+                    }
+                });
                 break;
 
         }
