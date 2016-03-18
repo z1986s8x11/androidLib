@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.zsx.app.Lib_BaseFragment;
@@ -55,6 +56,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                 return super.onJsAlert(view, url, message, result);
             }
         });
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.addJavascriptInterface(this, "zhusx");
     }
 
@@ -156,14 +158,6 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     private String getJavaName(Class<?> cls) {
         String fileName = "java/" + cls.getName().replace(".", "/") + ".java";
         return fileName;
-    }
-
-    public boolean _canGoBack() {
-        return mWebView.canGoBack();
-    }
-
-    public void _goBack() {
-        mWebView.goBack();
     }
 
     @Override

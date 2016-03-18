@@ -24,13 +24,4 @@ public class Lib_Class_ShowCodeResultActivity extends Lib_BaseFragmentActivity {
         fragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().replace(R.id.lib_content, fragment).commitAllowingStateLoss();
     }
-
-    @Override
-    public void onBackPressed() {
-        if (fragment._canGoBack()) {
-            fragment._goBack();
-            return;
-        }
-        super.onBackPressed();
-    }
 }
