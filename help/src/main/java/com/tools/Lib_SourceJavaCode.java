@@ -19,7 +19,7 @@ public class Lib_SourceJavaCode {
     public String[] keyValue = new String[]{"package", "import", "class",
             "public", "final", "static", "extends", "private", "new",
             "protected", "return", "throws", "switch", "case"};
-    public String[] keyValue2 = new String[]{"this", "super", "@Override"};
+    public String[] keyValue2 = new String[]{"this", "super", "@Override", "void", "default"};
 
     public String _toHtml(BufferedReader br) throws IOException {
         StringBuffer sb = new StringBuffer();
