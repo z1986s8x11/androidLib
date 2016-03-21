@@ -62,9 +62,9 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     }
 
     @JavascriptInterface
-    public void goReadFile(int type, final String className) {
+    public void goReadFile(String type, final String className) {
         switch (type) {
-            case 0:
+            case "java":
                 //java
                 mWebView.post(new Runnable() {
                     @Override
@@ -72,6 +72,46 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                         Intent in = new Intent(getActivity(), Lib_Class_ShowCodeResultActivity.class);
                         in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "java/" + className.replace(".", "/") + ".java");
                         getActivity().startActivity(in);
+                    }
+                });
+                break;
+            case "xml":
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent in = new Intent(getActivity(), Lib_Class_ShowCodeResultActivity.class);
+                        String[] sts = className.split("\\.");
+                        if (sts.length == 3) {
+                            switch (sts[1]) {
+                                case "styleable":
+                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/styles.xml");
+                                    break;
+                                case "string":
+                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/strings.xml");
+                                    break;
+                                case "array":
+                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/arrays.xml");
+                                    break;
+                                case "dimen":
+                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/dimens.xml");
+                                    break;
+                                case "layout":
+                                case "xml":
+                                case "anim":
+                                case "menu":
+                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/" + sts[1] + "/" + sts[2] + ".xml");
+                                    break;
+                                case "drawable":
+                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/drawable/" + sts[2] + ".xml");
+                                    break;
+                                case "id":
+                                    _showToast("暂不支持id定位");
+                                    break;
+                                default:
+                                    return;
+                            }
+                            getActivity().startActivity(in);
+                        }
                     }
                 });
                 break;

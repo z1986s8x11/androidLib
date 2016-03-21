@@ -3,6 +3,8 @@ package com.tools;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Author       zhusx
@@ -40,6 +42,8 @@ public class Lib_SourceJavaCode {
         sb.append("</pre>");
         sb.append("</body>");
         sb.append("</html>");
+
+
         return sb.toString();
     }
 
@@ -60,7 +64,7 @@ public class Lib_SourceJavaCode {
                             .replaceAll(
                                     st[1],
                                     String.format(
-                                            "<font color='blue' onclick=\"clickMe(0,'%s')\">%s</font> ",
+                                            "<font color='blue' onclick=\"clickMe('java','%s')\">%s</font> ",
                                             st[1].substring(0,
                                                     st[1].length() - 1), st[1]));
                 }
@@ -80,8 +84,15 @@ public class Lib_SourceJavaCode {
                 line = line.replaceAll(key,
                         String.format("<font color='orange'>%s</font>", key, key));
             }
-//            System.out
-//                    .println(st.replaceAll("R\\.[a-z]+\\.[A-Za-z_0-9]+", "<></>"));
+            String regex = "R\\.[a-z]+\\.[A-Za-z_0-9]+";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(line);
+            StringBuffer sb = new StringBuffer();
+            while (matcher.find()) {
+                matcher.appendReplacement(sb, String.format("<font color='blue' onclick=\"clickMe('xml','%s')\">%s</font> ", matcher.group(0), matcher.group(0)));
+            }
+            matcher.appendTail(sb);
+            line = sb.toString();
         }
         return line;
     }
