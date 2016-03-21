@@ -5,7 +5,7 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zsx.download.Lib_DownloadHelper;
+import com.zsx.tools.Lib_DownloadHelper;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.network.Lib_NetworkStateReceiver;
 import com.zsx.util._NetworkUtil;
