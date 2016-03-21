@@ -1,4 +1,4 @@
-package com.tools;
+package com.zsx.debug;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,13 +15,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.zsx.app.Lib_BaseFragment;
-import com.zsx.app.Lib_BaseFragmentActivity;
 import com.zsx.app._PublicFragmentActivity;
 import com.zsx.tools.Lib_Subscribes;
 import com.zsx.util.Lib_Util_File;
-import com.zsx.widget.slidingmenu.SlidingMenu;
-
-import org.zsx.android.api.R;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -127,18 +123,18 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         }
     }
 
-    public static void initContextView(Lib_BaseFragmentActivity activity) {
-        SlidingMenu mSlidingMenu = new SlidingMenu(activity, SlidingMenu.SLIDING_CONTENT);
-        final View right = LayoutInflater.from(activity).inflate(R.layout.lib_layout_linearlayout, null, false);
-        mSlidingMenu.setMenu(right);
-        mSlidingMenu.setBehindWidth(activity._getFullScreenWidth() - 200);
-        final String fileName = "java/" + activity.getClass().getName().replace(".", "/") + ".java";
-        Lib_SourceCodeFragment fragment = new Lib_SourceCodeFragment();
-        Bundle b = new Bundle();
-        b.putString(_EXTRA_String, fileName);
-        fragment.setArguments(b);
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.lib_content, fragment).commitAllowingStateLoss();
-    }
+//    public static void initContextView(Lib_BaseFragmentActivity activity) {
+//        SlidingMenu mSlidingMenu = new SlidingMenu(activity, SlidingMenu.SLIDING_CONTENT);
+//        final View right = LayoutInflater.from(activity).inflate(R.layout.lib_layout_linearlayout, null, false);
+//        mSlidingMenu.setMenu(right);
+//        mSlidingMenu.setBehindWidth(activity._getFullScreenWidth() - 200);
+//        final String fileName = "java/" + activity.getClass().getName().replace(".", "/") + ".java";
+//        Lib_SourceCodeFragment fragment = new Lib_SourceCodeFragment();
+//        Bundle b = new Bundle();
+//        b.putString(_EXTRA_String, fileName);
+//        fragment.setArguments(b);
+//        activity.getSupportFragmentManager().beginTransaction().replace(R.id.lib_content, fragment).commitAllowingStateLoss();
+//    }
 
     public String assetsName = "source.zip";
 

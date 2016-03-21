@@ -1,4 +1,4 @@
-package com.tools;
+package com.zsx.debug;
 
 import java.io.BufferedReader;
 import java.io.IOException;
