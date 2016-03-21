@@ -141,3 +141,5 @@ Java代码
 3.startActivity(intent);
 
 视频播放源码:https://github.com/lipangit/jiecaovideoplayer
+https://github.com/tigerguixh/QuickNews
+https://github.com/yixia/VitamioBundle

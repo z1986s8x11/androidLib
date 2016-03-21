@@ -6,6 +6,7 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -45,6 +46,13 @@ public class WebView_Activity extends _BaseActivity {
                 mWebView.getSettings().setDisplayZoomControls(false);
             }
         }
+        if (true) {
+            //
+            mWebView.getSettings().setLoadsImagesAutomatically(false);
+            //
+            mWebView.getSettings().setBlockNetworkImage(false);
+        }
+
         mWebView.setWebViewClient(new WebViewClient() {
             //WebView 在Android4.4的手机上onPageFinished()回调会多调用一次(具体原因待追查)
             @Override
@@ -54,6 +62,13 @@ public class WebView_Activity extends _BaseActivity {
         });
         mWebView.setWebChromeClient(new WebChromeClient() {
         });
+        /**
+         * LOAD_DEFAULT: 如果我们应用程序没有设置任何cachemode， 这个是默认的cache方式。 加载一张网页会检查是否有cache，如果有并且没有过期则使用本地cache，否则从网络上获取。
+         * LOAD_CACHE_ELSE_NETWORK: 使用cache资源，即使过期了也使用，如果没有cache才从网络上获取。
+         * LOAD_NO_CACHE: 不使用cache 全部从网络上获取
+         * LOAD_CACHE_ONLY:  只使用cache上的内容
+         */
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
     }
 
     @Override
@@ -65,10 +80,13 @@ public class WebView_Activity extends _BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         //.WebView页面中播放了音频,退出Activity后音频仍然在播放,需要在Activity的onDestory()中调用
+        mWebView.stopLoading();
+        mWebView.removeAllViews();
         mWebView.destroy();
     }
 
     private void clear() {
+        mWebView.clearFormData();
         //清理cache
         mWebView.clearCache(true);
         //历史记录

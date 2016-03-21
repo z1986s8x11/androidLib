@@ -86,6 +86,9 @@ public class Lib_WebViewClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         LogUtil.e("onPageFinished:", url);
+        if (!view.getSettings().getLoadsImagesAutomatically()) {
+            view.getSettings().setLoadsImagesAutomatically(true);
+        }
         showErrorPage(view);
     }
 

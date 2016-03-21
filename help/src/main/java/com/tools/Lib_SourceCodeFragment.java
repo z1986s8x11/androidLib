@@ -51,6 +51,8 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         mWebView.getSettings().setSupportZoom(true);
         mWebView.getSettings().setBuiltInZoomControls(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
+//        mWebView.getSettings().setLoadsImagesAutomatically(false);
+//        mWebView.getSettings().setBlockNetworkImage(false);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
@@ -214,5 +216,8 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         mWebView.clearHistory();
         mWebView.clearFormData();
         mWebView.clearCache(true);
+        mWebView.stopLoading();
+        mWebView.removeAllViews();
+        mWebView.destroy();
     }
 }
