@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
-import com.tools.Lib_Class_ShowCodeUtil;
-
 import org.zsx.android.api.R;
 import org.zsx.android.api._BaseActivity;
 
@@ -53,10 +51,4 @@ public class FrameAnimation_Activity extends _BaseActivity implements
 			anim.stop();
 		}
 	}
-
-	protected void __showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-		showCode.setShowXML(R.layout.anim_frame_animation,
-				R.drawable.anim_frame_list);
-	}
-
 }

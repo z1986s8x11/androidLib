@@ -68,11 +68,4 @@ public class Secure_Activity extends _BaseActivity implements OnClickListener {
 			break;
 		}
 	}
-
-	@Override
-	protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-		showCode.setShowJava(Secure_Activity.class, SecureGroupView.class);
-		showCode.setShowXML(R.layout.view_secure,
-				R.layout.view_secure_groupview);
-	}
 }

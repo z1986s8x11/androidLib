@@ -50,10 +50,4 @@ public class RotateAnimation_Activity extends _BaseActivity implements OnClickLi
         }
 
     }
-
-    @Override
-    protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-        showCode.setShowXML(R.layout.bitmap_rotate_animation, R.anim.anim_rotate);
-    }
-
 }

@@ -8,8 +8,6 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 
-import com.tools.Lib_Class_ShowCodeUtil;
-
 import org.zsx.android.api.R;
 import org.zsx.android.api._BaseActivity;
 
@@ -65,10 +63,5 @@ public class Service_Activity extends _BaseActivity implements
 			}
 			break;
 		}
-	}
-
-	@Override
-	protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode){
-		showCode.setShowJava(this.getClass(), Service_Service.class);
 	}
 }

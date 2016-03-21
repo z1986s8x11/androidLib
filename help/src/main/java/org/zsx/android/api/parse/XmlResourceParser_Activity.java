@@ -78,9 +78,4 @@ public class XmlResourceParser_Activity extends _BaseActivity implements
 		}
 		mTextView.setText(s.toString());
 	}
-
-	@Override
-	protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-		showCode.setShowXML(R.layout.parse_xmlresourceparser, R.xml.test);
-	}
 }

@@ -8,8 +8,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tools.Lib_Class_ShowCodeUtil;
-
 import org.zsx.android.api.R;
 import org.zsx.android.api._BaseActivity;
 
@@ -45,11 +43,5 @@ public class Animator_Activity extends _BaseActivity implements OnClickListener 
 		default:
 			break;
 		}
-	}
-
-	@Override
-	protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-		super._showCodeInit(showCode);
-		showCode.setShowXML(R.layout.anim_animator, R.anim.anim_anim_translate, R.anim.interpolator_cycle);
 	}
 }

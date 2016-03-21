@@ -57,12 +57,4 @@ public class TextView_Activity extends _BaseActivity {
 		mHtmlClickTV.setClickable(true);
 		mHtmlClickTV.setMovementMethod(LinkMovementMethod.getInstance());
 	}
-
-	@Override
-	public void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-		showCode.setShowJava(this.getClass(), TextView_ImageGetter.class,
-				TextView_TagHandler.class);
-		showCode.setShowFile("values" + File.separator + "strings.xml");
-	}
-
 }

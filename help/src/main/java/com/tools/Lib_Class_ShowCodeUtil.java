@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 
-import java.io.File;
+import com.zsx.app.Lib_BaseFragmentActivity;
+import com.zsx.app._PublicFragmentActivity;
 
 /**
  * @author zsx
@@ -22,68 +22,20 @@ import java.io.File;
  * <ul>
  */
 public class Lib_Class_ShowCodeUtil {
-    private int[] xmlID;
     private Class<?>[] clsArr;
-    private String[] filePaths;
-    private final int javaMenuStartID = 0;
-    private int javaMenuEndID = javaMenuStartID;
-    private final int xmlMenuStartID = 0;
-    private int xmlMenuEndID = xmlMenuStartID;
-    private final int fileMenuStartID = 0;
-    private int fileMenuEndID = fileMenuStartID;
-    private final int javaGroupID = 1;
-    private final int xmlGroupID = 2;
-    private final int fileGroupID = 3;
 
     public void setShowJava(Class<?>... clsArr) {
         this.clsArr = clsArr;
     }
 
-    public Class<?>[] getShowJava() {
-        return clsArr;
-    }
-
-    public int[] getShowXml() {
-        return xmlID;
-    }
-
-    public void setShowXML(int... xmlSource) {
-        this.xmlID = xmlSource;
-    }
-
-    public String[] getShowFile() {
-        return filePaths;
-    }
-
-    public void setShowFile(String... filePath) {
-        filePaths = filePath;
-    }
-
     public void _onOptionsItemSelected(Context context, MenuItem item) {
         switch (item.getGroupId()) {
-            case javaGroupID:
-                if (item.getItemId() >= javaMenuStartID && item.getItemId() <= javaMenuEndID) {
-                    Class<?> cls = clsArr[item.getItemId()];
-                    String fileName = "java/" + cls.getName().replace(".", "/") + ".java";
-                    Intent in = new Intent(context, Lib_Class_ShowCodeResultActivity.class);
-                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, fileName);
-                    context.startActivity(in);
-                }
-                break;
-            case xmlGroupID:
-                if (item.getItemId() >= xmlMenuStartID && item.getItemId() <= xmlMenuEndID) {
-                    int resourceID = xmlID[item.getItemId()];
-                    String fileName = "res/" + context.getResources().getResourceTypeName(resourceID) + File.separator
-                            + context.getResources().getResourceEntryName(resourceID) + ".xml";
-                    Intent in = new Intent(context, Lib_Class_ShowCodeResultActivity.class);
-                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, fileName);
-                    context.startActivity(in);
-                }
-                break;
-            case fileGroupID:
-                if (item.getItemId() >= fileMenuStartID && item.getItemId() <= fileMenuEndID) {
-                    Intent in = new Intent(context, Lib_Class_ShowCodeResultActivity.class);
-                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, filePaths[fileMenuEndID - item.getItemId() - 1]);
+            case 1:
+                if (item.getItemId() == 1986) {
+                    Class<?> cls = clsArr[0];
+                    Intent in = new Intent(context, _PublicFragmentActivity.class);
+                    in.putExtra(_PublicFragmentActivity._EXTRA_FRAGMENT, Lib_SourceCodeFragment.class);
+                    in.putExtra(Lib_BaseFragmentActivity._EXTRA_String, "java/" + cls.getName().replace(".", "/") + ".java");
                     context.startActivity(in);
                 }
                 break;
@@ -95,22 +47,7 @@ public class Lib_Class_ShowCodeUtil {
 
     public void _onCreateOptionsMenu(Context context, Menu menu) {
         if (clsArr != null) {
-            SubMenu javaSubMenu = menu.addSubMenu(javaGroupID, 0x0811, 0, "java");
-            for (int i = 0; i < clsArr.length; i++) {
-                javaSubMenu.add(javaGroupID, javaMenuEndID++, 0, clsArr[i].getSimpleName());
-            }
-        }
-        if (xmlID != null) {
-            SubMenu javaSubMenu = menu.addSubMenu(xmlGroupID, 0x0821, 0, "xml");
-            for (int i = 0; i < xmlID.length; i++) {
-                javaSubMenu.add(xmlGroupID, xmlMenuEndID++, 0, context.getResources().getResourceEntryName(xmlID[i]));
-            }
-        }
-        if (filePaths != null) {
-            SubMenu javaSubMenu = menu.addSubMenu(fileGroupID, 0x0831, 0, "特殊文件");
-            for (int i = 0; i < filePaths.length; i++) {
-                javaSubMenu.add(fileGroupID, fileMenuEndID++, 0, filePaths[i]);
-            }
+            menu.add(1, 1986, 0, clsArr[0].getSimpleName());
         }
     }
 }

@@ -20,12 +20,6 @@ public class Attrs_Activity extends _BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parse_attrs);
     }
-
-    @Override
-    protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-        showCode.setShowFile("values" + File.separator + "attrs.xml");
-    }
-
 }
 
 class CustomView extends TextView {

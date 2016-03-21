@@ -72,11 +72,6 @@ public class WebView_Activity extends _BaseActivity {
     }
 
     @Override
-    public void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-        showCode.setShowFile("webview.html");
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         //.WebView页面中播放了音频,退出Activity后音频仍然在播放,需要在Activity的onDestory()中调用

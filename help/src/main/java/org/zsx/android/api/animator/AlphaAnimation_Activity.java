@@ -7,8 +7,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.tools.Lib_Class_ShowCodeUtil;
-
 import org.zsx.android.api.R;
 import org.zsx.android.api._BaseActivity;
 
@@ -48,10 +46,5 @@ public class AlphaAnimation_Activity extends _BaseActivity implements
                 imageIV2.startAnimation(animation);
                 break;
         }
-    }
-
-    @Override
-    protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-        showCode.setShowXML(R.layout.bitmap_alpha_animation, R.anim.anim_alpha);
     }
 }

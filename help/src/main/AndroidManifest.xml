@@ -118,7 +118,6 @@
             android:name="com.zsx.app._PublicFragmentActivity"
             android:configChanges="orientation|keyboardHidden" />
         <activity android:name="zsx.lib.qrcode.main.Lib_QRCodeActivity" />
-        <activity android:name="com.tools.Lib_Class_ShowCodeResultActivity" />
         <!-- anim -->
         <activity android:name=".animator.ViewAnimator_Activity" />
         <activity android:name="org.zsx.android.api.animator.AlphaAnimation_Activity" />

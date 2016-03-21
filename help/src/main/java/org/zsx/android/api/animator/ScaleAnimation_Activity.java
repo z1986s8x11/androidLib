@@ -57,10 +57,4 @@ public class ScaleAnimation_Activity extends _BaseActivity implements
         }
 
     }
-
-    @Override
-    protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-        showCode.setShowXML(R.layout.bitmap_scale_animation, R.anim.anim_scale);
-    }
-
 }

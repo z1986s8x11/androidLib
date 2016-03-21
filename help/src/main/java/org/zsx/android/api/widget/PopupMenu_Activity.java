@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.tools.Lib_Class_ShowCodeUtil;
-
 import org.zsx.android.api.R;
 import org.zsx.android.api._BaseActivity;
 
@@ -45,12 +43,6 @@ public class PopupMenu_Activity extends _BaseActivity implements
                 mPopupMenu.show();
                 break;
         }
-    }
-
-
-    @Override
-    protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-        showCode.setShowXML(R.layout.widget_popupmenu, R.menu.popup_menu);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

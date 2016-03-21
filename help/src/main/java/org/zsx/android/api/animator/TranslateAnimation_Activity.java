@@ -50,11 +50,4 @@ public class TranslateAnimation_Activity extends _BaseActivity implements
                 break;
         }
     }
-
-    @Override
-    protected void _showCodeInit(Lib_Class_ShowCodeUtil showCode) {
-        showCode.setShowXML(R.layout.bitmap_translate_animation,
-                R.anim.anim_translate);
-    }
-
 }

@@ -45,7 +45,6 @@ public class TabHost_Activity extends TabActivity {
 	/****************** 显示代码相关 ***************************/
 	public void showCodeInit(Lib_Class_ShowCodeUtil showCode) {
 		showCode.setShowJava(this.getClass());
-		showCode.setShowXML(R.layout.widget_tabhost);
 	}
 
 	@Override

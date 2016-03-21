@@ -15,12 +15,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.zsx.app.Lib_BaseFragment;
+import com.zsx.app.Lib_BaseFragmentActivity;
+import com.zsx.app._PublicFragmentActivity;
 import com.zsx.tools.Lib_Subscribes;
 import com.zsx.util.Lib_Util_File;
 import com.zsx.widget.slidingmenu.SlidingMenu;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,8 +43,10 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mWebView = new WebView(inflater.getContext());
         initWebView(mWebView);
-        String fileName = getArguments().getString(_EXTRA_String);
-        initData(fileName);
+        if (getArguments() != null) {
+            String fileName = getArguments().getString(_EXTRA_String);
+            initData(fileName);
+        }
         return mWebView;
     }
 
@@ -63,6 +66,13 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         mWebView.addJavascriptInterface(this, "zhusx");
     }
 
+    protected void startShowCodeActivity(String filePath) {
+        Intent in = new Intent(getActivity(), _PublicFragmentActivity.class);
+        in.putExtra(_PublicFragmentActivity._EXTRA_FRAGMENT, Lib_SourceCodeFragment.class);
+        in.putExtra(_EXTRA_String, filePath);
+        getActivity().startActivity(in);
+    }
+
     @JavascriptInterface
     public void goReadFile(String type, final String className) {
         switch (type) {
@@ -71,9 +81,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                 mWebView.post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent in = new Intent(getActivity(), Lib_Class_ShowCodeResultActivity.class);
-                        in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "java/" + className.replace(".", "/") + ".java");
-                        getActivity().startActivity(in);
+                        startShowCodeActivity("java/" + className.replace(".", "/") + ".java");
                     }
                 });
                 break;
@@ -81,30 +89,29 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                 mWebView.post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent in = new Intent(getActivity(), Lib_Class_ShowCodeResultActivity.class);
                         String[] sts = className.split("\\.");
                         if (sts.length == 3) {
                             switch (sts[1]) {
                                 case "styleable":
-                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/styles.xml");
+                                    startShowCodeActivity("res/values/styles.xml");
                                     break;
                                 case "string":
-                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/strings.xml");
+                                    startShowCodeActivity("res/values/strings.xml");
                                     break;
                                 case "array":
-                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/arrays.xml");
+                                    startShowCodeActivity("res/values/arrays.xml");
                                     break;
                                 case "dimen":
-                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/values/dimens.xml");
+                                    startShowCodeActivity("res/values/dimens.xml");
                                     break;
                                 case "layout":
                                 case "xml":
                                 case "anim":
                                 case "menu":
-                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/" + sts[1] + "/" + sts[2] + ".xml");
+                                    startShowCodeActivity("res/" + sts[1] + "/" + sts[2] + ".xml");
                                     break;
                                 case "drawable":
-                                    in.putExtra(Lib_Class_ShowCodeResultActivity.RM_EXTRA_SHOW_CODE_FILE_KEY, "res/drawable/" + sts[2] + ".xml");
+                                    startShowCodeActivity("res/drawable/" + sts[2] + ".xml");
                                     break;
                                 case "id":
                                     _showToast("暂不支持id定位");
@@ -112,7 +119,6 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                                 default:
                                     return;
                             }
-                            getActivity().startActivity(in);
                         }
                     }
                 });
@@ -121,7 +127,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
         }
     }
 
-    public static void initContextView(_BaseActivity activity) {
+    public static void initContextView(Lib_BaseFragmentActivity activity) {
         SlidingMenu mSlidingMenu = new SlidingMenu(activity, SlidingMenu.SLIDING_CONTENT);
         final View right = LayoutInflater.from(activity).inflate(R.layout.lib_layout_linearlayout, null, false);
         mSlidingMenu.setMenu(right);
