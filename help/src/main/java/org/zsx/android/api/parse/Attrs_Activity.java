@@ -6,12 +6,8 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.tools.Lib_Class_ShowCodeUtil;
-
 import org.zsx.android.api.R;
 import org.zsx.android.api._BaseActivity;
-
-import java.io.File;
 
 public class Attrs_Activity extends _BaseActivity {
 
