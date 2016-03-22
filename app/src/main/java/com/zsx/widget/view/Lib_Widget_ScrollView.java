@@ -94,6 +94,29 @@ public class Lib_Widget_ScrollView extends ScrollView {
     }
 
     /**
+     * 滑动到顶部
+     */
+    public boolean _isScrollTop() {
+        if (getScrollY() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 滑动到底部
+     */
+    public boolean isScrollBottom() {
+        if (getChildCount() == 0) {
+            return true;
+        }
+        if ((getHeight() + getScrollY()) == getChildAt(0).getMeasuredHeight()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 初始化刷新的SwipeRefreshLayout
      */
     protected void __initSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {

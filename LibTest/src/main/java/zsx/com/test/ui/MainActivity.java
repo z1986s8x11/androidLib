@@ -26,6 +26,7 @@ import zsx.com.test.ui.network.LoadDataActivity;
 import zsx.com.test.ui.parse.JavaParseActivity;
 import zsx.com.test.ui.parse.LogcatActivity;
 import zsx.com.test.ui.refresh.RefreshLinearLayoutActivity;
+import zsx.com.test.ui.scroll.ScrollViewActivity;
 import zsx.com.test.ui.v7.RecyclerViewActivity;
 import zsx.com.test.ui.viewpagelooper.ViewPagerLooperActivity;
 import zsx.com.test.ui.web.WebViewActivity;
@@ -76,6 +77,7 @@ public class MainActivity extends _BaseActivity {
         list.add(new Item("HorizontalListView", HorizontalActivity.class));
         list.add(new Item("Chat", ChatActivity.class));
         list.add(new Item("textSpan", TextActivity.class));
+        list.add(new Item("scrollview", ScrollViewActivity.class));
         mListView.setAdapter(new _BaseAdapter<Item>(this, list) {
             @Override
             public View getView(LayoutInflater inflater, final Item bean, final int position, View convertView, ViewGroup parent) {
