@@ -23,7 +23,7 @@ public class _BaseFragmentActivity extends Lib_BaseFragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (helper == null) {
-            helper = new Lib_SourceCodeHelper(getClass());
+            helper = new Lib_SourceCodeHelper(this);
             helper._onCreateOptionsMenu(this, menu);
         }
         return super.onCreateOptionsMenu(menu);

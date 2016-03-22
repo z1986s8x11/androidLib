@@ -4,13 +4,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.zsx.app.Lib_BaseActivity;
+import com.zsx.app.Lib_BaseFragmentActivity;
 import com.zsx.debug.Lib_SourceCodeHelper;
 
 /**
  * Created by zhusx on 2015/8/5.
  */
-public class _BaseActivity extends Lib_BaseActivity {
+public class _BaseActivity extends Lib_BaseFragmentActivity {
     /**
      * xml定义的OnClick事件
      */
@@ -23,7 +23,7 @@ public class _BaseActivity extends Lib_BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (helper == null) {
-            helper = new Lib_SourceCodeHelper(getClass());
+            helper = new Lib_SourceCodeHelper(this);
             helper._onCreateOptionsMenu(this, menu);
         }
         return super.onCreateOptionsMenu(menu);
