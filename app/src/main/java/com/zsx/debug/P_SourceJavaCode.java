@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
  * Email        327270607@qq.com
  * Created      2016/3/18 17:06
  */
-public class Lib_SourceJavaCode {
+public class P_SourceJavaCode {
     public String packageName;
 
-    public Lib_SourceJavaCode(String packageName) {
+    public P_SourceJavaCode(String packageName) {
         this.packageName = packageName;
     }
 

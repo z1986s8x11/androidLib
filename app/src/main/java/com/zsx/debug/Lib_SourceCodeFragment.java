@@ -162,7 +162,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
                         br = new BufferedReader(new InputStreamReader(mZipFile.getInputStream(entry), "UTF-8"));
                         switch ("java") {
                             case "java":
-                                html = new Lib_SourceJavaCode(packageName)._toHtml(br);
+                                html = new P_SourceJavaCode(packageName)._toHtml(br);
                                 break;
                         }
                     }
