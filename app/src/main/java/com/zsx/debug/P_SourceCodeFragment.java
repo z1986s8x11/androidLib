@@ -31,7 +31,7 @@ import java.util.zip.ZipFile;
  * Email        327270607@qq.com
  * Created      2016/3/16 17:28
  */
-public class Lib_SourceCodeFragment extends Lib_BaseFragment {
+public class P_SourceCodeFragment extends Lib_BaseFragment {
     private WebView mWebView;
 
     @Nullable
@@ -64,7 +64,7 @@ public class Lib_SourceCodeFragment extends Lib_BaseFragment {
 
     protected void startShowCodeActivity(String filePath) {
         Intent in = new Intent(getActivity(), _PublicFragmentActivity.class);
-        in.putExtra(_PublicFragmentActivity._EXTRA_FRAGMENT, Lib_SourceCodeFragment.class);
+        in.putExtra(_PublicFragmentActivity._EXTRA_FRAGMENT, P_SourceCodeFragment.class);
         in.putExtra(_EXTRA_String, filePath);
         getActivity().startActivity(in);
     }

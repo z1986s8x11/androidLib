@@ -4,7 +4,7 @@ import android.app.Application;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.zsx.debug.Lib_UncaughtException;
+import com.zsx.debug.P_UncaughtException;
 import com.zsx.debug.LogUtil;
 import com.zsx.network.Lib_NetworkStateReceiver;
 
@@ -64,7 +64,7 @@ public class ZsxApplicationManager {
             if (LogUtil.DEBUG) {
                 if (uncaughtException) {
                 /* 监听全局异常 */
-                    Lib_UncaughtException._getInstance()._init(context);
+                    P_UncaughtException._getInstance()._init(context);
                 }
                 StrictMode.enableDefaults();
             }

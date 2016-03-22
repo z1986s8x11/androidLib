@@ -32,21 +32,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public final class Lib_UncaughtException implements UncaughtExceptionHandler {
+public final class P_UncaughtException implements UncaughtExceptionHandler {
 
     // CrashHandler 实例
-    private static Lib_UncaughtException INSTANCE = new Lib_UncaughtException();
+    private static P_UncaughtException INSTANCE = new P_UncaughtException();
 
     /**
      * 保证只有一个 CrashHandler 实例
      */
-    private Lib_UncaughtException() {
+    private P_UncaughtException() {
     }
 
     /**
      * 获取 CrashHandler 实例 ,单例模式
      */
-    public synchronized static Lib_UncaughtException _getInstance() {
+    public synchronized static P_UncaughtException _getInstance() {
         return INSTANCE;
     }
 

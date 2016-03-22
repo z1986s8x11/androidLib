@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@Deprecated
 public class Lib_DebugService extends Service {
 
 	@Override
