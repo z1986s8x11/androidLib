@@ -41,7 +41,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
         rootView.setOrientation(LinearLayout.VERTICAL);
         listView = new ListView(getActivity());
         registerForContextMenu(listView);
-        fontSize = Lib_SharedPreferences.getInstance(getContext()).get("fontSize", 6);
+        fontSize = Lib_SharedPreferences.getInstance(getActivity()).get("fontSize", 6);
         listView.setAdapter(adapter = new Lib_BaseAdapter<String>(getActivity()) {
             @Override
             public View getView(LayoutInflater inflater, String bean, int position, View convertView, ViewGroup parent) {
