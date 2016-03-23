@@ -143,3 +143,4 @@ Java代码
 视频播放源码:https://github.com/lipangit/jiecaovideoplayer
 https://github.com/tigerguixh/QuickNews
 https://github.com/yixia/VitamioBundle
+https://github.com/kimhou/Android/tree/master/VideoDemoPro
