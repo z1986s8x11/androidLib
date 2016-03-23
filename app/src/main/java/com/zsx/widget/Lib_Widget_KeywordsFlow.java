@@ -18,8 +18,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.zsx.debug.LogUtil;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -232,9 +230,9 @@ public class Lib_Widget_KeywordsFlow extends FrameLayout implements OnGlobalLayo
 				// 准备随机候选数，分别对应x/y轴位置
 				listX.add(i * xItem);
 				listY.add(i * yItem + (yItem >> 2));
-				if (LogUtil.DEBUG) {
-					LogUtil.e(this, "ListX:" + (i * xItem) + "#listY:" + (i * yItem + (yItem >> 2)));
-				}
+//				if (LogUtil.DEBUG) {
+//					LogUtil.e(this, "ListX:" + (i * xItem) + "#listY:" + (i * yItem + (yItem >> 2)));
+//				}
 			}
 			// TextView[] txtArr = new TextView[size];
 			LinkedList<TextView> listTxtTop = new LinkedList<TextView>();
