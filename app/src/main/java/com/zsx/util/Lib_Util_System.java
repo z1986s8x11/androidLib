@@ -763,7 +763,7 @@ public class Lib_Util_System {
             //开始读取日志，每次读取一行
             while ((str = bufferedReader.readLine()) != null) {
                 Runtime.getRuntime().exec(clearLog.toArray(new String[clearLog.size()]));  //清理日志....这里至关重要，不清理的话，任何操作都将产生新的日志，代码进入死循环，直到bufferreader满
-                if (str.startsWith("E/[Log]")) {
+                if (str.contains("[Log]")) {
                     list.add(str);    //输出，在logcat中查看效果，也可以是其他操作，比如发送给服务器..
                 }
             }
