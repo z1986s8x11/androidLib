@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -133,6 +134,9 @@ public class Lib_Util_Intent {
         }
     }
 
+    /**
+     * 运行某包名的应用
+     */
     public static Intent startApp(Activity activity, String packageName) {
         Intent intent = activity.getPackageManager().getLaunchIntentForPackage(packageName);
         return intent;
@@ -164,5 +168,20 @@ public class Lib_Util_Intent {
         shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
         // 发送广播,创建快捷方式
         context.sendBroadcast(shortcutIntent);
+    }
+
+    /**
+     * 跳转到应用系统设置详情页
+     */
+    public static void startAppSettingDetail(Activity activity) {
+        try {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    .setData(Uri.parse("package:" + activity.getPackageName()));
+            activity.startActivityForResult(intent, 11);
+        } catch (ActivityNotFoundException ee) {
+            if (LogUtil.DEBUG) {
+                LogUtil.w(ee);
+            }
+        }
     }
 }
