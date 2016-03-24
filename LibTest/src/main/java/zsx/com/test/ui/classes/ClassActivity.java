@@ -10,6 +10,8 @@ import zsx.com.test.base._BaseActivity;
  * Email        327270607@qq.com
  * Created      2016/3/24 10:54
  */
+//DexClassLoader
+//PathClassLoader
 public class ClassActivity extends _BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

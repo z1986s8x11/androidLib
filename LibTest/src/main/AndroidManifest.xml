@@ -40,13 +40,24 @@
         <activity android:name=".ui.anim.AnimActivity" />
         <activity android:name=".ui.parse.LogcatActivity" />
         <activity android:name=".ui.refresh.RefreshLinearLayoutActivity" />
-        <activity android:name=".ui.widget.ShapeTextViewActivity" />
+        <activity android:name=".ui.widget.ShapeTextViewActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:scheme="quwang" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.widget.DragViewHelperActivity" />
         <activity android:name=".ui.adapter.HorizontalActivity" />
         <activity android:name=".ui.web.WebViewActivity" />
         <activity android:name=".ui.v7.RecyclerViewActivity" />
         <activity android:name=".ui.scroll.ScrollViewActivity" />
-        <activity android:name=".ui.classes.ClassActivity" />
+        <activity android:name=".ui.classes.ClassActivity"/>
         <activity
             android:name=".ui.chat.ChatActivity"
             android:windowSoftInputMode="adjustResize" />

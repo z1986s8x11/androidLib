@@ -16,6 +16,14 @@ import org.zsx.android.api._BaseActivity;
 public class WebView_Activity extends _BaseActivity {
     private WebView mWebView;
 
+    /**
+     * document.location = 'm://qu.cn';
+     * 与
+     * <a href='m://qu.cn/'>点击</a>
+     *
+     * 效果一样
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
