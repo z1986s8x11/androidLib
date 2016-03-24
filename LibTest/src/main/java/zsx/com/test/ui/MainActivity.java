@@ -18,6 +18,7 @@ import zsx.com.test.ui.adapter.HorizontalActivity;
 import zsx.com.test.ui.adapter.InsertAdapterActivity;
 import zsx.com.test.ui.anim.AnimActivity;
 import zsx.com.test.ui.chat.ChatActivity;
+import zsx.com.test.ui.classes.ClassActivity;
 import zsx.com.test.ui.debug.ExceptionActivity;
 import zsx.com.test.ui.download.DownloadActivity;
 import zsx.com.test.ui.network.HttpRequestActivity;
@@ -51,6 +52,7 @@ public class MainActivity extends _BaseActivity {
         setContentView(R.layout.activity_main);
         ListView mListView = (ListView) findViewById(R.id.listView);
         List<Item> list = new ArrayList<>();
+        list.add(new Item("classes", ClassActivity.class));
         list.add(new Item("webView", WebViewActivity.class));
         list.add(new Item("recyclerView", RecyclerViewActivity.class));
         list.add(new Item("InsertAdapter", InsertAdapterActivity.class));
