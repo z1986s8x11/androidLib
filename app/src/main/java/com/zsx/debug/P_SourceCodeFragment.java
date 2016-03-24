@@ -147,10 +147,10 @@ public class P_SourceCodeFragment extends Lib_BaseFragment {
                     ZipEntry entry = mZipFile.getEntry(fileName);
                     if (entry != null) {
                         br = new BufferedReader(new InputStreamReader(mZipFile.getInputStream(entry), "UTF-8"));
-                        switch ("java") {
-                            case "java":
-                                html = new P_SourceJavaCode(packageName)._toHtml(br);
-                                break;
+                        if (fileName.startsWith("res")) {
+                            html = new P_SourceXmlCode(packageName)._toHtml(br);
+                        } else {
+                            html = new P_SourceJavaCode(packageName)._toHtml(br);
                         }
                     }
                     return html;
