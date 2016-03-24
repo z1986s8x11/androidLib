@@ -21,6 +21,10 @@ public class WebView_Activity extends _BaseActivity {
      * 与
      * <a href='m://qu.cn/'>点击</a>
      *
+     * 获取参数的方式
+     * Uri uri = getIntent().getData();
+     * String test1= uri.getQueryParameter("arg0");
+     * String test2= uri.getQueryParameter("arg1");
      * 效果一样
      */
 
