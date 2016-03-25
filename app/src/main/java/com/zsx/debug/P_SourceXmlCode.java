@@ -59,7 +59,23 @@ public class P_SourceXmlCode {
         } else if (!st.contains("=")) {
             String[] sts = line.split("=");
             if (sts.length == 2) {
-                line = String.format("%s=<font color='blue'>%s</font>", sts[0], sts[1]);
+                int id1 = sts[1].indexOf("&quot;") + 6;
+                int id2 = sts[1].indexOf("&quot;", id1 + 1);
+                String id = sts[1].substring(id1, id2);
+                if (id.startsWith("@")) {
+                    if (id.startsWith("@id") || id.startsWith("@+id")) {
+                        line = String.format("%s=<font color='blue'>%s</font>",
+                                sts[0], sts[1]);
+                    } else {
+                        String[] ids = id.substring(1, id.length()).split("/");
+                        line = String.format(
+                                "%s=<font color='blue' onclick=\"clickMe('xml','%s')\" ><B>%s</B></font>",
+                                sts[0], "R." + ids[0] + "." + ids[1], sts[1]);
+                    }
+                } else {
+                    line = String.format("%s=<font color='blue'>%s</font>",
+                            sts[0], sts[1]);
+                }
             }
         }
         return line;
