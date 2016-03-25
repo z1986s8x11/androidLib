@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Instrumentation;
 import android.app.KeyguardManager;
 import android.content.ClipData;
 import android.content.ComponentName;
@@ -28,6 +29,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.telephony.TelephonyManager;
 import android.text.Selection;
 import android.text.Spannable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -792,4 +794,15 @@ public class Lib_Util_System {
     // Typeface.createFromAsset(getContext().getAssets(),"fonts/samplefont.ttf");
     // mPaint.setTypeface(mFace);
 
+    /**
+     * 模拟点击返回键
+     */
+    public static void onBackPressed() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new Instrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+            }
+        }).start();
+    }
 }

@@ -4,12 +4,11 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
-    <!--<a href="tel:13764567708">移动WEB页面JS一键拨打号码咨询功能</a>-->
-    <!--<a href="sms:13764567708">移动WEB页面JS一键拨打号码咨询功能</a>-->
-    <!--<a href="mailto:13764567708">移动WEB页面JS一键拨打号码咨询功能</a>-->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoLink="web"
-        android:text="有好东西哦 http://3.cqgod.sinaapp.com/index.php  哈哈" />
+        android:onClick="onReturn"
+        android:text="返回" />
 </LinearLayout>
