@@ -152,8 +152,7 @@ public class P_SourceCodeFragment extends Lib_BaseFragment {
                             if (fileName.startsWith("res/layout")) {
                                 html = new P_SourceLayoutCode(packageName)._toHtml(br);
                             } else {
-                                //TODO 需要改
-                                html = new P_SourceJavaCode(packageName)._toHtml(br);
+                                html = new P_SourceValueCode(packageName)._toHtml(br);
                             }
                         } else {
                             html = new P_SourceJavaCode(packageName)._toHtml(br);
