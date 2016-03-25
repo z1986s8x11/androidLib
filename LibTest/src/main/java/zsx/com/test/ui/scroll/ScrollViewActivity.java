@@ -1,7 +1,7 @@
 package zsx.com.test.ui.scroll;
 
 import android.os.Bundle;
-import android.widget.ScrollView;
+import android.view.View;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -12,12 +12,14 @@ import zsx.com.test.base._BaseActivity;
  * Created      2016/3/22 13:44
  */
 public class ScrollViewActivity extends _BaseActivity {
-    ScrollView mScrollView;
+    TestScrollView mScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrollview);
-        mScrollView = (ScrollView) findViewById(R.id.scrollView);
+        View titleV = findViewById(R.id.tv_title);
+        mScrollView = (TestScrollView) findViewById(R.id.scrollView);
+        mScrollView.setTitle(titleV);
     }
 }

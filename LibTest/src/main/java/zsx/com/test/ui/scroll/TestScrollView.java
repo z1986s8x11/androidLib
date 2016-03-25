@@ -4,19 +4,30 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
-import com.zsx.debug.LogUtil;
+import com.zsx.util._AnimUtil;
 
 /**
  * Author       zhusx
  * Email        327270607@qq.com
  * Created      2016/3/22 13:45
  */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class TestScrollView extends ScrollView {
     public TestScrollView(Context context) {
         super(context);
+    }
+
+    public View titleV;
+
+
+    public void setTitle(View titleV) {
+        this.titleV = titleV;
+        _AnimUtil.initVisibilityAnim(Gravity.CENTER, titleV);
     }
 
     public TestScrollView(Context context, AttributeSet attrs) {
@@ -35,7 +46,13 @@ public class TestScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         if (_isScrollTop()) {
-            LogUtil.e("==========", "top" + t);
+            if (titleV.getVisibility() == View.GONE) {
+                titleV.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (titleV.getVisibility() == View.VISIBLE) {
+                titleV.setVisibility(View.GONE);
+            }
         }
     }
 
