@@ -89,6 +89,7 @@ public class P_SourceCodeFragment extends Lib_BaseFragment {
                         if (sts.length == 3) {
                             switch (sts[1]) {
                                 case "styleable":
+                                case "style":
                                     startShowCodeActivity("res/values/styles.xml");
                                     break;
                                 case "string":
@@ -148,7 +149,12 @@ public class P_SourceCodeFragment extends Lib_BaseFragment {
                     if (entry != null) {
                         br = new BufferedReader(new InputStreamReader(mZipFile.getInputStream(entry), "UTF-8"));
                         if (fileName.startsWith("res")) {
-                            html = new P_SourceXmlCode(packageName)._toHtml(br);
+                            if (fileName.startsWith("res/layout")) {
+                                html = new P_SourceLayoutCode(packageName)._toHtml(br);
+                            } else {
+                                //TODO 需要改
+                                html = new P_SourceJavaCode(packageName)._toHtml(br);
+                            }
                         } else {
                             html = new P_SourceJavaCode(packageName)._toHtml(br);
                         }

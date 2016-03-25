@@ -9,10 +9,10 @@ import java.io.UnsupportedEncodingException;
  * Email        327270607@qq.com
  * Created      2016/3/18 17:06
  */
-public class P_SourceXmlCode {
+public class P_SourceLayoutCode {
     public String packageName;
 
-    public P_SourceXmlCode(String packageName) {
+    public P_SourceLayoutCode(String packageName) {
         this.packageName = packageName;
     }
 
@@ -48,7 +48,7 @@ public class P_SourceXmlCode {
 
     private String lightXmlKey(String line) {
         String st = line.trim();
-        if (st.startsWith("&quot;!--")) {
+        if (st.startsWith("&lt;!--")) {
             line = String.format("<font color='Sienna'>%s1</font>", line);
         } else if (st.startsWith("&lt;")) {
             if (!st.contains(".")) {
