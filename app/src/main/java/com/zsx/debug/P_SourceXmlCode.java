@@ -48,7 +48,9 @@ public class P_SourceXmlCode {
 
     private String lightXmlKey(String line) {
         String st = line.trim();
-        if (st.startsWith("&lt;")) {
+        if (st.startsWith("&quot;!--")) {
+            line = String.format("<font color='Sienna'>%s1</font>", line);
+        } else if (st.startsWith("&lt;")) {
             if (!st.contains(".")) {
                 line = String.format("<font color='orange'><B>%s</B></font>", line);
             } else if (st.contains("=")) {
@@ -56,7 +58,7 @@ public class P_SourceXmlCode {
             } else {
                 line = String.format("<font color='orange' onclick=\"clickMe('java','%s')\"><B>%s</B></font>", st.substring(1, st.length() - 1), line);
             }
-        } else if (!st.contains("=")) {
+        } else if (st.contains("=")) {
             String[] sts = line.split("=");
             if (sts.length == 2) {
                 int id1 = sts[1].indexOf("&quot;") + 6;
