@@ -4,7 +4,7 @@
     <string name="app_name">帮助文档</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="html_str"><i>斜体</i><b>粗体</b><u>下划线</u><sup>上标</sup><sub>下标</sub><strike>删除线</strike><big>大字</big><small>小字</small><monospace>等宽</monospace></string>
+    <string name="html_str"><i>斜体</i><b>粗体</b><u>下划线</u><sup>上标</sup><sub>下标</sub><strike>删除线</strike><big>大字</big><small>小字</small><monospace>等宽</monospace><ignore>ignore</ignore></string>
     <string name="link"><a href="http://wap.baidu.com">进入百度</a>和<a href="tel:13996687614">打电话</a></string>
     <string name="styled_12_hour_clock">MM/<font fgcolor="#ffff0000"><b>dd</b></font>/yy h<font fgcolor="#ffff0000"><sup><small>mm</small></sup></font><b>aa</b></string>
     <string name="styled_24_hour_clock">MM/<font fgcolor="#ffff0000"><b>dd</b></font>/yy k<font fgcolor="#ffff0000"><sup><small>mm</small></sup></font></string>
