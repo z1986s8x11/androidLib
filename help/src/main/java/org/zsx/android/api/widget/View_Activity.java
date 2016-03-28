@@ -1,8 +1,5 @@
 package org.zsx.android.api.widget;
 
-import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +9,9 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+
+import org.zsx.android.api.R;
+import org.zsx.android.api._BaseActivity;
 
 public class View_Activity extends _BaseActivity {
 	ViewHelper mViewHelper;
@@ -75,6 +75,12 @@ class ViewHelper extends View {
 
 	/**
 	 * 调用该方法来检测View组件及它所包含的所有子组件的大小
+	 *
+	 * MeasureSpec的specMode,一共三种类型：
+	 * EXACTLY：一般是设置了明确的值或者是MATCH_PARENT
+	 * AT_MOST：表示子布局限制在一个最大值内，一般为WARP_CONTENT
+	 * UNSPECIFIED：表示子布局想要多大就多大，很少使用
+	 *
 	 */
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
