@@ -26,7 +26,7 @@ public class Lib_Util_Widget {
      * @param text
      * @return
      */
-    public static float getFontWidthFromView(TextView v, String text) {
+    public static float getFontWidth(TextView v, String text) {
         return v.getPaint().measureText(text);
     }
 
