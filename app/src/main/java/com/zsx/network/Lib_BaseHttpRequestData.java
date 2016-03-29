@@ -8,11 +8,6 @@ import com.zsx.exception.Lib_Exception;
 import com.zsx.util.Lib_Util_HttpURLRequest;
 import com.zsx.util._NetworkUtil;
 
-import org.apache.http.NoHttpResponseException;
-import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.conn.ConnectTimeoutException;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
@@ -207,17 +202,8 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
             } catch (URISyntaxException e) {
                 LogUtil.w(e);
                 error_message = "网络地址错误";
-            } catch (ConnectTimeoutException e) {
-                error_message = "连接超时";
-                LogUtil.w(e);
             } catch (SocketTimeoutException e) {
                 error_message = "请求超时";
-                LogUtil.w(e);
-            } catch (ClientProtocolException e) {
-                error_message = "网络协议错误";
-                LogUtil.w(e);
-            } catch (NoHttpResponseException e) {
-                error_message = "服务器未响应";
                 LogUtil.w(e);
             } catch (IOException e) {
                 error_message = "发生未知异常";
@@ -261,7 +247,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
     @SuppressWarnings("unchecked")
     protected String __requestProtocol(Id id, Lib_HttpParams params)
-            throws ParseException, URISyntaxException, IOException,
+            throws URISyntaxException, IOException,
             Lib_Exception {
         String str;
         Object paramObject = params.getParams();

@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.zsx.util._Arrays;
 
@@ -39,10 +38,15 @@ public class RecyclerViewActivity extends _BaseActivity {
 //        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         // 设置布局管理器
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter = new _BaseRecyclerAdapter<String>(_Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14")) {
+        recyclerView.setAdapter(adapter = new _BaseRecyclerAdapter<String>(this, _Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14")) {
             @Override
-            public View[] getView() {
-                return new View[0];
+            public int __getLayoutResource(int viewType) {
+                return R.layout.lib_list_item_1;
+            }
+
+            @Override
+            public void __bindViewHolder(_ViewHolder holder, int position, String st) {
+                holder.setText(android.R.id.text1, st);
             }
         });
 

@@ -1,14 +1,15 @@
 package zsx.com.test.ui.v7;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import zsx.com.test.R;
 
 /**
  * Author       zhusx
@@ -17,27 +18,38 @@ import zsx.com.test.R;
  */
 public abstract class _BaseRecyclerAdapter<T> extends RecyclerView.Adapter<_BaseRecyclerAdapter._ViewHolder> {
     private List<T> mList;
+    protected LayoutInflater mLayoutInflater;
 
-    public _BaseRecyclerAdapter(List<T> list) {
-        this.mList = list;
+    public _BaseRecyclerAdapter(Context context) {
+        this(context, new ArrayList<T>());
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+    public _BaseRecyclerAdapter(Context context, List<T> list) {
+        this.mList = list;
+        mLayoutInflater = LayoutInflater.from(context);
+    }
+
+    public List<T> getListData() {
+        return mList;
     }
 
     @Override
     public _ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.lib_list_item_1, parent, false);
-        _ViewHolder viewHolder = new _ViewHolder(rootView);
-        viewHolder.t = (TextView) rootView.findViewById(android.R.id.text1);
+        _ViewHolder viewHolder = new _ViewHolder(__getLayoutView(parent, viewType));
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(_ViewHolder holder, int position) {
-        holder.t.setText(String.valueOf(mList.get(position)));
+        __bindViewHolder(holder, position, mList.get(position));
+    }
+
+    public abstract void __bindViewHolder(_ViewHolder holder, int position, T t);
+
+    public abstract int __getLayoutResource(int viewType);
+
+    protected View __getLayoutView(ViewGroup parent, int viewType) {
+        return mLayoutInflater.inflate(__getLayoutResource(viewType), parent, false);
     }
 
     @Override
@@ -46,13 +58,25 @@ public abstract class _BaseRecyclerAdapter<T> extends RecyclerView.Adapter<_Base
     }
 
     public static class _ViewHolder extends RecyclerView.ViewHolder {
-        public TextView t;
-        public View[] vs;
+        public SparseArray viewHolder = new SparseArray();
+        public View rootView;
 
         public _ViewHolder(View itemView) {
             super(itemView);
+            rootView = itemView;
+        }
+
+        public void setText(int id, String text) {
+            ((TextView) getView(id)).setText(text);
+        }
+
+        public <T extends View> T getView(int id) {
+            View childView = (View) viewHolder.get(id);
+            if (childView == null) {
+                childView = rootView.findViewById(id);
+                viewHolder.put(id, childView);
+            }
+            return (T) childView;
         }
     }
-
-    public abstract View[] getView();
 }
