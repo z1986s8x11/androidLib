@@ -25,8 +25,7 @@ public class Lib_Util_Intent {
      */
     public static void sendSms(Context mContext, String smstext) {
         Uri smsToUri = Uri.parse("smsto:");
-        Intent mIntent = new Intent(Intent.ACTION_SENDTO,
-                smsToUri);
+        Intent mIntent = new Intent(Intent.ACTION_SENDTO, smsToUri);
         mIntent.putExtra("sms_body", smstext);
         mContext.startActivity(mIntent);
     }
@@ -183,5 +182,23 @@ public class Lib_Util_Intent {
                 LogUtil.w(ee);
             }
         }
+    }
+
+    /**
+     * 跳转拨号页面
+     */
+    public static void dialPhone(Context activity, String phone) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * 拨打电话
+     */
+    public static void callPhone(Context activity, String phone) {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
     }
 }
