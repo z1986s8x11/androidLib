@@ -201,4 +201,14 @@ public class Lib_Util_Intent {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
     }
+
+    /**
+     * 去桌面
+     */
+    public static void goDesktop(Context context) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//必须
+        intent.addCategory(Intent.CATEGORY_HOME);
+        context.startActivity(intent);
+    }
 }
