@@ -15,6 +15,10 @@ import com.zsx.R;
 public class XListViewFooter extends LinearLayout {
     private final ProgressBar loadingPB;
     private TextView loadMoreTV;
+    public String doneStr = "滑动加载";
+    public String noDataStr = "";
+    public String doneToLoadMore = "正在加载...";
+    public String loadMoreToError = "加载失败,点击重新加载";
 
     public XListViewFooter(Context context) {
         super(context);
@@ -27,21 +31,21 @@ public class XListViewFooter extends LinearLayout {
     /****************************************************/
     public void _onDone() {
         loadingPB.setVisibility(View.INVISIBLE);
-        loadMoreTV.setText("滑动加载");
+        loadMoreTV.setText(doneStr);
     }
 
     public void _onNoData() {
         loadingPB.setVisibility(View.INVISIBLE);
-        loadMoreTV.setText("亲~没有了");
+        loadMoreTV.setText(noDataStr);
     }
 
     public void _onDoneToLoadMore() {
         loadingPB.setVisibility(View.VISIBLE);
-        loadMoreTV.setText("正在加载...");
+        loadMoreTV.setText(doneToLoadMore);
     }
 
     public void _onLoadMoreToError() {
         loadingPB.setVisibility(View.INVISIBLE);
-        loadMoreTV.setText("加载失败,点击重新加载");
+        loadMoreTV.setText(loadMoreToError);
     }
 }

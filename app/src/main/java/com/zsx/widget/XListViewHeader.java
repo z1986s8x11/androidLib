@@ -18,11 +18,11 @@ import com.zsx.R;
 public class XListViewHeader extends LinearLayout {
     private final ProgressBar loadingPB;
     private final TextView messageTV;
-    private String strLoading = "正在刷新...";
-    private String strLoadComplete = "刷新完成";
-    private String strLoadError = "刷新失败";
-    private String strPushRefresh = "下拉刷新";
-    private String strReleaseRefresh = "松开刷新";
+    public String strLoading = "正在刷新...";
+    public String strLoadComplete = "刷新完成";
+    public String strLoadError = "刷新失败";
+    public String strPushRefresh = "下拉刷新";
+    public String strReleaseRefresh = "松开刷新";
     private RotateAnimation animation;
     private RotateAnimation reverseAnimation;
     private ImageView arrowIV;
