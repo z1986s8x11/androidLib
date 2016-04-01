@@ -11,7 +11,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="异常报告"
-        android:textColor="@color/lib_black_font"
+        android:textColor="@color/lib_white"
         android:textSize="18sp" />
 
     <View
