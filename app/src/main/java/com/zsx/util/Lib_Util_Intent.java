@@ -3,11 +3,14 @@ package com.zsx.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.IntentCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -210,5 +213,12 @@ public class Lib_Util_Intent {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//必须
         intent.addCategory(Intent.CATEGORY_HOME);
         context.startActivity(intent);
+    }
+
+    public static void restartActivity(Activity context, Class<? extends FragmentActivity> cls) {
+        Intent intentToBeNewRoot = new Intent(context, cls);
+        ComponentName cn = intentToBeNewRoot.getComponent();
+        Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+        context.startActivity(mainIntent);
     }
 }
