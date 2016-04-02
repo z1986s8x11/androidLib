@@ -5,15 +5,19 @@ import android.os.Looper;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
+import com.zsx.tools.Lib_DownloadHelper;
+import com.zsx.util.Lib_Util_HttpRequest;
 import com.zsx.util.Lib_Util_HttpURLRequest;
 import com.zsx.util._NetworkUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -137,7 +141,6 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     private class HttpWork extends Thread {
         private Lib_HttpParams mParams;
         private Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> mListeners;
-        private boolean isCancel = false;
 
         public HttpWork(Lib_HttpParams params, Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
             this.mParams = params;
@@ -145,13 +148,13 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         }
 
         public void cancel() {
-            this.isCancel = true;
+            this.mParams.isCancel = true;
             this.mListeners.clear();
         }
 
 
         private void onPostError(final Lib_HttpResult<Result> result, final boolean isApiError, final String error_message, final Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
-            if (isCancel) {
+            if (this.mParams.isCancel) {
                 pIsDownding = false;
                 return;
             }
@@ -165,7 +168,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         }
 
         private void onPostComplete(final Lib_HttpResult<Result> bean, final Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
-            if (isCancel) {
+            if (this.mParams.isCancel) {
                 pIsDownding = false;
                 return;
             }
@@ -246,10 +249,10 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     }
 
     @SuppressWarnings("unchecked")
-    protected String __requestProtocol(Id id, Lib_HttpParams params)
+    protected String __requestProtocol(final Id id, final Lib_HttpParams params)
             throws URISyntaxException, IOException,
             Lib_Exception {
-        String str;
+        String str = null;
         Object paramObject = params.getParams();
         switch (params.getRequestMethod()) {
             case Lib_HttpParams.GET:
@@ -275,12 +278,59 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                     str = Lib_Util_HttpURLRequest.httpRequest(params.getRequestMethod(), params.getRequestUrl(), paramObject == null ? "" : paramObject.toString(), params.getHttpHead(), params.isReadHttpCodeErrorMessage());
                 }
                 break;
+            case Lib_HttpParams.UPLOAD:
+                if (paramObject instanceof Map) {
+                    Map<String, Objects> files = (Map<String, Objects>) paramObject;
+                    for (String key : files.keySet()) {
+                        str = Lib_Util_HttpURLRequest.uploadFile(new File(String.valueOf(files.get(key))), params.getRequestUrl(), null, params.getHttpHead(), new Lib_Util_HttpURLRequest.OnProgressListener() {
+                            @Override
+                            public void onProgress(int progress, int currentSize, int totalSize) {
+                                onRequestProgress(id, progress, currentSize, totalSize);
+                            }
+
+                            @Override
+                            public boolean isCanceled() {
+                                return params.isCancel;
+                            }
+                        });
+                    }
+                } else {
+                    str = Lib_Util_HttpURLRequest.uploadFile(new File((String) params.getParams()), params.getRequestUrl());
+                }
+                break;
+            case Lib_HttpParams.DOWNLOAD:
+                Lib_Util_HttpURLRequest.downloadFile(params.getRequestUrl(), (String) params.getParam(), new Lib_Util_HttpURLRequest.OnProgressListener() {
+                    @Override
+                    public void onProgress(int progress, int currentSize, int totalSize) {
+                        onRequestProgress(id, progress, currentSize, totalSize);
+                    }
+
+                    @Override
+                    public boolean isCanceled() {
+                        return params.isCancel;
+                    }
+                });
+                break;
             default:
                 throw new IllegalArgumentException("没有此请求方法");
         }
         return str;
     }
 
+    private void onRequestProgress(final Id id, final int progress, final int currentSize, final int totalSize) {
+        pHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                __onLoadProgress(id, progress, currentSize, totalSize);
+            }
+        });
+    }
+
+    /**
+     * 上传下载进度
+     */
+    protected void __onLoadProgress(Id id, int progress, int currentSize, int totalSize) {
+    }
 
     private void onRequestStart(Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners, Lib_HttpRequest<Parameter> request) {
         pIsDownding = true;

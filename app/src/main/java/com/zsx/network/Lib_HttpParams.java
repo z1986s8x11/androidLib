@@ -16,11 +16,14 @@ public class Lib_HttpParams {
     public static final String POST = "POST";
     public static final String PUT = "PUT";
     public static final String DELETE = "DELETE";
+    public static final String UPLOAD = "UPLOAD";
+    public static final String DOWNLOAD = "DOWNLOAD";
     private String apiUrl;
     private String method = POST;
     private Object param;
     private boolean isReadHttpCodeErrorMessage = false; //是否读取httpCode > 300的错误信息
     private Map<String, Object> httpHead;  //http头
+    boolean isCancel = false;
 
     public Object getParam() {
         return param;
