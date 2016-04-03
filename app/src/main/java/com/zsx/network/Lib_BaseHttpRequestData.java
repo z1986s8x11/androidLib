@@ -368,8 +368,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
      * @param objects
      * @return
      */
-    protected abstract Lib_HttpParams getHttpParams(Id id,
-                                                    Parameter... objects);
+    protected abstract Lib_HttpParams getHttpParams(Id id, Parameter... objects);
 
     /**
      * @param currentDownloadText Http请求的数据
@@ -412,5 +411,15 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
      */
     protected String __parseReadHttpCodeError(Id id, String errorMessage) throws Exception {
         return errorMessage;
+    }
+
+    public void _loadNextPageData() {
+        if (pLastRequestData != null) {
+            requestData(false, pLastRequestData.lastObjectsParams);
+        } else {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(this, "requestData(Objects... objs) 从未主动加载过数据 不能加载更多");
+            }
+        }
     }
 }

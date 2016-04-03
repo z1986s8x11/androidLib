@@ -5,8 +5,8 @@ public class Lib_HttpResult<M> {
     private String message;
     private M data;
     private int errorCode = -1;
-    private int currentCount = CURRENT_COUNT_DEFAULT;
-    public static final int CURRENT_COUNT_DEFAULT = -1;
+    private int currentDataIndex = CURRENT_INDEX_DEFAULT;
+    public static final int CURRENT_INDEX_DEFAULT = -1;
 
     public int getErrorCode() {
         return errorCode;
@@ -16,12 +16,12 @@ public class Lib_HttpResult<M> {
         this.errorCode = errorCode;
     }
 
-    public int getCurrentCount() {
-        return currentCount;
+    public int getCurrentDataIndex() {
+        return currentDataIndex;
     }
 
-    public void setCurrentCount(int currentCount) {
-        this.currentCount = currentCount;
+    public void setCurrentDataIndex(int currentDataIndex) {
+        this.currentDataIndex = currentDataIndex;
     }
 
     public boolean isSuccess() {

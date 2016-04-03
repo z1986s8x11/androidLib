@@ -69,15 +69,10 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        LogUtil.e(this, "====" + String.valueOf(mLastItemVisible));
         if (scrollState == OnScrollListener.SCROLL_STATE_IDLE && mLastItemVisible) {
-            LogUtil.e(this, "==1==");
             if (!isLoading()) {
-                LogUtil.e(this, "==2==");
                 if (mLoadData != null && readDataListener != null) {
-                    LogUtil.e(this, "==3==");
                     if (getCount() == getLastVisiblePosition() + 1) {
-                        LogUtil.e(this, "==4==");
 //                        if (mLoadData._hasCache()) {
 //                            IAutoLoadMore data = mLoadData._getLastData().getData();
 //                            if (data.hasMoreData()) {
@@ -136,13 +131,13 @@ public abstract class Lib_SwipeListView<Id, T extends IAutoLoadMore, Parameter> 
             if (adapter != null) {
                 adapter._addItemToUpdate(result.getData().getList());
             }
-            if (footView != null) {
-                if (result.getData().hasMoreData(result.getCurrentCount())) {
-                    footView.noMoreData();
-                } else {
-                    footView.reset();
-                }
-            }
+//            if (footView != null) {
+//                if (result.getData().hasMoreData(result.getCurrentCount())) {
+//                    footView.noMoreData();
+//                } else {
+//                    footView.reset();
+//                }
+//            }
         }
     }
 
