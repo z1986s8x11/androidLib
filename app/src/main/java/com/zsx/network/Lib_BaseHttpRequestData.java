@@ -126,10 +126,10 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         pLastRequestData.isRefresh = isRefresh;
         if (Lib_NetworkStateReceiver._Current_NetWork_Status == _NetworkUtil.NetType.NoneNet) {
             if (LogUtil.DEBUG) {
-                LogUtil.e(this, "网络连接异常" + pId);
+                LogUtil.e(this, "网络异常,请检查网络设置!" + pId);
             }
             onRequestStart(pListeners, pLastRequestData);
-            onRequestError(null, false, "网络连接异常", pListeners);
+            onRequestError(null, false, "网络异常,请检查网络设置!", pListeners);
             return;
         }
         Lib_HttpParams pParams = getHttpParams(pId, objects);
@@ -411,15 +411,5 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
      */
     protected String __parseReadHttpCodeError(Id id, String errorMessage) throws Exception {
         return errorMessage;
-    }
-
-    public void _loadNextPageData() {
-        if (pLastRequestData != null) {
-            requestData(false, pLastRequestData.lastObjectsParams);
-        } else {
-            if (LogUtil.DEBUG) {
-                LogUtil.e(this, "requestData(Objects... objs) 从未主动加载过数据 不能加载更多");
-            }
-        }
     }
 }
