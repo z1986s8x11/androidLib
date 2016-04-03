@@ -20,7 +20,7 @@ public class Lib_HttpResult<M> {
         return currentDataIndex;
     }
 
-    public void setCurrentDataIndex(int currentDataIndex) {
+    void setCurrentDataIndex(int currentDataIndex) {
         this.currentDataIndex = currentDataIndex;
     }
 

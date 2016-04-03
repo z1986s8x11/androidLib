@@ -412,4 +412,30 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     protected String __parseReadHttpCodeError(Id id, String errorMessage) throws Exception {
         return errorMessage;
     }
+
+    /**
+     * 拿到下一页 页码
+     */
+    private int __getNextPage() {
+        if (pBean == null) {
+            return 1;
+        }
+        if (pBean.getCurrentDataIndex() == Lib_HttpResult.CURRENT_INDEX_DEFAULT) {
+            return 1;
+        }
+        return pBean.getCurrentDataIndex() + 1;
+    }
+
+    /**
+     * 是否还有更多数据
+     */
+    private boolean __hasMoreData() {
+        if (pBean == null) {
+            return true;
+        }
+        if (pBean.getCurrentDataIndex() == Lib_HttpResult.CURRENT_INDEX_DEFAULT) {
+            return true;
+        }
+        return false;
+    }
 }
