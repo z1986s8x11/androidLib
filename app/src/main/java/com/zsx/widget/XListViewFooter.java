@@ -18,7 +18,7 @@ public class XListViewFooter extends LinearLayout {
     public String doneStr = "滑动加载";
     public String noDataStr = "";
     public String doneToLoadMore = "正在加载...";
-    public String loadMoreToError = "加载失败,点击重新加载";
+    public String loadMoreToError = "";//加载失败,点击重新加载
 
     public XListViewFooter(Context context) {
         super(context);
