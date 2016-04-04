@@ -74,7 +74,17 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
     public void _reLoadData() {
         if (pLastRequestData != null) {
-            requestData(pLastRequestData.isRefresh, pLastRequestData.lastObjectsParams);
+            _reLoadData(pLastRequestData.isRefresh);
+        } else {
+            if (LogUtil.DEBUG) {
+                LogUtil.e(this, "requestData(Objects... objs) 从未主动加载过数据 不能直接刷新");
+            }
+        }
+    }
+
+    public void _reLoadData(boolean isRefresh) {
+        if (pLastRequestData != null) {
+            requestData(isRefresh, pLastRequestData.lastObjectsParams);
         } else {
             if (LogUtil.DEBUG) {
                 LogUtil.e(this, "requestData(Objects... objs) 从未主动加载过数据 不能直接刷新");
