@@ -250,6 +250,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
             }
             if (!isError) {
                 if (bean.isSuccess()) {
+                    bean.setCurrentDataIndex(_getNextPage());
                     onPostComplete(bean, mListeners);
                 } else {
                     onPostError(bean, true, bean.getMessage(), mListeners);
@@ -365,7 +366,6 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
     private final void onRequestComplete(Lib_HttpResult<Result> bean, Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
         pIsDownding = false;
-        bean.setCurrentDataIndex(_getNextPage());
         __onComplete(pId, pLastRequestData, bean);
         for (Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener : listeners) {
             if (listener != null) {
@@ -430,6 +430,9 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
      */
     protected final int _getNextPage() {
         if (pLastRequestData.isRefresh || !_hasCache()) {
+            return __getDefaultPage(pId);
+        }
+        if (pBean.getCurrentDataIndex() == Lib_HttpResult.CURRENT_INDEX_DEFAULT) {
             return __getDefaultPage(pId);
         }
         return pBean.getCurrentDataIndex() + 1;
