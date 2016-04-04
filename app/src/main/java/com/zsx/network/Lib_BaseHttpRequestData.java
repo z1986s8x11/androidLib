@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
+import com.zsx.itf.Lib_ListDataAdapter;
 import com.zsx.tools.Lib_DownloadHelper;
 import com.zsx.util.Lib_Util_HttpRequest;
 import com.zsx.util.Lib_Util_HttpURLRequest;
@@ -354,6 +355,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
 
     private final void onRequestComplete(Lib_HttpResult<Result> bean, Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners) {
         pIsDownding = false;
+        bean.setCurrentDataIndex(_getNextPage());
         __onComplete(pId, pLastRequestData, bean);
         for (Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter> listener : listeners) {
             if (listener != null) {
@@ -416,26 +418,14 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     /**
      * 拿到下一页 页码
      */
-    private int __getNextPage() {
-        if (pBean == null) {
-            return 1;
-        }
-        if (pBean.getCurrentDataIndex() == Lib_HttpResult.CURRENT_INDEX_DEFAULT) {
-            return 1;
+    protected final int _getNextPage() {
+        if (pLastRequestData.isRefresh || !_hasCache()) {
+            return __getDefaultPage(pId);
         }
         return pBean.getCurrentDataIndex() + 1;
     }
 
-    /**
-     * 是否还有更多数据
-     */
-    private boolean __hasMoreData() {
-        if (pBean == null) {
-            return true;
-        }
-        if (pBean.getCurrentDataIndex() == Lib_HttpResult.CURRENT_INDEX_DEFAULT) {
-            return true;
-        }
-        return false;
+    protected int __getDefaultPage(Id id) {
+        return 1;
     }
 }

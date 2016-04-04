@@ -6,5 +6,4 @@ package com.zsx.network;
 public class Lib_HttpRequest<T> {
     public T[] lastObjectsParams;
     public boolean isRefresh;
-
 }
