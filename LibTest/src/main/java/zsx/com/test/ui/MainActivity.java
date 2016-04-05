@@ -18,9 +18,9 @@ import zsx.com.test.ui.adapter.HorizontalActivity;
 import zsx.com.test.ui.anim.AnimActivity;
 import zsx.com.test.ui.chat.ChatActivity;
 import zsx.com.test.ui.classes.ClassActivity;
+import zsx.com.test.ui.custom.ViewActivity;
 import zsx.com.test.ui.download.DownloadActivity;
 import zsx.com.test.ui.network.LoadDataActivity;
-import zsx.com.test.ui.parse.LogcatActivity;
 import zsx.com.test.ui.refresh.RefreshLinearLayoutActivity;
 import zsx.com.test.ui.scroll.ScrollViewActivity;
 import zsx.com.test.ui.v7.RecyclerViewActivity;
@@ -46,6 +46,7 @@ public class MainActivity extends _BaseActivity {
         setContentView(R.layout.activity_main);
         ListView mListView = (ListView) findViewById(R.id.listView);
         List<Item> list = new ArrayList<>();
+        list.add(new Item("customView", ViewActivity.class));
         list.add(new Item("classes", ClassActivity.class));
         list.add(new Item("webView", WebViewActivity.class));
         list.add(new Item("recyclerView", RecyclerViewActivity.class));

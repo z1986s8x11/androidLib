@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_activity_title" />
+
+    <TextView
+        android:id="@+id/tv_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="remove" />
+
+    <zsx.com.test.ui.custom.CustomLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <zsx.com.test.ui.custom.CustomView
+            android:id="@+id/tv_customView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </zsx.com.test.ui.custom.CustomLinearLayout>
+</LinearLayout>

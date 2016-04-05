@@ -1,6 +1,7 @@
 package com.zsx.util;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -28,6 +29,15 @@ public class Lib_Util_Widget {
      */
     public static float getFontWidth(TextView v, String text) {
         return v.getPaint().measureText(text);
+    }
+
+    /**
+     * 获得绘制文本的宽和高
+     */
+    public static Rect getTextRect(TextView v, String text) {
+        Rect mBound = new Rect();
+        v.getPaint().getTextBounds(text, 0, text.length(), mBound);
+        return mBound;
     }
 
     /**

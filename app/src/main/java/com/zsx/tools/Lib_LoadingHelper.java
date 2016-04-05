@@ -2,6 +2,7 @@ package com.zsx.tools;
 
 import android.app.Activity;
 import android.graphics.drawable.Animatable;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -59,6 +60,11 @@ public abstract class Lib_LoadingHelper<Id, Result, Parameter> implements Lib_On
         int index = group.indexOfChild(resLayout);
         group.removeView(resLayout);
         group.addView(parentLayout, index, lp);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            parentLayout.setFitsSystemWindows(true);
+        } else {
+            //FIXME 兼容 2.3
+        }
         parentLayout.addView(resLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         parentLayout.addView(helperLayout = new FrameLayout(resLayout.getContext()), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         resLayout.setVisibility(View.GONE);
