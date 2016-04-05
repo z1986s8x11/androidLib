@@ -239,4 +239,12 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
     protected CheckBox _toCheckBox(View v) {
         return (CheckBox) v;
     }
+
+    /**
+     * 用源生ListView 多选时,需要重写 返回true
+     */
+    @Override
+    public boolean hasStableIds() {
+        return super.hasStableIds();
+    }
 }
