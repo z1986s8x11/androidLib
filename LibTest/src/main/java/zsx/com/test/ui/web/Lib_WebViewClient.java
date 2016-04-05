@@ -3,10 +3,8 @@ package zsx.com.test.ui.web;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.InputEvent;
 import android.view.KeyEvent;
-import android.view.View;
 import android.webkit.ClientCertRequest;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
@@ -14,8 +12,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.zsx.debug.LogUtil;
 
@@ -25,44 +21,6 @@ import com.zsx.debug.LogUtil;
  * Created      2016/3/15 13:46
  */
 public class Lib_WebViewClient extends WebViewClient {
-    boolean mIsErrorPage;
-    private TextView mErrorView = null;
-
-    protected void showErrorPage(WebView mWebView) {
-        LinearLayout webParentView = (LinearLayout) mWebView.getParent();
-        initErrorPage(mWebView);
-        while (webParentView.getChildCount() > 1) {
-            webParentView.removeViewAt(0);
-        }
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        webParentView.addView(mErrorView, 0, lp);
-        mIsErrorPage = true;
-    }
-
-    protected void hideErrorPage(WebView mWebView) {
-        LinearLayout webParentView = (LinearLayout) mWebView.getParent();
-
-        mIsErrorPage = false;
-        while (webParentView.getChildCount() > 1) {
-            webParentView.removeViewAt(0);
-        }
-    }
-
-
-    protected void initErrorPage(final WebView mWebView) {
-        if (mErrorView == null) {
-            mErrorView = new TextView(mWebView.getContext());
-            mErrorView.setText("重新加载");
-            mErrorView.setGravity(Gravity.CENTER);
-            mErrorView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    mWebView.clearFormData();
-                    hideErrorPage(mWebView);
-                    mWebView.reload();
-                }
-            });
-        }
-    }
 
     @Override
     public void onReceivedClientCertRequest(WebView view, ClientCertRequest request) {
@@ -86,17 +44,12 @@ public class Lib_WebViewClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         LogUtil.e("onPageFinished:", url);
-        if (!view.getSettings().getLoadsImagesAutomatically()) {
-            view.getSettings().setLoadsImagesAutomatically(true);
-        }
-        showErrorPage(view);
     }
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         LogUtil.e("onPageStarted:", url);
-        initErrorPage(view);
     }
 
     @Override
