@@ -22,7 +22,7 @@ import zsx.com.test.ui.refresh.DataEntity;
  */
 public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object> {
     public enum Api {
-        GET, POST, PUT, DELETE, TEST
+        PUT, TEST
     }
 
     public LoadData(LoadData.Api id, Lib_LifeCycle lifeCycle) {
@@ -40,27 +40,7 @@ public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object
         Lib_HttpParams params = new Lib_HttpParams();
         Map<String, Object> map = new HashMap<>();
         switch (id) {
-            case GET:
-                params.setRequestMethod(Lib_HttpParams.GET);
-                params.setApiUrl("http://api.m.qu.cn/goods/5520");
-                map.put("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
-                params.setParams(map);
-                break;
-            case POST:
-                params.setRequestMethod(Lib_HttpParams.GET);
-                params.setApiUrl("http://api.m.qu.cn/goods/55202131");
-                params.addHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
-                params.setParams(map);
-                break;
             case PUT:
-                params.setRequestMethod(Lib_HttpParams.POST);
-                params.setApiUrl("http://api.m.qu.cn/token/obtain");
-                params.addHttpHead("App-Agent", "version=2.0.2 , platform=ios , app_store_name=quwang, uuid=uuid5,software_version=ios7,models=meizu 4 pro");
-                params.setParams(map);
-                break;
-            case DELETE:
-                params.setRequestMethod(Lib_HttpParams.DELETE);
-                params.setApiUrl("http://api.m.qu.cn/test/delete");
                 break;
             case TEST:
                 break;
@@ -72,6 +52,7 @@ public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object
     protected String __requestProtocol(Api api, Lib_HttpParams params) throws ParseException, URISyntaxException, IOException, Lib_Exception {
         switch (api) {
             case TEST:
+            case PUT:
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
@@ -100,9 +81,6 @@ public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object
                 }
                 result.setData((T) d);
                 break;
-            case DELETE:
-            case GET:
-            case POST:
             case PUT:
                 result.setData((T) currentDownloadText);
                 break;

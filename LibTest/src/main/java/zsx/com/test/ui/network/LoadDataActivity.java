@@ -19,7 +19,6 @@ import zsx.com.test.base._BaseActivity;
 public class LoadDataActivity extends _BaseActivity implements View.OnClickListener {
     TextView mMessageTV;
     LoadData loadData;
-    LoadingHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,7 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
         findViewById(R.id.btn_load).setOnClickListener(this);
         mMessageTV = (TextView) findViewById(R.id.tv_message);
         loadData = new LoadData(LoadData.Api.PUT, this);
-        helper = new LoadingHelper(mMessageTV, loadData) {
+        loadData._setOnLoadingListener(new LoadingHelper(mMessageTV, loadData) {
             @Override
             public void __onComplete(Lib_HttpRequest<String> request, Lib_HttpResult<String> data) {
                 mMessageTV.setText(data.getData());
@@ -38,8 +37,8 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
             public void __onError(View errorView, Lib_HttpRequest<String> request, Lib_HttpResult<String> data, boolean isAPIError, String error_message) {
                 ((TextView) errorView).setText(error_message);
             }
-        };
-        loadData._setOnLoadingListener(helper);
+        });
+        loadData._refreshData();
     }
 
     @Override
@@ -54,7 +53,6 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
     public abstract static class LoadingHelper extends Lib_LoadingHelper<LoadData.Api, String, String> {
         public TextView loadingTV;
         public TextView errorTV;
-        public TextView noDataTV;
 
         public LoadingHelper(View resLayout, Lib_BaseHttpRequestData requestData) {
             super(resLayout);
@@ -66,11 +64,6 @@ public class LoadDataActivity extends _BaseActivity implements View.OnClickListe
             errorTV.setGravity(Gravity.CENTER);
             errorTV.setText("error...");
             _setErrorView(errorTV);
-            requestData._setOnLoadingListener(this);
-//            noDataTV = new TextView(resLayout.getContext());
-//            noDataTV.setGravity(Gravity.CENTER);
-//            noDataTV.setText("no Data...");
-//            setNoDataView(noDataTV);
         }
     }
 }
