@@ -2,8 +2,13 @@ package zsx.com.test.ui.web;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
+
+import com.zsx.tools.Lib_WebViewHelper;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -15,6 +20,7 @@ import zsx.com.test.base._BaseActivity;
  */
 public class WebViewActivity extends _BaseActivity implements View.OnClickListener {
     public WebView mWebView;
+    Lib_WebViewHelper webViewHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +29,22 @@ public class WebViewActivity extends _BaseActivity implements View.OnClickListen
         mWebView = (WebView) findViewById(R.id.webView);
         ((TextView) findViewById(R.id.tv_right)).setText("加载");
         findViewById(R.id.tv_right).setOnClickListener(this);
-        BaseWebView.init(mWebView);
+//        BaseWebView.init(mWebView);
+        webViewHelper = new Lib_WebViewHelper(mWebView);
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+//                super.onReceivedError(view, errorCode, description, failingUrl);
+                webViewHelper.onReceivedError(view, errorCode, description, failingUrl);
+            }
+        });
+        mWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                _showToast(url);
+                return super.onJsAlert(view, url, message, result);
+            }
+        });
     }
 
     @Override
