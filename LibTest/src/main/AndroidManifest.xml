@@ -21,15 +21,12 @@
             </intent-filter>
         </activity>
         <activity android:name="com.zsx.app._PublicFragmentActivity" />
-        <activity android:name=".ui.debug.ExceptionActivity" />
-        <activity android:name=".ui.adapter.InsertAdapterActivity" />
         <activity android:name=".ui.download.DownloadActivity" />
         <activity android:name=".ui.network.LoadDataActivity" />
         <activity android:name=".ui.network.HttpUrlConnectActivity" />
         <activity android:name=".ui.widget.SlidingMenuActivity" />
         <activity android:name=".ui.widget.ViewPagerIndicatorActivity" />
         <activity android:name=".ui.widget.KeywordsFlowActivity" />
-        <activity android:name=".ui.widget.AutoListViewActivity" />
         <activity android:name=".ui.widget.DragListViewActivity" />
         <activity android:name=".ui.parse.JavaParseActivity" />
         <activity android:name=".ui.widget.PinnedSectionActivity" />
