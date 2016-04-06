@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Material">
+        <!--设置波纹的颜色-->
+        <!--<item name="android:colorControlHighlight">#4D00AA00</item>-->
+        <!--设置checkbox等控件的选中颜色-->
+        <!--<item name="android:colorAccent">#4D23EAFA</item>-->
+        <!--android:background="?android:attr/selectableItemBackground"波纹有边界-->
+        <!--android:background="?android:attr/selectableItemBackgroundBorderless"波纹超出边界-->
+        <!--<item name="android:background">?android:attr/selectableItemBackground</item>-->
+
+
+        <!--&lt;!&ndash; 允许使用transitions &ndash;&gt;-->
+        <!--<item name="android:windowContentTransitions">true</item>-->
+
+        <!--&lt;!&ndash; 指定进入和退出transitions &ndash;&gt;-->
+        <!--<item name="android:windowEnterTransition">@transition/explode</item>-->
+        <!--<item name="android:windowExitTransition">@transition/explode</item>-->
+
+        <!--&lt;!&ndash; 指定shared element transitions &ndash;&gt;-->
+        <!--<item name="android:windowSharedElementEnterTransition">@transition/change_image_transform-->
+        <!--</item>-->
+        <!--<item name="android:windowSharedElementExitTransition">@transition/change_image_transform-->
+        <!--</item>-->
+    </style>
+</resources>

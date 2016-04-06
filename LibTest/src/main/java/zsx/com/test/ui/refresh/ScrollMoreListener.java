@@ -1,11 +1,5 @@
 package zsx.com.test.ui.refresh;
 
-import android.widget.AbsListView;
-
-import com.zsx.itf.Lib_ListDataAdapter;
-import com.zsx.network.Lib_BaseHttpRequestData;
-import com.zsx.network.Lib_HttpResult;
-
 /**
  * Author       zhusx
  * Email        327270607@qq.com

@@ -5,9 +5,6 @@ import android.os.Looper;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
-import com.zsx.itf.Lib_ListDataAdapter;
-import com.zsx.tools.Lib_DownloadHelper;
-import com.zsx.util.Lib_Util_HttpRequest;
 import com.zsx.util.Lib_Util_HttpURLRequest;
 import com.zsx.util._NetworkUtil;
 
