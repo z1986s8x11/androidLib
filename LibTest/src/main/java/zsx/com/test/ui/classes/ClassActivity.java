@@ -12,6 +12,13 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.zsx.debug.LogUtil;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+
+import dalvik.system.DexFile;
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
 
@@ -23,10 +30,44 @@ import zsx.com.test.base._BaseActivity;
 //DexClassLoader
 //PathClassLoader
 public class ClassActivity extends _BaseActivity {
+    private static String[] getClassesFromPackage(Context context) {
+        ArrayList<String> classes = new ArrayList<String>();
+        String packageName = context.getPackageName();
+        try {
+            LogUtil.e("====", context.getPackageCodePath());
+            DexFile df = new DexFile(context.getPackageCodePath());
+            Enumeration<String> entries = df.entries();
+            while (entries.hasMoreElements()) {
+                String className = entries.nextElement();
+                if (className.contains(packageName)) {
+                    if (!className.contains("$")) {
+                        LogUtil.e("====", className);
+                        classes.add(className);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return classes.toArray(new String[]{});
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
+        findViewById(R.id.tv_title).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
+//                    @Override
+//                    public String doInBackground() {
+//                        Arrays.toString(getClassesFromPackage(ClassActivity.this));
+//                        return "";
+//                    }
+//                });
+            }
+        });
     }
 }
 

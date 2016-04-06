@@ -15,7 +15,7 @@ import com.zsx.R;
 public class XListViewFooter extends LinearLayout {
     private final ProgressBar loadingPB;
     private TextView loadMoreTV;
-    public String doneStr = "滑动加载";
+    public String doneStr = "";
     public String noDataStr = "";
     public String doneToLoadMore = "正在加载...";
     public String loadMoreToError = "";//加载失败,点击重新加载
