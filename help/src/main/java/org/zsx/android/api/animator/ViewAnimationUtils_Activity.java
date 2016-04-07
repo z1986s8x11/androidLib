@@ -20,7 +20,7 @@ public class ViewAnimationUtils_Activity extends _BaseActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.zsx.R.layout.anim_viewaunimationutil);
+        setContentView(R.layout.anim_viewaunimationutil);
         findViewById(R.id.tv_text1).setOnClickListener(this);
         findViewById(R.id.tv_text2).setOnClickListener(this);
     }
