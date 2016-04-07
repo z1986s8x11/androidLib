@@ -147,3 +147,6 @@ https://github.com/kimhou/Android/tree/master/VideoDemoPro
 
 博客
 http://blog.csdn.net/lmj623565791/article/list/1
+
+UI卡顿工具  :BlockCanary
+内存泄漏工具 :LeakCanary
