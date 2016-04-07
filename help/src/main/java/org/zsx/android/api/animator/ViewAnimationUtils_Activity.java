@@ -32,6 +32,14 @@ public class ViewAnimationUtils_Activity extends _BaseActivity implements View.O
         switch (v.getId()) {
             case R.id.tv_text1:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    /**
+                     *  参数介绍:
+                     *  view 操作的视图
+                     *  centerX 动画开始的中心点X
+                     *  centerY 动画开始的中心点Y
+                     *  startRadius 动画开始半径
+                     *  startRadius 动画结束半径
+                     */
                     animator1 = ViewAnimationUtils.createCircularReveal(
                             v,
                             v.getWidth() / 2,
