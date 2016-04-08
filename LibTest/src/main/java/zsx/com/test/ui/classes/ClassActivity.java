@@ -10,8 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zsx.debug.LogUtil;
-import com.zsx.tools.Lib_Subscribes;
 import com.zsx.tools.Lib_PackageHelper;
+import com.zsx.tools.Lib_Subscribes;
 
 import java.util.Arrays;
 
@@ -58,6 +58,9 @@ public class ClassActivity extends _BaseActivity implements View.OnClickListener
                         @Override
                         public void onClick(View v) {
                             if (TextUtils.isEmpty(bean.path)) {
+                                return;
+                            }
+                            if (!bean.path.contains("Activity")) {
                                 return;
                             }
                             try {
