@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import dalvik.system.DexFile;
 
@@ -17,6 +20,7 @@ import dalvik.system.DexFile;
  */
 public class Lib_PackageHelper {
     public Map<String, Lib_PackageHelper> map;
+    public static Set<String> classNameSet = new HashSet<>();
     public String name;
     public String path;
     public static Lib_PackageHelper scanData;
@@ -66,6 +70,13 @@ public class Lib_PackageHelper {
         if (map != null) {
             map.clear();
         }
+        if (!classNameSet.isEmpty()) {
+            Iterator<String> it = classNameSet.iterator();
+            while (it.hasNext()) {
+                scanData.add(it.next());
+            }
+            return scanData;
+        }
         String packageName = context.getPackageName();
         try {
             DexFile df = new DexFile(context.getPackageCodePath());
@@ -75,6 +86,7 @@ public class Lib_PackageHelper {
                 if (className.contains(packageName)) {
                     if (!className.contains("$")) {
                         scanData.add(className);
+                        classNameSet.add(className);
                     }
                 }
             }
