@@ -11,8 +11,10 @@ import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.zsx.debug.LogUtil;
+import com.zsx.tools.Lib_WindowsHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import zsx.com.test.base._BaseActivity;
  */
 //DexClassLoader
 //PathClassLoader
-public class ClassActivity extends _BaseActivity {
+public class ClassActivity extends _BaseActivity implements View.OnClickListener {
     private static String[] getClassesFromPackage(Context context) {
         ArrayList<String> classes = new ArrayList<String>();
         String packageName = context.getPackageName();
@@ -56,9 +58,37 @@ public class ClassActivity extends _BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
-        findViewById(R.id.tv_title).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        findViewById(R.id.tv_title).setOnClickListener(this);
+    }
+
+    private TextView t;
+    Lib_WindowsHelper helper;
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_title:
+                if (helper == null) {
+                    helper = new Lib_WindowsHelper(v.getContext());
+                }
+                if (t == null) {
+                    t = new TextView(getBaseContext());
+                    t.setTextColor(Color.BLACK);
+                    t.setPadding(20, 20, 20, 20);
+                    t.setBackgroundColor(Color.WHITE);
+                    t.setText("通知来了");
+                }
+                if (t.getParent() == null) {
+                    helper._show(t);
+                    t.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (t.getParent() != null) {
+                                helper._hide(t);
+                            }
+                        }
+                    }, 3000);
+                }
 //                Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<String>() {
 //                    @Override
 //                    public String doInBackground() {
@@ -66,8 +96,8 @@ public class ClassActivity extends _BaseActivity {
 //                        return "";
 //                    }
 //                });
-            }
-        });
+                break;
+        }
     }
 }
 
