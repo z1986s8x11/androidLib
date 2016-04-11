@@ -23,11 +23,21 @@ android {
 //            keyPassword "gradle"
 //        }
 //    }
+    signingConfigs {
+        release {
+            storeFile file("keystore.jks")
+            storePassword "13996687614"
+            keyAlias "祝思翔"
+            keyPassword "13996687614"
+        }
+    }
     buildTypes {
         debug {
+            signingConfig signingConfigs.release
             buildConfigField "boolean", "SHOW_LOGS", "Boolean.parseBoolean(\"true\")"
         }
         release {
+            signingConfig signingConfigs.release
             buildConfigField "boolean", "SHOW_LOGS", "Boolean.parseBoolean(\"false\")"
             //混淆
             minifyEnabled true
