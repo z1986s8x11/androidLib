@@ -150,3 +150,5 @@ http://blog.csdn.net/lmj623565791/article/list/1
 
 UI卡顿工具  :BlockCanary
 内存泄漏工具 :LeakCanary
+
+chrome 模拟请求工具  :http://chromecj.com/web-development/2014-09/60/download.html

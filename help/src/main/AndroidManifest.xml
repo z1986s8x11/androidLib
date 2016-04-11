@@ -44,7 +44,6 @@
     <application
         android:name="org.zsx.android.api._BaseApplication"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <!-- Activity 配置 -->
@@ -91,7 +90,7 @@
         <activity
             android:name="org.zsx.android.api.MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:label="@string/app_name"
+            android:label="${APP_NAME}"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -284,6 +283,10 @@
             android:permission="org.android.zsx.permission.LOAD"
             android:process=":baseService" />
         <service android:name="com.zsx.debug.Lib_DebugService" />
+
+        <meta-data
+            android:name="ZHUSX"
+            android:value="${ZHUSX}" />
     </application>
 
 </manifest>
