@@ -12,18 +12,10 @@ android {
         versionName "1.0"
     }
     //签名
-//    signingConfigs {
+    signingConfigs {
 //        debug {
 //            storeFile file("C:/Users/Administrator/.android/debug.keystore")
 //        }
-//        relealse {
-//            storeFile file("F:/gradle.jks")                 //Android Studio --> Build --> Generate Signed APK --> Create New 可以生成
-//            storePassword "gradle"                          //在生成.jks文件时需要填入的参数一一对应即可
-//            keyAlias "gradle"
-//            keyPassword "gradle"
-//        }
-//    }
-    signingConfigs {
         release {
             storeFile file("keystore.jks")
             storePassword "13996687614"
