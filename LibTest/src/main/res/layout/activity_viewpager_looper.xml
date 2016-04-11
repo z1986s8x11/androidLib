@@ -9,6 +9,6 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:autoScroll="true"
-        app:interval="2000" />
+        app:lib_autoScroll="true"
+        app:lib_interval="2000" />
 </LinearLayout>

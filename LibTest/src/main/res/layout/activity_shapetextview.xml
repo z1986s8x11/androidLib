@@ -12,9 +12,9 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:gradientEndColor="@color/lib_green"
-        app:gradientStartColor="@color/lib_blue"
-        app:solidColor="#888888" />
+        app:lib_gradientEndColor="@color/lib_green"
+        app:lib_gradientStartColor="@color/lib_blue"
+        app:lib_solidColor="#888888" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -23,10 +23,10 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:solidColor="#888888"
-        app:strokeColor="#ff22ff"
-        app:strokeWidth="3dp"
-        app:topLeftRadius="10dp" />
+        app:lib_solidColor="#888888"
+        app:lib_strokeColor="#ff22ff"
+        app:lib_strokeWidth="3dp"
+        app:lib_topLeftRadius="10dp" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -35,11 +35,11 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:solidColor="#888888"
-        app:strokeColor="#ff22ff"
-        app:strokeDashGap="2dp"
-        app:strokeDashWidth="2dp"
-        app:strokeWidth="3dp" />
+        app:lib_solidColor="#888888"
+        app:lib_strokeColor="#ff22ff"
+        app:lib_strokeDashGap="2dp"
+        app:lib_strokeDashWidth="2dp"
+        app:lib_strokeWidth="3dp" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -48,8 +48,8 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:radius="6dp"
-        app:solidColor="#888888" />
+        app:lib_radius="6dp"
+        app:lib_solidColor="#888888" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -58,9 +58,9 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:bottomLeftRadius="6dp"
-        app:bottomRightRadius="6dp"
-        app:solidColor="#888888" />
+        app:lib_bottomLeftRadius="6dp"
+        app:lib_bottomRightRadius="6dp"
+        app:lib_solidColor="#888888" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -70,13 +70,13 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:bottomLeftRadius="6dp"
-        app:bottomRightRadius="6dp"
-        app:solidColor2="#FFDD11"
-        app:status="pressed"
-        app:strokeColor="#ff22ff"
-        app:strokeColor2="#2222ff"
-        app:strokeWidth="3dp" />
+        app:lib_bottomLeftRadius="6dp"
+        app:lib_bottomRightRadius="6dp"
+        app:lib_solidColor2="#FFDD11"
+        app:lib_status="pressed"
+        app:lib_strokeColor="#ff22ff"
+        app:lib_strokeColor2="#2222ff"
+        app:lib_strokeWidth="3dp" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -85,11 +85,11 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:strokeColor="#ff22ff"
-        app:strokeColor2="#2222ff"
-        app:strokeWidth="3dp"
-        app:textColor2="@color/lib_yellow"
-        app:textColorStatus="pressed" />
+        app:lib_strokeColor="#ff22ff"
+        app:lib_strokeColor2="#2222ff"
+        app:lib_strokeWidth="3dp"
+        app:lib_textColor2="@color/lib_yellow"
+        app:lib_textColorStatus="pressed" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -99,13 +99,13 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_white"
-        app:solidColor2="@color/lib_gray"
-        app:status="pressed"
-        app:strokeColor="#ff22ff"
-        app:strokeColor2="#2222ff"
-        app:strokeWidth="3dp"
-        app:textColor2="@color/lib_yellow"
-        app:textColorStatus="pressed" />
+        app:lib_solidColor2="@color/lib_gray"
+        app:lib_status="pressed"
+        app:lib_strokeColor="#ff22ff"
+        app:lib_strokeColor2="#2222ff"
+        app:lib_strokeWidth="3dp"
+        app:lib_textColor2="@color/lib_yellow"
+        app:lib_textColorStatus="pressed" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -115,14 +115,14 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_black"
-        app:status="pressed"
-        app:strokeColor="#ff22ff"
-        app:strokeColor2="#553055"
-        app:strokeDashGap="2dp"
-        app:strokeDashWidth="10dp"
-        app:strokeWidth="3dp"
-        app:textColor2="@color/lib_gray"
-        app:textColorStatus="pressed" />
+        app:lib_status="pressed"
+        app:lib_strokeColor="#ff22ff"
+        app:lib_strokeColor2="#553055"
+        app:lib_strokeDashGap="2dp"
+        app:lib_strokeDashWidth="10dp"
+        app:lib_strokeWidth="3dp"
+        app:lib_textColor2="@color/lib_gray"
+        app:lib_textColorStatus="pressed" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -141,7 +141,7 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_black"
-        app:background2="@drawable/lib_base_iv_listview_arrow" />
+        app:lib_background2="@drawable/lib_base_iv_listview_arrow" />
 
     <com.zsx.widget.view.Lib_Widget_TextView
         android:layout_width="match_parent"
@@ -151,6 +151,6 @@
         android:padding="5dp"
         android:text="哈哈"
         android:textColor="@color/lib_black"
-        app:background2="@drawable/lib_base_iv_listview_arrow"
-        app:status="pressed" />
+        app:lib_background2="@drawable/lib_base_iv_listview_arrow"
+        app:lib_status="pressed" />
 </LinearLayout>

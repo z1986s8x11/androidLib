@@ -38,7 +38,7 @@ public class Lib_Widget_ExpandListView extends ListView {
             return;
         }
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Lib_AbsListView);
-        isExpand = typedArray.getBoolean(R.styleable.Lib_AbsListView_isExpand, true);
+        isExpand = typedArray.getBoolean(R.styleable.Lib_AbsListView_lib_isExpand, true);
         typedArray.recycle();
     }
 

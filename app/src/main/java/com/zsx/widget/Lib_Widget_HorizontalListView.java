@@ -278,14 +278,14 @@ public class Lib_Widget_HorizontalListView extends AdapterView<ListAdapter> {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Lib_HorizontalListView);
 
             // Get the provided drawable from the XML
-            final Drawable d = a.getDrawable(R.styleable.Lib_HorizontalListView_divider);
+            final Drawable d = a.getDrawable(R.styleable.Lib_HorizontalListView_lib_divider);
             if (d != null) {
                 // If a drawable is provided to use as the divider then use its intrinsic width for the divider width
                 setDivider(d);
             }
 
             // If a width is explicitly specified then use that width
-            final int dividerWidth = a.getDimensionPixelSize(R.styleable.Lib_HorizontalListView_dividerWidth, 0);
+            final int dividerWidth = a.getDimensionPixelSize(R.styleable.Lib_HorizontalListView_lib_dividerWidth, 0);
             if (dividerWidth != 0) {
                 setDividerWidth(dividerWidth);
             }
