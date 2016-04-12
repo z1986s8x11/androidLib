@@ -1,4 +1,4 @@
-package zsx.com.test.ui.v7;
+package com.zsx.widget.v7;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -78,5 +78,16 @@ public abstract class _BaseRecyclerAdapter<T> extends RecyclerView.Adapter<_Base
             }
             return (T) childView;
         }
+    }
+
+    public void _addItemToUpdate(T t) {
+        mList.add(t);
+        notifyItemInserted(mList.indexOf(t));
+    }
+
+    public void _removeItemToUpdate(T t) {
+        int position = mList.indexOf(t);
+        mList.remove(position);
+        notifyItemRemoved(position);
     }
 }

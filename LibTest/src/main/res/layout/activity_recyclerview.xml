@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
-    <View
-        android:id="@+id/vTestPalette"
+    <com.zsx.widget.Lib_Widget_HorizontalListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#FFFFFF" />
+        android:layout_height="50dp" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/vTestPalette">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -23,4 +20,4 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
-</RelativeLayout>
+</LinearLayout>
