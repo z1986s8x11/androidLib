@@ -224,6 +224,7 @@
         <activity android:name="org.zsx.android.api.widget.ProgressDialog_Activity" />
         <activity android:name="org.zsx.android.api.widget.RaidoButton_Activity" />
         <activity android:name="org.zsx.android.api.widget.RatingBar_Activity" />
+        <activity android:name="org.zsx.android.api.widget.RecyclerView_Activity" />
         <activity android:name="org.zsx.android.api.widget.SearchView_Activity" />
         <activity android:name="org.zsx.android.api.widget.ScrollView_Activity" />
         <activity android:name="org.zsx.android.api.widget.SeekBar_Activity" />

@@ -102,6 +102,7 @@ import org.zsx.android.api.widget.ProgressBar_Activity;
 import org.zsx.android.api.widget.ProgressDialog_Activity;
 import org.zsx.android.api.widget.RaidoButton_Activity;
 import org.zsx.android.api.widget.RatingBar_Activity;
+import org.zsx.android.api.widget.RecyclerView_Activity;
 import org.zsx.android.api.widget.ScrollView_Activity;
 import org.zsx.android.api.widget.SearchView_Activity;
 import org.zsx.android.api.widget.SeekBar_Activity;
@@ -141,7 +142,7 @@ public class MainActivity extends _BaseActivity {
             ExpandableListView_Activity.class, Gallery_Activity.class, GridLayout_Activity.class, GridView_Activity.class, HorizontalScrollView_Activity.class,
             ImageButton_Activity.class, ImageSwithcer_Activity.class, ImageView_Activity.class, ListView_Activity.class, PopupMenu_Activity.class,
             PopupWindow_Activity.class, PreferenceActivity_Activity.class, PreferenceFragment_Activity.class, PreferenceHeader_Activity.class,
-            ProgressBar_Activity.class, ProgressDialog_Activity.class, RaidoButton_Activity.class, RatingBar_Activity.class, SearchView_Activity.class,
+            ProgressBar_Activity.class, ProgressDialog_Activity.class, RaidoButton_Activity.class, RatingBar_Activity.class, RecyclerView_Activity.class, SearchView_Activity.class,
             ScrollView_Activity.class, SeekBar_Activity.class, SlidingDrawer_Activity.class, Switch_Activity.class, SwipeRefreshLayout_Activity.class,
             SurfaceView_Activity.class, Spinner_Activity.class, TabHost_Activity.class, TextClock_Activity.class, TableLayout_Activity.class,
             TextToSpeech_Activity.class, TextView_Activity.class, TextSwitch_Activity.class, TimePicker_Activity.class, TimePickerDialog_Activity.class,
