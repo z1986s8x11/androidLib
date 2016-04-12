@@ -85,7 +85,7 @@ public class P_ProjectHelper {
                 String className = entries.nextElement();
                 if (className.contains(packageName)) {
                     if (!className.contains("$")) {
-                        if (className.endsWith("Activity") || className.endsWith("Fragment")) {
+                        if (className.endsWith("_Activity") || className.endsWith("_Fragment")) {
                             scanData.add(className);
                             classNameSet.add(className);
                         }
