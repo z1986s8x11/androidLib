@@ -1,4 +1,4 @@
-package com.zsx.tools;
+package com.zsx.debug;
 
 import android.content.Context;
 
@@ -18,36 +18,36 @@ import dalvik.system.DexFile;
  * Email        327270607@qq.com
  * Created      2016/4/7 18:08
  */
-public class Lib_PackageHelper {
-    public Map<String, Lib_PackageHelper> map;
+public class P_ProjectHelper {
+    public Map<String, P_ProjectHelper> map;
     public static Set<String> classNameSet = new HashSet<>();
     public String name;
     public String path;
-    public static Lib_PackageHelper scanData;
+    public static P_ProjectHelper scanData;
 
-    private Lib_PackageHelper() {
+    private P_ProjectHelper() {
     }
 
-    public static Lib_PackageHelper getInstance() {
+    public static P_ProjectHelper getInstance() {
         if (scanData == null) {
-            scanData = new Lib_PackageHelper();
+            scanData = new P_ProjectHelper();
         }
         return scanData;
     }
 
 
-    public Lib_PackageHelper _init(Context context) {
+    public P_ProjectHelper _init(Context context) {
         initClassesFromPackage(context);
         return scanData;
     }
 
 
     public void add(String packName) {
-        Lib_PackageHelper rootItem = this;
+        P_ProjectHelper rootItem = this;
         String[] keys = packName.split("\\.");
         String path = "";
         for (int i = 0; i < keys.length; i++) {
-            Lib_PackageHelper item = new Lib_PackageHelper();
+            P_ProjectHelper item = new P_ProjectHelper();
             path += "." + keys[i];
             item.name = keys[i];
             if (i == keys.length - 1) {
@@ -66,7 +66,7 @@ public class Lib_PackageHelper {
         }
     }
 
-    private Lib_PackageHelper initClassesFromPackage(Context context) {
+    private P_ProjectHelper initClassesFromPackage(Context context) {
         if (map != null) {
             map.clear();
         }
@@ -85,8 +85,10 @@ public class Lib_PackageHelper {
                 String className = entries.nextElement();
                 if (className.contains(packageName)) {
                     if (!className.contains("$")) {
-                        scanData.add(className);
-                        classNameSet.add(className);
+                        if (className.endsWith("Activity") || className.endsWith("Fragment")) {
+                            scanData.add(className);
+                            classNameSet.add(className);
+                        }
                     }
                 }
             }
@@ -96,9 +98,9 @@ public class Lib_PackageHelper {
         return scanData;
     }
 
-    public Lib_PackageHelper get(String packName) {
+    public P_ProjectHelper get(String packName) {
         String[] keys = packName.trim().split("\\.");
-        Map<String, Lib_PackageHelper> maps = this.map;
+        Map<String, P_ProjectHelper> maps = this.map;
         for (int i = 0; i < keys.length; i++) {
             if (i == keys.length - 1) {
                 return maps.get(keys[i]);
@@ -114,12 +116,12 @@ public class Lib_PackageHelper {
         return map != null;
     }
 
-    public Lib_PackageHelper[] list() {
+    public P_ProjectHelper[] list() {
         if (map == null) {
-            return new Lib_PackageHelper[]{};
+            return new P_ProjectHelper[]{};
         }
-        Collection<Lib_PackageHelper> c = map.values();
-        return c.toArray(new Lib_PackageHelper[]{});
+        Collection<P_ProjectHelper> c = map.values();
+        return c.toArray(new P_ProjectHelper[]{});
     }
 
     @Override

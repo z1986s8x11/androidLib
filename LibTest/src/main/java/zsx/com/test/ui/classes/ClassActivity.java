@@ -1,23 +1,6 @@
 package zsx.com.test.ui.classes;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.zsx.debug.LogUtil;
-import com.zsx.tools.Lib_PackageHelper;
-import com.zsx.tools.Lib_Subscribes;
-
-import java.util.Arrays;
-
-import zsx.com.test.R;
-import zsx.com.test.base._BaseActivity;
-import zsx.com.test.base._BaseAdapter;
+import com.zsx.debug.P_ProjectActivity;
 
 /**
  * Author       zhusx
@@ -26,89 +9,10 @@ import zsx.com.test.base._BaseAdapter;
  */
 //DexClassLoader
 //PathClassLoader
-public class ClassActivity extends _BaseActivity implements View.OnClickListener {
-
-    private ListView mListView;
-    _BaseAdapter<Lib_PackageHelper> adapter;
-
+public class ClassActivity extends P_ProjectActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_class);
-        findViewById(R.id.tv_title).setOnClickListener(this);
-        mListView = (ListView) findViewById(R.id.listView);
-        mListView.setAdapter(adapter = new _BaseAdapter<Lib_PackageHelper>(this) {
-            @Override
-            public View getView(LayoutInflater inflater, final Lib_PackageHelper bean, int position, View convertView, ViewGroup parent) {
-                TextView t = new TextView(inflater.getContext());
-                t.setPadding(30, 30, 30, 30);
-                t.setText(bean.name);
-                if (bean.isDir()) {
-                    t.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(v.getContext(), ClassActivity.class);
-                            intent.putExtra(_EXTRA_String, bean.path);
-                            startActivity(intent);
-
-                        }
-                    });
-                } else {
-                    t.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (TextUtils.isEmpty(bean.path)) {
-                                return;
-                            }
-                            if (!bean.path.contains("Activity")) {
-                                return;
-                            }
-                            try {
-                                Class cls = Class.forName(bean.path);
-                                Intent intent = new Intent(v.getContext(), cls);
-                                startActivity(intent);
-                            } catch (ClassNotFoundException e) {
-                                e.printStackTrace();
-                                _showToast(bean.path + " 没有找到");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                _showToast("Activity 在mainfest.xml 没有注册");
-                            }
-                        }
-                    });
-                }
-                return t;
-            }
-        });
-        if (getIntent() != null && getIntent().getStringExtra(_EXTRA_String) != null) {
-            adapter._setItemsToUpdate(Arrays.asList(Lib_PackageHelper.getInstance().get(getIntent().getStringExtra(_EXTRA_String)).list()));
-        } else {
-            Lib_Subscribes.subscribe(new Lib_Subscribes.Subscriber<Lib_PackageHelper>() {
-                @Override
-                public Lib_PackageHelper doInBackground() {
-                    return Lib_PackageHelper.getInstance()._init(ClassActivity.this).get(getPackageName() + ".ui");
-                }
-
-                @Override
-                public void onComplete(Lib_PackageHelper helper) {
-                    adapter._setItemsToUpdate(Arrays.asList(helper.list()));
-                }
-
-                @Override
-                public void onError(Throwable t) {
-                    _showToast("未知错误");
-                    LogUtil.e(t);
-                }
-            }, this);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_title:
-                break;
-        }
+    protected String __getFilterPackage() {
+        return super.__getFilterPackage() + ".ui";
     }
 }
 
