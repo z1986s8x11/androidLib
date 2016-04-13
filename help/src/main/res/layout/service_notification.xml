@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <Button
         android:id="@id/global_btn1"
@@ -15,14 +15,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="关闭" />
+
     <Button
         android:id="@id/global_btn3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开启2" />
+
     <Button
         android:id="@id/global_btn4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="关闭2" />
+
+    <Button
+        android:id="@id/global_btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启悬浮通知" />
+
+    <Button
+        android:id="@id/global_btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="关闭悬浮通知" />
 </LinearLayout>

@@ -18,6 +18,7 @@ public class Notification_Activity extends _BaseActivity implements Button.OnCli
     private NotificationManager mNotificationManager;
     private final int ZSX_ID = 0x811;
     private final int ZSX_ID2 = 0x822;
+    private final int ZSX_ID3 = 0x823;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class Notification_Activity extends _BaseActivity implements Button.OnCli
         findViewById(R.id.global_btn2).setOnClickListener(this);
         findViewById(R.id.global_btn3).setOnClickListener(this);
         findViewById(R.id.global_btn4).setOnClickListener(this);
+        findViewById(R.id.global_btn5).setOnClickListener(this);
+        findViewById(R.id.global_btn6).setOnClickListener(this);
         mNotificationManager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
     }
 
@@ -45,6 +48,12 @@ public class Notification_Activity extends _BaseActivity implements Button.OnCli
                 mNotificationManager.notify(ZSX_ID2, notifyNotification2());
                 break;
             case R.id.global_btn4:
+                mNotificationManager.cancel(ZSX_ID2);
+                break;
+            case R.id.global_btn5:
+                mNotificationManager.notify(ZSX_ID3, notifyNotification3());
+                break;
+            case R.id.global_btn6:
                 mNotificationManager.cancel(ZSX_ID2);
                 break;
             default:
@@ -115,5 +124,22 @@ public class Notification_Activity extends _BaseActivity implements Button.OnCli
          */
         n.flags = Notification.FLAG_AUTO_CANCEL;
         return n;
+    }
+
+    /**
+     * 悬浮通知
+     */
+    private Notification notifyNotification3() {
+        PendingIntent intent = PendingIntent.getActivity(this, 11, new Intent(), PendingIntent.FLAG_NO_CREATE);
+        Notification notification = new NotificationCompat.Builder(this)
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setFullScreenIntent(intent, false) //开启悬浮通知  Builder.setFullScreenIntent(pendingIntent, false) 是关键;
+                .setContentTitle("这是标题")
+                .setContentText("这是内容")
+                .setUsesChronometer(true)// true 通知栏将会显示计时时间, false 将会显示当前时间
+                .addAction(R.drawable.ic_launcher, "菜单1", intent)
+                .build();
+        return notification;
     }
 }

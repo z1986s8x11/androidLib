@@ -5,6 +5,8 @@
     <item name="global_btn2" type="id"></item>
     <item name="global_btn3" type="id"></item>
     <item name="global_btn4" type="id"></item>
+    <item name="global_btn5" type="id"></item>
+    <item name="global_btn6" type="id"></item>
     <item name="global_edittext1" type="id"></item>
     <item name="global_textview1" type="id"></item>
     <item name="global_textview2" type="id"></item>

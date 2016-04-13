@@ -61,6 +61,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':app')
     compile files('libs/core.jar')
-//compile(name: 'androidLib-1.0.0', ext: 'aar')
-//apt files('src/libs/apt.jar')
+    //compile(name: 'androidLib-1.0.0', ext: 'aar')
+    //apt files('src/libs/apt.jar')
+    compile 'com.android.support:design:22.2.1'
 }
