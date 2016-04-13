@@ -1,5 +1,7 @@
 package zsx.com.test.ui.network;
 
+import android.os.Environment;
+
 import com.zsx.exception.Lib_Exception;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
@@ -10,6 +12,7 @@ import com.zsx.network.Lib_HttpResult;
 import org.apache.http.ParseException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -22,7 +25,7 @@ import zsx.com.test.ui.refresh.DataEntity;
  */
 public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object> {
     public enum Api {
-        PUT, TEST
+        PUT, TEST, DOWNLOAD
     }
 
     public LoadData(LoadData.Api id, Lib_LifeCycle lifeCycle) {
@@ -43,6 +46,11 @@ public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object
             case PUT:
                 break;
             case TEST:
+                break;
+            case DOWNLOAD:
+                params.setRequestMethod(Lib_HttpParams.DOWNLOAD);
+                params.setApiUrl("http://s.qw.cc/app/mobile.apk?v=1619");
+                params.setParams(new File(Environment.getExternalStorageDirectory(), "test.apk").getPath());
                 break;
         }
         return params;

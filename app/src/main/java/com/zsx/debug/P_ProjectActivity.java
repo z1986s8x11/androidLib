@@ -35,8 +35,8 @@ public class P_ProjectActivity extends Lib_BaseActivity {
             @Override
             public View getView(LayoutInflater inflater, final P_ProjectHelper bean, int position, View convertView, ViewGroup parent) {
                 View[] vs = _getViewHolder(inflater, convertView, parent, R.layout.lib_list_item_1);
-                _toTextView(vs[0]).setText(bean.name);
                 if (bean.isDir()) {
+                    _toTextView(vs[0]).setText(bean.name);
                     vs[0].setBackgroundResource(R.color.lib_yellow);
                     _toTextView(vs[0]).setTextColor(getResources().getColor(R.color.lib_blue));
                     vs[0].setOnClickListener(new View.OnClickListener() {
@@ -49,6 +49,7 @@ public class P_ProjectActivity extends Lib_BaseActivity {
                         }
                     });
                 } else {
+                    _toTextView(vs[0]).setText(bean.name.substring(0, bean.name.lastIndexOf("_")));
                     vs[0].setBackgroundResource(R.color.lib_white);
                     _toTextView(vs[0]).setTextColor(getResources().getColor(R.color.lib_black));
                     vs[0].setOnClickListener(new View.OnClickListener() {
@@ -61,9 +62,9 @@ public class P_ProjectActivity extends Lib_BaseActivity {
                                 Class cls = Class.forName(bean.path);
                                 Intent intent;
                                 Bundle b = new Bundle();
-                                if (bean.path.endsWith("Activity")) {
+                                if (bean.path.endsWith("_Activity")) {
                                     intent = new Intent(v.getContext(), cls);
-                                } else if (bean.path.endsWith("Fragment")) {
+                                } else if (bean.path.endsWith("_Fragment")) {
                                     intent = new Intent(v.getContext(), _PublicFragmentActivity.class);
                                     b.putSerializable(_PublicFragmentActivity._EXTRA_FRAGMENT, cls);
                                 } else {

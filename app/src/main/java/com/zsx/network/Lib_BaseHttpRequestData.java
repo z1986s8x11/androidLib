@@ -291,10 +291,11 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                 if (paramObject instanceof Map) {
                     Map<String, Objects> files = (Map<String, Objects>) paramObject;
                     for (String key : files.keySet()) {
-                        str = Lib_Util_HttpURLRequest.uploadFile(new File(String.valueOf(files.get(key))), params.getRequestUrl(), null, params.getHttpHead(), new Lib_Util_HttpURLRequest.OnProgressListener() {
+                        final String filePath = String.valueOf(files.get(key));
+                        str = Lib_Util_HttpURLRequest.uploadFile(new File(filePath), params.getRequestUrl(), null, params.getHttpHead(), new Lib_Util_HttpURLRequest.OnProgressListener() {
                             @Override
                             public void onProgress(int progress, int currentSize, int totalSize) {
-                                onRequestProgress(id, progress, currentSize, totalSize);
+                                onRequestProgress(id, filePath, progress, currentSize, totalSize);
                             }
 
                             @Override
@@ -311,7 +312,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                 Lib_Util_HttpURLRequest.downloadFile(params.getRequestUrl(), (String) params.getParam(), new Lib_Util_HttpURLRequest.OnProgressListener() {
                     @Override
                     public void onProgress(int progress, int currentSize, int totalSize) {
-                        onRequestProgress(id, progress, currentSize, totalSize);
+                        onRequestProgress(id, params.getRequestUrl(), progress, currentSize, totalSize);
                     }
 
                     @Override
@@ -326,11 +327,11 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
         return str;
     }
 
-    private void onRequestProgress(final Id id, final int progress, final int currentSize, final int totalSize) {
+    private void onRequestProgress(final Id id, final String url, final int progress, final int currentSize, final int totalSize) {
         pHandler.post(new Runnable() {
             @Override
             public void run() {
-                __onLoadProgress(id, progress, currentSize, totalSize);
+                __onLoadProgress(id, url, progress, currentSize, totalSize);
             }
         });
     }
@@ -338,7 +339,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     /**
      * 上传下载进度
      */
-    protected void __onLoadProgress(Id id, int progress, int currentSize, int totalSize) {
+    protected void __onLoadProgress(Id id, String url, int progress, int currentSize, int totalSize) {
     }
 
     private void onRequestStart(Set<Lib_OnHttpLoadingListener<Id, Lib_HttpResult<Result>, Parameter>> listeners, Lib_HttpRequest<Parameter> request) {

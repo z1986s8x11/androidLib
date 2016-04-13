@@ -48,6 +48,7 @@
                     android:scheme="quwang" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.download.Download_Activity" />
         <activity android:name=".ui.widget.DragViewHelperActivity" />
         <activity android:name=".ui.adapter.HorizontalActivity" />
         <activity android:name=".ui.web.WebViewActivity" />
