@@ -2,6 +2,7 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Material">
+        <item name="colorAccent">#3498db</item>
         <!--设置波纹的颜色-->
         <!--<item name="android:colorControlHighlight">#4D00AA00</item>-->
         <!--设置checkbox等控件的选中颜色-->
@@ -23,5 +24,9 @@
         <!--</item>-->
         <!--<item name="android:windowSharedElementExitTransition">@transition/change_image_transform-->
         <!--</item>-->
+    </style>
+
+    <style name="textInputLayout" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">#3498db</item>
     </style>
 </resources>

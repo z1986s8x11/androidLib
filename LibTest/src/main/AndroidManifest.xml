@@ -34,6 +34,9 @@
         <activity android:name=".ui.widget.BadgeViewActivity" />
         <activity android:name=".ui.anim.AnimActivity" />
         <activity android:name=".ui.custom.ViewActivity" />
+        <activity
+            android:name=".ui.design.TextInputLayout_Activity"
+            android:theme="@style/textInputLayout" />
         <activity android:name=".ui.refresh.RefreshLinearLayoutActivity" />
         <activity android:name=".ui.widget.ShapeTextViewActivity">
             <intent-filter>
