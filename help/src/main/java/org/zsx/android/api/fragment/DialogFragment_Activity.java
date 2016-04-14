@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
-import org.zsx.android.api._BaseDialogFragment;
+import org.zsx.android.base._BaseActivity;
+import org.zsx.android.base._BaseDialogFragment;
 
 public class DialogFragment_Activity extends _BaseActivity implements
         OnClickListener {

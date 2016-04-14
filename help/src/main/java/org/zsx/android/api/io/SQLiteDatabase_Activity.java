@@ -13,7 +13,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import java.io.File;
 import java.util.ArrayList;

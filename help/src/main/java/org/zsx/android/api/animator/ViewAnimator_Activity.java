@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.zsx.adapter.Lib_BaseAdapter;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import java.util.Arrays;
 

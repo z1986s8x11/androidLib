@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;

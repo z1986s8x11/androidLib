@@ -11,7 +11,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ToggleButton;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class SoundPool_Activity extends _BaseActivity implements OnCheckedChangeListener, OnLoadCompleteListener {
 	private SoundPool mSoundPool;

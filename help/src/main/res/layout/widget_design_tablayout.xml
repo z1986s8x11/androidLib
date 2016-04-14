@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <!--不知道为什么 一定要有属性值,否则报错-->
     <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+        android:id="@+id/act_widget_current_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/lib_bg_green"

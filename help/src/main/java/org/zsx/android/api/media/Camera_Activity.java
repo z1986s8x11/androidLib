@@ -3,7 +3,7 @@ package org.zsx.android.api.media;
 import java.io.File;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import android.app.Activity;
 import android.content.Intent;

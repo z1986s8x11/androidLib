@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
-import org.zsx.android.api._BaseFragment;
+import org.zsx.android.base._BaseActivity;
+import org.zsx.android.base._BaseFragment;
 
 public class Fragment_Activity extends _BaseActivity implements OnClickListener {
     private CustomFragment fragment1;

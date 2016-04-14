@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class ListView_Activity extends _BaseActivity implements
         ListView.OnItemClickListener {

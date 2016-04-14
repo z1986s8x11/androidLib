@@ -1,4 +1,4 @@
-package org.zsx.android.api;
+package org.zsx.android.base;
 
 import android.app.Service;
 import android.content.Intent;

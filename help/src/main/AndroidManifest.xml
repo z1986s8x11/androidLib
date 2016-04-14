@@ -42,7 +42,7 @@
     <!-- android:taskAffinity 拥有相同的affinity的Activity理论上属于相同的Task，应用程序默认的affinity的名字是<manifest>元素中设定的package名 -->
     <!-- android:theme 一个资源的风格，它定义了一个默认的主题风格给所有的activity,当然也可以在自己的theme里面去设置它，有点类似style -->
     <application
-        android:name="org.zsx.android.api._BaseApplication"
+        android:name="org.zsx.android.base._BaseApplication"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">
 
@@ -279,7 +279,7 @@
         <!-- process 服务运行在单独的进程中的进程名 -->
         <!-- permission 权限配置 -->
         <service
-            android:name="org.zsx.android.api._BaseService"
+            android:name="org.zsx.android.base._BaseService"
             android:exported="false"
             android:permission="org.android.zsx.permission.LOAD"
             android:process=":baseService" />

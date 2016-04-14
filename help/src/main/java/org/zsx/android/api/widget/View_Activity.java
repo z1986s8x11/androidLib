@@ -17,7 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class View_Activity extends _BaseActivity {
     ViewHelper mViewHelper;

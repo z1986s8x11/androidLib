@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.zsx.util.Lib_Util_System;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 @SuppressLint("NewApi")
 public class AccountManager_Activity extends _BaseActivity {

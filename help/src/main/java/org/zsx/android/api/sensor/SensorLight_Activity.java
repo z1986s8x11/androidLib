@@ -1,7 +1,7 @@
 package org.zsx.android.api.sensor;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import android.app.Service;
 import android.hardware.Sensor;

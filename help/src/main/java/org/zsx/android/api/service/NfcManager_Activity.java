@@ -11,7 +11,7 @@ import android.nfc.NfcManager;
 import android.os.Bundle;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 /**
  * 未实现

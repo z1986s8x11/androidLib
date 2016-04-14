@@ -1,6 +1,6 @@
 package org.zsx.android.api.widget;
 
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import android.content.Context;
 import android.view.ViewGroup;

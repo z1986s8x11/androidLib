@@ -5,7 +5,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class Activity_Activity_TestActivity extends _BaseActivity {
 	public static final String _EXTRA_FLAG_KEY = "Activity_Activity_TestActivity";

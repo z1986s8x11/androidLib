@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ValueAnimator_Activity extends _BaseActivity {

@@ -9,7 +9,7 @@ import com.zsx.network.Lib_NetworkStateReceiver;
 import com.zsx.util._NetworkUtil;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import java.io.IOException;
 

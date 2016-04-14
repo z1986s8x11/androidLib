@@ -25,7 +25,9 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':app')
-    compile files('src/libs/apt.jar')
-    apt files('src/libs/apt.jar')
+//    compile files('src/libs/apt.jar')
+//    apt files('src/libs/apt.jar')
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.jakewharton:butterknife:5.1.1'
 }
 

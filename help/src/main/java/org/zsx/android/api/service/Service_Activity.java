@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class Service_Activity extends _BaseActivity implements
 		Button.OnClickListener {

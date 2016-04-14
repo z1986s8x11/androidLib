@@ -81,6 +81,11 @@ public abstract class Lib_BasePagerAdapter<T> extends PagerAdapter {
     }
 
     @Override
+    public CharSequence getPageTitle(int position) {
+        return String.valueOf(mList.get(position));
+    }
+
+    @Override
     public int getCount() {
         return mList.size();
     }

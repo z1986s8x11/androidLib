@@ -3,7 +3,7 @@ package org.zsx.android.api.parse;
 import android.os.Bundle;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class Attrs_Activity extends _BaseActivity {
 

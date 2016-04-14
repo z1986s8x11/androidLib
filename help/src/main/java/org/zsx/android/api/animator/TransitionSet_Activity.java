@@ -9,7 +9,7 @@ import android.transition.Explode;
 import android.view.Window;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 /**
  * Author       zhusx

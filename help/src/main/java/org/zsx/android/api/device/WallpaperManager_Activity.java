@@ -3,7 +3,7 @@ package org.zsx.android.api.device;
 import java.io.IOException;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import android.app.WallpaperManager;
 import android.graphics.Color;

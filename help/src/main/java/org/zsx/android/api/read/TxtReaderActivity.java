@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.zsx.util.Lib_Util_String;
 
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import java.io.File;
 

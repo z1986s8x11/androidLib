@@ -20,7 +20,7 @@ import com.zsx.widget.Lib_Widget_HorizontalListView;
 import com.zsx.widget.v7._BaseRecyclerAdapter;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import java.util.Arrays;
 

@@ -8,20 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 
-import com.tools.Lib_Class_ShowCodeUtil;
+import com.zsx.debug.Lib_SourceCodeHelper;
 
 import org.zsx.android.api.R;
 
 @SuppressWarnings("deprecation")
 public class TabHost_Activity extends TabActivity {
-
-    private Lib_Class_ShowCodeUtil showCode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showCode = new Lib_Class_ShowCodeUtil();
-        showCode.setShowJava(this.getClass());
         TabHost host = getTabHost();
         /**
          * 设置使用TabHost布局 **
@@ -42,15 +37,18 @@ public class TabHost_Activity extends TabActivity {
                 .setContent(new Intent(this, TextView_Activity.class)));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        showCode._onCreateOptionsMenu(this, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+    private Lib_SourceCodeHelper helper;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        showCode._onOptionsItemSelected(this, item);
+        helper._onOptionsItemSelected(this, item);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        helper = new Lib_SourceCodeHelper(this.getClass());
+        helper._onCreateOptionsMenu(this, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

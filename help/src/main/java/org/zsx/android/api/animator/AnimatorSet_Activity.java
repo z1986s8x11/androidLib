@@ -1,7 +1,7 @@
 package org.zsx.android.api.animator;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

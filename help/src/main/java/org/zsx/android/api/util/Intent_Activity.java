@@ -2,7 +2,7 @@ package org.zsx.android.api.util;
 
 import org.zsx.android.api.MainActivity;
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 import org.zsx.android.api.activity.Activity_Activity;
 import org.zsx.android.api.activity.Activity_Activity_TestDialogActivity;
 

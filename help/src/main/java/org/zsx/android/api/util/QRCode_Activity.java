@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import zsx.lib.qrcode.main.Lib_QRCodeActivity;
 import zsx.lib.qrcode.main.Lib_QRCodeGenerateUtil;

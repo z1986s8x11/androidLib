@@ -1,7 +1,7 @@
 package org.zsx.android.api.graphice;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import android.content.Context;
 import android.graphics.Canvas;

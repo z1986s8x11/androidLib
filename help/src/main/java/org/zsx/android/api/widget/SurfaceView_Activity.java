@@ -15,7 +15,7 @@ import android.view.WindowManager;
 
 import com.zsx.debug.LogUtil;
 
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import java.io.IOException;
 import java.util.List;

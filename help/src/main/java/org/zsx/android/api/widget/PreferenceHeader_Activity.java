@@ -3,7 +3,7 @@ package org.zsx.android.api.widget;
 import java.util.List;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BasePreferencesActivity;
+import org.zsx.android.base._BasePreferencesActivity;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;

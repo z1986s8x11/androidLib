@@ -10,7 +10,7 @@ import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class Animation_Activity extends _BaseActivity {
 	@Override

@@ -8,7 +8,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class ScaleAnimation_Activity extends _BaseActivity implements
         OnClickListener {

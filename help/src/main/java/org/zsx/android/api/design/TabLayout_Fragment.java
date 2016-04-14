@@ -1,4 +1,4 @@
-package zsx.com.test.ui.design;
+package org.zsx.android.api.design;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,13 +11,14 @@ import android.widget.TextView;
 
 import com.zsx.adapter.Lib_BasePagerAdapter;
 
+import org.zsx.android.api.R;
+import org.zsx.android.base._BaseFragment;
+
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import zsx.com.test.R;
-import zsx.com.test.base._BaseFragment;
 
 /**
  * Author       zhusx
@@ -27,7 +28,7 @@ import zsx.com.test.base._BaseFragment;
 public class TabLayout_Fragment extends _BaseFragment {
     @InjectView(R.id.viewPager)
     public ViewPager mViewPager;
-    @InjectView(R.id.tab_layout)
+    @InjectView(R.id.act_widget_current_view)
     public TabLayout mTabLayout;
     List<String> list = Arrays.asList("item1", "item2", "item3", "item4", "item5", "item6", "item7", "item8");
 

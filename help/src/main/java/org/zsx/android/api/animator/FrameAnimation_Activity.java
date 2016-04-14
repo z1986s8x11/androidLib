@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class FrameAnimation_Activity extends _BaseActivity implements
 		OnClickListener {

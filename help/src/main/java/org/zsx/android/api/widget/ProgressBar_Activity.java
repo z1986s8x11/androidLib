@@ -5,7 +5,7 @@ import android.view.Window;
 import android.widget.ProgressBar;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class ProgressBar_Activity extends _BaseActivity {
 

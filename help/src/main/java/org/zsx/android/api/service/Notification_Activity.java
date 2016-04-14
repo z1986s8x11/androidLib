@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import org.zsx.android.api.MainActivity;
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class Notification_Activity extends _BaseActivity implements Button.OnClickListener {
     private NotificationManager mNotificationManager;

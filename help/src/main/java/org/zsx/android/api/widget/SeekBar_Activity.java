@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.zsx.debug.LogUtil;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class SeekBar_Activity extends _BaseActivity implements
 		SeekBar.OnSeekBarChangeListener {

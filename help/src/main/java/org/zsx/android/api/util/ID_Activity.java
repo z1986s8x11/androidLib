@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class ID_Activity extends _BaseActivity implements OnClickListener {
 	private EditText mEditText;

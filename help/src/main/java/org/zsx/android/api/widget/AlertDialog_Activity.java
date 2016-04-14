@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class AlertDialog_Activity extends _BaseActivity implements Button.OnClickListener {
 	private Button mShowDialog;

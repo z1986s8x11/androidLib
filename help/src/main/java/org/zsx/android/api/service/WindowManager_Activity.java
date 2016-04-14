@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.zsx.debug.Lib_DebugService;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 public class WindowManager_Activity extends _BaseActivity implements
 		Button.OnClickListener {

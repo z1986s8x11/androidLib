@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import org.zsx.android.api.R;
-import org.zsx.android.api._BaseActivity;
+import org.zsx.android.base._BaseActivity;
 
 import java.util.Date;
 
