@@ -1,7 +1,9 @@
 package org.zsx.android.api.view;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -31,7 +33,7 @@ public class CustomFullView_Activity extends _BaseActivity {
 				(Button) findViewById(R.id.global_btn1),
 				(SeekBar) findViewById(R.id.global_seekbar));
 	}
-
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class CustomView extends ImageView implements
 			OnSystemUiVisibilityChangeListener, View.OnClickListener {
 		Activity mActivity;
@@ -47,6 +49,7 @@ public class CustomFullView_Activity extends _BaseActivity {
 				setNavVisibility(false);
 			}
 		};
+
 
 		public CustomView(Context context, AttributeSet attrs) {
 			super(context, attrs);

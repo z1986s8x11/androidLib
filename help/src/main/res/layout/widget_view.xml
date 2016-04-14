@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <!-- 位于http://schemas.android.com/apk/res/+项目子包 -->
 
-    <com.zhusixiang.android.help.widget.ViewHelper
+    <org.zsx.android.api.widget.view.ViewHelper
         android:id="@id/act_widget_current_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

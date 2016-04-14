@@ -1,4 +1,4 @@
-package org.zsx.android.api.widget;
+package org.zsx.android.api.widget.view;
 
 import android.content.Context;
 import android.graphics.BlurMaskFilter;

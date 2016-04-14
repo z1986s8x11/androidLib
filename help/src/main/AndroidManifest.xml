@@ -247,7 +247,7 @@
         <activity android:name="org.zsx.android.api.widget.VideoView_Activity" />
         <activity android:name="org.zsx.android.api.widget.ViewFlipper_Activity" />
         <activity android:name="org.zsx.android.api.widget.ViewGroup_Activity" />
-        <activity android:name="org.zsx.android.api.widget.View_Activity" />
+        <activity android:name=".widget.view.View_Activity" />
         <activity android:name="org.zsx.android.api.widget.WebView_Activity" />
         <!-- graphice -->
         <activity android:name="org.zsx.android.api.graphice.Animation_Activity" />
