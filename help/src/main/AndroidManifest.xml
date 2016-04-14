@@ -249,6 +249,23 @@
         <activity android:name="org.zsx.android.api.widget.ViewGroup_Activity" />
         <activity android:name=".widget.view.View_Activity" />
         <activity android:name="org.zsx.android.api.widget.WebView_Activity" />
+
+        <activity
+            android:name="org.zsx.android.api.design.FloatingActionButton_Activity"
+            android:theme="@style/appCompat" />
+        <activity
+            android:name="org.zsx.android.api.design.Snackbar_Activity"
+            android:theme="@style/appCompat" />
+        <activity
+            android:name="org.zsx.android.api.design.TextInputLayout_Activity"
+            android:theme="@style/appCompat" />
+        <activity
+            android:name="org.zsx.android.api.design.NavigationView_Activity"
+            android:theme="@style/appCompat" />
+        <activity
+            android:name=".design.AppBarLayout_Activity"
+            android:theme="@style/appCompat" />
+
         <!-- graphice -->
         <activity android:name="org.zsx.android.api.graphice.Animation_Activity" />
         <activity android:name="org.zsx.android.api.graphice.Arcs_Activity" />

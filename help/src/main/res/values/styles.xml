@@ -1,10 +1,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light">
-    </style>
+
+    <style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light"></style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-    </style>
+    <style name="AppTheme" parent="AppBaseTheme"></style>
 
     <style name="textView_showCode">
         <item name="android:background">@android:color/darker_gray</item>
@@ -12,5 +11,25 @@
         <item name="android:textSize">12sp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="appCompat" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!--导航栏底色-->
+        <item name="colorPrimary">@color/accent_material_dark</item>
+        <!--状态栏底色-->
+        <item name="colorPrimaryDark">@color/accent_material_light</item>
+        <!--导航栏上的标题颜色-->
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <!--Activity窗口的颜色-->
+        <item name="android:windowBackground">@color/material_blue_grey_800</item>
+        <!--按钮选中或者点击获得焦点后的颜色-->
+        <item name="colorAccent">#3498db</item>
+        <!--和 colorAccent相反，正常状态下按钮的颜色-->
+        <item name="colorControlNormal">#ff0000</item>
+        <!--Button按钮正常状态颜色-->
+        <item name="colorButtonNormal">@color/accent_material_light</item>
+        <!--EditText 输入框中字体的颜色-->
+        <item name="editTextColor">@android:color/white</item>
     </style>
 </resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--app:elevation="1dp" 阴影深度-->
+        <!--app:fabSize="normal|mini" 两种大小-->
+        <!--app:rippleColor 按下状态的波纹颜色-->
+        <!--app:pressedTranslationZ="12dp"  控制按下状态阴影的变化-->
+        <!--app:backgroundTint="#ffffff" 用来填充背景颜色-->
+        <!--borderWidth="0dp" 你不设置这个属性等于0dp，默认情况下borderWidth会将阴影遮挡住，你就看不到阴影了-->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_delete"
+            app:fabSize="mini" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_dialog_info" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_input_add"
+            app:backgroundTint="#000af4"
+            app:elevation="1dp"
+            app:fabSize="normal" />
+
+    </LinearLayout>
+</LinearLayout>

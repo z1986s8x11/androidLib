@@ -1,0 +1,40 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/navigation_item1"
+            android:checkable="true"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="热门图片" />
+        <item
+            android:id="@+id/navigation_item2"
+            android:checkable="true"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:title="联系人" />
+        <item
+            android:id="@+id/navigation_item3"
+            android:checkable="true"
+            android:icon="@android:drawable/ic_menu_always_landscape_portrait"
+            android:title="图库" />
+    </group>
+    <item
+        android:id="@+id/navigation_sub"
+        android:title="新增功能">
+        <menu>
+            <item
+                android:id="@+id/navigation_sub_item1"
+                android:checkable="true"
+                android:icon="@android:drawable/ic_menu_call"
+                android:title="地图导航" />
+            <item
+                android:id="@+id/navigation_sub_item2"
+                android:checkable="true"
+                android:icon="@android:drawable/ic_menu_camera"
+                android:title="最近热门" />
+            <item
+                android:id="@+id/navigation_sub_item3"
+                android:checkable="true"
+                android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                android:title="社交圈子" />
+        </menu>
+    </item>
+</menu>
