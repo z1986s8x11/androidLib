@@ -10,22 +10,25 @@ import android.widget.ImageView;
 import org.zsx.android.api.R;
 import org.zsx.android.base._BaseActivity;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class AlphaAnimation_Activity extends _BaseActivity implements
         OnClickListener {
-    private ImageView imageIV1;
-    private ImageView imageIV2;
+    @InjectView(R.id.global_imageview1)
+    public ImageView imageIV1;
+    @InjectView(R.id.global_imageview2)
+    public ImageView imageIV2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bitmap_alpha_animation);
-        findViewById(R.id.global_btn1).setOnClickListener(this);
-        findViewById(R.id.global_btn2).setOnClickListener(this);
-        imageIV1 = (ImageView) findViewById(R.id.global_imageview1);
-        imageIV2 = (ImageView) findViewById(R.id.global_imageview2);
+        ButterKnife.inject(this);
     }
 
-    @Override
+    @OnClick({R.id.global_btn1, R.id.global_btn2})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.global_btn1:
