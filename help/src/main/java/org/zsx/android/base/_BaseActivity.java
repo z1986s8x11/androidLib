@@ -23,5 +23,4 @@ public abstract class _BaseActivity extends Lib_BaseFragmentActivity {
         helper._onCreateOptionsMenu(this, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 }
