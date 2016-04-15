@@ -1,11 +1,19 @@
 package zsx.com.test.ui.design;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.zsx.adapter.Lib_BasePagerAdapter;
 import com.zsx.util._Arrays;
 import com.zsx.widget.v7._BaseRecyclerAdapter;
+
+import java.util.Arrays;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -20,18 +28,27 @@ public class CoordinatorLayout_Activity extends _BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.widget_design_coordinatorlayout);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new _BaseRecyclerAdapter<String>(this, _Arrays.asList("1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3")) {
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setAdapter(new Lib_BasePagerAdapter<String>(this, Arrays.asList("1", "2", "3")) {
             @Override
-            public void __bindViewHolder(_ViewHolder holder, int position, String s) {
-                holder.setText(android.R.id.text1, s);
-            }
+            public View getView(LayoutInflater inflater, int position, String s, View convertView, ViewGroup container) {
+                RecyclerView recyclerView = new RecyclerView(inflater.getContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false));
+                recyclerView.setAdapter(new _BaseRecyclerAdapter<String>(inflater.getContext(), _Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3")) {
+                    @Override
+                    public void __bindViewHolder(_ViewHolder holder, int position, String s) {
+                        holder.setText(android.R.id.text1, s);
+                    }
 
-            @Override
-            public int __getLayoutResource(int viewType) {
-                return android.R.layout.simple_list_item_1;
+                    @Override
+                    public int __getLayoutResource(int viewType) {
+                        return android.R.layout.simple_list_item_1;
+                    }
+                });
+                return recyclerView;
             }
         });
+        ((TabLayout) findViewById(R.id.tabs)).setupWithViewPager(mViewPager);
+
     }
 }

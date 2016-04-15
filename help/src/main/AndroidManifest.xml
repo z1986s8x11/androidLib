@@ -263,7 +263,10 @@
             android:name="org.zsx.android.api.design.NavigationView_Activity"
             android:theme="@style/appCompat" />
         <activity
-            android:name=".design.AppBarLayout_Activity"
+            android:name="org.zsx.android.api.design.AppBarLayout_Activity"
+            android:theme="@style/appCompat" />
+        <activity
+            android:name="org.zsx.android.api.design.CollapsingToolbarLayout_Activity"
             android:theme="@style/appCompat" />
 
         <!-- graphice -->

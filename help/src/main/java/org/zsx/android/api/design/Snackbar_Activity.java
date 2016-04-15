@@ -28,6 +28,8 @@ public class Snackbar_Activity extends _BaseActivity {
                     }
                 });
                 snackbar.show();
+
+//                Snackbar.make(view, "checkin success!", Snackbar.LENGTH_SHORT).show();
             }
         });
     }

@@ -38,13 +38,6 @@
         <activity
             android:name=".ui.design.CoordinatorLayout_Activity"
             android:theme="@style/appCompat" />
-        <activity
-            android:name=".ui.design.CollapsingToolbarLayout_Activity"
-            android:theme="@style/appCompat" />
-        <activity
-            android:name=".ui.design.AppBarLayout_Activity"
-            android:label="AppBarLayout"
-            android:theme="@style/appCompat" />
         <activity android:name=".ui.widget.ShapeTextViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
