@@ -23,6 +23,9 @@
     </RelativeLayout>
     <!--app:headerLayout	控制头部的布局-->
     <!--app:menu	导航菜单的资源文件（也可以在运行时配置）-->
+    <!--app:itemBackground 给menu设置背景资源-->
+    <!--app:itemIconTint 给menu的icon设置颜色-->
+    <!--app:itemTextColor 给menu的item设置字体颜色-->
     <!-- 侧滑导航-->
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"
