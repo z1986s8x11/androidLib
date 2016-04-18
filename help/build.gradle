@@ -67,7 +67,7 @@ android {
         zhusx {
             manifestPlaceholders = [ZHUSX: "android.intent.action.MAIN", APP_NAME: "我的help"]
             applicationId "org.zsx.android.api"
-            buildConfigField "String", "NAME", "\"祝思翔\")"
+            buildConfigField "String", "NAME", "\"祝思翔\""
         }
     }
 }
