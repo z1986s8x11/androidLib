@@ -77,6 +77,23 @@ public class Lib_Util_System {
     }
 
     /**
+     * 拿到app 的名称
+     */
+    public static String getApplicationName(Context context) {
+        PackageManager packageManager = null;
+        ApplicationInfo applicationInfo = null;
+        try {
+            packageManager = context.getApplicationContext().getPackageManager();
+            applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            applicationInfo = null;
+        }
+        String applicationName =
+                (String) packageManager.getApplicationLabel(applicationInfo);
+        return applicationName;
+    }
+
+    /**
      * 拿到apk version Code
      */
     public static int getAppVersionCode(Context context) {
@@ -273,7 +290,7 @@ public class Lib_Util_System {
 
     /**
      * 使用Wifi时获取IP 设置用户权限
-     * <p/>
+     * <p>
      * <uses-permission
      * android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
      *
@@ -301,7 +318,7 @@ public class Lib_Util_System {
 
     /**
      * 打开Wifi 按钮
-     * <p/>
+     * <p>
      * <uses-permission
      * android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
      *
@@ -320,7 +337,7 @@ public class Lib_Util_System {
 
     /**
      * 使用GPRS上网，时获取ip地址，设置用户上网权限
-     * <p/>
+     * <p>
      * <uses-permission
      * android:name="android.permission.INTERNET"></uses-permission>
      *
@@ -734,7 +751,7 @@ public class Lib_Util_System {
 
     /**
      * 需要android.permission.READ_LOGS
-     * <p/>
+     * <p>
      * 拿到过滤过的Log 日志
      */
     public static List<String> getLogCatForLogUtil() {
