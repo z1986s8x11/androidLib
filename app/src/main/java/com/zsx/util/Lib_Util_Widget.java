@@ -2,11 +2,13 @@ package com.zsx.util;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -144,5 +146,24 @@ public class Lib_Util_Widget {
             return parentLayout;
         }
         return null;
+    }
+
+    /**
+     * return    false 在顶部
+     *           true  不在顶部
+     */
+    public static boolean canScrollVertically(View mTargetScrollView) {
+        if (android.os.Build.VERSION.SDK_INT < 14) {
+            if (mTargetScrollView instanceof AbsListView) {
+                final AbsListView absListView = (AbsListView) mTargetScrollView;
+                return absListView.getChildCount() > 0
+                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
+                        .getTop() < absListView.getPaddingTop());
+            } else {
+                return ViewCompat.canScrollVertically(mTargetScrollView, -1) || mTargetScrollView.getScrollY() > 0;
+            }
+        } else {
+            return ViewCompat.canScrollVertically(mTargetScrollView, -1);
+        }
     }
 }
