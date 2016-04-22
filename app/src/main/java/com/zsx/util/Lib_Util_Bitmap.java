@@ -16,11 +16,17 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 
+import com.zsx.debug.LogUtil;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Lib_Util_Bitmap {
     /**
@@ -417,5 +423,49 @@ public class Lib_Util_Bitmap {
         canvasRef.drawRect(0, height, width, bitmapWithReflection.getHeight()
                 + reflectionGap, paint);
         return bitmapWithReflection;
+    }
+
+    /**
+     * 拿到文件视频第一帧
+     */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static Bitmap getFirstBitmapAtMedia(File file) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        try {
+            retriever.setDataSource(file.getPath());
+            final Bitmap bitmap = retriever.getFrameAtTime();
+            return bitmap;
+        } catch (Exception ex) {
+            LogUtil.e(ex);
+        } finally {
+            try {
+                retriever.release();
+            } catch (RuntimeException ex) {
+                LogUtil.e(ex);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 拿到视频流第一帧
+     */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static Bitmap getFirstBitmapAtMedia(Uri uri) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        try {
+            retriever.setDataSource(uri.toString(), new HashMap<String, String>());
+            final Bitmap bitmap = retriever.getFrameAtTime();
+            return bitmap;
+        } catch (Exception ex) {
+            LogUtil.e(ex);
+        } finally {
+            try {
+                retriever.release();
+            } catch (RuntimeException ex) {
+                LogUtil.e(ex);
+            }
+        }
+        return null;
     }
 }
