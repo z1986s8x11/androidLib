@@ -456,6 +456,9 @@ public class Lib_Util_Bitmap {
         try {
             retriever.setDataSource(uri.toString(), new HashMap<String, String>());
             final Bitmap bitmap = retriever.getFrameAtTime();
+//            String duration = retriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION); 视频长度
+//            String width = retriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH); 视频宽度
+//            String height = retriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT); 视频高度
             return bitmap;
         } catch (Exception ex) {
             LogUtil.e(ex);
