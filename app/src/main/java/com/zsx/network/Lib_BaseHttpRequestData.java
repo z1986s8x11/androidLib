@@ -320,6 +320,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                         return params.isCancel;
                     }
                 });
+                str = String.valueOf(params.getParam());
                 break;
             default:
                 throw new IllegalArgumentException("没有此请求方法");
