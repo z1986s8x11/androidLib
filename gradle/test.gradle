@@ -1,5 +1,9 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+
+// 提交到仓库中的版本号
+version = "0.1.1"
+
 def siteUrl = 'https://github.com/z1986s8x11/androidLib'      // 项目的主页
 def gitUrl = 'https://github.com/z1986s8x11/androidLib.git'   // Git仓库的url
 group = "com.android.zhusx"
