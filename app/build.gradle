@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+// 提交到仓库中的版本号
+version = "0.1.1"
 
 android {
     compileSdkVersion 22
@@ -15,10 +17,10 @@ android {
 //        }
 //    }
 }
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:recyclerview-v7:22.0.0'
 }
+//apply from: '../gradle/test.gradle'
