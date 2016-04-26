@@ -15,11 +15,16 @@ public class _HtmlUtil {
     /**
      * 图片自适应
      */
-    public static final String IMG_META = "img { height: auto; width: auto; width:100%;";
+    public static final String IMG_META = "img { height: auto; width: auto; width:100%;}";
     /**
      * 文本自动换行
      */
     public static final String AUTO_LINE = "html{word-break: break-all; word-wrap:break-word; width:100%; height:auto;overflow:hidden;}";
+
+    /**
+     * 自适应屏幕
+     */
+    public static final String AUTO_META = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0\"/>";
 
     /**
      * 简单实现 为文本加Html
