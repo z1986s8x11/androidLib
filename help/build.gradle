@@ -70,6 +70,12 @@ android {
             buildConfigField "String", "NAME", "\"祝思翔\""
         }
     }
+    //重命名 打包生成的文件
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(output.outputFile.parent, defaultConfig.applicationId + "-" + buildType.name + "-v" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk" );
+        }
+    }
 }
 
 dependencies {
