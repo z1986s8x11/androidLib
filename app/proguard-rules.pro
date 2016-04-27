@@ -15,3 +15,63 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+# dump.txt 描述apk文件中所有类文件间的内部结构。
+# mapping.txt 列出了原始的类，方法，和字段名与混淆后代码之间的映射。
+# seeds.txt 列出了未被混淆的类和成员
+# usage.txt 列出了从apk中删除的代码
+
+-optimizationpasses 5   #设置混淆的压缩比率 0 ~ 7
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses #如果应用程序引入的有jar包,并且想混淆jar包里面的class
+-dontpreverify
+-verbose  #混淆后生产映射文件 map 类名->转化后类名的映射
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*   #混淆采用的算法.
+
+#-keepattributes Signature   #保持签名
+-keepattributes SourceFile,LineNumberTable #保持源文件和行号的信息,用于混淆后定位错误位置
+
+#-printmapping build/outputs/mapping.txt
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class com.android.vending.licensing.ILicensingService
+
+-keep public class android.** { public protected private *; }
+
+#-libraryjars lib/commons-logging-1.1.jar  #保持三方引用库
+#-dontwarn com.zsx.**  #忽略警告
+
+#保持 Jni 方法
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+#View 构造方法不混淆
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+#View 构造方法不混淆
+-keepclasseswithmembernames class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+#枚举类不去混淆.
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+#Parcelable 不去混淆
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+#-------------------------------------------------Base End------------------------------------------------------------#
+
+#保持 三方库 NineOldAndorid.jar
+-keep class com.nineoldandroids.**{*;}
+
