@@ -44,6 +44,8 @@
 #-libraryjars lib/commons-logging-1.1.jar  #保持三方引用库
 #-dontwarn com.zsx.**  #忽略警告
 
+#-keepattributes *JavascriptInterface*
+
 #保持 Jni 方法
 -keepclasseswithmembernames class * {
     native <methods>;
