@@ -10,6 +10,7 @@ import android.app.KeyguardManager;
 import android.content.ClipData;
 import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -20,6 +21,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -290,7 +292,7 @@ public class Lib_Util_System {
 
     /**
      * 使用Wifi时获取IP 设置用户权限
-     * <p>
+     * <p/>
      * <uses-permission
      * android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
      *
@@ -318,7 +320,7 @@ public class Lib_Util_System {
 
     /**
      * 打开Wifi 按钮
-     * <p>
+     * <p/>
      * <uses-permission
      * android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
      *
@@ -337,7 +339,7 @@ public class Lib_Util_System {
 
     /**
      * 使用GPRS上网，时获取ip地址，设置用户上网权限
-     * <p>
+     * <p/>
      * <uses-permission
      * android:name="android.permission.INTERNET"></uses-permission>
      *
@@ -751,7 +753,7 @@ public class Lib_Util_System {
 
     /**
      * 需要android.permission.READ_LOGS
-     * <p>
+     * <p/>
      * 拿到过滤过的Log 日志
      */
     public static List<String> getLogCatForLogUtil() {
@@ -821,5 +823,18 @@ public class Lib_Util_System {
                 new Instrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
             }
         }).start();
+    }
+
+    /**
+     * 需要权限 Write_Sms
+     */
+    public static void writeSms(Context context, String phone, String body) {
+        ContentResolver cr = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put("address", phone);
+        values.put("type", 1);
+        values.put("date", System.currentTimeMillis());
+        values.put("body", body);
+        cr.insert(Uri.parse("content://sms"), values);
     }
 }

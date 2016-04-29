@@ -21,11 +21,15 @@
 # usage.txt 列出了从apk中删除的代码
 
 -optimizationpasses 5   #设置混淆的压缩比率 0 ~ 7
--dontusemixedcaseclassnames
+-dontusemixedcaseclassnames #包明不混合大小写
 -dontskipnonpubliclibraryclasses #如果应用程序引入的有jar包,并且想混淆jar包里面的class
--dontpreverify
+-dontoptimize #优化  不优化输入的类文件
+-dontpreverify  #预校验
 -verbose  #混淆后生产映射文件 map 类名->转化后类名的映射
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*   #混淆采用的算法.
+
+#忽略警告
+#-ignorewarning
 
 #-keepattributes Signature   #保持签名
 -keepattributes SourceFile,LineNumberTable #保持源文件和行号的信息,用于混淆后定位错误位置
@@ -43,8 +47,6 @@
 
 #-libraryjars lib/commons-logging-1.1.jar  #保持三方引用库
 #-dontwarn com.zsx.**  #忽略警告
-
-#-keepattributes *JavascriptInterface*
 
 #保持 Jni 方法
 -keepclasseswithmembernames class * {
@@ -72,6 +74,25 @@
   public static final android.os.Parcelable$Creator *;
 }
 
+#不混淆资源类
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+#保证gson 对应文件不被混淆
+#-keepclasseswithmembernames class com.weishang.qwapp.entity.** {*;}
+#保证gson 对应文件的匿名内部类不被混淆
+#-keepnames class com.weishang.qwapp.entity.**$* {
+#    public <fields>;
+#}
+
+#如果有WebView 相应JS 事件
+-keepclassmembers class com.zsx.tools.Lib_WebViewHelper {
+   public *;
+}
+#保护注解
+-keepattributes *Annotation*
+-keepattributes *JavascriptInterface*
 #-------------------------------------------------Base End------------------------------------------------------------#
 
 #保持 三方库 NineOldAndorid.jar
