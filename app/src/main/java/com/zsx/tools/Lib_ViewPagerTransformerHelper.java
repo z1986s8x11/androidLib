@@ -11,7 +11,7 @@ import com.nineoldandroids.view.ViewHelper;
  * Created      2016/5/16 11:29
  */
 public class Lib_ViewPagerTransformerHelper {
-    public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+    public static class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.9f;
         private static final float MIN_ALPHA = 0.5f;
         private float defaultScale = 0.9f;
