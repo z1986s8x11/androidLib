@@ -108,7 +108,7 @@ public class P_LogCatFragment extends Lib_BaseFragment {
                 break;
         }
         isChange = true;
-        Lib_SharedPreferences.getInstance(getContext()).put("fontSize", fontSize);
+        Lib_SharedPreferences.getInstance(getActivity()).put("fontSize", fontSize);
         return true;
     }
 
