@@ -26,11 +26,25 @@ import android.view.GestureDetector;
 import android.widget.ImageView;
 
 /**
-* zsxTitle      引用自 https://github.com/chrisbanes/PhotoView
-* Author        zhusx
-* Email         327270607@qq.com
-* Created       2016/5/26 14:49
-*/
+ * zsxTitle      引用自 https://github.com/chrisbanes/PhotoView
+ * Author        zhusx
+ * Email         327270607@qq.com
+ * Created       2016/5/26 14:49
+ */
+//  final PhotoViewAttacher attacher = new PhotoViewAttacher(photoView);
+//
+//        Picasso.with(this)
+//        .load("http://pbs.twimg.com/media/Bist9mvIYAAeAyQ.jpg")
+//        .into(photoView, new Callback() {
+//              @Override
+//              public void onSuccess() {
+//                  attacher.update();
+//              }
+//
+//              @Override
+//              public void onError() {
+//              }
+//        });
 public class Lib_Widget_PhotoView extends ImageView implements IPhotoView {
 
     private PhotoViewAttacher mAttacher;
