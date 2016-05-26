@@ -1,10 +1,15 @@
 package zsx.com.test.ui.custom;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zsx.app._PublicFragmentActivity;
 import com.zsx.debug.LogUtil;
+import com.zsx.debug.P_LogCatFragment;
 
 import zsx.com.test.R;
 import zsx.com.test.base._BaseActivity;
@@ -29,6 +34,20 @@ public class ViewActivity extends _BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(1, 1, 1, "log");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, _PublicFragmentActivity.class);
+        intent.putExtra(_PublicFragmentActivity._EXTRA_FRAGMENT, P_LogCatFragment.class);
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

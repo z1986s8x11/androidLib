@@ -63,7 +63,7 @@ import java.util.UUID;
  * 503 不可用的服务
  * 504 网关超时
  * 505 HTTP版本未被支持
- * <p>
+ * <p/>
  * Created by zhusx on 2015/11/5.
  */
 public class Lib_Util_HttpURLRequest {
@@ -124,7 +124,7 @@ public class Lib_Util_HttpURLRequest {
         }
         try {
             if (LogUtil.DEBUG) {
-                LogUtil.e("requestData params:", String.valueOf(requestUrl) + "[" + String.valueOf(param) + "]" + requestPropertys == null ? "" : requestPropertys.toString());
+                LogUtil.e("requestData params:", String.valueOf(requestUrl) + "[" + String.valueOf(param) + "][" + (requestPropertys == null ? "" : requestPropertys.toString()) + "]");
             }
             URL url = new URL(requestUrl);
             urlConn = (HttpURLConnection) url.openConnection();
