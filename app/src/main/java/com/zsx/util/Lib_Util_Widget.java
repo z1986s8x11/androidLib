@@ -150,9 +150,9 @@ public class Lib_Util_Widget {
 
     /**
      * return    false 在顶部
-     *           true  不在顶部
+     * true  不在顶部
      */
-    public static boolean canScrollVertically(View mTargetScrollView) {
+    public static boolean isVerticallyScrollUp(View mTargetScrollView) {
         if (android.os.Build.VERSION.SDK_INT < 14) {
             if (mTargetScrollView instanceof AbsListView) {
                 final AbsListView absListView = (AbsListView) mTargetScrollView;
@@ -164,6 +164,29 @@ public class Lib_Util_Widget {
             }
         } else {
             return ViewCompat.canScrollVertically(mTargetScrollView, -1);
+        }
+    }
+
+    /**
+     * return    false 在底部
+     * true  不在底部
+     */
+    public static boolean isVerticallyScrollDown(View mTargetScrollView) {
+        if (android.os.Build.VERSION.SDK_INT < 14) {
+            if (mTargetScrollView instanceof AbsListView) {
+                final AbsListView absListView = (AbsListView) mTargetScrollView;
+                int count = absListView.getAdapter().getCount();
+                int fristPos = absListView.getFirstVisiblePosition();
+                if (fristPos == 0 && absListView.getChildAt(0).getTop() >= absListView.getPaddingTop()) {
+                    return false;
+                }
+                int lastPos = absListView.getLastVisiblePosition();
+                return lastPos > 0 && count > 0 && lastPos == count - 1;
+            } else {
+                return ViewCompat.canScrollVertically(mTargetScrollView, 1) || mTargetScrollView.getScrollY() < 0;
+            }
+        } else {
+            return ViewCompat.canScrollVertically(mTargetScrollView, 1);
         }
     }
 }
