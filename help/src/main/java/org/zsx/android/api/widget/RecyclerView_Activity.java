@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.zsx.adapter.Lib_BaseAdapter;
 import com.zsx.util._Arrays;
 import com.zsx.widget.Lib_Widget_HorizontalListView;
-import com.zsx.widget.v7._BaseRecyclerAdapter;
+import com.zsx.widget.v7.Lib_BaseRecyclerAdapter;
 
 import org.zsx.android.api.R;
 import org.zsx.android.base._BaseActivity;
@@ -32,7 +32,7 @@ import java.util.Arrays;
 public class RecyclerView_Activity extends _BaseActivity {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeLayout;
-    private _BaseRecyclerAdapter<String> adapter;
+    private Lib_BaseRecyclerAdapter<String> adapter;
     private Lib_Widget_HorizontalListView listView;
 
     @Override
@@ -96,7 +96,7 @@ public class RecyclerView_Activity extends _BaseActivity {
             }
         });
         listView.performItemClick(listView.getChildAt(0), 0, listView.getItemIdAtPosition(0));
-        recyclerView.setAdapter(adapter = new _BaseRecyclerAdapter<String>(this, _Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14")) {
+        recyclerView.setAdapter(adapter = new Lib_BaseRecyclerAdapter<String>(this, _Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14")) {
             @Override
             public int __getLayoutResource(int viewType) {
                 return R.layout.lib_list_item_1;

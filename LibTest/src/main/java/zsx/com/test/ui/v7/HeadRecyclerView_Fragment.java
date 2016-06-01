@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zsx.widget.v7._BaseRecyclerAdapter;
-import com.zsx.widget.v7._BaseRecyclerViewItemDecoration;
+import com.zsx.widget.v7.Lib_BaseRecyclerAdapter;
+import com.zsx.widget.v7.Lib_BaseRecyclerViewItemDecoration;
 
 import java.util.Arrays;
 
@@ -32,8 +32,8 @@ public class HeadRecyclerView_Fragment extends _BaseFragment {
         View rootView = inflater.inflate(R.layout.activity_headrecyclervie, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
-        mRecyclerView.addItemDecoration(new _BaseRecyclerViewItemDecoration(inflater.getContext()));
-        mRecyclerView.setAdapter(new _BaseRecyclerAdapter<String>(inflater.getContext(), Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")) {
+        mRecyclerView.addItemDecoration(new Lib_BaseRecyclerViewItemDecoration(inflater.getContext()));
+        mRecyclerView.setAdapter(new Lib_BaseRecyclerAdapter<String>(inflater.getContext(), Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")) {
             @Override
             public void __bindViewHolder(_ViewHolder holder, int position, String s) {
                 holder.setText(android.R.id.text1, s);

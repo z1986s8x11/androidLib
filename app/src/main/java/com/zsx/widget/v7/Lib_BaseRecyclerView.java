@@ -10,16 +10,16 @@ import android.util.AttributeSet;
  * Email        327270607@qq.com
  * Created      2016/4/12 9:42
  */
-public class _BaseRecyclerView extends RecyclerView {
-    public _BaseRecyclerView(Context context) {
+public class Lib_BaseRecyclerView extends RecyclerView {
+    public Lib_BaseRecyclerView(Context context) {
         super(context);
     }
 
-    public _BaseRecyclerView(Context context, AttributeSet attrs) {
+    public Lib_BaseRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public _BaseRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public Lib_BaseRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -27,7 +27,7 @@ public class _BaseRecyclerView extends RecyclerView {
      * 添加分割线
      */
     public void _setDefaultItemDecoration() {
-        addItemDecoration(new _BaseRecyclerViewItemDecoration(getContext()));
+        addItemDecoration(new Lib_BaseRecyclerViewItemDecoration(getContext()));
     }
 
     /**

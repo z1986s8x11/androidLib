@@ -16,15 +16,15 @@ import java.util.List;
  * Email        327270607@qq.com
  * Created      2016/3/2 10:43
  */
-public abstract class _BaseRecyclerAdapter<T> extends RecyclerView.Adapter<_BaseRecyclerAdapter._ViewHolder> {
+public abstract class Lib_BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Lib_BaseRecyclerAdapter._ViewHolder> {
     private List<T> mList;
     protected LayoutInflater mLayoutInflater;
 
-    public _BaseRecyclerAdapter(Context context) {
+    public Lib_BaseRecyclerAdapter(Context context) {
         this(context, new ArrayList<T>());
     }
 
-    public _BaseRecyclerAdapter(Context context, List<T> list) {
+    public Lib_BaseRecyclerAdapter(Context context, List<T> list) {
         this.mList = list;
         mLayoutInflater = LayoutInflater.from(context);
     }

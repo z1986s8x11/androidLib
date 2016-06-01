@@ -16,10 +16,10 @@ import android.view.View;
  * Email        327270607@qq.com
  * Created      2016/4/12 10:37
  */
-public class _BaseRecyclerViewItemDecoration extends RecyclerView.ItemDecoration {
+public class Lib_BaseRecyclerViewItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
-    public _BaseRecyclerViewItemDecoration(Context context) {
+    public Lib_BaseRecyclerViewItemDecoration(Context context) {
         final TypedArray a = context.obtainStyledAttributes(new int[]{android.R.attr.listDivider});
         mDivider = a.getDrawable(0);
         a.recycle();

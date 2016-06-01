@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.zsx.adapter.Lib_BasePagerAdapter;
 import com.zsx.util._Arrays;
-import com.zsx.widget.v7._BaseRecyclerAdapter;
+import com.zsx.widget.v7.Lib_BaseRecyclerAdapter;
 
 import java.util.Arrays;
 
@@ -34,7 +34,7 @@ public class CoordinatorLayout_Activity extends _BaseActivity {
             public View getView(LayoutInflater inflater, int position, String s, View convertView, ViewGroup container) {
                 RecyclerView recyclerView = new RecyclerView(inflater.getContext());
                 recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext(), LinearLayoutManager.VERTICAL, false));
-                recyclerView.setAdapter(new _BaseRecyclerAdapter<String>(inflater.getContext(), _Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3")) {
+                recyclerView.setAdapter(new Lib_BaseRecyclerAdapter<String>(inflater.getContext(), _Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3")) {
                     @Override
                     public void __bindViewHolder(_ViewHolder holder, int position, String s) {
                         holder.setText(android.R.id.text1, s);
