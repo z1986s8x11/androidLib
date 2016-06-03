@@ -1,11 +1,12 @@
 package com.zsx.app;
 
 import android.app.Application;
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.os.StrictMode;
 
-import com.zsx.debug.P_UncaughtException;
 import com.zsx.debug.LogUtil;
+import com.zsx.debug.P_UncaughtException;
 import com.zsx.network.Lib_NetworkStateReceiver;
 
 
@@ -24,6 +25,7 @@ public class ZsxApplicationManager {
         private Application context;
         private boolean monitorNet;
         private boolean uncaughtException;
+        private boolean safety;
         private Application.ActivityLifecycleCallbacks activityCallbacks;
         private Lib_NetworkStateReceiver receiver;
 
@@ -53,6 +55,10 @@ public class ZsxApplicationManager {
             return this;
         }
 
+        public Builder setSafety(boolean safety) {
+            this.safety = safety;
+            return this;
+        }
 
         private void init() {
             /*监听网络变化*/
@@ -67,6 +73,18 @@ public class ZsxApplicationManager {
                     P_UncaughtException._getInstance()._init(context);
                 }
                 StrictMode.enableDefaults();
+            }
+            if (safety) {
+                if (!LogUtil.DEBUG) {
+                    if ((context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+                        //LogUtil.e(this, "程序被修改为可调试状态");
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    }
+                    if (android.os.Debug.isDebuggerConnected()) {
+                        //LogUtil.e(this, "检测到检测器");
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    }
+                }
             }
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 //                activityCallbacks = new Application.ActivityLifecycleCallbacks() {
