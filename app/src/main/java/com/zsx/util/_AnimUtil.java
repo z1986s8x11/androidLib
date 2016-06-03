@@ -35,6 +35,16 @@ public class _AnimUtil {
                         animVisible = android.animation.ObjectAnimator.ofFloat(animView, "alpha", 0f, 1f);
                         animGone = android.animation.ObjectAnimator.ofFloat(animView, "alpha", 1f, 0f);
                         break;
+                    case Gravity.RIGHT:
+                        Lib_Util_Widget.measureView(animView);
+                        animVisible = android.animation.ObjectAnimator.ofFloat(animView, "translationX", animView.getMeasuredWidth(), 0);
+                        animGone = android.animation.ObjectAnimator.ofFloat(animView, "translationX", 0, animView.getMeasuredWidth());
+                        break;
+                    case Gravity.LEFT:
+                        Lib_Util_Widget.measureView(animView);
+                        animVisible = android.animation.ObjectAnimator.ofFloat(animView, "translationX", -animView.getMeasuredWidth(), 0);
+                        animGone = android.animation.ObjectAnimator.ofFloat(animView, "translationX", 0, -animView.getMeasuredWidth());
+                        break;
                     default:
                         return;
                 }
