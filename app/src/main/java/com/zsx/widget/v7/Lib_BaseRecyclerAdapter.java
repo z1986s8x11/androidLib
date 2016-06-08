@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zsx.util._Arrays;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +84,14 @@ public abstract class Lib_BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Li
 
     public void _addItemToUpdate(T t) {
         mList.add(t);
-        notifyItemInserted(mList.indexOf(t));
+        notifyItemInserted(mList.size() - 1);
+    }
+
+    public void _addItemToUpdate(List<T> list) {
+        if (!_Arrays.isEmpty(list)) {
+            mList.addAll(list);
+            notifyItemRangeInserted(mList.size() - list.size(), list.size());
+        }
     }
 
     public void _removeItemToUpdate(T t) {
@@ -90,4 +99,10 @@ public abstract class Lib_BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Li
         mList.remove(position);
         notifyItemRemoved(position);
     }
+
+    public void _removeItemToUpdate(int position) {
+        mList.remove(position);
+        notifyItemRemoved(position);
+    }
+
 }
