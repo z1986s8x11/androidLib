@@ -427,7 +427,7 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
     /**
      * 拿到下一页 页码
      */
-    protected final int _getNextPage() {
+    public final int _getNextPage() {
         if (pLastRequestData.isRefresh || !_hasCache()) {
             return __getDefaultPage(pId);
         }
