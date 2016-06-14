@@ -174,6 +174,35 @@ public class Lib_Util_File {
     }
 
     /**
+     * 压缩成JPG 保存到文件中
+     */
+    public static boolean saveToFile(String txt, String savePath) {
+        if (TextUtils.isEmpty(txt)) {
+            return false;
+        }
+        boolean isSuccess = false;
+        OutputStream stream = null;
+        try {
+            stream = new FileOutputStream(savePath);
+            stream.write(txt.getBytes());
+            stream.close();
+            isSuccess = true;
+        } catch (Exception e) {
+            isSuccess = false;
+            e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return isSuccess;
+    }
+
+    /**
      * 计算SD卡的剩余空间
      *
      * @return 返回-1，说明没有安装sd卡
