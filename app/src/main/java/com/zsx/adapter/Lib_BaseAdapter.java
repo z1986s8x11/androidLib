@@ -33,6 +33,9 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
 
     public Lib_BaseAdapter(Context context, List<T> list) {
         this.inflater = LayoutInflater.from(context);
+        if (list == null) {
+            list = new ArrayList<>();
+        }
         this.p_list = list;
     }
 
