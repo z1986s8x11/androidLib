@@ -152,3 +152,5 @@ UI卡顿工具  :BlockCanary
 内存泄漏工具 :LeakCanary
 
 chrome 模拟请求工具  :http://chromecj.com/web-development/2014-09/60/download.html
+
+ViewPager 无限滚动 :https://github.com/saiwu-bigkoo/Android-ConvenientBanner.git

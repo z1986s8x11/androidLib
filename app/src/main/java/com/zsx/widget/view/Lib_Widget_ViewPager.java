@@ -19,7 +19,7 @@ import com.zsx.itf.Lib_OnCycleListener;
  * <p/>
  * 可禁止滑动的ViewPager
  *
- * @author zsx
+ * @author zhusx
  */
 public class Lib_Widget_ViewPager extends ViewPager {
     private boolean isScrollable = true;//是否可以滑动
@@ -64,21 +64,6 @@ public class Lib_Widget_ViewPager extends ViewPager {
     @Override
     public boolean onTouchEvent(MotionEvent arg0) {
         if (isScrollable) {
-            if (isAutoScroll) {
-                switch (arg0.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        if (autoScroll != null) {
-                            autoScroll._stopAutoScroll();
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        if (autoScroll != null) {
-                            autoScroll._startAutoScroll();
-                        }
-                        break;
-                }
-            }
             return super.onTouchEvent(arg0);
         }
         getParent().requestDisallowInterceptTouchEvent(true);
@@ -100,6 +85,29 @@ public class Lib_Widget_ViewPager extends ViewPager {
                 break;
         }
         return false;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (isScrollable) {
+            if (isAutoScroll) {
+                switch (ev.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (autoScroll != null) {
+                            autoScroll._stopAutoScroll();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_OUTSIDE:
+                        if (autoScroll != null) {
+                            autoScroll._startAutoScroll();
+                        }
+                        break;
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     private class AutoScroll {
