@@ -61,8 +61,7 @@
             android:name=".ui.chat.ChatActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.TextActivity" />
-
-        <service android:name="com.zsx.download.Lib_DownloadService" />
+        <activity android:name=".ui.test.ExpActivity" />
     </application>
 
 </manifest>

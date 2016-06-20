@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.zsx.widget.Lib_Widget_ExpandableLayout
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lib_bg_red"
+                android:padding="10dp"
+                android:text="我是神仙"
+                android:textColor="@color/lib_white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lib_bg_green"
+                android:padding="10dp"
+                android:text="我是半神仙"
+                android:textColor="@color/lib_white" />
+        </com.zsx.widget.Lib_Widget_ExpandableLayout>
+    </LinearLayout>
+</ScrollView>

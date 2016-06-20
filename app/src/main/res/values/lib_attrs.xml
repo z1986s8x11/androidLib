@@ -131,4 +131,9 @@
         <attr name="lib_divider" format="color|reference" />
         <attr name="lib_dividerWidth" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="Lib_ExpandableLayout">
+        <attr name="lib_expDuration" format="integer|reference"/>
+        <attr name="lib_expWithParentScroll" format="boolean"/>
+        <attr name="lib_expExpandScrollTogether" format="boolean"/>
+    </declare-styleable>
 </resources>

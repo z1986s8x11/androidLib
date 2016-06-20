@@ -154,3 +154,7 @@ UI卡顿工具  :BlockCanary
 chrome 模拟请求工具  :http://chromecj.com/web-development/2014-09/60/download.html
 
 ViewPager 无限滚动 :https://github.com/saiwu-bigkoo/Android-ConvenientBanner.git
+开源集合:https://github.com/snowdream/awesome-android
+
+ViewPager 大背景 https://github.com/zhe525069676/BgMoveViewPager
+RecyclerView 滑动删除 拖动效果 https://github.com/HoneyNeutrons/RecyclerViewUndoSwipe
