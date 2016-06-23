@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import com.zsx.debug.LogUtil;
 import com.zsx.exception.Lib_Exception;
 import com.zsx.util.Lib_Util_HttpURLRequest;
+import com.zsx.util.Lib_Util_System;
 
 import org.apache.http.conn.ConnectTimeoutException;
 
@@ -45,8 +46,12 @@ public class Lib_DownloadHelper {
 
     private Notification createNotification(Context context, String text, int progress) {
         PendingIntent intent = PendingIntent.getActivity(context, requestCode, new Intent(), PendingIntent.FLAG_NO_CREATE);
+        String title = Lib_Util_System.getApplicationName(context);
+        if (title == null) {
+            title = "";
+        }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setContentTitle(context.getResources().getString(context.getApplicationInfo().labelRes))//设置通知栏标题
+                .setContentTitle(title)//设置通知栏标题
                 .setContentText(text)//设置通知栏显示内容
                 .setContentIntent(intent)//设置通知栏点击意图
                 .setSmallIcon(context.getApplicationInfo().icon)//设置通知小ICON
