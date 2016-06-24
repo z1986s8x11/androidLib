@@ -7,11 +7,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.IntentCompat;
 import android.text.TextUtils;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.zsx.debug.LogUtil;
@@ -112,10 +114,17 @@ public class Lib_Util_Intent {
             LogUtil.e(Lib_Util_Intent.class, "文件不存在，安装失败：" + apkPath);
             return;
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(Uri.fromFile(apk),
-                "application/vnd.android.package-archive");
+        Intent intent = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+            intent.setData(Uri.fromFile(apk));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        } else {
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(Uri.fromFile(apk),
+                    "application/vnd.android.package-archive");
+        }
         context.startActivity(intent);
     }
 
@@ -220,5 +229,12 @@ public class Lib_Util_Intent {
         ComponentName cn = intentToBeNewRoot.getComponent();
         Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
         context.startActivity(mainIntent);
+    }
+
+    public static String getMIMEType(String fileSuffix) {
+        if (TextUtils.isEmpty(fileSuffix)) {
+            return null;
+        }
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileSuffix.toLowerCase());
     }
 }
