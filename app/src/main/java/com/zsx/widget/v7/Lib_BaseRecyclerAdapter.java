@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zsx.util._Arrays;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -105,4 +106,8 @@ public abstract class Lib_BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Li
         notifyItemRemoved(position);
     }
 
+    public void _moveItemToUpdate(int from, int to) {
+        Collections.swap(mList, from, to);
+        notifyItemMoved(from, to);
+    }
 }
