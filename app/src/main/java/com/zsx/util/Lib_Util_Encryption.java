@@ -8,7 +8,6 @@ import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.AlgorithmParameterSpec;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -16,7 +15,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
@@ -52,9 +50,13 @@ public class Lib_Util_Encryption {
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
             // key的长度不能够小于8位字节
             Key secretKey = keyFactory.generateSecret(dks);
-            Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
-            IvParameterSpec iv = new IvParameterSpec("12345678".getBytes());
-            AlgorithmParameterSpec paramSpec = iv;
+            /**第一种*/
+//            Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+//            AlgorithmParameterSpec paramSpec = new IvParameterSpec("12345678".getBytes());
+            /**第二种*/
+            Cipher cipher = Cipher.getInstance("DES");
+            // DES算法要求有一个可信任的随机数源
+            SecureRandom paramSpec = new SecureRandom();
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, paramSpec);
             byte[] bytes = cipher.doFinal(data.getBytes());
             return byte2hex(bytes);
@@ -94,9 +96,13 @@ public class Lib_Util_Encryption {
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
             // key的长度不能够小于8位字节
             Key secretKey = keyFactory.generateSecret(dks);
-            Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
-            IvParameterSpec iv = new IvParameterSpec("12345678".getBytes());
-            AlgorithmParameterSpec paramSpec = iv;
+            /**第一种*/
+//            Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+//            AlgorithmParameterSpec paramSpec = new IvParameterSpec("12345678".getBytes());
+            /**第二种*/
+            Cipher cipher = Cipher.getInstance("DES");
+            // DES算法要求有一个可信任的随机数源
+            SecureRandom paramSpec = new SecureRandom();
             cipher.init(Cipher.DECRYPT_MODE, secretKey, paramSpec);
             return new String(cipher.doFinal(hex2byte(data.getBytes())));
         } catch (BadPaddingException e) {
@@ -158,6 +164,7 @@ public class Lib_Util_Encryption {
      */
     public static String encodeAES(String key, String content) {
         try {
+            /**第一种*/
             KeyGenerator kGen = KeyGenerator.getInstance("AES");
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
             sr.setSeed(key.getBytes());
@@ -167,6 +174,9 @@ public class Lib_Util_Encryption {
             byte[] rawKey = sKey.getEncoded();
             SecretKeySpec sKeySpec = new SecretKeySpec(rawKey, "AES");
             Cipher cipher = Cipher.getInstance("AES");
+            /**第二种*/
+//            SecretKeySpec sKeySpec = new SecretKeySpec(key.getBytes(), "AES");
+//            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, sKeySpec);
             byte[] result = cipher.doFinal(content.getBytes());
             return byte2hex(result);
@@ -183,6 +193,7 @@ public class Lib_Util_Encryption {
      */
     public static String decodeAES(String key, String data) {
         try {
+            /**第一种*/
             KeyGenerator kGen = KeyGenerator.getInstance("AES");
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
             sr.setSeed(key.getBytes());
@@ -190,11 +201,13 @@ public class Lib_Util_Encryption {
             kGen.init(128, sr);
             SecretKey sKey = kGen.generateKey();
             byte[] rawKey = sKey.getEncoded();
-            byte[] enc = hex2byte(data.getBytes());
             SecretKeySpec sKeySpec = new SecretKeySpec(rawKey, "AES");
             Cipher cipher = Cipher.getInstance("AES");
+            /**第二种*/
+//            SecretKeySpec sKeySpec = new SecretKeySpec(key.getBytes(), "AES");
+//            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, sKeySpec);
-            byte[] result = cipher.doFinal(enc);
+            byte[] result = cipher.doFinal(hex2byte(data.getBytes()));
             return new String(result);
         } catch (Exception e) {
             e.printStackTrace();
