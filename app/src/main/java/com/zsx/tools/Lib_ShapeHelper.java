@@ -266,7 +266,7 @@ public class Lib_ShapeHelper {
             view.setClickable(true);
         }
         if (textColorStatus != -1) {
-            int textColor = view.getTextColors().getDefaultColor();
+            int textColor = view.getCurrentTextColor();
             int textColor2 = typedArray.getColor(R.styleable.Lib_TextViewColor_lib_textColor2, -1);
             if (textColor2 != -1) {
                 ColorStateList colorStateList = null;
