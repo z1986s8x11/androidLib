@@ -40,7 +40,6 @@ import android.widget.EditText;
 import com.zsx.debug.LogUtil;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
@@ -143,38 +142,6 @@ public class Lib_Util_System {
             android.text.ClipboardManager cmb2 = (android.text.ClipboardManager) context.getSystemService(Activity.CLIPBOARD_SERVICE);
             return cmb2.getText().toString();
         }
-    }
-
-    /**
-     * @param filePath
-     * @return 文件MimeType
-     */
-    @SuppressLint("DefaultLocale")
-    public static String getMimeType(String filePath) {
-        String type = "";
-        File file = new File(filePath);
-        String fName = file.getName();
-        /* 取得扩展名 */
-        String end = fName.substring(fName.lastIndexOf(".") + 1, fName.length()).toLowerCase();
-        /* 按扩展名的类型决定MimeType */
-        if (end.equals("m4a") || end.equals("mp3") || end.equals("mid") || end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
-            type = "audio";
-        } else if (end.equals("3gp") || end.equals("mp4")) {
-            type = "video";
-        } else if (end.equals("jpg") || end.equals("gif") || end.equals("png") || end.equals("jpeg") || end.equals("bmp")) {
-            type = "image";
-        } else if (end.equals("doc") || end.equals("docx")) {
-            type = "application/msword";
-        } else if (end.equals("xls")) {
-            type = "application/vnd.ms-excel";
-        } else if (end.equals("ppt") || end.equals("pptx") || end.equals("pps") || end.equals("dps")) {
-            type = "application/vnd.ms-powerpoint";
-        } else {
-            type = "*";
-        }
-        /* 如果无法直接打开，就弹出软件列表给用户选择 */
-        type += "/*";
-        return type;
     }
 
     /**
