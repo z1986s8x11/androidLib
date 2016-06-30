@@ -130,7 +130,7 @@ public class Lib_Util_Encryption {
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
             digest.update(content.getBytes());
-            return getHashString(digest);
+            return byte2hex(digest.digest());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -150,7 +150,7 @@ public class Lib_Util_Encryption {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA");
             digest.update(content.getBytes());
-            return getHashString(digest);
+            return byte2hex(digest.digest());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -215,34 +215,25 @@ public class Lib_Util_Encryption {
         return null;
     }
 
-    private static String getHashString(MessageDigest digest) {
-        StringBuilder builder = new StringBuilder();
-        for (byte b : digest.digest()) {
-            builder.append(Integer.toHexString((b >> 4) & 0xf));
-            builder.append(Integer.toHexString(b & 0xf));
-        }
-        return builder.toString();
-    }
-
     /**
      * 二行制转字符串
      *
      * @param b
      * @return
      */
-    private static String byte2hex(byte[] b) {
+    public static String byte2hex(byte[] b) {
         StringBuilder hs = new StringBuilder();
-        String stmp;
         for (int n = 0; b != null && n < b.length; n++) {
-            stmp = Integer.toHexString(b[n] & 0XFF);
-            if (stmp.length() == 1)
+            String temp = Integer.toHexString(b[n] & 0XFF);
+            if (temp.length() == 1) {
                 hs.append('0');
-            hs.append(stmp);
+            }
+            hs.append(temp);
         }
-        return hs.toString().toUpperCase();
+        return hs.toString();
     }
 
-    private static byte[] hex2byte(byte[] b) {
+    public static byte[] hex2byte(byte[] b) {
         if ((b.length % 2) != 0)
             throw new IllegalArgumentException();
         byte[] b2 = new byte[b.length / 2];
