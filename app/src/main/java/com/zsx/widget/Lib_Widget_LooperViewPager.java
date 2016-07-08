@@ -17,6 +17,7 @@
 package com.zsx.widget;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -31,18 +32,18 @@ import com.zsx.widget.view.Lib_Widget_ViewPager;
 
 /**
  * A ViewPager subclass enabling infinte scrolling of the viewPager elements
- * <p/>
+ * <p>
  * When used for paginating views (in opposite to fragments), no code changes
  * should be needed only change xml's from <android.support.v4.view.ViewPager>
  * to <com.imbryk.viewPager.LoopViewPager>
- * <p/>
+ * <p>
  * If "blinking" can be seen when paginating to first or last view, simply call
  * seBoundaryCaching( true ), or change DEFAULT_BOUNDARY_CASHING to true
- * <p/>
+ * <p>
  * When using a FragmentPagerAdapter or FragmentStatePagerAdapter,
  * additional changes in the adapter must be done.
  * The adapter must be prepared to create 2 extra items e.g.:
- * <p/>
+ * <p>
  * The original adapter creates 4 items: [0,1,2,3]
  * The modified adapter will have to create 6 items [0,1,2,3,4,5]
  * with mapping realPosition=(position-1)%count
@@ -140,6 +141,9 @@ public class Lib_Widget_LooperViewPager extends Lib_Widget_ViewPager {
     }
 
     private void init() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
         super.setOnPageChangeListener(onPageChangeListener);
     }
 
