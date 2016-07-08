@@ -164,7 +164,7 @@ public class Lib_Util_PinYin {
         for (int i = 0; i < chs.length(); i++) {
             key = chs.substring(i, i + 1);
             if (key.getBytes().length >= 2) {
-                value = (String) convert(key, charset);
+                value = convert(key, charset);
                 if (value == null) {
                     value = "unknown";
                 }
