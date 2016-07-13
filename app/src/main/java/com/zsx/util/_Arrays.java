@@ -1,6 +1,7 @@
 package com.zsx.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,9 +15,7 @@ public final class _Arrays {
 
     public static <T> List<T> asList(T... t) {
         List<T> list = new ArrayList<>();
-        for (int i = 0; i < t.length; i++) {
-            list.add(t[i]);
-        }
+        Collections.addAll(list, t);
         return list;
     }
 
