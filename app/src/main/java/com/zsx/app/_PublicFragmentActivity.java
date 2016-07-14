@@ -11,7 +11,6 @@ import com.zsx.R;
  */
 public final class _PublicFragmentActivity extends Lib_BaseFragmentActivity {
     public static final String _EXTRA_FRAGMENT = "fragment";
-    private Fragment fragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +18,7 @@ public final class _PublicFragmentActivity extends Lib_BaseFragmentActivity {
         setContentView(R.layout.lib_layout_linearlayout);
         try {
             Class<Fragment> fragmentClass = (Class<Fragment>) getIntent().getSerializableExtra(_EXTRA_FRAGMENT);
-            fragment = fragmentClass.newInstance();
+            Fragment fragment = fragmentClass.newInstance();
             fragment.setArguments(getIntent().getExtras());
             _replaceFragment(R.id.lib_content, fragment);
         } catch (Exception e) {

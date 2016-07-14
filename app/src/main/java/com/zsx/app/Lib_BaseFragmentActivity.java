@@ -1,23 +1,29 @@
 package com.zsx.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.zsx.debug.LogUtil;
+import com.zsx.debug.P_LogCatFragment;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +39,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     protected String mToastMessage = "再次点击退出";
     private boolean pIsPause;
     private boolean pisDestroy;
+    private boolean isOpenDebugMenu;
     /**
      * 一个Activity 只创建一个Toast
      */
@@ -295,5 +302,45 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
 
     public void _replaceFragment(int id, Fragment fragment, String tag) {
         getSupportFragmentManager().beginTransaction().replace(id, fragment, tag).commit();
+    }
+
+    public void _setOpenDebugMenu(boolean isOpenDebugMenu) {
+        this.isOpenDebugMenu = isOpenDebugMenu;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (isOpenDebugMenu) {
+            if (LogUtil.DEBUG) {
+                menu.add(8, 11, 1, "查看LogCat");
+                menu.add(8, 12, 1, "清空LogCat");
+            }
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (isOpenDebugMenu) {
+            if (LogUtil.DEBUG) {
+                if (item.getGroupId() == 8) {
+                    switch (item.getItemId()) {
+                        case 11:
+                            Intent intent = new Intent(this, _PublicFragmentActivity.class);
+                            intent.putExtra(_PublicFragmentActivity._EXTRA_FRAGMENT, P_LogCatFragment.class);
+                            startActivity(intent);
+                            break;
+                        case 12:
+                            try {
+                                Runtime.getRuntime().exec("logcat -c");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
