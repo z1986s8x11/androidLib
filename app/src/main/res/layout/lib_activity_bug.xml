@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:background="@color/lib_black"
+        android:background="@color/lib_white"
         android:fadeScrollbars="@null"
         android:padding="15dp"
         android:scrollbars="none">
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/lib_white" />
+                android:textColor="@color/lib_black" />
 
         </LinearLayout>
     </ScrollView>
