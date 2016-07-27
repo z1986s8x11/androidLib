@@ -7,28 +7,26 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.zsx.debug.LogUtil;
-import com.zsx.util._NetworkUtil;
 import com.zsx.util.Lib_Util_System;
+import com.zsx.util._NetworkUtil;
 
 /**
- * 是一个检测网络状态改变的，需要配置 <code> <receiver
- * android:name="com.ta.util.netstate.TANetworkStateReceiver" >
- * <intent-filter> <action
- * android:name="android.net.conn.CONNECTIVITY_CHANGE" /> <action
- * android:name="lib.android.net.conn.CONNECTIVITY_CHANGE" />
- * </intent-filter> </receiver>
- * <p/>
- * 需要开启权限 <uses-permission
- * android:name="android.permission.CHANGE_NETWORK_STATE" />
- * <uses-permission
- * android:name="android.permission.CHANGE_WIFI_STATE" />
- * <uses-permission
- * android:name="android.permission.ACCESS_NETWORK_STATE" />
- * <uses-permission
- * android:name="android.permission.ACCESS_WIFI_STATE" />
+ * 是一个检测网络状态改变的，需要配置
+ * <code>
+ *     <receiver android:name="com.ta.util.netstate.TANetworkStateReceiver" >
+ *          <intent-filter>
+ *               <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+ *               <action android:name="lib.android.net.conn.CONNECTIVITY_CHANGE" />
+ *          </intent-filter>
+ *     </receiver>
+ *     <p/>
+ * 需要开启权限 <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+ *              <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+ *              <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+ *              <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
  * </code>
  *
- * @author zsx
+ * @author zhusx
  * @date 2013-5-5 下午 22:47
  */
 public class Lib_NetworkStateReceiver extends BroadcastReceiver {

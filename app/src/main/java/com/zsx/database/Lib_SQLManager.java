@@ -57,7 +57,7 @@ public class Lib_SQLManager {
     /**
      * 当前日期的前后多少天日期
      */
-    public static final String getDayDateKey(int dayCount) {
+    public static String _getDayDateKey(int dayCount) {
         if (dayCount > 0) {
             return " date('now','start of day','+? days') ";
         } else {
@@ -68,7 +68,7 @@ public class Lib_SQLManager {
     /**
      * @return 当前月份的第一天
      */
-    public static final String getFirstDayFromMonth() {
+    public static String _getFirstDayFromMonth() {
         return "date('now','start of month')";
     }
 
