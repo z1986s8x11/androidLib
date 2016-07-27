@@ -2,6 +2,9 @@ package com.zsx.app;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -13,6 +16,7 @@ import android.view.WindowManager;
 public class Lib_BaseDialog extends Dialog {
     public Lib_BaseDialog(Context context) {
         super(context);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);  去掉标题栏
     }
 
     public Lib_BaseDialog(Context context, int theme) {
@@ -23,14 +27,23 @@ public class Lib_BaseDialog extends Dialog {
         super(context, cancelable, cancelListener);
     }
 
+    /**
+     * 设置背景 可以除去显示时的padding
+     */
+    public void _setBackgroundColor(int colorValue) {
+        Window win = getWindow();
+        if (win != null) {
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        }
+    }
+
     public void _setGravity(int gravity) {
         Window win = getWindow();
         if (win != null) {
-            WindowManager.LayoutParams params = win.getAttributes();
-            if (params != null) {
-                params.gravity = gravity;
-                win.setAttributes(params);
-            }
+            WindowManager.LayoutParams lp = win.getAttributes();
+            lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            lp.gravity = gravity;
+            win.setAttributes(lp);
         }
     }
 }
