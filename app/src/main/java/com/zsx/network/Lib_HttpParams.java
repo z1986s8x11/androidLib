@@ -94,7 +94,7 @@ public class Lib_HttpParams {
         return method;
     }
 
-    public Map<String, ?> getHttpHead() {
+    public Map<String, Object> getHttpHead() {
         return httpHead;
     }
 
