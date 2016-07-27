@@ -2,8 +2,8 @@ package com.zsx.app;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.ColorInt;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,10 +30,10 @@ public class Lib_BaseDialog extends Dialog {
     /**
      * 设置背景 可以除去显示时的padding
      */
-    public void _setBackgroundColor(int colorValue) {
+    public void _setBackgroundColor(@ColorInt int colorValue) {
         Window win = getWindow();
         if (win != null) {
-            getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+            getWindow().setBackgroundDrawable(new ColorDrawable(colorValue));
         }
     }
 
