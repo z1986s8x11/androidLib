@@ -19,12 +19,7 @@ public class LogUtil {
      * @param message
      */
     public static void e(Object cls, String message) {
-        if (DEBUG) {
-            if (message == null) {
-                return;
-            }
-            Log.e(TAG + cls.getClass().getSimpleName(), message);
-        }
+        e(cls.getClass().getSimpleName(), message);
     }
 
     /**
@@ -36,7 +31,19 @@ public class LogUtil {
             if (message == null) {
                 return;
             }
-            Log.e(TAG + tag, message);
+            int index = 0;
+            int maxLength = 4000;
+            String sub;
+            while (index < message.length()) {
+                // java的字符不允许指定超过总的长度end
+                if (message.length() <= index + maxLength) {
+                    sub = message.substring(index);
+                } else {
+                    sub = message.substring(index, maxLength);
+                }
+                index += maxLength;
+                Log.e(TAG + tag, sub.trim());
+            }
         }
     }
 
@@ -45,12 +52,7 @@ public class LogUtil {
      * @param message
      */
     public static void e(Class<?> cls, String message) {
-        if (DEBUG) {
-            if (message == null) {
-                return;
-            }
-            Log.e(TAG + cls.getSimpleName(), message);
-        }
+        e(cls.getSimpleName(), message);
     }
 
     /**
