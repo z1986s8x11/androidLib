@@ -19,8 +19,8 @@ import java.util.List;
 
 /**
  * Adapter 基类
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Created by zhusx on 2015/7/31.
  */
 public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
@@ -220,12 +220,15 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         }
     }
 
-    public ViewHolder _getViewHolder(int layoutId, View view, ViewGroup parent) {
-        ViewHolder viewTag = (ViewHolder) view.getTag();
+    public ViewHolder _toViewHolder(LayoutInflater inflater, View convertView, ViewGroup parent, int layoutId) {
+        if (convertView == null) {
+            convertView = inflater.inflate(layoutId, parent, false);
+        }
+        ViewHolder viewTag = (ViewHolder) convertView.getTag();
         if (viewTag == null) {
             viewTag = new ViewHolder();
-            viewTag.rootView = LayoutInflater.from(view.getContext()).inflate(layoutId, parent, false);
-            view.setTag(viewTag);
+            viewTag.rootView = convertView;
+            convertView.setTag(viewTag);
         }
         return viewTag;
     }
