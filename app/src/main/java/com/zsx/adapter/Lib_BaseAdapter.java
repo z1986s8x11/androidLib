@@ -19,8 +19,8 @@ import java.util.List;
 
 /**
  * Adapter 基类
- * <p>
- * <p>
+ * <p/>
+ * <p/>
  * Created by zhusx on 2015/7/31.
  */
 public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
@@ -203,18 +203,20 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
     }
 
     public static class ViewHolder {
-        public SparseArray viewHolder = new SparseArray();
-        public View rootView;
+        private SparseArray viewHolder = new SparseArray();
+        public View _convertView;
 
-        public void setText(int id, String text) {
-            ((TextView) getView(id)).setText(text);
+        public void _setText(int id, String text) {
+            ((TextView) _getView(id)).setText(text);
         }
 
-        public <T extends View> T getView(int id) {
+        public <T extends View> T _getView(int id) {
             View childView = (View) viewHolder.get(id);
             if (childView == null) {
-                childView = rootView.findViewById(id);
-                viewHolder.put(id, childView);
+                childView = _convertView.findViewById(id);
+                if (childView != null) {
+                    viewHolder.put(id, childView);
+                }
             }
             return (T) childView;
         }
@@ -227,7 +229,7 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         ViewHolder viewTag = (ViewHolder) convertView.getTag();
         if (viewTag == null) {
             viewTag = new ViewHolder();
-            viewTag.rootView = convertView;
+            viewTag._convertView = convertView;
             convertView.setTag(viewTag);
         }
         return viewTag;
