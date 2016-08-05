@@ -1,7 +1,7 @@
 package com.zsx.itf;
 
 /**
- * Created by Administrator on 2015/8/28.
+ * Created by zhusx on 2015/8/28.
  */
 public interface Lib_LifeCycle {
     void _addOnCancelListener(Lib_OnCancelListener listener);
