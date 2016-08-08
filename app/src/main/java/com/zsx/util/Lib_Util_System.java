@@ -259,7 +259,7 @@ public class Lib_Util_System {
 
     /**
      * 使用Wifi时获取IP 设置用户权限
-     * <p/>
+     * <p>
      * <uses-permission
      * android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
      *
@@ -287,7 +287,7 @@ public class Lib_Util_System {
 
     /**
      * 打开Wifi 按钮
-     * <p/>
+     * <p>
      * <uses-permission
      * android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
      *
@@ -306,7 +306,7 @@ public class Lib_Util_System {
 
     /**
      * 使用GPRS上网，时获取ip地址，设置用户上网权限
-     * <p/>
+     * <p>
      * <uses-permission
      * android:name="android.permission.INTERNET"></uses-permission>
      *
@@ -720,7 +720,7 @@ public class Lib_Util_System {
 
     /**
      * 需要android.permission.READ_LOGS
-     * <p/>
+     * <p>
      * 拿到过滤过的Log 日志
      */
     public static List<String> getLogCatForLogUtil() {
@@ -769,6 +769,14 @@ public class Lib_Util_System {
             }
         }
         return list;
+    }
+
+    public static void clearLogCat() {
+        try {
+            Runtime.getRuntime().exec("logcat -c");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static int getCPUCount() {
