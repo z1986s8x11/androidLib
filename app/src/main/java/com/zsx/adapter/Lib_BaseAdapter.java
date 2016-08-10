@@ -1,6 +1,8 @@
 package com.zsx.adapter;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -206,8 +208,16 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         private SparseArray viewHolder = new SparseArray();
         public View _convertView;
 
-        public void _setText(int id, String text) {
+        public void _setText(@IdRes int id, String text) {
             ((TextView) _getView(id)).setText(text);
+        }
+
+        public void _setText(@IdRes int id, @StringRes int stringId) {
+            ((TextView) _getView(id)).setText(stringId);
+        }
+
+        public void _checkBox(@IdRes int id, boolean checked) {
+            ((CheckBox) _getView(id)).setChecked(checked);
         }
 
         public <T extends View> T _getView(int id) {
