@@ -13,6 +13,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -31,6 +32,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.telephony.TelephonyManager;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -51,6 +53,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.UUID;
 
 public class Lib_Util_System {
 
@@ -241,6 +244,25 @@ public class Lib_Util_System {
         TelephonyManager telephonyManager;
         telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
+    }
+
+    /**
+     * @return 获取设备唯一字符串
+     */
+    public static String getUUID(Context context) {
+        String uuid = getIMEI(context);
+        if (TextUtils.isEmpty(uuid) || "0".equals(uuid)) {
+            uuid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            if (TextUtils.isEmpty(uuid) || "9774d56d682e549c".equals(uuid)) {
+                SharedPreferences prefs = context.getSharedPreferences("lib_device_id", 0);
+                uuid = prefs.getString("device_id", null);
+                if (uuid == null) {
+                    uuid = UUID.randomUUID().toString();
+                    prefs.edit().putString("device_id", uuid).apply();
+                }
+            }
+        }
+        return uuid;
     }
 
     /**

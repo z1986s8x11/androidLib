@@ -19,8 +19,8 @@ import java.util.List;
 
 /**
  * Adapter 基类
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Created by zhusx on 2015/7/31.
  */
 public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
@@ -222,7 +222,7 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         }
     }
 
-    public ViewHolder _toViewHolder(LayoutInflater inflater, View convertView, ViewGroup parent, int layoutId) {
+    public ViewHolder _getViewHolder(View convertView, ViewGroup parent, int layoutId) {
         if (convertView == null) {
             convertView = inflater.inflate(layoutId, parent, false);
         }
