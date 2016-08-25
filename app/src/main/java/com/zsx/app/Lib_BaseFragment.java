@@ -26,7 +26,9 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     public static final String _EXTRA_Boolean = Lib_BaseActivity._EXTRA_Boolean;
     public static final String _EXTRA_Double = Lib_BaseActivity._EXTRA_Double;
     public static final String _EXTRA_String_ID = Lib_BaseActivity._EXTRA_Strig_ID;
-    private Toast toast;
+    private Toast pToast;
+    private boolean pIsFirst = false;
+
     /**
      * 基于Activity生命周期回调
      */
@@ -107,11 +109,11 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
         if (getActivity() == null) {
             return;
         }
-        if (toast == null) {
-            toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+        if (pToast == null) {
+            pToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
         }
-        toast.setText(message);
-        toast.show();
+        pToast.setText(message);
+        pToast.show();
     }
 
     public int _getFullScreenWidth() {
@@ -147,5 +149,20 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
                 list.get(i).onActivityResult(requestCode, resultCode, data);
             }
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (!pIsFirst) {
+                pIsFirst = true;
+                __onFragmentFirstVisible();
+            }
+        }
+    }
+
+    protected void __onFragmentFirstVisible() {
+
     }
 }
