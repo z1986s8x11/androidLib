@@ -1,5 +1,6 @@
 package com.zsx.debug;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.zsx.BuildConfig;
@@ -28,7 +29,8 @@ public class LogUtil {
      */
     public static void e(String tag, String message) {
         if (DEBUG) {
-            if (message == null) {
+            if (TextUtils.isEmpty(message)) {
+                Log.e(TAG + tag, String.valueOf(message));
                 return;
             }
             int index = 0;
@@ -39,7 +41,7 @@ public class LogUtil {
                 if (message.length() <= index + maxLength) {
                     sub = message.substring(index);
                 } else {
-                    sub = message.substring(index, maxLength);
+                    sub = message.substring(index, maxLength + index);
                 }
                 index += maxLength;
                 Log.e(TAG + tag, sub.trim());

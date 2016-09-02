@@ -36,6 +36,9 @@ public class CustomDrawable_Fragment extends _BaseFragment {
         return linearLayout;
     }
 
+    /**
+     * 自定义Drawable
+     */
     public static class CircleImageDrawable extends Drawable {
         private Paint mPaint;
         private int mWidth;

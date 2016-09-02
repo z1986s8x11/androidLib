@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -206,24 +207,24 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
 
     public static class ViewHolder {
         private SparseArray viewHolder = new SparseArray();
-        public View _convertView;
+        public View rootView;
 
-        public void _setText(@IdRes int id, String text) {
-            ((TextView) _getView(id)).setText(text);
+        public void setText(@IdRes int id, String text) {
+            ((TextView) getView(id)).setText(text);
         }
 
-        public void _setText(@IdRes int id, @StringRes int stringId) {
-            ((TextView) _getView(id)).setText(stringId);
+        public void setText(@IdRes int id, @StringRes int stringId) {
+            ((TextView) getView(id)).setText(stringId);
         }
 
-        public void _checkBox(@IdRes int id, boolean checked) {
-            ((CheckBox) _getView(id)).setChecked(checked);
+        public void setCheck(@IdRes int id, boolean checked) {
+            ((CompoundButton) getView(id)).setChecked(checked);
         }
 
-        public <T extends View> T _getView(int id) {
+        public <T extends View> T getView(int id) {
             View childView = (View) viewHolder.get(id);
             if (childView == null) {
-                childView = _convertView.findViewById(id);
+                childView = rootView.findViewById(id);
                 if (childView != null) {
                     viewHolder.put(id, childView);
                 }
@@ -239,7 +240,7 @@ public abstract class Lib_BaseAdapter<T> extends BaseAdapter {
         ViewHolder viewTag = (ViewHolder) convertView.getTag();
         if (viewTag == null) {
             viewTag = new ViewHolder();
-            viewTag._convertView = convertView;
+            viewTag.rootView = convertView;
             convertView.setTag(viewTag);
         }
         return viewTag;
