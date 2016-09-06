@@ -70,7 +70,8 @@ public class P_SourceCodeFragment extends Lib_BaseFragment {
     }
 
     @JavascriptInterface
-    public void goReadFile(String type, final String className) {
+    public void goReadFile(String type, final String itemName) {
+        final String className = itemName.trim();
         switch (type) {
             case "java":
                 //java
