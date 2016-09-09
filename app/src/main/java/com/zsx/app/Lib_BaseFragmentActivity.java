@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.zsx.debug.LogUtil;
 import com.zsx.debug.P_LogCatFragment;
 import com.zsx.itf.Lib_LifeCycle;
+import com.zsx.itf.Lib_OnBackKeyListener;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
@@ -65,6 +67,7 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
      */
     private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
+    private Lib_OnBackKeyListener onBackKeyListener;
 
     public void _showToast(String message) {
         if (TextUtils.isEmpty(message)) {
@@ -350,5 +353,21 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
         if (!_Arrays.isEmpty(getSupportFragmentManager().getFragments())) {
             super.onSaveInstanceState(outState);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (onBackKeyListener != null) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if (onBackKeyListener.onBackKey()) {
+                    return true;
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void _setOnBackKeyListener(Lib_OnBackKeyListener onBackKeyListener) {
+        this.onBackKeyListener = onBackKeyListener;
     }
 }
