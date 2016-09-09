@@ -22,6 +22,7 @@ import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
+import com.zsx.util._Arrays;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -342,5 +343,12 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (!_Arrays.isEmpty(getSupportFragmentManager().getFragments())) {
+            super.onSaveInstanceState(outState);
+        }
     }
 }
