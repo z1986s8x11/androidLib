@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.zsx.itf.Lib_LifeCycle;
+import com.zsx.itf.Lib_OnBackKeyListener;
 import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
@@ -21,8 +23,8 @@ import java.util.Set;
 
 /**
  * Activity 基类
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Created by zhusx on 2015/7/31.
  */
 public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
@@ -60,6 +62,7 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
      */
     private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
+    private Lib_OnBackKeyListener onBackKeyListener;
 
     public void _showToast(String message) {
         if (TextUtils.isEmpty(message)) {
@@ -258,5 +261,21 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
         } else {
             _exitSystem();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (onBackKeyListener != null) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if (onBackKeyListener.onBackKey()) {
+                    return true;
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void _setOnBackKeyListener(Lib_OnBackKeyListener onBackKeyListener) {
+        this.onBackKeyListener = onBackKeyListener;
     }
 }
