@@ -305,7 +305,17 @@ public abstract class Lib_BaseHttpRequestData<Id, Result, Parameter> {
                         });
                     }
                 } else {
-                    str = Lib_Util_HttpURLRequest.uploadFile(new File((String) params.getParams()), params.getRequestUrl());
+                    str = Lib_Util_HttpURLRequest.uploadFile(new File((String) params.getParams()), params.getRequestUrl(), null, params.getHttpHead(), new Lib_Util_HttpURLRequest.OnProgressListener() {
+                        @Override
+                        public void onProgress(int progress, int currentSize, int totalSize) {
+                            onRequestProgress(id, (String) params.getParams(), progress, currentSize, totalSize);
+                        }
+
+                        @Override
+                        public boolean isCanceled() {
+                            return params.isCancel;
+                        }
+                    });
                 }
                 break;
             case Lib_HttpParams.DOWNLOAD:
