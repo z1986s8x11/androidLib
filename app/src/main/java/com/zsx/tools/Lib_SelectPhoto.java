@@ -111,39 +111,33 @@ public class Lib_SelectPhoto {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case ActivityCameraRequestCode:
-                    if (resultCode == Activity.RESULT_OK) {
-                        if (isClop) {
-                            gotoClop(Uri.fromFile(saveFile), photoWidth, photoHeight);
-                        } else {
-                            listener.onPhoto(saveFile);
-                        }
+                    if (isClop) {
+                        gotoClop(Uri.fromFile(saveFile), photoWidth, photoHeight);
+                    } else {
+                        listener.onPhoto(saveFile);
                     }
                     break;
                 case ActivityPhotoRequestCode:
-                    if (resultCode == Activity.RESULT_OK) {
-                        Uri uri = data.getData();
-                        if (isClop) {
-                            gotoClop(Uri.fromFile(new File(getPath(context, uri))), photoWidth, photoHeight);
-                        } else {
-                            File file = new File(getPath(context, uri));
-                            listener.onPhoto(file);
-                        }
+                    Uri uri = data.getData();
+                    if (isClop) {
+                        gotoClop(Uri.fromFile(new File(getPath(context, uri))), photoWidth, photoHeight);
+                    } else {
+                        File file = new File(getPath(context, uri));
+                        listener.onPhoto(file);
                     }
                     break;
                 case ActivityClopPhotoRequestCode:
-                    if (resultCode == Activity.RESULT_OK) {
-                        Bitmap bm = data.getParcelableExtra("data");
-                        if (bm != null) {
-                            if (saveFile.exists()) {
-                                saveFile.delete();
-                            }
-                            boolean isSuccess = Lib_Util_File.saveToFile(bm, saveFile.getPath());
-                            if (!bm.isRecycled()) {
-                                bm.recycle();
-                            }
-                            if (isSuccess) {
-                                listener.onPhoto(saveFile);
-                            }
+                    Bitmap bm = data.getParcelableExtra("data");
+                    if (bm != null) {
+                        if (saveFile.exists()) {
+                            saveFile.delete();
+                        }
+                        boolean isSuccess = Lib_Util_File.saveToFile(bm, saveFile.getPath());
+                        if (!bm.isRecycled()) {
+                            bm.recycle();
+                        }
+                        if (isSuccess) {
+                            listener.onPhoto(saveFile);
                         }
                     }
                     break;
