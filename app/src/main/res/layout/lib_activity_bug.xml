@@ -50,6 +50,7 @@
         android:background="@color/lib_yellow"
         android:padding="10dp"
         android:text="发送错误"
+        android:gravity="center"
         android:textColor="@color/lib_red"
         android:textStyle="bold" />
 </LinearLayout>
