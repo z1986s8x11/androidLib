@@ -22,4 +22,3 @@ dependencies {
 //    compile 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.android.support:recyclerview-v7:24.0.0-alpha2'
 }
-//apply from: '../gradle/test.gradle'

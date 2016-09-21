@@ -87,3 +87,4 @@ dependencies {
     compile 'com.android.support:design:22.2.1'
     compile 'com.jakewharton:butterknife:5.1.1'
 }
+//apply from: '../gradle/test.gradle'
