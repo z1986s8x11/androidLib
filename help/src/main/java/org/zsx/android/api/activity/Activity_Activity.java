@@ -20,8 +20,7 @@ public class Activity_Activity extends _BaseActivity implements OnClickListener 
     public TextView mTextView;
     @InjectView(R.id.global_spinner)
     public Spinner mSpinner;
-    private int[] styles = new int[]{android.R.style.Theme_Dialog,
-            Window.FEATURE_NO_TITLE, Window.FEATURE_LEFT_ICON};
+    private int[] styles = new int[]{android.R.style.Theme_Dialog, Window.FEATURE_NO_TITLE, Window.FEATURE_LEFT_ICON};
     private String[] stylesName = new String[]{
             "android.R.style.Theme_Dialog", "Window.FEATURE_NO_TITLE",
             "Window.FEATURE_LEFT_ICON"};
@@ -36,9 +35,7 @@ public class Activity_Activity extends _BaseActivity implements OnClickListener 
         ButterKnife.inject(this);
         mTextView.append("onCreate\n");
         findViewById(R.id.global_btn1).setOnClickListener(this);
-        mSpinner.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line,
-                android.R.id.text1, stylesName));
+        mSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, stylesName));
         // finishAffinity(); 结束此Activity相关的所有Activity
         // recreate(); 重启此Activity
     }

@@ -4,8 +4,4 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@id/global_textview1"
-        style="@style/textView_showCode" />
-
 </LinearLayout>
