@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "org.zsx.android.api"
         minSdkVersion 10
-        targetSdkVersion 22
+        targetSdkVersion 22  //如果改成23 部分机型将进行android6.0 动态权限
         versionCode 1
         versionName "1.0"
     }
@@ -81,10 +81,10 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':app')
-    compile files('libs/core.jar')
     //compile(name: 'androidLib-1.0.0', ext: 'aar')
     //apt files('src/libs/apt.jar')
     compile 'com.android.support:design:22.2.1'
     compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'com.google.zxing:core:3.3.0'
 }
 //apply from: '../gradle/test.gradle'
