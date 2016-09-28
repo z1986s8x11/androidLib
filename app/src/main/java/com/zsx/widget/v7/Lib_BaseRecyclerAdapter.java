@@ -23,13 +23,19 @@ public abstract class Lib_BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Li
     private List<T> mList;
     protected LayoutInflater mLayoutInflater;
 
+    public Lib_BaseRecyclerAdapter() {
+        this(null, new ArrayList<T>());
+    }
+
     public Lib_BaseRecyclerAdapter(Context context) {
         this(context, new ArrayList<T>());
     }
 
     public Lib_BaseRecyclerAdapter(Context context, List<T> list) {
         this.mList = list;
-        mLayoutInflater = LayoutInflater.from(context);
+        if (context != null) {
+            mLayoutInflater = LayoutInflater.from(context);
+        }
     }
 
     public List<T> getListData() {
@@ -52,6 +58,9 @@ public abstract class Lib_BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Li
     public abstract int __getLayoutResource(int viewType);
 
     protected View __getLayoutView(ViewGroup parent, int viewType) {
+        if (mLayoutInflater == null) {
+            mLayoutInflater = LayoutInflater.from(parent.getContext());
+        }
         return mLayoutInflater.inflate(__getLayoutResource(viewType), parent, false);
     }
 
