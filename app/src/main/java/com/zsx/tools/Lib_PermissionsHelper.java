@@ -25,8 +25,14 @@ public class Lib_PermissionsHelper {
         this.activity = activity;
     }
 
-    public void _checkPermissions(String... permissions) {
-        if (!hasPermissions(permissions)) {
+    /**
+     * 请求权限
+     *
+     * @param permissions Manifest.permission.xxxxx
+     * @return
+     */
+    public void _requestPermissions(String... permissions) {
+        if (!_hasPermissions(permissions)) {
             ActivityCompat.requestPermissions(activity, permissions, REQUEST_CODE);
         }
     }
@@ -55,7 +61,7 @@ public class Lib_PermissionsHelper {
         }
     }
 
-    private boolean hasPermissions(String... permissionsArray) {
+    public boolean _hasPermissions(String... permissionsArray) {
         boolean result = true;
         for (String permission : permissionsArray) {
             if (ActivityCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
