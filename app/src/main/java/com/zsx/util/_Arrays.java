@@ -25,4 +25,20 @@ public final class _Arrays {
         }
         return false;
     }
+
+    public static <T> List<T> filter(List<T> list, Filter<T> filter) {
+        List<T> temp = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            T t = list.get(i);
+            if (!filter.isFilter(t)) {
+                temp.add(t);
+            }
+        }
+        return temp;
+    }
+
+    public interface Filter<T> {
+        boolean isFilter(T t);
+    }
 }
+
