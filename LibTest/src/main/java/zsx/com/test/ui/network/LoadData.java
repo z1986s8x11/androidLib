@@ -4,7 +4,7 @@ import android.os.Environment;
 
 import com.zsx.exception.Lib_Exception;
 import com.zsx.itf.Lib_LifeCycle;
-import com.zsx.itf.Lib_OnCancelListener;
+import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.network.Lib_BaseHttpRequestData;
 import com.zsx.network.Lib_HttpParams;
 import com.zsx.network.Lib_HttpResult;
@@ -30,9 +30,17 @@ public class LoadData<T> extends Lib_BaseHttpRequestData<LoadData.Api, T, Object
 
     public LoadData(LoadData.Api id, Lib_LifeCycle lifeCycle) {
         super(id);
-        lifeCycle._addOnCancelListener(new Lib_OnCancelListener() {
+        lifeCycle._addOnCycleListener(new Lib_OnCycleListener() {
             @Override
-            public void onCancel() {
+            public void onResume() {
+            }
+
+            @Override
+            public void onPause() {
+            }
+
+            @Override
+            public void onDestroy() {
                 _cancelLoadData();
             }
         });

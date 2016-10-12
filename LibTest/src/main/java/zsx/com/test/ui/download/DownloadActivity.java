@@ -41,6 +41,10 @@ public class DownloadActivity extends _BaseActivity implements View.OnClickListe
             public void onPause() {
                 downloadHelper._unregisterDownloadListener(DownloadActivity.this);
             }
+
+            @Override
+            public void onDestroy() {
+            }
         });
 
     }

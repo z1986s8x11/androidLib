@@ -5,7 +5,7 @@ import android.os.Looper;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.itf.Lib_LifeCycle;
-import com.zsx.itf.Lib_OnCancelListener;
+import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.itf.Lib_Runnable;
 
 import java.util.LinkedHashSet;
@@ -31,9 +31,17 @@ public class Lib_Subscribes {
         subscribes.add(subscriber);
         final CancelRunnable<T> runnable = new CancelRunnable<T>(subscriber);
         if (lifeCycle != null) {
-            lifeCycle._addOnCancelListener(new Lib_OnCancelListener() {
+            lifeCycle._addOnCycleListener(new Lib_OnCycleListener() {
                 @Override
-                public void onCancel() {
+                public void onResume() {
+                }
+
+                @Override
+                public void onPause() {
+                }
+
+                @Override
+                public void onDestroy() {
                     runnable._setCancel();
                 }
             });

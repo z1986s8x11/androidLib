@@ -22,7 +22,9 @@ public class Lib_WebViewHelper {
     }
 
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        LogUtil.e(this, String.format("%d:%s:%s", errorCode, description, failingUrl));
+        if (LogUtil.DEBUG) {
+            LogUtil.e(this, String.format("%d:%s:%s", errorCode, description, failingUrl));
+        }
         StringBuffer sb = new StringBuffer();
         sb.append("<html>");
         sb.append("<head>");

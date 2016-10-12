@@ -152,6 +152,10 @@ public class Lib_Widget_ViewPager extends ViewPager {
                     _stopAutoScroll();
                 }
             }
+
+            @Override
+            public void onDestroy() {
+            }
         };
 
         public void _stopAutoScroll() {

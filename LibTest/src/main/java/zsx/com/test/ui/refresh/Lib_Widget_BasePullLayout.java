@@ -12,7 +12,7 @@ import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
-import com.zsx.util.Lib_Util_Widget;
+import com.zsx.util._Views;
 
 /**
  * Author       zhusx
@@ -171,7 +171,7 @@ public abstract class Lib_Widget_BasePullLayout extends LinearLayout {
         this.mHeadView = mTarget;
         mHeadViewHeight = mTarget.getMeasuredHeight();
         if (mHeadViewHeight == 0) {
-            Lib_Util_Widget.measureView(mTarget);
+            _Views.measureView(mTarget);
             mHeadViewHeight = mTarget.getMeasuredHeight();
         }
         __reset(mTarget, mHeadViewHeight, TYPE_OTHER, null);

@@ -8,4 +8,6 @@ public interface Lib_OnCycleListener {
     void onResume();
 
     void onPause();
+
+    void onDestroy();
 }

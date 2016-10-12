@@ -21,7 +21,6 @@ import com.zsx.debug.LogUtil;
 import com.zsx.debug.P_LogCatFragment;
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnBackKeyListener;
-import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
 import com.zsx.util._Arrays;
@@ -65,7 +64,6 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     /**
      * 基于Activity生命周期回调
      */
-    private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
     private Lib_OnBackKeyListener onBackKeyListener;
 
@@ -132,19 +130,6 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     }
 
     @Override
-    public void _addOnCancelListener(Lib_OnCancelListener listener) {
-        if (cancelListener.contains(listener)) {
-            return;
-        }
-        cancelListener.add(listener);
-    }
-
-    @Override
-    public void _removeOnCancelListener(Lib_OnCancelListener listener) {
-        cancelListener.remove(listener);
-    }
-
-    @Override
     public void _addOnCycleListener(Lib_OnCycleListener listener) {
         if (cycleListener.contains(listener)) {
             return;
@@ -155,6 +140,11 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     @Override
     public void _removeOnCycleListener(Lib_OnCycleListener listener) {
         cycleListener.remove(listener);
+    }
+
+    @Override
+    public Set<Lib_OnCycleListener> getCycleListeners() {
+        return cycleListener;
     }
 
     @Override
@@ -177,10 +167,9 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         pisDestroy = true;
         destroyActivity();
-        cycleListener.clear();
-        super.onDestroy();
     }
 
     public boolean _isDestroy() {
@@ -192,10 +181,10 @@ public class Lib_BaseFragmentActivity extends FragmentActivity implements Lib_Li
     }
 
     private final void destroyActivity() {
-        for (Lib_OnCancelListener l : cancelListener) {
-            l.onCancel();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onDestroy();
         }
-        cancelListener.clear();
+        cycleListener.clear();
         Lib_SystemExitManager.removeActivity(this);
     }
 

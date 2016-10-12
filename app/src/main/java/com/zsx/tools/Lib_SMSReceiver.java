@@ -10,7 +10,7 @@ import android.os.Handler;
 
 import com.zsx.debug.LogUtil;
 import com.zsx.itf.Lib_LifeCycle;
-import com.zsx.itf.Lib_OnCancelListener;
+import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.util.Lib_Util_System;
 
 import java.util.ArrayList;
@@ -43,9 +43,17 @@ public class Lib_SMSReceiver {
             return;
         }
         context.getContentResolver().registerContentObserver(uri, true, observer);
-        context._addOnCancelListener(new Lib_OnCancelListener() {
+        context._addOnCycleListener(new Lib_OnCycleListener() {
             @Override
-            public void onCancel() {
+            public void onResume() {
+            }
+
+            @Override
+            public void onPause() {
+            }
+
+            @Override
+            public void onDestroy() {
                 context.getContentResolver().unregisterContentObserver(observer);
             }
         });

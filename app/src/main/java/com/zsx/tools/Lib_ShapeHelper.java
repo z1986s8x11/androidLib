@@ -164,6 +164,38 @@ public class Lib_ShapeHelper {
         if (gradientStartColor != -1 && gradientEndColor != -1) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 int gradientCenterColor = typedArray.getColor(R.styleable.Lib_ShapeBackground_lib_gradientCenterColor, -1);
+                int orientation = typedArray.getInt(R.styleable.Lib_ShapeBackground_lib_orientation, -1);
+                if (orientation != -1) {
+                    switch (orientation) {
+                        case 0:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+                            break;
+                        case 1:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.TR_BL);
+                            break;
+                        case 2:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.RIGHT_LEFT);
+                            break;
+                        case 3:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.BR_TL);
+                            break;
+                        case 4:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.BOTTOM_TOP);
+                            break;
+                        case 5:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.BL_TR);
+                            break;
+                        case 6:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+                            break;
+                        case 7:
+                            gradientDrawable.setOrientation(GradientDrawable.Orientation.TR_BL);
+                            break;
+                    }
+                    if (gradientDrawable2 != null) {
+                        gradientDrawable2.setOrientation(gradientDrawable.getOrientation());
+                    }
+                }
                 if (gradientCenterColor == -1) {
                     gradientDrawable.setColors(new int[]{gradientStartColor, gradientEndColor});
                     if (gradientDrawable2 != null) {

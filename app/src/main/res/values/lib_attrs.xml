@@ -81,6 +81,16 @@
         <attr name="lib_gradientCenterColor2" format="color" />
         <attr name="lib_gradientEndColor" format="color" />
         <attr name="lib_gradientEndColor2" format="color" />
+        <attr name="lib_orientation">
+            <enum name="top_bottom" value="0" />
+            <enum name="tr_bl" value="1" />
+            <enum name="right_left" value="2" />
+            <enum name="br_tl" value="3" />
+            <enum name="bottom_top" value="4" />
+            <enum name="bl_tr" value="5" />
+            <enum name="left_right" value="6" />
+            <enum name="tl_br" value="7" />
+        </attr>
         <attr name="lib_background2" format="color|reference"/>
         <attr name="lib_status">
             <enum name="pressed" value="0" />
@@ -107,6 +117,16 @@
             <!--<enum name="gradientCenterColor2" value="15" />-->
             <!--<enum name="gradientEndColor" value="16" />-->
             <!--<enum name="gradientEndColor2" value="17" />-->
+            <!--<attr name="orientation">-->
+            <!--<enum name="top_bottom" value="0" />-->
+            <!--<enum name="tr_bl" value="1" />-->
+            <!--<enum name="right_left" value="2" />-->
+            <!--<enum name="br_tl" value="3" />-->
+            <!--<enum name="bottom_top" value="4" />-->
+            <!--<enum name="bl_tr" value="5" />-->
+            <!--<enum name="left_right" value="6" />-->
+            <!--<enum name="tl_br" value="7" />-->
+            <!--</attr>-->
             <!--<enum name="status" value="18" />-->
             <!--<enum name="pressed" value="19" />-->
             <!--<enum name="enabled" value="20" />-->

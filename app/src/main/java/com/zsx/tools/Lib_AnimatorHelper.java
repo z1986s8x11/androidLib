@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
-import com.zsx.util.Lib_Util_Widget;
+import com.zsx.util._Views;
 
 /**
  * Created by Administrator on 2015/12/11.
@@ -42,7 +42,7 @@ public class Lib_AnimatorHelper {
                 throw new IllegalArgumentException("animView 构造器参数不能有父类  ");
             }
             if (v.getMeasuredHeight() == 0 || v.getMeasuredWidth() == 0) {
-                Lib_Util_Widget.measureView(v);
+                _Views.measureView(v);
             }
             rootView.addView(v, v.getMeasuredWidth(), v.getMeasuredHeight());
             this.animView = v;

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.zsx.itf.Lib_LifeCycle;
-import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 
 import java.lang.reflect.Field;
@@ -32,21 +31,7 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     /**
      * 基于Activity生命周期回调
      */
-    private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
-
-    @Override
-    public void _addOnCancelListener(Lib_OnCancelListener listener) {
-        if (cancelListener.contains(listener)) {
-            return;
-        }
-        cancelListener.add(listener);
-    }
-
-    @Override
-    public void _removeOnCancelListener(Lib_OnCancelListener listener) {
-        cancelListener.remove(listener);
-    }
 
     @Override
     public void _addOnCycleListener(Lib_OnCycleListener listener) {
@@ -80,10 +65,15 @@ public abstract class Lib_BaseFragment extends Fragment implements Lib_LifeCycle
     @Override
     public void onDetach() {
         super.onDetach();
-        for (Lib_OnCancelListener l : cancelListener) {
-            l.onCancel();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onDestroy();
         }
-        cancelListener.clear();
+        cycleListener.clear();
+    }
+
+    @Override
+    public Set<Lib_OnCycleListener> getCycleListeners() {
+        return cycleListener;
     }
 
     /**

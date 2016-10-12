@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.zsx.itf.Lib_LifeCycle;
 import com.zsx.itf.Lib_OnBackKeyListener;
-import com.zsx.itf.Lib_OnCancelListener;
 import com.zsx.itf.Lib_OnCycleListener;
 import com.zsx.manager.Lib_SystemExitManager;
 
@@ -60,7 +59,6 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     /**
      * 基于Activity生命周期回调
      */
-    private Set<Lib_OnCancelListener> cancelListener = new HashSet<Lib_OnCancelListener>();
     private Set<Lib_OnCycleListener> cycleListener = new HashSet<Lib_OnCycleListener>();
     private Lib_OnBackKeyListener onBackKeyListener;
 
@@ -125,25 +123,6 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     }
 
     /**
-     * 添加取消监听
-     */
-    @Override
-    public void _addOnCancelListener(Lib_OnCancelListener listener) {
-        if (cancelListener.contains(listener)) {
-            return;
-        }
-        cancelListener.add(listener);
-    }
-
-    /**
-     * 移除取消监听
-     */
-    @Override
-    public void _removeOnCancelListener(Lib_OnCancelListener listener) {
-        cancelListener.remove(listener);
-    }
-
-    /**
      * 添加周期监听
      */
     @Override
@@ -160,6 +139,11 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     @Override
     public void _removeOnCycleListener(Lib_OnCycleListener listener) {
         cycleListener.remove(listener);
+    }
+
+    @Override
+    public Set<Lib_OnCycleListener> getCycleListeners() {
+        return cycleListener;
     }
 
     @Override
@@ -184,7 +168,6 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     protected void onDestroy() {
         pisDestroy = true;
         destroyActivity();
-        cycleListener.clear();
         super.onDestroy();
     }
 
@@ -197,10 +180,10 @@ public class Lib_BaseActivity extends Activity implements Lib_LifeCycle {
     }
 
     private final void destroyActivity() {
-        for (Lib_OnCancelListener l : cancelListener) {
-            l.onCancel();
+        for (Lib_OnCycleListener l : cycleListener) {
+            l.onDestroy();
         }
-        cancelListener.clear();
+        cycleListener.clear();
         Lib_SystemExitManager.removeActivity(this);
     }
 

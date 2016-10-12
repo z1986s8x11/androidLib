@@ -1,7 +1,6 @@
 package org.zsx.android.api.service;
 
 import android.app.Service;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -11,8 +10,6 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import com.zsx.debug.Lib_DebugService;
 
 import org.zsx.android.api.R;
 import org.zsx.android.base._BaseActivity;
@@ -84,10 +81,10 @@ public class WindowManager_Activity extends _BaseActivity implements
 			}
 			break;
 		case R.id.global_btn3:
-			startService(new Intent(this, Lib_DebugService.class));
+//			startService(new Intent(this, Lib_DebugService.class));
 			break;
 		case R.id.global_btn4:
-			stopService(new Intent(this, Lib_DebugService.class));
+//			stopService(new Intent(this, Lib_DebugService.class));
 			break;
 		}
 	}
