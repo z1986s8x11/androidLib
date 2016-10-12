@@ -90,37 +90,56 @@ public class ZsxApplicationManager {
 //                activityCallbacks = new Application.ActivityLifecycleCallbacks() {
 //                    @Override
 //                    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-//                        LogUtil.e(activity, "onActivityCreated");
+//                        Lib_SystemExitManager.addActivity(activity);
 //                    }
 //
 //                    @Override
 //                    public void onActivityStarted(Activity activity) {
-//                        LogUtil.e(activity, "onActivityStarted");
 //                    }
 //
 //                    @Override
 //                    public void onActivityResumed(Activity activity) {
-//                        LogUtil.e(activity, "onActivityResumed");
+//                        if (activity instanceof Lib_LifeCycle) {
+//                            Set<Lib_OnCycleListener> cycleListener = ((Lib_LifeCycle) activity).getCycleListeners();
+//                            if (!_Sets.isEmpty(cycleListener)) {
+//                                for (Lib_OnCycleListener l : cycleListener) {
+//                                    l.onResume();
+//                                }
+//                            }
+//                        }
 //                    }
 //
 //                    @Override
 //                    public void onActivityPaused(Activity activity) {
-//                        LogUtil.e(activity, "onActivityPaused");
+//                        if (activity instanceof Lib_LifeCycle) {
+//                            Set<Lib_OnCycleListener> cycleListener = ((Lib_LifeCycle) activity).getCycleListeners();
+//                            if (!_Sets.isEmpty(cycleListener)) {
+//                                for (Lib_OnCycleListener l : cycleListener) {
+//                                    l.onPause();
+//                                }
+//                            }
+//                        }
 //                    }
 //
 //                    @Override
 //                    public void onActivityStopped(Activity activity) {
-//                        LogUtil.e(activity, "onActivityStopped");
 //                    }
 //
 //                    @Override
 //                    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-//                        LogUtil.e(activity, "onActivitySaveInstanceState");
 //                    }
 //
 //                    @Override
 //                    public void onActivityDestroyed(Activity activity) {
-//                        LogUtil.e(activity, "onActivityDestroyed");
+//                        if (activity instanceof Lib_LifeCycle) {
+//                            Set<Lib_OnCycleListener> cycleListener = ((Lib_LifeCycle) activity).getCycleListeners();
+//                            if (!_Sets.isEmpty(cycleListener)) {
+//                                for (Lib_OnCycleListener l : cycleListener) {
+//                                    l.onDestroy();
+//                                }
+//                            }
+//                        }
+//                        Lib_SystemExitManager.removeActivity(activity);
 //                    }
 //                };
 //                context.registerActivityLifecycleCallbacks(activityCallbacks);
