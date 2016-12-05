@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+def myName = "zhusx祝思翔"  //定义参数
+
+ext{  //定义组合
+    name = "zhusx"
+    age = "30"
+}
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -19,12 +26,16 @@ android {
 //    }
 
     defaultConfig {
+
         applicationId "org.zsx.android.api"
         minSdkVersion 10
         targetSdkVersion 22  //如果改成23 部分机型将进行android6.0 动态权限
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "name", "\"${myName}\""  //设置常量
     }
+
     //签名
     signingConfigs {
 //        debug {
@@ -76,6 +87,11 @@ android {
             output.outputFile = new File(output.outputFile.parent, defaultConfig.applicationId + "-" + buildType.name + "-v" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk" );
         }
     }
+}
+
+
+def getAge(){  //定义方法
+    return zsx.age;
 }
 
 dependencies {
