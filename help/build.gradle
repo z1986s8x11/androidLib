@@ -37,9 +37,10 @@ android {
         targetSdkVersion 22  //如果改成23 部分机型将进行android6.0 动态权限
         versionCode 1
         versionName "1.0"
-        buildConfigField "int", "age", gradleProperties['gradleAge']  //通过def gradleProperties 定义的常量
+        buildConfigField "boolean", "isShow", "Boolean.parseBoolean(\"true\")" //直接定义
+        buildConfigField "int", "gradleAge", gradleProperties['gradleAge']  //通过def gradleProperties 定义的常量
         buildConfigField "String", "name", "\"${myName}\""  // 通过 def 定义的常量
-        buildConfigField "String", "name", "\"${gradleName}\""  //直接获取 gradleProperties 定义的常量
+        buildConfigField "String", "gradleName", "\"${gradleName}\""  //直接获取 gradleProperties 定义的常量
     }
 
     //签名
@@ -49,9 +50,11 @@ android {
 //        }
         release {
             storeFile file("keystore.jks")
+            // storePassword System.getenv("KSTOREPWD")  通过环境变量获取密码
+            //storePassword System.console().readLine("\nKeystore password: ")  命令行调用此构建时提示您输入密码
+            keyPassword "13996687614"
             storePassword "13996687614"
             keyAlias "祝思翔"
-            keyPassword "13996687614"
         }
     }
     buildTypes {
