@@ -7,6 +7,11 @@ ext{  //定义组合
     age = "30"
 }
 
+//根目录的 gradle.properties 文件加载进来转化成 key value形式
+def gradlePropertiesFile = rootProject.file("gradle.properties")
+def gradleProperties = new Properties()
+gradleProperties.load(new FileInputStream(gradlePropertiesFile))
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -32,8 +37,9 @@ android {
         targetSdkVersion 22  //如果改成23 部分机型将进行android6.0 动态权限
         versionCode 1
         versionName "1.0"
-
-        buildConfigField "String", "name", "\"${myName}\""  //设置常量
+        buildConfigField "int", "age", gradleProperties['gradleAge']  //通过def gradleProperties 定义的常量
+        buildConfigField "String", "name", "\"${myName}\""  // 通过 def 定义的常量
+        buildConfigField "String", "name", "\"${gradleName}\""  //直接获取 gradleProperties 定义的常量
     }
 
     //签名
