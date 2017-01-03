@@ -144,6 +144,7 @@ Java代码
 https://github.com/tigerguixh/QuickNews
 https://github.com/yixia/VitamioBundle
 https://github.com/kimhou/Android/tree/master/VideoDemoPro
+https://github.com/tcking/GiraffePlayer
 
 博客
 http://blog.csdn.net/lmj623565791/article/list/1
@@ -156,7 +157,9 @@ chrome 模拟请求工具  :http://chromecj.com/web-development/2014-09/60/downl
 ViewPager 无限滚动 :https://github.com/saiwu-bigkoo/Android-ConvenientBanner.git
 开源集合:https://github.com/snowdream/awesome-android
 
-ViewPager 大背景 https://github.com/zhe525069676/BgMoveViewPager
 RecyclerView 滑动删除 拖动效果 https://github.com/HoneyNeutrons/RecyclerViewUndoSwipe
 google Demo: https://github.com/googlesamples
 上传jcenter http://blog.csdn.net/ls1110924/article/details/46470059
+gradle文档:https://docs.gradle.org/current/userguide/userguide
+判断前台进程的6种方法:https://github.com/wenmingvs/AndroidProcess
+悬浮球相关:https://github.com/fashare2015/ActivityTracker
