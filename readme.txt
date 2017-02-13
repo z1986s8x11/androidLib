@@ -145,6 +145,8 @@ https://github.com/tigerguixh/QuickNews
 https://github.com/yixia/VitamioBundle
 https://github.com/kimhou/Android/tree/master/VideoDemoPro
 https://github.com/tcking/GiraffePlayer
+https://github.com/Bilibili/ijkplayer
+https://github.com/wlsh/JieCaoVideoPlayer/
 
 博客
 http://blog.csdn.net/lmj623565791/article/list/1
